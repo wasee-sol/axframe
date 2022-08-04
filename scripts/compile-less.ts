@@ -18,7 +18,6 @@ function compileLESS(from, to) {
         if (e) console.error(e);
         if (!e) {
           fs.writeFile(to, output.css);
-          console.log("compiled css file : " + to);
         }
       }
     );
@@ -46,6 +45,8 @@ const buildLessVar = () => {
 
     compileLESS(`../src/styles/less/app-${palette}.less`, `../public/app-${palette}.css`);
   });
+
+  console.log("compiled css file");
 };
 
 // build less vars

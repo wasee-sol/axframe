@@ -2,6 +2,8 @@ import * as webpack from "webpack";
 import * as path from "path";
 import * as HtmlWebpackPlugin from "html-webpack-plugin";
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 const isDev: boolean = process.env.NODE_ENV === "development";
 
@@ -10,8 +12,9 @@ const config: webpack.Configuration = {
   watch: isDev,
   entry: ["/src/index.tsx"],
   output: {
-    filename: "output.bundle.js",
+    filename: "[name].bundle.js",
     path: path.join(__dirname, "dist"),
+    publicPath: "./",
   },
   module: {
     rules: [
@@ -24,12 +27,12 @@ const config: webpack.Configuration = {
       },
       {
         test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
+        use: [!isDev ? MiniCssExtractPlugin.loader : "style-loader", "css-loader"],
       },
       {
         test: /\.less$/i,
         use: [
-          "style-loader",
+          !isDev ? MiniCssExtractPlugin.loader : "style-loader",
           "css-loader",
           {
             loader: "less-loader",
@@ -60,16 +63,67 @@ const config: webpack.Configuration = {
     extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
     fallback: { buffer: false },
   },
-  node: {
-    __dirname: false, // Use Node __dirname
-  },
   plugins: [
+    new CopyPlugin({
+      patterns: [{ from: "*.css", context: path.resolve(__dirname, "public") }],
+    }),
+    new MiniCssExtractPlugin({
+      attributes: {
+        id: "target",
+        "data-target": "example",
+      },
+    }),
     new ForkTsCheckerWebpackPlugin({
       async: true,
       devServer: isDev,
     }),
     new HtmlWebpackPlugin({ template: path.join(__dirname, "public", "index.html") }),
   ],
+  optimization: {
+    splitChunks: {
+      chunks: "all",
+      maxInitialRequests: Infinity,
+      minSize: 0,
+      cacheGroups: {
+        app: {
+          test: /[\\/]src[\\/](?!pages)/,
+          chunks: "all",
+          enforce: true,
+          name(module: webpack.Configuration): string {
+            if (!module.context) return "app";
+
+            const match = module.context.match(/([^\\/]*?)[\\/]([^\\/]*?)$/);
+
+            if (!match) return "app";
+
+            const [, parent, child] = match;
+
+            return `app.${parent.replace("@", "")}${child ? `.${child.replace("@", "")}` : ""}`;
+          },
+          priority: -30,
+        },
+        vendor: {
+          test: /[\\/](?:node_modules|plugins)[\\/]|]/,
+          chunks: "all",
+          enforce: true,
+          name(module: webpack.Configuration): string {
+            // get the name. E.g. node_modules/packageName/not/this/part.js
+            // or node_modules/packageName
+            const packageName = module.context?.match(/[\\/](?:node_modules|plugins)[\\/](.*?)([\\/]|$)/)?.[1];
+
+            // npm package names are URL-safe, but some servers don't like @ symbols
+            return `npm.${(packageName ?? "").replace("@", "")}`;
+          },
+          priority: -10,
+          reuseExistingChunk: true,
+        },
+      },
+    },
+    minimize: !isDev,
+    mergeDuplicateChunks: true,
+    removeAvailableModules: true,
+    removeEmptyChunks: true,
+  },
 };
 
 export default config;

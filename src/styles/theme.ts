@@ -10,8 +10,6 @@ const transparent = "transparent";
 const lightColors = {
   body_background: LIGHT.INK_5,
   scroll_thumb_color: LIGHT.INK_30,
-
-  // antd
   border_color_base: LIGHT.INK_30,
   border_color_split: LIGHT.INK_30,
   primary_color: LIGHT.INK_5,
@@ -30,8 +28,6 @@ const lightColors = {
 const darkColors: typeof lightColors = {
   body_background: DARK.INK_60,
   scroll_thumb_color: DARK.INK_30,
-
-  // antd
   border_color_base: DARK.INK_30,
   border_color_split: DARK.INK_30,
   primary_color: DARK.INK_60,

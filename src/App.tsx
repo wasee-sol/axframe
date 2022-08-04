@@ -10,7 +10,6 @@ import { useThemeSwitcher } from "react-css-theme-switcher";
 
 const App: React.FC = () => {
   const { switcher, currentTheme, status, themes } = useThemeSwitcher();
-
   const loaded = useAppStore((s) => s.loaded);
   const theme = useAppStore((s) => s.theme);
 

@@ -3,14 +3,17 @@ exports.__esModule = true;
 var path = require("path");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
 var ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+var MiniCssExtractPlugin = require("mini-css-extract-plugin");
+var CopyPlugin = require("copy-webpack-plugin");
 var isDev = process.env.NODE_ENV === "development";
 var config = {
     mode: process.env.NODE_ENV,
     watch: isDev,
     entry: ["/src/index.tsx"],
     output: {
-        filename: "output.bundle.js",
-        path: path.join(__dirname, "dist")
+        filename: "[name].bundle.js",
+        path: path.join(__dirname, "dist"),
+        publicPath: "./"
     },
     module: {
         rules: [
@@ -23,12 +26,12 @@ var config = {
             },
             {
                 test: /\.css$/i,
-                use: ["style-loader", "css-loader"]
+                use: [!isDev ? MiniCssExtractPlugin.loader : "style-loader", "css-loader"]
             },
             {
                 test: /\.less$/i,
                 use: [
-                    "style-loader",
+                    !isDev ? MiniCssExtractPlugin.loader : "style-loader",
                     "css-loader",
                     {
                         loader: "less-loader",
@@ -59,15 +62,64 @@ var config = {
         extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
         fallback: { buffer: false }
     },
-    node: {
-        __dirname: false
-    },
     plugins: [
+        new CopyPlugin({
+            patterns: [{ from: "*.css", context: path.resolve(__dirname, "public") }]
+        }),
+        new MiniCssExtractPlugin({
+            attributes: {
+                id: "target",
+                "data-target": "example"
+            }
+        }),
         new ForkTsCheckerWebpackPlugin({
             async: true,
             devServer: isDev
         }),
         new HtmlWebpackPlugin({ template: path.join(__dirname, "public", "index.html") }),
-    ]
+    ],
+    optimization: {
+        splitChunks: {
+            chunks: "all",
+            maxInitialRequests: Infinity,
+            minSize: 0,
+            cacheGroups: {
+                app: {
+                    test: /[\\/]src[\\/](?!pages)/,
+                    chunks: "all",
+                    enforce: true,
+                    name: function (module) {
+                        if (!module.context)
+                            return "app";
+                        var match = module.context.match(/([^\\/]*?)[\\/]([^\\/]*?)$/);
+                        if (!match)
+                            return "app";
+                        var parent = match[1], child = match[2];
+                        return "app.".concat(parent.replace("@", "")).concat(child ? ".".concat(child.replace("@", "")) : "");
+                    },
+                    priority: -30
+                },
+                vendor: {
+                    test: /[\\/](?:node_modules|plugins)[\\/]|]/,
+                    chunks: "all",
+                    enforce: true,
+                    name: function (module) {
+                        var _a, _b;
+                        // get the name. E.g. node_modules/packageName/not/this/part.js
+                        // or node_modules/packageName
+                        var packageName = (_b = (_a = module.context) === null || _a === void 0 ? void 0 : _a.match(/[\\/](?:node_modules|plugins)[\\/](.*?)([\\/]|$)/)) === null || _b === void 0 ? void 0 : _b[1];
+                        // npm package names are URL-safe, but some servers don't like @ symbols
+                        return "npm.".concat((packageName !== null && packageName !== void 0 ? packageName : "").replace("@", ""));
+                    },
+                    priority: -10,
+                    reuseExistingChunk: true
+                }
+            }
+        },
+        minimize: !isDev,
+        mergeDuplicateChunks: true,
+        removeAvailableModules: true,
+        removeEmptyChunks: true
+    }
 };
 exports["default"] = config;
