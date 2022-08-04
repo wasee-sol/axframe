@@ -39,15 +39,8 @@ export const useAppStore = buildStore<AppStore>("app", (set, get) => ({
   ...getAppStoreActions(set, get),
 }));
 
-useAppStore.persist.setOptions({
-  deserialize: (str: any) => {
-    const state = JSON.parse(
-      LZUTF8.decompress(str, {
-        inputEncoding: "StorageBinaryString",
-      })
-    );
-
-    state.state.loaded = true;
-    return state;
-  },
+useAppStore.persist.onFinishHydration((state) => {
+  if (!state.loaded) {
+    state.setLoaded(true);
+  }
 });

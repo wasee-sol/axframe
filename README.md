@@ -22,4 +22,4 @@ npm run dev
 npm run build
 ```
 
-Check Package.json for additional script commands.
+- In the development mode, check the disable cache option on the network tab.

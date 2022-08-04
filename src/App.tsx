@@ -26,7 +26,9 @@ const App: React.FC = () => {
             <Home />
           </AppContainer>
         ) : (
-          <div>Loading...</div>
+          <div>
+            Loading... loaded: {loaded}, theme: {theme}
+          </div>
         )}
       </ConfigProvider>
     </ThemeProvider>

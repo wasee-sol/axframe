@@ -1,3 +1,6 @@
+// ref
+// https://github.com/ant-design/ant-design/blob/master/components/style/themes/default.less
+
 import { alpha } from "./palette/colorUtil"; // Using relative path because the tsconfig isn't set at building less file
 import DARK from "./palette/dark";
 import LIGHT from "./palette/light";
@@ -32,14 +35,14 @@ const darkColors: typeof lightColors = {
   border_color_base: DARK.INK_30,
   border_color_split: DARK.INK_30,
   primary_color: DARK.INK_60,
-  text_color: DARK.INK_20,
-  error_color: LIGHT.RED_50,
-  success_color: LIGHT.GREEN_50,
-  info_color: LIGHT.BLUE_50,
-  highlight_color: LIGHT.RED_50,
-  disabled_color: alpha(LIGHT.INK_70, 0.5),
-  warning_color: LIGHT.YELLOW_50,
-  white_color: LIGHT.INK_5,
+  text_color: DARK.INK_5,
+  error_color: DARK.RED_50,
+  success_color: DARK.GREEN_50,
+  info_color: DARK.BLUE_50,
+  highlight_color: DARK.RED_50,
+  disabled_color: alpha(DARK.INK_70, 0.5),
+  warning_color: DARK.YELLOW_50,
+  white_color: DARK.INK_5,
   black_color: "#000",
 };
 

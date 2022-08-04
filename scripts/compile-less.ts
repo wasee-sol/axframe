@@ -1,8 +1,10 @@
 import * as less from "less";
 import * as path from "path";
 import * as fs from "fs-extra";
+
 const srcPath = "../src/styles/theme.ts";
-const srcResolved = path.resolve(__dirname, srcPath);
+const srcTheme = path.resolve(__dirname, srcPath);
+const theme = require(srcPath);
 
 function compileLESS(from, to) {
   from = path.join(__dirname, from);
@@ -24,16 +26,13 @@ function compileLESS(from, to) {
 }
 
 const buildLessVar = () => {
-  delete require.cache[srcResolved];
-  const theme = require(srcPath);
+  delete require.cache[srcTheme];
 
-  const themePalette = Object.keys(theme.themePalette);
-
-  themePalette.forEach((palette) => {
+  Object.keys(theme.themePalette).forEach((palette) => {
     const themeValue = theme.themePalette[palette];
 
     fs.writeFileSync(
-      path.resolve(__dirname, `../src/styles/less/theme-${palette}.less`),
+      path.resolve(__dirname, `../src/styles/palette/theme-${palette}.less`),
       Object.keys(themeValue)
         .map((k) => {
           if (typeof themeValue[k] !== "string" || !themeValue[k].includes("#")) {
@@ -48,17 +47,6 @@ const buildLessVar = () => {
     compileLESS(`../src/styles/less/app-${palette}.less`, `../public/app-${palette}.css`);
   });
 };
-
-// watch file theme.js to less-var
-fs.watchFile(srcResolved, { interval: 1000 }, () => {
-  try {
-    buildLessVar();
-    console.log("update LESS files");
-  } catch (e) {
-    console.log(e);
-  }
-});
-console.log(`Watching theme files : ` + srcResolved);
 
 // build less vars
 buildLessVar();

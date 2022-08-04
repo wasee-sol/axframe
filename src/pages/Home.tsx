@@ -13,7 +13,7 @@ function Home() {
           Hello World!!! <p>description</p>
           <button onClick={() => setTheme("light")}>light</button>
           <button onClick={() => setTheme("dark")}>dark</button>
-          <Button>ANTD Button</Button>
+          <Button type={"primary"}>ANTD Button</Button>
         </div>
       </PageLayout.Content>
     </PageLayout>
