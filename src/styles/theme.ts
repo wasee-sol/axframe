@@ -8,17 +8,39 @@ const lightColors = {
   body_background: LIGHT.INK_5,
   scroll_thumb_color: LIGHT.INK_30,
 
-  border_color_base: LIGHT.INK_30, // ant
-  border_color_split: LIGHT.INK_30, // ant
+  // antd
+  border_color_base: LIGHT.INK_30,
+  border_color_split: LIGHT.INK_30,
+  primary_color: LIGHT.INK_5,
+  text_color: LIGHT.INK_70,
+  error_color: LIGHT.RED_50,
+  success_color: LIGHT.GREEN_50,
+  info_color: LIGHT.BLUE_50,
+  highlight_color: LIGHT.RED_50,
+  disabled_color: alpha(LIGHT.INK_70, 0.5),
+  warning_color: LIGHT.YELLOW_50,
+  white_color: LIGHT.INK_5,
+  black_color: "#000",
 };
 
 // dark component colors
 const darkColors: typeof lightColors = {
   body_background: DARK.INK_60,
-  scroll_thumb_color: LIGHT.INK_30,
+  scroll_thumb_color: DARK.INK_30,
 
-  border_color_base: LIGHT.INK_30, // ant
-  border_color_split: LIGHT.INK_30, // ant
+  // antd
+  border_color_base: DARK.INK_30,
+  border_color_split: DARK.INK_30,
+  primary_color: DARK.INK_60,
+  text_color: DARK.INK_20,
+  error_color: LIGHT.RED_50,
+  success_color: LIGHT.GREEN_50,
+  info_color: LIGHT.BLUE_50,
+  highlight_color: LIGHT.RED_50,
+  disabled_color: alpha(LIGHT.INK_70, 0.5),
+  warning_color: LIGHT.YELLOW_50,
+  white_color: LIGHT.INK_5,
+  black_color: "#000",
 };
 
 const commons = {
@@ -63,34 +85,12 @@ const commons = {
 
   active: LIGHT.BLUE_50,
   passed: LIGHT.BLUE_30,
-
-  txt_static: LIGHT.INK_100,
-  txt_default: LIGHT.INK_70,
-  txt_hover: LIGHT.INK_100,
-  txt_active: LIGHT.INK_100,
-  txt_disabled: alpha(LIGHT.INK_70, 0.5),
-  txt_label: LIGHT.INK_100,
-  txt_point: LIGHT.BLUE_50,
-  txt_link: LIGHT.BLUE_50,
-  txt_link_secondary: LIGHT.INK_60,
-  txt_link_active: LIGHT.BLUE_80,
-  txt_desc: LIGHT.INK_50,
   heading_color: LIGHT.INK_100,
 
   // antd styles
-  white_color: LIGHT.INK_5,
-  black_color: "#000",
-  error_color: LIGHT.RED_50,
-  success_color: LIGHT.GREEN_50,
-  info_color: LIGHT.BLUE_50,
-  highlight_color: LIGHT.RED_50,
-  disabled_color: alpha(LIGHT.INK_70, 0.5),
-  warning_color: LIGHT.YELLOW_50,
-
   error_page_header_color: "#FF4040",
   error_page_color: LIGHT.BLUE_90,
 
-  text_color: LIGHT.INK_70,
   text_color_hover: LIGHT.INK_100,
   text_color_active: LIGHT.INK_100,
   text_color_secondary: LIGHT.INK_70,
