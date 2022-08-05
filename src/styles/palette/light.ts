@@ -6,7 +6,7 @@ const LIGHT = {
   BLUE_30: "#7DB2D5",
   BLUE_40: "#5B9DCB",
   BLUE_50: "#4691C7",
-  BLUE_60: "#3582B8",
+  BLUE_60: "#3B82F6",
   BLUE_70: "#2E73A3",
   BLUE_80: "#23577B",
   BLUE_90: "#193E58",
@@ -24,7 +24,7 @@ const LIGHT = {
   INK_70: "#656C72",
   INK_80: "#545A60",
   INK_90: "#41474D",
-  INK_100: "#222529",
+  INK_100: "#1F2633",
 
   GREEN_10: "#CAEED0",
   GREEN_50: "#4FB75F",

@@ -12,7 +12,7 @@ const lightColors = {
   scroll_thumb_color: LIGHT.INK_20,
   border_color_base: LIGHT.INK_20,
   border_color_split: LIGHT.INK_20,
-  primary_color: LIGHT.INK_5,
+  primary_color: LIGHT.BLUE_60,
   text_color: LIGHT.INK_70,
   error_color: LIGHT.RED_50,
   success_color: LIGHT.GREEN_50,
@@ -22,6 +22,10 @@ const lightColors = {
   warning_color: LIGHT.YELLOW_50,
   white_color: LIGHT.INK_5,
   black_color: "#000",
+  heading_color: LIGHT.INK_100,
+
+  //custom colors
+  header_background: LIGHT.INK_5,
 };
 
 // dark component colors
@@ -30,7 +34,7 @@ const darkColors: typeof lightColors = {
   scroll_thumb_color: DARK.INK_30,
   border_color_base: DARK.INK_30,
   border_color_split: DARK.INK_30,
-  primary_color: DARK.INK_60,
+  primary_color: DARK.BLUE_60,
   text_color: DARK.INK_5,
   error_color: DARK.RED_50,
   success_color: DARK.GREEN_50,
@@ -40,6 +44,10 @@ const darkColors: typeof lightColors = {
   warning_color: DARK.YELLOW_50,
   white_color: DARK.INK_5,
   black_color: "#000",
+  heading_color: DARK.INK_5,
+
+  //custom colors
+  header_background: DARK.INK_100,
 };
 
 const commons = {
@@ -67,7 +75,6 @@ const commons = {
   brand_90: LIGHT.BLUE_90,
   brand_100: LIGHT.BLUE_100,
   brand_a10: LIGHT.BLUE_A10,
-  primary_color: LIGHT.BLUE_50, // antd
 
   ink_5: LIGHT.INK_5,
   ink_7: LIGHT.INK_7,
@@ -84,7 +91,6 @@ const commons = {
 
   active: LIGHT.BLUE_50,
   passed: LIGHT.BLUE_30,
-  heading_color: LIGHT.INK_100,
 
   // antd styles
   error_page_header_color: "#FF4040",
