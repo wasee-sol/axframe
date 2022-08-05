@@ -7,12 +7,12 @@
   "scripts": {
     "build:webpack-config": "tsc webpack.config.ts",
     "dev": "npm run build:webpack-config && npm-run-all --parallel start:dev-server watch",
-    "start:dev-server": "webpack-dev-server --port 4005 --node-env development",
+    "start:dev-server": "webpack-dev-server --port 4005 --compress --node-env development",
     "build:less": "ts-node -T scripts/compile-less.ts",
     "watch:less": "onchange -f change -d 1000 'src/styles/less' 'src/styles/theme.ts' -- run-s build:less",
     "watch": "run-p watch:*",
     "build": "npm run build:webpack-config && webpack build --node-env production",
-    "start": "npm run build && http-server ./dist"
+    "start": "npm run build && http-server ./dist -g"
   },
   "keywords": [],
   "author": "",
@@ -34,11 +34,12 @@
     "zustand": "^4.0.0"
   },
   "devDependencies": {
-    "@types/uuid": "^8.3.4",
     "@emotion/babel-plugin": "^11.10.0",
     "@swc/core": "^1.2.222",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
+    "@types/uuid": "^8.3.4",
+    "compression-webpack-plugin": "^10.0.0",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.1",
     "fork-ts-checker-webpack-plugin": "^7.2.13",

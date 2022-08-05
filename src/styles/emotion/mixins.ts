@@ -1,5 +1,5 @@
 import * as React from "react";
-import { css } from "@emotion/css";
+import { css } from "@emotion/react";
 
 type FlexDirection = React.CSSProperties["flexDirection"];
 type FlexWrap = React.CSSProperties["flexWrap"];

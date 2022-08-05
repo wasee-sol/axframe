@@ -8,10 +8,10 @@ import LIGHT from "./palette/light";
 const transparent = "transparent";
 
 const lightColors = {
-  body_background: LIGHT.INK_5,
-  scroll_thumb_color: LIGHT.INK_30,
-  border_color_base: LIGHT.INK_30,
-  border_color_split: LIGHT.INK_30,
+  body_background: LIGHT.INK_7,
+  scroll_thumb_color: LIGHT.INK_20,
+  border_color_base: LIGHT.INK_20,
+  border_color_split: LIGHT.INK_20,
   primary_color: LIGHT.INK_5,
   text_color: LIGHT.INK_70,
   error_color: LIGHT.RED_50,

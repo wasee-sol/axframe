@@ -9,7 +9,6 @@ export interface AppModel {
   language: string;
   theme: ThemeType;
   sideMenuOpened: boolean;
-  sideMenuWidth: number;
 }
 
 export interface AppActions {
@@ -25,7 +24,6 @@ export const appInitialState: AppModel = {
   language: "ko",
   theme: "light",
   sideMenuOpened: true,
-  sideMenuWidth: 300,
 };
 
 const getAppStoreActions: StoreActions = (set, get) => ({
@@ -43,4 +41,10 @@ useAppStore.persist.onFinishHydration((state) => {
   if (!state.loaded) {
     state.setLoaded(true);
   }
+});
+
+useAppStore.persist.setOptions({
+  migrate: (persistedState) => {
+    return { ...(persistedState as AppStore), ...appInitialState };
+  },
 });

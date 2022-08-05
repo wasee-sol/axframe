@@ -1,6 +1,7 @@
 import * as LZUTF8 from "lzutf8";
 import { get, set, del } from "idb-keyval";
 import { StateStorage } from "zustand/middleware";
+import { PersistOptions } from "zustand/middleware/persist";
 
 // Custom storage object
 const storage: StateStorage = {
@@ -18,15 +19,16 @@ const storage: StateStorage = {
   },
 };
 
-export function getPersistSerializer(storeName: string) {
+export function getPersistSerializer<T>(storeName: string): PersistOptions<T> {
   return {
+    version: 1,
     name: `store-${storeName}`,
     getStorage: () => storage,
-    serialize: (state: any) =>
+    serialize: (state) =>
       LZUTF8.compress(JSON.stringify(state), {
         outputEncoding: "StorageBinaryString",
       }),
-    deserialize: (str: any) => {
+    deserialize: (str) => {
       return JSON.parse(
         LZUTF8.decompress(str, {
           inputEncoding: "StorageBinaryString",

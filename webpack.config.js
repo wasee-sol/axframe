@@ -5,6 +5,7 @@ var HtmlWebpackPlugin = require("html-webpack-plugin");
 var ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 var MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var CopyPlugin = require("copy-webpack-plugin");
+var CompressionPlugin = require("compression-webpack-plugin");
 var isDev = process.env.NODE_ENV === "development";
 var config = {
     mode: process.env.NODE_ENV,
@@ -12,7 +13,8 @@ var config = {
     entry: ["/src/index.tsx"],
     output: {
         filename: "[name].bundle.js",
-        path: path.join(__dirname, "dist")
+        path: path.join(__dirname, "dist"),
+        clean: true
     },
     module: {
         rules: [
@@ -62,6 +64,7 @@ var config = {
         fallback: { buffer: false }
     },
     plugins: [
+        new CompressionPlugin(),
         new CopyPlugin({
             patterns: [{ from: "*.css", context: path.resolve(__dirname, "public") }]
         }),
