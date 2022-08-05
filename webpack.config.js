@@ -5,7 +5,7 @@ var HtmlWebpackPlugin = require("html-webpack-plugin");
 var ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 var MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var CopyPlugin = require("copy-webpack-plugin");
-var CompressionPlugin = require("compression-webpack-plugin");
+var BrotliPlugin = require("brotli-webpack-plugin");
 var isDev = process.env.NODE_ENV === "development";
 var config = {
     mode: process.env.NODE_ENV,
@@ -64,7 +64,12 @@ var config = {
         fallback: { buffer: false }
     },
     plugins: [
-        new CompressionPlugin(),
+        new BrotliPlugin({
+            asset: "[path].br[query]",
+            test: /\.(js|css|html|svg)$/,
+            threshold: 0,
+            minRatio: 0.8
+        }),
         new CopyPlugin({
             patterns: [{ from: "*.css", context: path.resolve(__dirname, "public") }]
         }),

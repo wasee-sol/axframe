@@ -4,7 +4,7 @@ import * as HtmlWebpackPlugin from "html-webpack-plugin";
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
-const CompressionPlugin = require("compression-webpack-plugin");
+const BrotliPlugin = require("brotli-webpack-plugin");
 
 const isDev: boolean = process.env.NODE_ENV === "development";
 
@@ -65,7 +65,12 @@ const config: webpack.Configuration = {
     fallback: { buffer: false },
   },
   plugins: [
-    new CompressionPlugin(),
+    new BrotliPlugin({
+      asset: "[path].br[query]",
+      test: /\.(js|css|html|svg)$/,
+      threshold: 0,
+      minRatio: 0.8,
+    }),
     new CopyPlugin({
       patterns: [{ from: "*.css", context: path.resolve(__dirname, "public") }],
     }),
