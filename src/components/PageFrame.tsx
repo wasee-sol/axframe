@@ -25,6 +25,7 @@ const PageFrameContainer = styled.div`
   flex: 1;
 `;
 const PageFrameNav = styled.div`
+  ${SMixinFlexRow("stretch", "stretch")};
   flex: none;
   &.opened {
     width: 302px;

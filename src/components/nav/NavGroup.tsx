@@ -8,16 +8,25 @@ interface Props {
   opened: boolean;
 }
 
-function NavGroup(props: Props) {
+function NavGroup({ opened }: Props) {
   return (
     <NavGroupContainer>
-      <NavHeader />
-      <UserInfo />
-      <NavUserMenu />
+      <NavHeader opened={opened} />
+
+      <NavContent>
+        <UserInfo />
+        <NavUserMenu />
+      </NavContent>
     </NavGroupContainer>
   );
 }
 
-const NavGroupContainer = styled.div``;
+const NavGroupContainer = styled.div`
+  flex: 1;
+  border-right: 1px solid ${(p) => p.theme.border_color_base};
+`;
+const NavContent = styled.div`
+  padding: 28px;
+`;
 
 export default NavGroup;

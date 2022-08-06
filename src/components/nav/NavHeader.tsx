@@ -1,38 +1,60 @@
 import * as React from "react";
 import styled from "@emotion/styled";
 import { SMixinFlexRow } from "../../styles/emotion";
-import { ReactFrameLogo, RFIMenuFold, RFIMenuUnfold } from "react-frame-icon";
+import { ReactFrameLogo } from "react-frame-icon";
+import { css } from "@emotion/react";
 
-interface Props {}
+interface Props {
+  opened: boolean;
+}
 
-function NavHeader(props: Props) {
+function NavHeader({ opened }: Props) {
   return (
-    <NavHeaderContainer>
-      <Logo>
+    <NavHeaderContainer opened={opened}>
+      <Logo opened={opened}>
         <ReactFrameLogo fontSize={24} />
-        React Frame
+        {opened ? "React Frame" : ""}
       </Logo>
       <TabLine />
     </NavHeaderContainer>
   );
 }
 
-const NavHeaderContainer = styled.div`
+const NavHeaderContainer = styled.div<Props>`
   position: relative;
-  ${SMixinFlexRow("stretch", "center")};
   height: 45px;
   padding: 0 32px;
-  border-right: 1px solid ${(p) => p.theme.border_color_base};
   background: ${(p) => p.theme.header_background};
+
+  ${({ opened }) => {
+    if (opened) {
+      return css`
+        ${SMixinFlexRow("stretch", "center")};
+      `;
+    }
+    return css`
+      ${SMixinFlexRow("center", "center")};
+    `;
+  }}
 `;
 
-const Logo = styled.div`
-  ${SMixinFlexRow("stretch", "center")};
+const Logo = styled.div<Props>`
   column-gap: 6px;
   flex: 1;
   font-size: 16px;
   font-weight: bold;
   color: ${(p) => p.theme.heading_color};
+
+  ${({ opened }) => {
+    if (opened) {
+      return css`
+        ${SMixinFlexRow("stretch", "center")};
+      `;
+    }
+    return css`
+      ${SMixinFlexRow("center", "center")};
+    `;
+  }}
 `;
 
 const TabLine = styled.div`
