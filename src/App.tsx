@@ -1,12 +1,12 @@
-import * as React from "react";
-import "styles/index.less";
-import { useAppStore } from "stores";
 import { ThemeProvider } from "@emotion/react";
+import Home from "@pages/Home";
 import { ConfigProvider } from "antd";
-import Home from "pages/Home";
-import { themePalette } from "styles/theme";
-import { AppContainer } from "styles/emotion";
+import * as React from "react";
 import { useThemeSwitcher } from "react-css-theme-switcher";
+import { useAppStore } from "stores";
+import { AppContainer } from "styles/emotion";
+import { themePalette } from "styles/theme";
+import "styles/index.less";
 
 const App: React.FC = () => {
   const { switcher, currentTheme, status, themes } = useThemeSwitcher();

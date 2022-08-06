@@ -1,8 +1,8 @@
 import * as React from "react";
 import styled from "@emotion/styled";
-import NavHeader from "./NavHeader";
-import UserInfo from "./UserInfo";
-import NavUserMenu from "./NavUserMenu";
+import NavHeader from "@template/nav/NavHeader";
+import UserInfo from "@template/nav/UserInfo";
+import NavUserMenu from "@template/nav/NavUserMenu";
 
 interface Props {
   opened: boolean;

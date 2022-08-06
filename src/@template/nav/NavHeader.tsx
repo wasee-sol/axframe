@@ -1,8 +1,8 @@
-import * as React from "react";
-import styled from "@emotion/styled";
-import { SMixinFlexRow } from "../../styles/emotion";
-import { ReactFrameLogo } from "react-frame-icon";
 import { css } from "@emotion/react";
+import styled from "@emotion/styled";
+import * as React from "react";
+import { ReactFrameLogo } from "react-frame-icon";
+import { SMixinFlexRow } from "styles/emotion";
 
 interface Props {
   opened: boolean;

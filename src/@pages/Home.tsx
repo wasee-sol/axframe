@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useAppStore } from "stores";
 import { Button } from "antd";
-import PageFrame from "../components/PageFrame";
+import PageFrame from "../@containers/PageFrame";
 
 function Home() {
   const setTheme = useAppStore((s) => s.setTheme);

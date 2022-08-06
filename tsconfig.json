@@ -18,6 +18,14 @@
     "jsx": "react",
     "typeRoots": ["@types", "node_modules/@types"],
     "baseUrl": "src",
+    "paths": {
+      "@containers/**": ["src/@container"],
+      "@pages/**": ["src/@pages"],
+      "@template/**": ["src/@template"],
+      "styles/**": ["src/styles"],
+      "stores/**": ["src/stores"],
+      "utils/**": ["src/utils"],
+    }
   },
   "exclude": ["node_modules"]
 }

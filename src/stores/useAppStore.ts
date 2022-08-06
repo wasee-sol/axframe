@@ -1,8 +1,6 @@
-import * as LZUTF8 from "lzutf8";
 import buildStore from "stores/buildStore";
 import { StoreActions } from "stores/types";
 import { ThemeType } from "styles/theme";
-import { useTab01Store } from "stores/pages";
 
 export interface AppModel {
   loaded: boolean;

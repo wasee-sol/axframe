@@ -1,8 +1,8 @@
+import NavGroup from "@containers/nav/NavGroup";
 import styled from "@emotion/styled";
 import * as React from "react";
-import { SMixinFlexRow } from "../styles/emotion";
-import { useAppStore } from "../stores";
-import NavGroup from "./nav/NavGroup";
+import { useAppStore } from "stores";
+import { SMixinFlexRow } from "styles/emotion";
 
 interface Props {
   children?: React.ReactNode;
