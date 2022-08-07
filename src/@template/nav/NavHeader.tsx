@@ -25,6 +25,7 @@ const NavHeaderContainer = styled.div<Props>`
   height: 45px;
   padding: 0 32px;
   background: ${(p) => p.theme.header_background};
+  line-height: 1.1;
 
   ${({ opened }) => {
     if (opened) {
