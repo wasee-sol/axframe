@@ -12,7 +12,7 @@
     "watch:less": "onchange -f change -d 1000 'src/styles/less' 'src/styles/theme.ts' -- run-s build:less",
     "watch": "run-p watch:*",
     "build": "npm run build:webpack-config && webpack build --node-env production",
-    "start": "npm run build && http-server ./dist -g",
+    "start": "npm run build && http-server ./dist -b",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
@@ -68,7 +68,6 @@
     "npm-watch": "^0.11.0",
     "onchange": "^7.1.0",
     "prettier": "^2.7.1",
-    "storybook-less-loader": "^0.1.0",
     "style-loader": "^3.3.1",
     "swc-loader": "^0.2.3",
     "ts-node": "^10.9.1",
