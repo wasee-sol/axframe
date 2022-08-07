@@ -63,14 +63,6 @@ const config: webpack.Configuration = {
     modules: [path.resolve(__dirname, "src"), "node_modules"],
     extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
     fallback: { buffer: false },
-    // alias: {
-    //   "@containers$": path.resolve(__dirname, "src/@containers"),
-    //   "@pages$": path.resolve(__dirname, "src/@pages"),
-    //   "@template$": path.resolve(__dirname, "src/@template"),
-    //   styles$: path.resolve(__dirname, "src/styles"),
-    //   stores$: path.resolve(__dirname, "src/stores"),
-    //   utils$: path.resolve(__dirname, "src/utils"),
-    // },
   },
   plugins: [
     new BrotliPlugin({
