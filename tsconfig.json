@@ -19,7 +19,7 @@
     "typeRoots": ["@types", "node_modules/@types"],
     "baseUrl": "src",
     "paths": {
-      "@containers/**": ["src/@container"],
+      "@controller/**": ["src/@controller"],
       "@pages/**": ["src/@pages"],
       "@template/**": ["src/@template"],
       "styles/**": ["src/styles"],

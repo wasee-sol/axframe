@@ -6,7 +6,7 @@
   "watch": {},
   "scripts": {
     "build:webpack-config": "tsc webpack.config.ts",
-    "dev": "npm run build:webpack-config && npm-run-all --parallel start:dev-server watch",
+    "dev": "npm run build:webpack-config && npm-p start:dev-server watch",
     "start:dev-server": "webpack-dev-server --port 4000 --compress --node-env development",
     "build:less": "ts-node -T scripts/compile-less.ts",
     "watch:less": "onchange -f change -d 1000 'src/styles/less' 'src/styles/theme.ts' -- run-s build:less",

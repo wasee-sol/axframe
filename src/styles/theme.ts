@@ -32,6 +32,9 @@ const lightColors = {
   text_sub_body_color: LIGHT.INK_30,
   header_background: LIGHT.INK_5,
   component_background: LIGHT.INK_5,
+  popover_background: LIGHT.INK_5,
+
+  box_shadow_base: LIGHT.ELEVATION_03,
 };
 
 // dark component colors
@@ -59,7 +62,10 @@ const darkColors: typeof lightColors = {
   text_body_color: LIGHT.INK_70,
   text_sub_body_color: LIGHT.INK_30,
   header_background: DARK.INK_100,
-  component_background: LIGHT.INK_100,
+  component_background: DARK.INK_100,
+  popover_background: DARK.INK_5,
+
+  box_shadow_base: DARK.ELEVATION_03,
 };
 
 const commons = {
@@ -78,8 +84,6 @@ const commons = {
   // antd styles
   error_page_header_color: "#FF4040",
   error_page_color: LIGHT.BLUE_90,
-
-  popover_bg: LIGHT.INK_5,
 };
 //~
 

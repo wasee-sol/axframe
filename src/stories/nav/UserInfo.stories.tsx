@@ -11,6 +11,14 @@ export default {
   argTypes: {
     backgroundColor: { control: "color" },
   },
+  args: {
+    me: {
+      uuid: "uuid",
+      name: "Thomas Jang",
+      email: "tom@axisj.com",
+      jobTitle: "Software Engineer",
+    },
+  },
 } as ComponentMeta<typeof UserInfo>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
@@ -19,13 +27,6 @@ const Template: ComponentStory<typeof UserInfo> = (args) => (
     <UserInfo {...args} />
   </PageFrameNav>
 );
-
-export const Opened = Template.bind({});
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
-Opened.args = {
-  opened: true,
-};
-
 const PageFrameNav = styled.div`
   &.opened {
     width: 302px;
@@ -34,3 +35,15 @@ const PageFrameNav = styled.div`
     width: 60px;
   }
 `;
+
+export const Opened = Template.bind({});
+// More on args: https://storybook.js.org/docs/react/writing-stories/args
+Opened.args = {
+  opened: true,
+};
+
+export const Closed = Template.bind({});
+// More on args: https://storybook.js.org/docs/react/writing-stories/args
+Closed.args = {
+  opened: false,
+};

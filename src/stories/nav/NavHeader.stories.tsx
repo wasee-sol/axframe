@@ -27,8 +27,8 @@ Opened.args = {
   opened: true,
 };
 
-export const Colosed = Template.bind({});
-Colosed.args = {
+export const Closed = Template.bind({});
+Closed.args = {
   opened: false,
 };
 

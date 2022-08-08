@@ -1,4 +1,4 @@
-import NavGroup from "@containers/nav/NavGroup";
+import NavGroupController from "@controller/nav/NavGroupController";
 import styled from "@emotion/styled";
 import * as React from "react";
 import { useAppStore } from "stores";
@@ -7,13 +7,13 @@ import { SMixinFlexRow } from "styles/emotion";
 interface Props {
   children?: React.ReactNode;
 }
-function PageFrame(props: Props) {
+function PageFrameController(props: Props) {
   const sideMenuOpened = useAppStore((s) => s.sideMenuOpened);
 
   return (
     <PageFrameContainer>
       <PageFrameNav className={sideMenuOpened ? "opened" : "closed"}>
-        <NavGroup opened={sideMenuOpened} />
+        <NavGroupController opened={sideMenuOpened} />
       </PageFrameNav>
       <PageFrameContent>{props.children}</PageFrameContent>
     </PageFrameContainer>
@@ -39,4 +39,4 @@ const PageFrameContent = styled.div`
   overflow: auto;
 `;
 
-export default PageFrame;
+export default PageFrameController;

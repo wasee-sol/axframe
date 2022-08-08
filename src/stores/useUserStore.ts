@@ -1,17 +1,18 @@
 import buildStore from "stores/buildStore";
 
-export interface Me {
+export interface Member {
   uuid: string;
   name: string;
   email: string;
+  jobTitle?: string;
 }
 
 export interface UserModel {
-  me?: Me;
+  me?: Member;
 }
 
 export interface UserActions {
-  setMe: (me: Me) => void;
+  setMe: (me: Member) => void;
   signOut: () => void;
 }
 

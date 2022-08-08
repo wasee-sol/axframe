@@ -2,21 +2,14 @@ import * as React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import NavUserMenu from "@template/nav/NavUserMenu";
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: "template/nav/NavUserMenu",
   component: NavUserMenu,
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
     backgroundColor: { control: "color" },
   },
 } as ComponentMeta<typeof NavUserMenu>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof NavUserMenu> = (args) => <NavUserMenu {...args} />;
 
-export const Opened = Template.bind({});
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
-Opened.args = {
-  opened: true,
-};
+export const Default = Template.bind({});

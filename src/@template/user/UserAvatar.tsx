@@ -11,6 +11,7 @@ interface StyleProps {
 interface Props extends StyleProps {
   userName?: string;
   profileImgUrl?: string;
+  role?: string;
 }
 
 const findIconLabel = (name: string): string => {
@@ -25,9 +26,9 @@ const findIconLabel = (name: string): string => {
   return "?";
 };
 
-function UserAvatar({ userName = "react frame", size = "medium" }: Props) {
+function UserAvatar({ userName = "react frame", size = "medium", role }: Props) {
   return (
-    <UserAvatarContainer size={size}>
+    <UserAvatarContainer size={size} role={role}>
       <UserAvatarBox size={size}>{findIconLabel(userName)}</UserAvatarBox>
     </UserAvatarContainer>
   );

@@ -3,7 +3,7 @@ const path = require("path");
 module.exports = ({ config }) => {
   config.resolve.alias = {
     ...config.resolve.alias,
-    "@containers": path.resolve(__dirname, "../src/@containers"),
+    "@controller": path.resolve(__dirname, "../src/@controller"),
     "@pages": path.resolve(__dirname, "../src/@pages"),
     "@template": path.resolve(__dirname, "../src/@template"),
     styles: path.resolve(__dirname, "../src/styles"),
