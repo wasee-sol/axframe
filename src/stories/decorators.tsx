@@ -10,7 +10,6 @@ const themes = {
 };
 
 import "styles/index.less";
-import { SMixinFlexRow } from "../styles/emotion";
 import { themePalette } from "../styles/theme";
 
 export const GlobalDecorator: DecoratorFunction<React.ReactNode> = (storyFn, options) => {

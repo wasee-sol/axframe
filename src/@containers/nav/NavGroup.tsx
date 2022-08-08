@@ -14,8 +14,8 @@ function NavGroup({ opened }: Props) {
       <NavHeader opened={opened} />
 
       <NavContent>
-        <UserInfo />
-        <NavUserMenu />
+        <UserInfo opened={opened} />
+        <NavUserMenu opened={opened} />
       </NavContent>
     </NavGroupContainer>
   );

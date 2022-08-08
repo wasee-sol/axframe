@@ -44,7 +44,7 @@ const Logo = styled.div<Props>`
   flex: 1;
   font-size: 16px;
   font-weight: bold;
-  color: ${(p) => p.theme.heading_color};
+  color: ${(p) => p.theme.text_heading_color};
 
   ${({ opened }) => {
     if (opened) {

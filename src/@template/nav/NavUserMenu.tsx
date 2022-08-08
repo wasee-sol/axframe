@@ -1,7 +1,9 @@
 import * as React from "react";
 import styled from "@emotion/styled";
 
-interface Props {}
+interface Props {
+  opened: boolean;
+}
 
 function NavUserMenu(props: Props) {
   return <NavUserMenuContainer>NavUserMenu</NavUserMenuContainer>;
