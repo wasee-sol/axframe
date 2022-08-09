@@ -34,7 +34,7 @@ const Template: ComponentStory<typeof NavGroup> = (args) => (
 
 const PageFrameNav = styled.div`
   &.opened {
-    width: 302px;
+    width: 300px;
   }
   &.closed {
     width: 60px;
@@ -44,9 +44,11 @@ const PageFrameNav = styled.div`
 export const Opened = Template.bind({});
 Opened.args = {
   opened: true,
+  openedUuids: ["consulting", "consulting-2"],
 };
 
 export const Closed = Template.bind({});
 Closed.args = {
   opened: false,
+  openedUuids: ["consulting", "consulting-2"],
 };

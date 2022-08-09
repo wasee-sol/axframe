@@ -19,11 +19,14 @@ interface Props extends StyleProps {
 }
 
 function IconText({ role, iconSize, icon, iconPlacement, onClick, children, disabled, block }: Props) {
-  const handleClick = React.useCallback((evt: React.MouseEvent<HTMLAnchorElement>) => {
-    if (disabled) {
-      onClick?.(evt);
-    }
-  }, []);
+  const handleClick = React.useCallback(
+    (evt: React.MouseEvent<HTMLAnchorElement>) => {
+      if (!disabled) {
+        onClick?.(evt);
+      }
+    },
+    [disabled, onClick]
+  );
 
   return (
     <IconTextContainer role={role} onClick={handleClick} block={block} disabled={disabled}>

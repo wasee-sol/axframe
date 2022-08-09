@@ -8,6 +8,25 @@ export const mock_userMenus: UserMenuItem[] = [
     uuid: "consulting",
     label: "Consulting",
     path: "",
+    children: [
+      {
+        icon: <RFIWriteForm />,
+        uuid: "consulting-1",
+        label: "Write",
+        path: "",
+        children: [],
+      },
+      {
+        icon: <RFIWriteForm />,
+        uuid: "consulting-2",
+        label: "List",
+        path: "",
+        children: [
+          { uuid: "consulting-2-1", label: "List-2-1", path: "", children: [] },
+          { uuid: "consulting-2-2", label: "List-2-2", path: "", children: [] },
+        ],
+      },
+    ],
   },
   {
     icon: <RFITemplate />,

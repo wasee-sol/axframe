@@ -16,7 +16,7 @@ interface Props extends StyleProps {
 function UserInfoDropdown({ asPopover, onClickSignOut }: Props) {
   const handleClickSignOut = React.useCallback(() => {
     onClickSignOut?.();
-  }, []);
+  }, [onClickSignOut]);
 
   return (
     <UserInfoDropdownContainer asPopover={asPopover}>
@@ -31,7 +31,7 @@ function UserInfoDropdown({ asPopover, onClickSignOut }: Props) {
       </LabelText>
       <CustomDivider />
       <CustomMenus>
-        <IconText icon={<RFIArrowLogOut />} iconSize={"1.5em"} onClick={handleClickSignOut}>
+        <IconText icon={<RFIArrowLogOut />} iconSize={"15px"} onClick={handleClickSignOut} block>
           Sign Out
         </IconText>
       </CustomMenus>
@@ -42,7 +42,7 @@ function UserInfoDropdown({ asPopover, onClickSignOut }: Props) {
 const UserInfoDropdownContainer = styled.div<StyleProps>`
   ${SMixinFlexColumn("stretch", "stretch")};
   border-radius: 5px;
-  padding: 15px 0;
+  padding: 15px 0 15px 0;
   gap: 15px;
 
   ${({ asPopover, theme }) => {
@@ -54,7 +54,7 @@ const UserInfoDropdownContainer = styled.div<StyleProps>`
       box-shadow: ${theme.box_shadow_base};
     `;
   }}
-  font-size: 11px;
+  font-size: 12px;
 
   [role="info"] {
     padding: 0 20px;

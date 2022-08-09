@@ -2,7 +2,7 @@ import * as React from "react";
 import buildStore from "stores/buildStore";
 
 export interface UserMenuItem {
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
   uuid: string;
   label: string;
   path?: string;

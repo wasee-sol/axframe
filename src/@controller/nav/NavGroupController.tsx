@@ -1,8 +1,8 @@
+import NavGroup from "@template/nav/NavGroup";
 import { message } from "antd";
 import * as React from "react";
 import useUserMenuStore from "stores/useUserMenuStore";
 import useUserStore from "stores/useUserStore";
-import NavGroup from "@template/nav/NavGroup";
 
 interface Props {
   opened: boolean;
@@ -21,7 +21,7 @@ function NavGroupController({ opened }: Props) {
   return (
     <NavGroup
       me={me}
-      opened={true}
+      opened={opened}
       menus={menus}
       openedUuids={openedUuids}
       selectedUuid={selectedUuid}

@@ -20,43 +20,115 @@ function getItem(
   } as MenuItem;
 }
 
-interface Props {
+function getItems(menus: UserMenuItem[]): MenuItem[] {
+  return menus.map((menu) => {
+    const { label, icon, uuid, children } = menu;
+    return getItem(label, uuid, icon, children && children.length > 0 ? getItems(children) : undefined);
+  });
+}
+
+interface StyleProps {
   opened: boolean;
+}
+interface Props extends StyleProps {
   menus: UserMenuItem[];
   openedUuids: string[];
   selectedUuid: string;
 }
 
-function NavUserMenu({ menus }: Props) {
+function NavUserMenu({ opened, menus, openedUuids, selectedUuid }: Props) {
   const items: MenuItem[] = React.useMemo(() => {
-    return menus.map((menu) => {
-      const { label, icon, uuid, children } = menu;
-      return getItem(label, uuid, icon);
-    });
-  }, []);
+    return getItems(menus);
+  }, [menus]);
 
   return (
-    <NavUserMenuContainer>
-      <Menu mode={"inline"} items={items} />
+    <NavUserMenuContainer opened={opened}>
+      <Menu
+        mode={"inline"}
+        items={items}
+        defaultOpenKeys={openedUuids}
+        defaultSelectedKeys={[selectedUuid]}
+        inlineIndent={28}
+        inlineCollapsed={!opened}
+      />
     </NavUserMenuContainer>
   );
 }
 
-const NavUserMenuContainer = styled.div`
+const NavUserMenuContainer = styled.div<StyleProps>`
   .ant-menu {
     background: inherit;
     color: ${(p) => p.theme.text_heading_color};
     font-weight: 500;
   }
+
+  // 우측에 보더값 제거
   .ant-menu-inline,
   .ant-menu-vertical,
   .ant-menu-vertical-left {
     border-right: 0 none;
   }
 
-  .ant-menu-item .ant-menu-item-icon {
+  // 메뉴의 패딩값 조절
+  .ant-menu-inline .ant-menu-item {
+    padding: 0 28px;
+  }
+
+  // 메뉴 아이콘 크기와 색상 조정
+  .ant-menu-item .ant-menu-item-icon,
+  .ant-menu-submenu-title .ant-menu-item-icon {
     font-size: 22px;
     color: ${(p) => p.theme.primary_color};
+  }
+
+  // 그룹메뉴 색상 및 스타일 조정
+  .ant-menu-sub {
+    &.ant-menu-inline {
+      background: inherit;
+      font-size: 13px;
+      font-weight: 400;
+      color: ${(p) => p.theme.text_body_color};
+    }
+    .ant-menu-item-icon {
+      font-size: 20px;
+      color: ${(p) => p.theme.text_body_color};
+    }
+    .ant-menu-item-selected {
+      .ant-menu-item-icon {
+        color: ${(p) => p.theme.primary_color};
+      }
+    }
+  }
+
+  // 그룹메뉴 다운화살표 위치 조정
+  .ant-menu-submenu-expand-icon,
+  .ant-menu-submenu-arrow {
+    right: 30px;
+  }
+
+  // 그룹메뉴 우측 패딩 값
+  .ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title {
+    padding-right: 38px;
+  }
+
+  // !opened menu
+  .ant-menu.ant-menu-inline-collapsed {
+    width: 60px;
+  }
+  // !opened menu padding 조절, 아이콘 크기 조절
+  .ant-menu.ant-menu-inline-collapsed > .ant-menu-item,
+  .ant-menu.ant-menu-inline-collapsed > .ant-menu-item-group > .ant-menu-item-group-list > .ant-menu-item,
+  .ant-menu.ant-menu-inline-collapsed
+    > .ant-menu-item-group
+    > .ant-menu-item-group-list
+    > .ant-menu-submenu
+    > .ant-menu-submenu-title,
+  .ant-menu.ant-menu-inline-collapsed > .ant-menu-submenu > .ant-menu-submenu-title {
+    padding: 0 calc(50% - 22px / 2);
+    .ant-menu-item-icon {
+      font-size: 22px;
+      margin-top: 8px;
+    }
   }
 `;
 
