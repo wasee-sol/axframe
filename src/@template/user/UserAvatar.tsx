@@ -35,27 +35,29 @@ function UserAvatar({ userName = "react frame", size = "medium", role }: Props) 
 }
 
 const UserAvatarContainer = styled.div<StyleProps>`
-  padding: 2px;
   border-radius: 50%;
   position: relative;
   border: 2px solid ${(p) => p.theme.primary_color};
 
-  ${({ size }) => {
+  ${({ size, theme }) => {
     if (size === "small") {
       return css`
-        width: 26px;
-        height: 26px;
+        width: 24px;
+        height: 24px;
+        background: ${theme.primary_color};
       `;
     }
     if (size === "large") {
       return css`
         width: 56px;
         height: 56px;
+        padding: 2px;
       `;
     }
     return css`
       width: 46px;
       height: 46px;
+      padding: 2px;
     `;
   }}
 `;
@@ -65,13 +67,14 @@ const UserAvatarBox = styled.div<StyleProps>`
   height: 100%;
   ${SMixinFlexRow("center", "center")};
   font-weight: bold;
-  background: ${(p) => p.theme.ink_30};
-  color: ${(p) => p.theme.primary_color};
+  color: ${(p) => p.theme.component_background};
+  background: ${(p) => p.theme.primary_color};
+  line-height: 1.1;
 
   ${({ size }) => {
     if (size === "small") {
       return css`
-        font-size: 16px;
+        font-size: 14px;
       `;
     }
     if (size === "large") {

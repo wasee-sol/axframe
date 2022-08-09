@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
-import * as React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
 import UserInfo from "@template/nav/UserInfo";
+import * as React from "react";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {

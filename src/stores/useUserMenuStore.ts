@@ -1,16 +1,16 @@
 import * as React from "react";
 import buildStore from "stores/buildStore";
 
-export interface Menu {
+export interface UserMenuItem {
   icon: React.ReactNode;
   uuid: string;
   label: string;
   path?: string;
-  children: Menu[];
+  children?: UserMenuItem[];
 }
 
 export interface UserMenuModel {
-  menus: Menu[];
+  menus: UserMenuItem[];
   openedUuids: string[];
   selectedUuid: string;
 }

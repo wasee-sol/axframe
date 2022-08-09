@@ -1,33 +1,43 @@
 import styled from "@emotion/styled";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
-import NavUserMenu from "@template/nav/NavUserMenu";
 import * as React from "react";
+import { ComponentStory, ComponentMeta } from "@storybook/react";
+import NavGroup from "@template/nav/NavGroup";
 import { mock_userMenus } from "../_mock/userMenus";
 
 export default {
-  title: "template/nav/NavUserMenu",
-  component: NavUserMenu,
+  title: "template/nav/NavGroup",
+  component: NavGroup,
   argTypes: {
     backgroundColor: { control: "color" },
   },
   args: {
+    me: {
+      uuid: "uuid",
+      name: "Thomas Jang",
+      email: "tom@axisj.com",
+      jobTitle: "Software Engineer",
+    },
     menus: mock_userMenus,
+    openedUuids: [],
+    selectedUuid: "",
+    onClickSignOut: () => {
+      console.log("onClickSignOut");
+    },
   },
-} as ComponentMeta<typeof NavUserMenu>;
+} as ComponentMeta<typeof NavGroup>;
 
-const Template: ComponentStory<typeof NavUserMenu> = (args) => (
+const Template: ComponentStory<typeof NavGroup> = (args) => (
   <PageFrameNav className={args.opened ? "opened" : "closed"}>
-    <NavUserMenu {...args} />
+    <NavGroup {...args} />
   </PageFrameNav>
 );
+
 const PageFrameNav = styled.div`
   &.opened {
     width: 302px;
-    padding: 28px;
   }
   &.closed {
     width: 60px;
-    padding: 10px 0;
   }
 `;
 

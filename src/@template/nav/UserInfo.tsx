@@ -13,46 +13,73 @@ interface StyleProps {
 }
 interface Props extends StyleProps {
   me: Member;
+  onClickSignOut?: () => void;
 }
 
-function UserInfo({ opened, me }: Props) {
-  const { name, email, jobTitle } = me;
+function UserInfo({ opened, me, onClickSignOut }: Props) {
+  const { name, jobTitle } = me;
   return (
     <UserInfoContainer opened={opened}>
-      <UserAvatar size={"medium"} userName={name} role='avatar' />
-      {opened && (
-        <>
-          <UserCard>
-            <span role='name'>{name}</span>
-            <span role='job-title'>{jobTitle}</span>
-          </UserCard>
-          <Dropdown overlay={<UserInfoDropdown />} trigger={["click"]} placement={"bottomRight"}>
-            <DownDownHandle>
-              <RFIMoreVertical />
-            </DownDownHandle>
-          </Dropdown>
-        </>
-      )}
+      <UserInfoBox opened={opened}>
+        {opened ? (
+          <>
+            <UserAvatar size={"medium"} userName={name} role='avatar' />
+            <UserCard>
+              <span role='name'>{name}</span>
+              <span role='job-title'>{jobTitle}</span>
+            </UserCard>
+            <Dropdown
+              overlay={<UserInfoDropdown onClickSignOut={onClickSignOut} />}
+              trigger={["click"]}
+              placement={"bottomRight"}
+            >
+              <DownDownHandle>
+                <RFIMoreVertical />
+              </DownDownHandle>
+            </Dropdown>
+          </>
+        ) : (
+          <>
+            <Popover
+              content={<UserInfoDropdown onClickSignOut={onClickSignOut} asPopover />}
+              trigger={"click"}
+              placement={"rightTop"}
+              align={{ targetOffset: [0, 8] }}
+            >
+              <div>
+                <UserAvatar size={"small"} userName={name} role='avatar' />
+              </div>
+            </Popover>
+          </>
+        )}
+      </UserInfoBox>
     </UserInfoContainer>
   );
 }
 
 const UserInfoContainer = styled.div<StyleProps>`
   flex: 1;
-  ${SMixinFlexRow("stretch", "center")};
-  column-gap: 20px;
+  padding: 28px 28px 0 28px;
   [role="avatar"] {
     flex: none;
   }
-
-  ${({ opened }) => {
+`;
+const UserInfoBox = styled.div<StyleProps>`
+  ${SMixinFlexRow("stretch", "center")};
+  column-gap: 20px;
+  ${({ opened, theme }) => {
     if (opened) {
       return css`
         ${SMixinFlexRow("stretch", "center")};
+        border-bottom: 1px solid ${theme.border_color_base};
+        padding-bottom: 32px;
       `;
     }
     return css`
       ${SMixinFlexRow("center", "center")};
+      [role="avatar"] {
+        cursor: pointer;
+      }
     `;
   }}
 `;
@@ -72,6 +99,7 @@ const UserCard = styled.div`
   }
 `;
 const DownDownHandle = styled.div`
+  ${SMixinFlexRow("center", "center")};
   cursor: pointer;
   flex: none;
   font-size: 24px;

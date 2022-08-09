@@ -15,7 +15,7 @@ function NavHeader({ opened }: Props) {
         <ReactFrameLogo fontSize={24} />
         {opened ? "React Frame" : ""}
       </Logo>
-      <TabLine />
+      {opened && <TabLine />}
     </NavHeaderContainer>
   );
 }
@@ -23,7 +23,6 @@ function NavHeader({ opened }: Props) {
 const NavHeaderContainer = styled.div<Props>`
   position: relative;
   height: 45px;
-  padding: 0 32px;
   background: ${(p) => p.theme.header_background};
   line-height: 1.1;
 
@@ -31,10 +30,13 @@ const NavHeaderContainer = styled.div<Props>`
     if (opened) {
       return css`
         ${SMixinFlexRow("stretch", "center")};
+        padding: 0 32px;
       `;
     }
     return css`
       ${SMixinFlexRow("center", "center")};
+      height: 60px;
+      padding: 0;
     `;
   }}
 `;
