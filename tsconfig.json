@@ -20,10 +20,10 @@
     "baseUrl": "src",
     "paths": {
       "@controller/**": ["src/@controller"],
-      "@pages/**": ["src/@pages"],
       "@template/**": ["src/@template"],
-      "styles/**": ["src/styles"],
+      "router/**": ["src/router"],
       "stores/**": ["src/stores"],
+      "styles/**": ["src/styles"],
       "utils/**": ["src/utils"],
     }
   },

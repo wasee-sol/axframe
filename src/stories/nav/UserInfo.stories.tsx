@@ -3,11 +3,9 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import UserInfo from "@template/nav/UserInfo";
 import * as React from "react";
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: "template/nav/UserInfo",
   component: UserInfo,
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
     backgroundColor: { control: "color" },
   },
@@ -21,7 +19,6 @@ export default {
   },
 } as ComponentMeta<typeof UserInfo>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof UserInfo> = (args) => (
   <PageFrameNav className={args.opened ? "opened" : "closed"}>
     <UserInfo {...args} />
@@ -37,13 +34,11 @@ const PageFrameNav = styled.div`
 `;
 
 export const Opened = Template.bind({});
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
 Opened.args = {
   opened: true,
 };
 
 export const Closed = Template.bind({});
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
 Closed.args = {
   opened: false,
 };

@@ -3,16 +3,14 @@ import { message } from "antd";
 import * as React from "react";
 import useUserMenuStore from "stores/useUserMenuStore";
 import useUserStore from "stores/useUserStore";
+import { useAppStore } from "../../stores";
 
-interface Props {
-  opened: boolean;
-}
-
-function NavGroupController({ opened }: Props) {
+function NavGroupController() {
   const me = useUserStore((s) => s.me);
   const menus = useUserMenuStore((s) => s.menus);
   const openedUuids = useUserMenuStore((s) => s.openedUuids);
   const selectedUuid = useUserMenuStore((s) => s.selectedUuid);
+  const sideMenuOpened = useAppStore((s) => s.sideMenuOpened);
 
   const handleSignOut = React.useCallback(async () => {
     await message.info("sign out");
@@ -21,7 +19,7 @@ function NavGroupController({ opened }: Props) {
   return (
     <NavGroup
       me={me}
-      opened={opened}
+      opened={sideMenuOpened}
       menus={menus}
       openedUuids={openedUuids}
       selectedUuid={selectedUuid}

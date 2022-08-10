@@ -7,7 +7,7 @@ import { useAppStore } from "stores";
 import { AppContainer } from "styles/emotion";
 import "styles/index.less";
 import { themePalette } from "styles/theme";
-import PageRoute from "./@pages/PageRoute";
+import PageRoute from "router/PageRoute";
 
 const App: React.FC = () => {
   const { switcher, themes } = useThemeSwitcher();
