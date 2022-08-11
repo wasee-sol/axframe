@@ -19,5 +19,10 @@ const KO: typeof EN = {
       },
     },
   },
+  button: {
+    ok: "OK",
+    reload: "Reload",
+    cancel: "Cancel",
+  },
 };
 export default KO;

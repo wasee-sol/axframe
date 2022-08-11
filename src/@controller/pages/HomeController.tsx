@@ -5,6 +5,7 @@ import { Button } from "antd";
 
 function HomeController() {
   const setTheme = useAppStore((s) => s.setTheme);
+  const setSideMenuOpened = useAppStore((s) => s.setSideMenuOpened);
   const navigate = useNavigate();
 
   return (
@@ -21,6 +22,8 @@ function HomeController() {
       >
         GO TO SIGN-IN
       </Button>
+      <button onClick={() => setSideMenuOpened(true)}>왼쪽메뉴 열기</button>
+      <button onClick={() => setSideMenuOpened(false)}>왼쪽메뉴 접기</button>
     </>
   );
 }

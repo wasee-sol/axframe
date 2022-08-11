@@ -1,8 +1,8 @@
-import * as React from "react";
 import buildStore from "stores/buildStore";
+import { UserRepository } from "../repository/UserRepository";
 
 export interface UserMenuItem {
-  icon?: React.ReactNode;
+  icon?: string;
   uuid: string;
   label: string;
   path?: string;
@@ -16,9 +16,10 @@ export interface UserMenuModel {
 }
 
 export interface UserMenuActions {
-  setMenus: (title: string) => void;
-  setOpenedUuids: (uuid: string) => void;
+  setMenus: (menus: UserMenuItem[]) => void;
+  setOpenedUuids: (uuids: string[]) => void;
   setSelectedUuid: (uuid: string) => void;
+  initMenus: (userUuid: string) => Promise<void>;
 }
 
 export interface UserMenuStore extends UserMenuModel, UserMenuActions {}
@@ -31,9 +32,19 @@ export const userMenuInitialState: UserMenuModel = {
 
 const useUserMenuStore = buildStore<UserMenuStore>("userMenu", (set, get) => ({
   ...userMenuInitialState,
-  setMenus: () => {},
-  setOpenedUuids: (uuid) => {},
-  setSelectedUuid: (uuid) => {},
+  setMenus: (menus) => {
+    set({ menus });
+  },
+  setOpenedUuids: (uuids) => {
+    set({ openedUuids: uuids });
+  },
+  setSelectedUuid: (uuid) => {
+    set({ selectedUuid: uuid });
+  },
+  initMenus: async (userUuid) => {
+    const { menus } = await UserRepository.getUserMenu(userUuid);
+    set({ menus });
+  },
 }));
 
 export default useUserMenuStore;

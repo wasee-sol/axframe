@@ -4,19 +4,19 @@ import UserAvatar from "@template/user/UserAvatar";
 import { Dropdown, Popover } from "antd";
 import * as React from "react";
 import { RFIMoreVertical } from "react-frame-icon";
-import { Member } from "stores";
-import { SMixinFlexRow } from "../../styles/emotion";
+import { User } from "stores";
+import { SMixinFlexRow } from "styles/emotion";
 import UserInfoDropdown from "./UserInfoDropdown";
 
 interface StyleProps {
   opened: boolean;
 }
 interface Props extends StyleProps {
-  me: Member;
-  onClickSignOut?: () => void;
+  me: User;
+  onSignOut?: () => Promise<void>;
 }
 
-function UserInfo({ opened, me, onClickSignOut }: Props) {
+function UserInfo({ opened, me, onSignOut }: Props) {
   const { name, jobTitle } = me;
   return (
     <UserInfoContainer opened={opened}>
@@ -29,7 +29,7 @@ function UserInfo({ opened, me, onClickSignOut }: Props) {
               <span role='job-title'>{jobTitle}</span>
             </UserCard>
             <Dropdown
-              overlay={<UserInfoDropdown onClickSignOut={onClickSignOut} />}
+              overlay={<UserInfoDropdown onSignOut={onSignOut} />}
               trigger={["click"]}
               placement={"bottomRight"}
             >
@@ -41,7 +41,7 @@ function UserInfo({ opened, me, onClickSignOut }: Props) {
         ) : (
           <>
             <Popover
-              content={<UserInfoDropdown onClickSignOut={onClickSignOut} asPopover />}
+              content={<UserInfoDropdown onSignOut={onSignOut} asPopover />}
               trigger={"click"}
               placement={"rightTop"}
               align={{ targetOffset: [0, 8] }}
@@ -59,10 +59,21 @@ function UserInfo({ opened, me, onClickSignOut }: Props) {
 
 const UserInfoContainer = styled.div<StyleProps>`
   flex: 1;
-  padding: 28px 28px 0 28px;
+
   [role="avatar"] {
     flex: none;
   }
+
+  ${({ opened }) => {
+    if (opened) {
+      return css`
+        padding: 28px 28px 0 28px;
+      `;
+    }
+    return css`
+      padding: 20px 0;
+    `;
+  }}
 `;
 const UserInfoBox = styled.div<StyleProps>`
   ${SMixinFlexRow("stretch", "center")};

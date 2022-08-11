@@ -14,6 +14,7 @@ export interface AppActions {
   setLanguage: (language: LanguageType) => void;
   setTheme: (theme: ThemeType) => void;
   setLoaded: (loaded: boolean) => void;
+  setSideMenuOpened: (sideMenuOpened: boolean) => void;
 }
 
 export interface AppStore extends AppModel, AppActions {}
@@ -29,6 +30,7 @@ const getAppStoreActions: StoreActions = (set, get) => ({
   setLanguage: (language: LanguageType) => set({ currentLanguage: language }),
   setTheme: (theme: ThemeType) => set({ theme }),
   setLoaded: (loaded: boolean) => set({ loaded }),
+  setSideMenuOpened: (sideMenuOpened: boolean) => set({ sideMenuOpened }),
 });
 
 export const useAppStore = buildStore<AppStore>("app", (set, get) => ({

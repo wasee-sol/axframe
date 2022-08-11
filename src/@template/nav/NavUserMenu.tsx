@@ -3,6 +3,7 @@ import * as React from "react";
 import styled from "@emotion/styled";
 import { MenuProps } from "antd/lib/menu";
 import { UserMenuItem } from "stores";
+import ProgramIcon, { ProgramType } from "components/ProgramIcon";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -23,7 +24,12 @@ function getItem(
 function getItems(menus: UserMenuItem[]): MenuItem[] {
   return menus.map((menu) => {
     const { label, icon, uuid, children } = menu;
-    return getItem(label, uuid, icon, children && children.length > 0 ? getItems(children) : undefined);
+    return getItem(
+      label,
+      uuid,
+      icon ? <ProgramIcon type={icon as ProgramType} /> : undefined,
+      children && children.length > 0 ? getItems(children) : undefined
+    );
   });
 }
 

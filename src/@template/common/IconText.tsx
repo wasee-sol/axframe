@@ -1,3 +1,4 @@
+import { LoadingOutlined } from "@ant-design/icons";
 import * as React from "react";
 import styled from "@emotion/styled";
 import { SMixinFlexRow } from "../../styles/emotion";
@@ -13,27 +14,27 @@ interface StyleProps {
   disabled?: boolean;
   active?: boolean;
   block?: boolean;
+  loading?: boolean;
 }
 interface Props extends StyleProps {
   icon?: React.ReactNode;
   children?: React.ReactNode;
 }
 
-function IconText({ role, iconSize, icon, iconPlacement, onClick, children, disabled, active, block }: Props) {
+function IconText({ role, iconSize, icon, iconPlacement, onClick, children, disabled, active, block, loading }: Props) {
   const handleClick = React.useCallback(
     (evt: React.MouseEvent<HTMLAnchorElement>) => {
-      if (!disabled) {
-        onClick?.(evt);
-      }
+      if (loading || disabled) return;
+      onClick?.(evt);
     },
-    [disabled, onClick]
+    [disabled, loading, onClick]
   );
 
   return (
     <IconTextContainer role={role} onClick={handleClick} block={block} disabled={disabled} active={active}>
       {icon && (
         <IconContainer iconSize={iconSize} iconPlacement={iconPlacement}>
-          {icon}
+          {loading ? <LoadingOutlined spin /> : icon}
         </IconContainer>
       )}
       <TextContainer block={block}>{children}</TextContainer>

@@ -1,23 +1,21 @@
-import * as React from "react";
-import { RFIGraph, RFIInbox, RFIProject, RFIReport, RFISetting, RFITemplate, RFIWriteForm } from "react-frame-icon";
 import { UserMenuItem } from "stores";
 
 export const mock_userMenus: UserMenuItem[] = [
   {
-    icon: <RFIWriteForm />,
+    icon: "RFIWriteForm",
     uuid: "consulting",
     label: "Consulting",
     path: "",
     children: [
       {
-        icon: <RFIWriteForm />,
+        icon: "RFIWriteForm",
         uuid: "consulting-1",
         label: "Write",
         path: "",
         children: [],
       },
       {
-        icon: <RFIWriteForm />,
+        icon: "RFIWriteForm",
         uuid: "consulting-2",
         label: "List",
         path: "",
@@ -29,37 +27,37 @@ export const mock_userMenus: UserMenuItem[] = [
     ],
   },
   {
-    icon: <RFITemplate />,
+    icon: "RFITemplate",
     uuid: "template",
     label: "Template",
     path: "",
   },
   {
-    icon: <RFIInbox />,
+    icon: "RFIInbox",
     uuid: "inbox",
     label: "Inbox",
     path: "",
   },
   {
-    icon: <RFIProject />,
+    icon: "RFIProject",
     uuid: "project",
     label: "Project",
     path: "",
   },
   {
-    icon: <RFIReport />,
+    icon: "RFIReport",
     uuid: "report",
     label: "Report",
     path: "",
   },
   {
-    icon: <RFIGraph />,
+    icon: "RFIGraph",
     uuid: "analytics",
     label: "Analytics",
     path: "",
   },
   {
-    icon: <RFISetting />,
+    icon: "RFISetting",
     uuid: "setting",
     label: "Settings",
     path: "",

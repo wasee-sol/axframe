@@ -1,33 +1,34 @@
 import { IdcardOutlined, LockOutlined } from "@ant-design/icons";
 import styled from "@emotion/styled";
 import { Button, Divider, Form, Input } from "antd";
+import { useState } from "react";
 import * as React from "react";
 import { RFIArrowLogIn } from "react-frame-icon";
 import { SMixinFlexColumn, SMixinFlexRow } from "styles/emotion";
-import { LanguageType } from "i18n";
 import { useI18n } from "hooks/useI18n";
 import { getTrimNonEmptyRegExp } from "../../utils/formPatterns/getTrimNonEmptyRegExp";
 import IconText from "../common/IconText";
 
-interface Props {}
-interface FormItem {
+interface Props {
+  onSignIn?: (values: SignInFormItem) => Promise<void>;
+}
+export interface SignInFormItem {
   userId?: string;
   password?: string;
 }
 
-function SignIn(props: Props) {
-  const [form] = Form.useForm<FormItem>();
+function SignIn({ onSignIn }: Props) {
   const { t, currentLanguage, setLanguage } = useI18n();
+  const [form] = Form.useForm<SignInFormItem>();
+  const [signing, setSigning] = useState(false);
 
-  const handleSubmit = React.useCallback((values: FormItem) => {
-    console.log("values", values);
-  }, []);
-
-  const handleChangeLang = React.useCallback(
-    (lang: LanguageType) => {
-      setLanguage(lang);
+  const handleSubmit = React.useCallback(
+    async (values: SignInFormItem) => {
+      setSigning(true);
+      await onSignIn?.(values);
+      setSigning(false);
     },
-    [setLanguage]
+    [onSignIn]
   );
 
   return (
@@ -38,7 +39,7 @@ function SignIn(props: Props) {
           <Logo>React Frame</Logo>
         </SignInBoxHeader>
         <SignInBoxBody>
-          <Form<FormItem> form={form} onFinish={handleSubmit} layout={"vertical"}>
+          <Form<SignInFormItem> form={form} onFinish={handleSubmit} layout={"vertical"}>
             <Form.Item
               label={t.formItem.user.userId.label}
               name='userId'
@@ -72,7 +73,7 @@ function SignIn(props: Props) {
               <Input.Password prefix={<LockOutlined />} placeholder={t.formItem.user.password.placeholder} allowClear />
             </Form.Item>
             <Form.Item>
-              <Button type='primary' htmlType='submit' role={"sign-in-btn"} block>
+              <Button type='primary' htmlType='submit' role={"sign-in-btn"} block loading={signing}>
                 <RFIArrowLogIn fontSize={20} />
                 Sign In
               </Button>
@@ -80,11 +81,11 @@ function SignIn(props: Props) {
           </Form>
         </SignInBoxBody>
         <SignInBoxFooter>
-          <IconText onClick={() => handleChangeLang("en")} active={currentLanguage === "en"}>
+          <IconText onClick={() => setLanguage("en")} active={currentLanguage === "en"}>
             English
           </IconText>
           <Divider type='vertical' />
-          <IconText onClick={() => handleChangeLang("ko")} active={currentLanguage === "ko"}>
+          <IconText onClick={() => setLanguage("ko")} active={currentLanguage === "ko"}>
             한국어
           </IconText>
         </SignInBoxFooter>
@@ -159,7 +160,7 @@ const SignInBoxBody = styled.div`
 `;
 const SignInBoxFooter = styled.div``;
 
-const Logo = styled.div<Props>`
+const Logo = styled.div`
   ${SMixinFlexRow("stretch", "center")};
   column-gap: 6px;
   flex: none;

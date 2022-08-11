@@ -1,5 +1,6 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
+import { useState } from "react";
 import * as React from "react";
 import { RFIArrowLogOut } from "react-frame-icon";
 import { SMixinFlexColumn } from "../../styles/emotion";
@@ -10,13 +11,16 @@ interface StyleProps {
   asPopover?: boolean;
 }
 interface Props extends StyleProps {
-  onClickSignOut?: () => void;
+  onSignOut?: () => Promise<void>;
 }
 
-function UserInfoDropdown({ asPopover, onClickSignOut }: Props) {
-  const handleClickSignOut = React.useCallback(() => {
-    onClickSignOut?.();
-  }, [onClickSignOut]);
+function UserInfoDropdown({ asPopover, onSignOut }: Props) {
+  const [spinning, setSpinning] = useState(false);
+  const handleClickSignOut = React.useCallback(async () => {
+    setSpinning(true);
+    await onSignOut?.();
+    setSpinning(false);
+  }, [onSignOut]);
 
   return (
     <UserInfoDropdownContainer asPopover={asPopover}>
@@ -31,7 +35,7 @@ function UserInfoDropdown({ asPopover, onClickSignOut }: Props) {
       </LabelText>
       <CustomDivider />
       <CustomMenus>
-        <IconText icon={<RFIArrowLogOut />} iconSize={"15px"} onClick={handleClickSignOut} block>
+        <IconText icon={<RFIArrowLogOut />} iconSize={"15px"} onClick={handleClickSignOut} block loading={spinning}>
           Sign Out
         </IconText>
       </CustomMenus>

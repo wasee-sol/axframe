@@ -17,5 +17,10 @@ const EN = {
       },
     },
   },
+  button: {
+    ok: "OK",
+    reload: "Reload",
+    cancel: "Cancel",
+  },
 };
 export default EN;

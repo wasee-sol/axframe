@@ -5,28 +5,28 @@ import NavHeader from "@template/nav/NavHeader";
 import UserInfo from "@template/nav/UserInfo";
 import NavUserMenu from "@template/nav/NavUserMenu";
 import { UserMenuItem } from "stores/useUserMenuStore";
-import { Member } from "stores/useUserStore";
+import { User } from "stores/useUserStore";
 import { SMixinFlexColumn } from "../../styles/emotion";
 
 interface StyleProps {
   opened: boolean;
 }
 interface Props extends StyleProps {
-  me?: Member;
+  me?: User;
   menus: UserMenuItem[];
   openedUuids: string[];
   selectedUuid: string;
-  onClickSignOut: () => void;
+  onSignOut: () => Promise<void>;
 }
 
-function NavGroup({ opened, me, menus, openedUuids, selectedUuid, onClickSignOut }: Props) {
+function NavGroup({ opened, me, menus, openedUuids, selectedUuid, onSignOut }: Props) {
   return (
     <NavGroupContainer opened={opened}>
       <NavHeader opened={opened} />
 
       {me ? (
         <NavContent opened={opened}>
-          <UserInfo me={me} opened={opened} onClickSignOut={onClickSignOut} />
+          <UserInfo me={me} opened={opened} onSignOut={onSignOut} />
           <NavUserMenu
             {...{
               opened,
@@ -46,11 +46,6 @@ function NavGroup({ opened, me, menus, openedUuids, selectedUuid, onClickSignOut
 const NavGroupContainer = styled.div<StyleProps>`
   flex: 1;
   border-right: 1px solid ${(p) => p.theme.border_color_base};
-`;
-const NavContent = styled.div<StyleProps>`
-  overflow-x: hidden;
-  ${SMixinFlexColumn("center", "stretch")};
-  row-gap: 20px;
 
   ${({ opened, theme }) => {
     if (opened) {
@@ -60,6 +55,11 @@ const NavContent = styled.div<StyleProps>`
       background: ${theme.header_background};
     `;
   }}
+`;
+const NavContent = styled.div<StyleProps>`
+  overflow-x: hidden;
+  ${SMixinFlexColumn("center", "stretch")};
+  row-gap: 20px;
 `;
 
 export default NavGroup;

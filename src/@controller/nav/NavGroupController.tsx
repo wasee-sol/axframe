@@ -1,8 +1,8 @@
 import NavGroup from "@template/nav/NavGroup";
-import { message } from "antd";
 import * as React from "react";
 import useUserMenuStore from "stores/useUserMenuStore";
 import useUserStore from "stores/useUserStore";
+import { useDialog } from "../../hooks/useDialog";
 import { useAppStore } from "../../stores";
 
 function NavGroupController() {
@@ -11,10 +11,16 @@ function NavGroupController() {
   const openedUuids = useUserMenuStore((s) => s.openedUuids);
   const selectedUuid = useUserMenuStore((s) => s.selectedUuid);
   const sideMenuOpened = useAppStore((s) => s.sideMenuOpened);
+  const signOut = useUserStore((s) => s.signOut);
+  const { errorDialog } = useDialog();
 
   const handleSignOut = React.useCallback(async () => {
-    await message.info("sign out");
-  }, []);
+    try {
+      await signOut();
+    } catch (err) {
+      await errorDialog(err);
+    }
+  }, [errorDialog, signOut]);
 
   return (
     <NavGroup
@@ -23,7 +29,7 @@ function NavGroupController() {
       menus={menus}
       openedUuids={openedUuids}
       selectedUuid={selectedUuid}
-      onClickSignOut={handleSignOut}
+      onSignOut={handleSignOut}
     />
   );
 }

@@ -20,7 +20,7 @@ export default {
     menus: mock_userMenus,
     openedUuids: [],
     selectedUuid: "",
-    onClickSignOut: () => {
+    onSignOut: async () => {
       console.log("onClickSignOut");
     },
   },

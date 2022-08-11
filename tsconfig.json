@@ -18,16 +18,6 @@
     "jsx": "react",
     "typeRoots": ["@types", "node_modules/@types"],
     "baseUrl": "src",
-    "paths": {
-      "@controller/**": ["src/@controller"],
-      "@template/**": ["src/@template"],
-      "hooks/**": ["src/hooks"],
-      "i18n/**": ["src/i18n"],
-      "router/**": ["src/router"],
-      "stores/**": ["src/stores"],
-      "styles/**": ["src/styles"],
-      "utils/**": ["src/utils"],
-    }
   },
   "exclude": ["node_modules"]
 }
