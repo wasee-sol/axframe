@@ -1,7 +1,6 @@
 "use strict";
 exports.__esModule = true;
 var path = require("path");
-var HtmlWebpackPlugin = require("html-webpack-plugin");
 var ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 var MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var CopyPlugin = require("copy-webpack-plugin");
@@ -71,7 +70,7 @@ var config = {
             minRatio: 0.8
         }),
         new CopyPlugin({
-            patterns: [{ from: "*.css", context: path.resolve(__dirname, "public") }]
+            patterns: [{ from: "*", context: path.resolve(__dirname, "public") }]
         }),
         new MiniCssExtractPlugin({
             attributes: {
@@ -83,7 +82,7 @@ var config = {
             async: true,
             devServer: isDev
         }),
-        new HtmlWebpackPlugin({ template: path.join(__dirname, "public", "index.html") }),
+        // new HtmlWebpackPlugin({ template: path.join(__dirname, "public", "index.html") }),
     ],
     optimization: {
         splitChunks: {

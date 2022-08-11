@@ -1,6 +1,5 @@
 import * as webpack from "webpack";
 import * as path from "path";
-import * as HtmlWebpackPlugin from "html-webpack-plugin";
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
@@ -72,7 +71,7 @@ const config: webpack.Configuration = {
       minRatio: 0.8,
     }),
     new CopyPlugin({
-      patterns: [{ from: "*.css", context: path.resolve(__dirname, "public") }],
+      patterns: [{ from: "*", context: path.resolve(__dirname, "public") }],
     }),
     new MiniCssExtractPlugin({
       attributes: {
@@ -84,7 +83,7 @@ const config: webpack.Configuration = {
       async: true,
       devServer: isDev,
     }),
-    new HtmlWebpackPlugin({ template: path.join(__dirname, "public", "index.html") }),
+    // new HtmlWebpackPlugin({ template: path.join(__dirname, "public", "index.html") }),
   ],
   optimization: {
     splitChunks: {

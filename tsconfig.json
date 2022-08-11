@@ -21,6 +21,8 @@
     "paths": {
       "@controller/**": ["src/@controller"],
       "@template/**": ["src/@template"],
+      "hooks/**": ["src/hooks"],
+      "i18n/**": ["src/i18n"],
       "router/**": ["src/router"],
       "stores/**": ["src/stores"],
       "styles/**": ["src/styles"],

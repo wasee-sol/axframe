@@ -1,27 +1,22 @@
 import styled from "@emotion/styled";
 import * as React from "react";
-import { SMixinFlexRow } from "styles/emotion";
+import { Outlet } from "react-router-dom";
+import { SMixinFlexColumn } from "styles/emotion";
 
-interface Props {
-  children?: React.ReactNode;
-}
-
-function FrameDefault({ children }: Props) {
+function FrameDefault() {
   return (
     <PageFrameContainer>
-      <PageFrameContent>{children}</PageFrameContent>
+      <Outlet />
     </PageFrameContainer>
   );
 }
 
-const PageFrameContainer = styled.div`
-  ${SMixinFlexRow("stretch", "stretch")};
+export const PageFrameContainer = styled.div`
+  ${SMixinFlexColumn("stretch", "stretch")};
+  height: 100vh;
+  width: 100vw;
+  background: ${(p) => p.theme.body_background};
   flex: 1;
-`;
-
-const PageFrameContent = styled.div`
-  flex: 1;
-  overflow: auto;
 `;
 
 export default FrameDefault;

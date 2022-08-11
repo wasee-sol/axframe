@@ -4,7 +4,6 @@ import * as React from "react";
 import { useThemeSwitcher } from "react-css-theme-switcher";
 import { BrowserRouter } from "react-router-dom";
 import { useAppStore } from "stores";
-import { AppContainer } from "styles/emotion";
 import "styles/index.less";
 import { themePalette } from "styles/theme";
 import PageRoute from "router/PageRoute";
@@ -22,11 +21,9 @@ const App: React.FC = () => {
     <ThemeProvider theme={themePalette[theme]}>
       <ConfigProvider>
         {loaded ? (
-          <AppContainer>
-            <BrowserRouter>
-              <PageRoute />
-            </BrowserRouter>
-          </AppContainer>
+          <BrowserRouter>
+            <PageRoute />
+          </BrowserRouter>
         ) : (
           <div>
             Loading... loaded: {loaded}, theme: {theme}
