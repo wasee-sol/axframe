@@ -11,6 +11,7 @@ interface StyleProps {
   iconSize?: number | string;
   onClick?: (evt: React.MouseEvent<HTMLAnchorElement>) => void;
   disabled?: boolean;
+  active?: boolean;
   block?: boolean;
 }
 interface Props extends StyleProps {
@@ -18,7 +19,7 @@ interface Props extends StyleProps {
   children?: React.ReactNode;
 }
 
-function IconText({ role, iconSize, icon, iconPlacement, onClick, children, disabled, block }: Props) {
+function IconText({ role, iconSize, icon, iconPlacement, onClick, children, disabled, active, block }: Props) {
   const handleClick = React.useCallback(
     (evt: React.MouseEvent<HTMLAnchorElement>) => {
       if (!disabled) {
@@ -29,7 +30,7 @@ function IconText({ role, iconSize, icon, iconPlacement, onClick, children, disa
   );
 
   return (
-    <IconTextContainer role={role} onClick={handleClick} block={block} disabled={disabled}>
+    <IconTextContainer role={role} onClick={handleClick} block={block} disabled={disabled} active={active}>
       {icon && (
         <IconContainer iconSize={iconSize} iconPlacement={iconPlacement}>
           {icon}
@@ -75,6 +76,14 @@ const IconTextContainer = styled.span<StyleProps>`
       return css`
         opacity: 0.5;
         cursor: not-allowed;
+      `;
+    }
+    return css``;
+  }}
+  ${({ active, theme }) => {
+    if (active) {
+      return css`
+        color: ${theme.link_hover_color};
       `;
     }
     return css``;

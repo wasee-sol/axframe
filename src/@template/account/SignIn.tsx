@@ -1,9 +1,13 @@
+import { IdcardOutlined, LockOutlined } from "@ant-design/icons";
 import styled from "@emotion/styled";
-import { Form, Input } from "antd";
+import { Button, Divider, Form, Input } from "antd";
 import * as React from "react";
+import { RFIArrowLogIn } from "react-frame-icon";
 import { SMixinFlexColumn, SMixinFlexRow } from "styles/emotion";
 import { LanguageType } from "i18n";
 import { useI18n } from "hooks/useI18n";
+import { getTrimNonEmptyRegExp } from "../../utils/formPatterns/getTrimNonEmptyRegExp";
+import IconText from "../common/IconText";
 
 interface Props {}
 interface FormItem {
@@ -13,7 +17,7 @@ interface FormItem {
 
 function SignIn(props: Props) {
   const [form] = Form.useForm<FormItem>();
-  const { t, setLanguage } = useI18n();
+  const { t, currentLanguage, setLanguage } = useI18n();
 
   const handleSubmit = React.useCallback((values: FormItem) => {
     console.log("values", values);
@@ -41,23 +45,48 @@ function SignIn(props: Props) {
               rules={[
                 {
                   required: true,
-                  // pattern: getTrimNonEmptyRegExp(),
-                  // message: ,
+                  pattern: getTrimNonEmptyRegExp(),
+                  message: t.formItem.user.userId.msg.empty,
                 },
               ]}
             >
               <Input
+                prefix={<IdcardOutlined />}
                 autoFocus
-                // prefix={<QIUser className='placeholder-icon' />}
-                // placeholder={t.formItem.accountLogin.id.placeholder}
+                placeholder={t.formItem.user.userId.placeholder}
                 allowClear
               />
+            </Form.Item>
+
+            <Form.Item
+              label={t.formItem.user.password.label}
+              name='password'
+              rules={[
+                {
+                  required: true,
+                  pattern: getTrimNonEmptyRegExp(),
+                  message: t.formItem.user.password.msg.empty,
+                },
+              ]}
+            >
+              <Input.Password prefix={<LockOutlined />} placeholder={t.formItem.user.password.placeholder} allowClear />
+            </Form.Item>
+            <Form.Item>
+              <Button type='primary' htmlType='submit' role={"sign-in-btn"} block>
+                <RFIArrowLogIn fontSize={20} />
+                Sign In
+              </Button>
             </Form.Item>
           </Form>
         </SignInBoxBody>
         <SignInBoxFooter>
-          <button onClick={() => handleChangeLang("ko")}>KO</button>
-          <button onClick={() => handleChangeLang("en")}>EN</button>
+          <IconText onClick={() => handleChangeLang("en")} active={currentLanguage === "en"}>
+            English
+          </IconText>
+          <Divider type='vertical' />
+          <IconText onClick={() => handleChangeLang("ko")} active={currentLanguage === "ko"}>
+            한국어
+          </IconText>
         </SignInBoxFooter>
       </SignInBox>
     </SignInContainer>
@@ -69,6 +98,35 @@ const SignInContainer = styled.div`
   flex: 1;
   overflow: auto;
   background: url("/signin-background.jpg") no-repeat center center #0060e6;
+
+  .ant-input-affix-wrapper {
+    box-sizing: border-box;
+    border-radius: 5px;
+    padding: 4px 10px;
+    border: 1px solid ${(p) => p.theme.border_color_base};
+
+    .ant-input-prefix {
+      margin-right: 6px;
+    }
+
+    .ant-input {
+      font-weight: 400;
+      line-height: 30px;
+      padding-left: 8px;
+    }
+
+    .ant-input-suffix {
+      .ant-input-password-icon {
+        margin-left: 4px;
+      }
+    }
+  }
+
+  [role="sign-in-btn"] {
+    height: 40px;
+    ${SMixinFlexRow("center", "center")};
+    column-gap: 5px;
+  }
 `;
 
 const SignInBox = styled.div`
