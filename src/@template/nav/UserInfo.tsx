@@ -4,20 +4,19 @@ import UserAvatar from "@template/user/UserAvatar";
 import { Dropdown, Popover } from "antd";
 import * as React from "react";
 import { RFIMoreVertical } from "react-frame-icon";
-import { User } from "stores";
 import { SMixinFlexRow } from "styles/emotion";
+import { useNavGroupController } from "../../@controller/nav/NavGroupController";
 import UserInfoDropdown from "./UserInfoDropdown";
 
 interface StyleProps {
-  opened: boolean;
+  opened?: boolean;
 }
-interface Props extends StyleProps {
-  me: User;
-  onSignOut?: () => Promise<void>;
-}
+interface Props extends StyleProps {}
 
-function UserInfo({ opened, me, onSignOut }: Props) {
-  const { name, jobTitle } = me;
+function UserInfo({ opened: _opened }: Props) {
+  const { me, handleSignOut: onSignOut, sideMenuOpened } = useNavGroupController();
+  const opened = _opened ?? sideMenuOpened;
+  const { name, jobTitle } = me ?? {};
   return (
     <UserInfoContainer opened={opened}>
       <UserInfoBox opened={opened}>
@@ -30,7 +29,7 @@ function UserInfo({ opened, me, onSignOut }: Props) {
             </UserCard>
             <Dropdown
               overlay={<UserInfoDropdown onSignOut={onSignOut} />}
-              trigger={["hover", "click"]}
+              trigger={["click"]}
               placement={"bottomRight"}
             >
               <DownDownHandle>
@@ -57,7 +56,7 @@ function UserInfo({ opened, me, onSignOut }: Props) {
 }
 
 const UserInfoContainer = styled.div<StyleProps>`
-  flex: 1;
+  flex: none;
 
   [role="avatar"] {
     flex: none;

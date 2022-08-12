@@ -3,8 +3,9 @@ import * as React from "react";
 import useUserStore from "stores/useUserStore";
 import { useDialog } from "hooks/useDialog";
 import { useAppStore } from "stores";
+import { useLink } from "../../hooks/useLink";
 
-function NavGroupController() {
+export function useNavGroupController() {
   const me = useUserStore((s) => s.me);
   const menus = useUserStore((s) => s.menus);
   const openedMenuUuids = useUserStore((s) => s.openedMenuUuids);
@@ -13,6 +14,7 @@ function NavGroupController() {
   const setSideMenuOpened = useAppStore((s) => s.setSideMenuOpened);
   const signOut = useUserStore((s) => s.signOut);
   const { errorDialog } = useDialog();
+  const { linkTo } = useLink();
 
   const handleSignOut = React.useCallback(async () => {
     try {
@@ -29,17 +31,20 @@ function NavGroupController() {
     [setSideMenuOpened]
   );
 
-  return (
-    <NavGroup
-      me={me}
-      opened={sideMenuOpened}
-      menus={menus}
-      openedMenuUuids={openedMenuUuids}
-      selectedMenuUuid={selectedMenuUuid}
-      onSignOut={handleSignOut}
-      onChangeSideMenuOpened={handleSetSideMenuOpened}
-    />
-  );
+  return {
+    me,
+    menus,
+    openedMenuUuids,
+    selectedMenuUuid,
+    handleSignOut,
+    sideMenuOpened,
+    handleSetSideMenuOpened,
+    linkTo,
+  };
+}
+
+function NavGroupController() {
+  return <NavGroup />;
 }
 
 export default NavGroupController;

@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import { MenuProps } from "antd/lib/menu";
 import { UserMenuItem } from "stores";
 import ProgramIcon, { ProgramType } from "components/ProgramIcon";
+import { useNavGroupController } from "../../@controller/nav/NavGroupController";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -11,6 +12,7 @@ function getItem(
   label: React.ReactNode,
   key?: React.Key | null,
   icon?: React.ReactNode,
+  path?: string,
   children?: MenuItem[]
 ): MenuItem {
   return {
@@ -18,51 +20,69 @@ function getItem(
     icon,
     children,
     label,
+    path,
   } as MenuItem;
 }
 
 function getItems(menus: UserMenuItem[]): MenuItem[] {
   return menus.map((menu) => {
-    const { label, icon, uuid, children } = menu;
+    const { label, icon, uuid, children, path } = menu;
     return getItem(
       label,
       uuid,
       icon ? <ProgramIcon type={icon as ProgramType} /> : undefined,
+      path,
       children && children.length > 0 ? getItems(children) : undefined
     );
   });
 }
 
 interface StyleProps {
-  opened: boolean;
+  opened?: boolean;
 }
 interface Props extends StyleProps {
-  menus: UserMenuItem[];
-  openedMenuUuids: string[];
-  selectedMenuUuid: string;
+  openedMenuUuids?: string[];
 }
 
-function NavUserMenu({ opened, menus, openedMenuUuids, selectedMenuUuid }: Props) {
+function NavUserMenu({ opened: _opened, openedMenuUuids: _openedMenuUuids }: Props) {
+  const { menus, openedMenuUuids, selectedMenuUuid, sideMenuOpened, linkTo } = useNavGroupController();
+  const opened = _opened ?? sideMenuOpened;
+  const openKeys = _openedMenuUuids ?? openedMenuUuids;
+
   const items: MenuItem[] = React.useMemo(() => {
     return getItems(menus);
   }, [menus]);
+
+  const onClick: MenuProps["onClick"] = React.useCallback(
+    ({ keyPath }) => {
+      const menu = keyPath.reduceRight((acc, cur) => {
+        return Array.isArray(acc) ? acc.find((m) => m.uuid === cur) : acc.children.find((m) => m.uuid === cur);
+      }, menus);
+
+      linkTo(menu.path);
+    },
+    [menus, linkTo]
+  );
 
   return (
     <NavUserMenuContainer opened={opened}>
       <Menu
         mode={"inline"}
         items={items}
-        defaultOpenKeys={openedMenuUuids}
+        defaultOpenKeys={openKeys}
         defaultSelectedKeys={[selectedMenuUuid]}
         inlineIndent={28}
         inlineCollapsed={!opened}
-        motion={undefined}
+        onClick={onClick}
       />
     </NavUserMenuContainer>
   );
 }
 
 const NavUserMenuContainer = styled.div<StyleProps>`
+  flex: 1;
+  overflow: auto;
+  overflow-x: hidden;
   .ant-menu {
     background: inherit;
     color: ${(p) => p.theme.text_heading_color};

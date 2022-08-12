@@ -44,11 +44,9 @@ const PageFrameNav = styled.div`
 export const Opened = Template.bind({});
 Opened.args = {
   opened: true,
-  openedMenuUuids: ["consulting", "consulting-2"],
 };
 
 export const Closed = Template.bind({});
 Closed.args = {
   opened: false,
-  openedMenuUuids: ["consulting", "consulting-2"],
 };

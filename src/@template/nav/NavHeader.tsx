@@ -1,21 +1,33 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
+import { Tooltip } from "antd";
 import * as React from "react";
-import { ReactFrameLogo, RFIArrowRight, RFIMenuFold } from "react-frame-icon";
-import { SMixinFlexRow } from "styles/emotion";
+import { ReactFrameLogo, RFIMenuFold, RFIMenuUnfold } from "react-frame-icon";
+import { SMixinFlexColumn, SMixinFlexRow } from "styles/emotion";
+import { useNavGroupController } from "../../@controller/nav/NavGroupController";
+import { useI18n } from "../../hooks/useI18n";
 import IconText from "../common/IconText";
 
 interface Props {
-  opened: boolean;
-  onChangeSideMenuOpened?: (opened: boolean) => void;
+  opened?: boolean;
 }
 
-function NavHeader({ opened, onChangeSideMenuOpened }: Props) {
+function NavHeader({ opened: _opened }: Props) {
+  const { t } = useI18n();
+  const { handleSetSideMenuOpened: onChangeSideMenuOpened, sideMenuOpened } = useNavGroupController();
+  const opened = _opened ?? sideMenuOpened;
+
   return (
     <NavHeaderContainer opened={opened}>
       <Logo opened={opened}>
-        <ReactFrameLogo fontSize={24} />
-        {opened ? "React Frame" : ""}
+        {opened ? (
+          <ReactFrameLogo fontSize={24} />
+        ) : (
+          <Tooltip title={t.appName} placement={"right"}>
+            <ReactFrameLogo fontSize={30} />
+          </Tooltip>
+        )}
+        {opened ? t.appName : ""}
       </Logo>
       <ToggleHandle role={"toggle-menu"}>
         {opened ? (
@@ -27,7 +39,7 @@ function NavHeader({ opened, onChangeSideMenuOpened }: Props) {
         ) : (
           <IconText
             role={"toggle-icon"}
-            icon={<RFIArrowRight fontSize={18} />}
+            icon={<RFIMenuUnfold fontSize={18} />}
             onClick={() => onChangeSideMenuOpened?.(true)}
             block
           />
@@ -44,7 +56,7 @@ const NavHeaderContainer = styled.div<Props>`
   background: ${(p) => p.theme.header_background};
   line-height: 1.1;
 
-  ${({ opened, theme }) => {
+  ${({ opened }) => {
     if (opened) {
       return css`
         ${SMixinFlexRow("stretch", "center")};
@@ -52,21 +64,12 @@ const NavHeaderContainer = styled.div<Props>`
       `;
     }
     return css`
-      ${SMixinFlexRow("center", "center")};
-      height: 60px;
+      ${SMixinFlexColumn("center", "center")};
+      height: 70px;
       padding: 0;
 
       [role="toggle-menu"] {
-        position: absolute;
-        right: -10px;
-        top: 15px;
-        width: 20px;
-        height: 20px;
-        background: ${theme.border_color_base};
-        color: ${theme.text_heading_color};
-        border-radius: 50%;
         ${SMixinFlexRow("center", "center")};
-        cursor: pointer;
       }
     `;
   }}
@@ -102,7 +105,7 @@ const ToggleHandle = styled.div`
 const TabLine = styled.div`
   position: absolute;
   height: 3px;
-  width: 100%;
+  width: calc(100% + 1px);
   bottom: 0;
   left: 0;
   background: ${(p) => p.theme.primary_color};
