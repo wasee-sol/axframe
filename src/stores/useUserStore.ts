@@ -17,6 +17,7 @@ export interface UserMenuItem {
 }
 
 export interface UserModel {
+  loaded: boolean;
   me?: User;
   menus: UserMenuItem[];
   openedMenuUuids: string[];
@@ -24,6 +25,7 @@ export interface UserModel {
 }
 
 export interface UserActions {
+  setLoaded: (loaded: boolean) => void;
   setMe: (me: User) => Promise<void>;
   signOut: () => void;
   setMenus: (menus: UserMenuItem[]) => void;
@@ -34,6 +36,7 @@ export interface UserActions {
 export interface UserStore extends UserModel, UserActions {}
 
 export const userInitialState: UserModel = {
+  loaded: false,
   menus: [],
   openedMenuUuids: [],
   selectedMenuUuid: "",
@@ -41,6 +44,7 @@ export const userInitialState: UserModel = {
 
 const useUserStore = buildStore<UserStore>("user", (set, get) => ({
   ...userInitialState,
+  setLoaded: (loaded: boolean) => set({ loaded }),
   setMe: async (me) => {
     const { menus } = await UserService.getUserMenu(me.uuid);
     set({ me, menus });
@@ -58,5 +62,11 @@ const useUserStore = buildStore<UserStore>("user", (set, get) => ({
     set({ selectedMenuUuid: uuid });
   },
 }));
+
+useUserStore.persist.onFinishHydration((state) => {
+  if (!state.loaded) {
+    state.setLoaded(true);
+  }
+});
 
 export default useUserStore;

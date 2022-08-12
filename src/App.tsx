@@ -25,9 +25,7 @@ const App: React.FC = () => {
             <PageRoute />
           </BrowserRouter>
         ) : (
-          <div>
-            Loading... loaded: {loaded}, theme: {theme}
-          </div>
+          <div>Loading...</div>
         )}
       </ConfigProvider>
     </ThemeProvider>

@@ -1,6 +1,7 @@
 import EN from "./en";
 
 const KO: typeof EN = {
+  appName: "React Frame",
   formItem: {
     user: {
       userId: {

@@ -1,4 +1,5 @@
 const EN = {
+  appName: "React Frame",
   formItem: {
     user: {
       userId: {

@@ -11,6 +11,7 @@ module.exports = ({ config }) => {
     i18n: path.resolve(__dirname, "../src/i18n"),
     repository: path.resolve(__dirname, "../src/repository"),
     router: path.resolve(__dirname, "../src/router"),
+    services: path.resolve(__dirname, "../src/services"),
     stores: path.resolve(__dirname, "../src/stores"),
     stories: path.resolve(__dirname, "../src/stories"),
     styles: path.resolve(__dirname, "../src/styles"),

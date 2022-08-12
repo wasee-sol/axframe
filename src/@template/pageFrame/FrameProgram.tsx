@@ -1,18 +1,20 @@
 import NavGroupController from "@controller/nav/NavGroupController";
+import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import * as React from "react";
 import { Outlet } from "react-router-dom";
 import { SMixinFlexColumn, SMixinFlexRow } from "styles/emotion";
 import TabGroupController from "../../@controller/content/tabs/TabGroupController";
 
-interface Props {
+interface StyleProps {
   sideMenuOpened: boolean;
 }
+interface Props extends StyleProps {}
 
 function FrameProgram({ sideMenuOpened }: Props) {
   return (
     <PageFrameContainer>
-      <PageFrameNav className={sideMenuOpened ? "opened" : "closed"}>
+      <PageFrameNav sideMenuOpened={sideMenuOpened}>
         <NavGroupController />
       </PageFrameNav>
       <PageFrameContent>
@@ -31,16 +33,23 @@ const PageFrameContainer = styled.div`
   width: 100vw;
   flex: 1;
 `;
-const PageFrameNav = styled.div`
+const PageFrameNav = styled.div<StyleProps>`
   ${SMixinFlexRow("stretch", "stretch")};
   flex: none;
   position: relative;
-  &.opened {
-    width: 302px;
-  }
-  &.closed {
-    width: 61px;
-  }
+
+  ${({ sideMenuOpened }) => {
+    if (sideMenuOpened) {
+      return css`
+        width: 302px;
+      `;
+    }
+
+    return css`
+      width: 61px;
+    `;
+  }}
+
   z-index: 10;
 `;
 const PageFrameContent = styled.div`
@@ -50,6 +59,7 @@ const PageFrameContent = styled.div`
 const Content = styled.div`
   flex: 1;
   overflow: auto;
+  padding: 36px;
 `;
 
 export default FrameProgram;
