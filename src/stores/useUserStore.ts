@@ -1,4 +1,5 @@
 import buildStore from "stores/buildStore";
+import useUserMenuStore from "./useUserMenuStore";
 
 export interface User {
   uuid: string;
@@ -24,6 +25,8 @@ const useUserStore = buildStore<UserStore>("user", (set, get) => ({
   ...userInitialState,
   setMe: (me) => {
     set({ me });
+
+    useUserMenuStore.setState({});
   },
   signOut: () => {
     set({ me: undefined });

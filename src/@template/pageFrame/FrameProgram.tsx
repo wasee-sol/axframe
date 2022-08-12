@@ -30,11 +30,12 @@ const PageFrameContainer = styled.div`
 const PageFrameNav = styled.div`
   ${SMixinFlexRow("stretch", "stretch")};
   flex: none;
+  position: relative;
   &.opened {
     width: 302px;
   }
   &.closed {
-    width: 60px;
+    width: 61px;
   }
 `;
 const PageFrameContent = styled.div`

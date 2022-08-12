@@ -56,6 +56,7 @@ function NavUserMenu({ opened, menus, openedUuids, selectedUuid }: Props) {
         defaultSelectedKeys={[selectedUuid]}
         inlineIndent={28}
         inlineCollapsed={!opened}
+        motion={undefined}
       />
     </NavUserMenuContainer>
   );

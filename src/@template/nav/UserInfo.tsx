@@ -101,11 +101,11 @@ const UserCard = styled.div`
   [role="name"] {
     display: block;
     color: ${(p) => p.theme.text_heading_color};
-    font-size: 12px;
-    margin-bottom: 4px;
+    font-size: 13px;
+    margin-bottom: 2px;
   }
   [role="job-title"] {
-    font-size: 12px;
+    font-size: 11px;
     color: ${(p) => p.theme.text_sub_body_color};
   }
 `;

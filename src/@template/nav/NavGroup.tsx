@@ -17,12 +17,13 @@ interface Props extends StyleProps {
   openedUuids: string[];
   selectedUuid: string;
   onSignOut: () => Promise<void>;
+  onChangeSideMenuOpened?: (opened: boolean) => void;
 }
 
-function NavGroup({ opened, me, menus, openedUuids, selectedUuid, onSignOut }: Props) {
+function NavGroup({ opened, me, menus, openedUuids, selectedUuid, onSignOut, onChangeSideMenuOpened }: Props) {
   return (
     <NavGroupContainer opened={opened}>
-      <NavHeader opened={opened} />
+      <NavHeader opened={opened} onChangeSideMenuOpened={onChangeSideMenuOpened} />
 
       {me ? (
         <NavContent opened={opened}>
@@ -60,6 +61,17 @@ const NavContent = styled.div<StyleProps>`
   overflow-x: hidden;
   ${SMixinFlexColumn("center", "stretch")};
   row-gap: 20px;
+
+  ${({ opened }) => {
+    if (opened) {
+      return css`
+        width: 301px;
+      `;
+    }
+    return css`
+      width: 60px;
+    `;
+  }}
 `;
 
 export default NavGroup;

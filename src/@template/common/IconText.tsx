@@ -31,7 +31,13 @@ function IconText({ role, iconSize, icon, iconPlacement, onClick, children, disa
   );
 
   return (
-    <IconTextContainer role={role} onClick={handleClick} block={block} disabled={disabled} active={active}>
+    <IconTextContainer
+      role={role}
+      onClick={onClick ? handleClick : undefined}
+      block={block}
+      disabled={disabled}
+      active={active}
+    >
       {icon && (
         <IconContainer iconSize={iconSize} iconPlacement={iconPlacement}>
           {loading ? <LoadingOutlined spin /> : icon}

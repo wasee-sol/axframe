@@ -11,6 +11,7 @@ function NavGroupController() {
   const openedUuids = useUserMenuStore((s) => s.openedUuids);
   const selectedUuid = useUserMenuStore((s) => s.selectedUuid);
   const sideMenuOpened = useAppStore((s) => s.sideMenuOpened);
+  const setSideMenuOpened = useAppStore((s) => s.setSideMenuOpened);
   const signOut = useUserStore((s) => s.signOut);
   const { errorDialog } = useDialog();
 
@@ -22,6 +23,13 @@ function NavGroupController() {
     }
   }, [errorDialog, signOut]);
 
+  const handleSetSideMenuOpened = React.useCallback(
+    (opened: boolean) => {
+      setSideMenuOpened(opened);
+    },
+    [setSideMenuOpened]
+  );
+
   return (
     <NavGroup
       me={me}
@@ -30,6 +38,7 @@ function NavGroupController() {
       openedUuids={openedUuids}
       selectedUuid={selectedUuid}
       onSignOut={handleSignOut}
+      onChangeSideMenuOpened={handleSetSideMenuOpened}
     />
   );
 }
