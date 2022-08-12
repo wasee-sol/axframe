@@ -4,6 +4,10 @@
   "description": "",
   "main": "index.js",
   "watch": {},
+  "engines" : {
+    "npm" : ">=8.17.0",
+    "node" : ">=18.0.0"
+  },
   "scripts": {
     "build:webpack-config": "tsc webpack.config.ts",
     "dev": "npm run build:webpack-config && run-p start:dev-server watch",

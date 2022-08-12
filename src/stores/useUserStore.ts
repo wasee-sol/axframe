@@ -1,6 +1,4 @@
 import buildStore from "stores/buildStore";
-import { SignInFormItem } from "@template/account/SignIn";
-import { UserRepository } from "repository/UserRepository";
 
 export interface User {
   uuid: string;
@@ -15,7 +13,6 @@ export interface UserModel {
 
 export interface UserActions {
   setMe: (me: User) => void;
-  signIn: (values: SignInFormItem) => Promise<void>;
   signOut: () => void;
 }
 
@@ -26,10 +23,6 @@ export const userInitialState: UserModel = {};
 const useUserStore = buildStore<UserStore>("user", (set, get) => ({
   ...userInitialState,
   setMe: (me) => {
-    set({ me });
-  },
-  signIn: async (values) => {
-    const me = await UserRepository.signIn(values);
     set({ me });
   },
   signOut: () => {

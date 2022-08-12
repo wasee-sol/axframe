@@ -3,34 +3,27 @@ import SignIn, { SignInFormItem } from "@template/account/SignIn";
 import { useDialog } from "hooks/useDialog";
 import useUserStore from "stores/useUserStore";
 import useUserMenuStore from "stores/useUserMenuStore";
+import { UserService } from "services";
 
 function SignInController() {
-  const signIn = useUserStore((s) => s.signIn);
-  const initMenus = useUserMenuStore((s) => s.initMenus);
+  const setMe = useUserStore((s) => s.setMe);
+  const setMenus = useUserMenuStore((s) => s.setMenus);
   const { errorDialog } = useDialog();
 
   const handleSignIn = React.useCallback(
     async (values: SignInFormItem) => {
       try {
-        await signIn(values);
+        const me = await UserService.signIn(values);
+        const { menus } = await UserService.getUserMenu(me.uuid);
+
+        setMe(me);
+        setMenus(menus);
       } catch (err) {
         await errorDialog(err);
       }
     },
-    [errorDialog, signIn]
+    [errorDialog, setMe, setMenus]
   );
-
-  React.useEffect(() => {
-    const unsub = useUserStore.subscribe(async (state) => {
-      if (state.me) {
-        await initMenus(state.me.uuid);
-      }
-    });
-
-    return () => {
-      unsub();
-    };
-  }, [initMenus]);
 
   return <SignIn onSignIn={handleSignIn} />;
 }
