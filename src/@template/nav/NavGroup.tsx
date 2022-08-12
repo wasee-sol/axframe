@@ -4,8 +4,7 @@ import styled from "@emotion/styled";
 import NavHeader from "@template/nav/NavHeader";
 import UserInfo from "@template/nav/UserInfo";
 import NavUserMenu from "@template/nav/NavUserMenu";
-import { UserMenuItem } from "stores/useUserMenuStore";
-import { User } from "stores/useUserStore";
+import { User, UserMenuItem } from "stores/useUserStore";
 import { SMixinFlexColumn } from "../../styles/emotion";
 
 interface StyleProps {

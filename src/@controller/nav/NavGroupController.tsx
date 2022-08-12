@@ -1,15 +1,14 @@
 import NavGroup from "@template/nav/NavGroup";
 import * as React from "react";
-import useUserMenuStore from "stores/useUserMenuStore";
 import useUserStore from "stores/useUserStore";
 import { useDialog } from "../../hooks/useDialog";
 import { useAppStore } from "../../stores";
 
 function NavGroupController() {
   const me = useUserStore((s) => s.me);
-  const menus = useUserMenuStore((s) => s.menus);
-  const openedUuids = useUserMenuStore((s) => s.openedUuids);
-  const selectedUuid = useUserMenuStore((s) => s.selectedUuid);
+  const menus = useUserStore((s) => s.menus);
+  const openedUuids = useUserStore((s) => s.openedUuids);
+  const selectedUuid = useUserStore((s) => s.selectedUuid);
   const sideMenuOpened = useAppStore((s) => s.sideMenuOpened);
   const setSideMenuOpened = useAppStore((s) => s.setSideMenuOpened);
   const signOut = useUserStore((s) => s.signOut);
