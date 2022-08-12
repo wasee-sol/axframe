@@ -5,7 +5,7 @@ import NavHeader from "@template/nav/NavHeader";
 import UserInfo from "@template/nav/UserInfo";
 import NavUserMenu from "@template/nav/NavUserMenu";
 import { User, UserMenuItem } from "stores/useUserStore";
-import { SMixinFlexColumn } from "../../styles/emotion";
+import { SMixinFlexColumn } from "styles/emotion";
 
 interface StyleProps {
   opened: boolean;
@@ -13,13 +13,13 @@ interface StyleProps {
 interface Props extends StyleProps {
   me?: User;
   menus: UserMenuItem[];
-  openedUuids: string[];
-  selectedUuid: string;
+  openedMenuUuids: string[];
+  selectedMenuUuid: string;
   onSignOut: () => Promise<void>;
   onChangeSideMenuOpened?: (opened: boolean) => void;
 }
 
-function NavGroup({ opened, me, menus, openedUuids, selectedUuid, onSignOut, onChangeSideMenuOpened }: Props) {
+function NavGroup({ opened, me, menus, openedMenuUuids, selectedMenuUuid, onSignOut, onChangeSideMenuOpened }: Props) {
   return (
     <NavGroupContainer opened={opened}>
       <NavHeader opened={opened} onChangeSideMenuOpened={onChangeSideMenuOpened} />
@@ -31,8 +31,8 @@ function NavGroup({ opened, me, menus, openedUuids, selectedUuid, onSignOut, onC
             {...{
               opened,
               menus,
-              openedUuids,
-              selectedUuid,
+              openedMenuUuids,
+              selectedMenuUuid,
             }}
           />
         </NavContent>

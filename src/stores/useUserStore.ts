@@ -1,5 +1,5 @@
 import buildStore from "stores/buildStore";
-import { UserService } from "../services";
+import { UserService } from "services";
 
 export interface User {
   uuid: string;
@@ -19,24 +19,24 @@ export interface UserMenuItem {
 export interface UserModel {
   me?: User;
   menus: UserMenuItem[];
-  openedUuids: string[];
-  selectedUuid: string;
+  openedMenuUuids: string[];
+  selectedMenuUuid: string;
 }
 
 export interface UserActions {
   setMe: (me: User) => Promise<void>;
   signOut: () => void;
   setMenus: (menus: UserMenuItem[]) => void;
-  setOpenedUuids: (uuids: string[]) => void;
-  setSelectedUuid: (uuid: string) => void;
+  setOpenedMenuUuids: (uuids: string[]) => void;
+  setSelectedMenuUuid: (uuid: string) => void;
 }
 
 export interface UserStore extends UserModel, UserActions {}
 
 export const userInitialState: UserModel = {
   menus: [],
-  openedUuids: [],
-  selectedUuid: "",
+  openedMenuUuids: [],
+  selectedMenuUuid: "",
 };
 
 const useUserStore = buildStore<UserStore>("user", (set, get) => ({
@@ -51,11 +51,11 @@ const useUserStore = buildStore<UserStore>("user", (set, get) => ({
   setMenus: (menus) => {
     set({ menus });
   },
-  setOpenedUuids: (uuids) => {
-    set({ openedUuids: uuids });
+  setOpenedMenuUuids: (uuids) => {
+    set({ openedMenuUuids: uuids });
   },
-  setSelectedUuid: (uuid) => {
-    set({ selectedUuid: uuid });
+  setSelectedMenuUuid: (uuid) => {
+    set({ selectedMenuUuid: uuid });
   },
 }));
 

@@ -30,7 +30,7 @@ function UserInfo({ opened, me, onSignOut }: Props) {
             </UserCard>
             <Dropdown
               overlay={<UserInfoDropdown onSignOut={onSignOut} />}
-              trigger={["click"]}
+              trigger={["hover", "click"]}
               placement={"bottomRight"}
             >
               <DownDownHandle>
@@ -42,7 +42,6 @@ function UserInfo({ opened, me, onSignOut }: Props) {
           <>
             <Popover
               content={<UserInfoDropdown onSignOut={onSignOut} asPopover />}
-              trigger={"click"}
               placement={"rightTop"}
               align={{ targetOffset: [0, 8] }}
             >

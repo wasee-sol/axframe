@@ -2,7 +2,8 @@ import NavGroupController from "@controller/nav/NavGroupController";
 import styled from "@emotion/styled";
 import * as React from "react";
 import { Outlet } from "react-router-dom";
-import { SMixinFlexRow } from "styles/emotion";
+import { SMixinFlexColumn, SMixinFlexRow } from "styles/emotion";
+import TabGroupController from "../../@controller/content/tabs/TabGroupController";
 
 interface Props {
   sideMenuOpened: boolean;
@@ -15,7 +16,10 @@ function FrameProgram({ sideMenuOpened }: Props) {
         <NavGroupController />
       </PageFrameNav>
       <PageFrameContent>
-        <Outlet />
+        <TabGroupController />
+        <Content>
+          <Outlet />
+        </Content>
       </PageFrameContent>
     </PageFrameContainer>
   );
@@ -37,8 +41,13 @@ const PageFrameNav = styled.div`
   &.closed {
     width: 61px;
   }
+  z-index: 10;
 `;
 const PageFrameContent = styled.div`
+  flex: 1;
+  ${SMixinFlexColumn("stretch", "stretch")};
+`;
+const Content = styled.div`
   flex: 1;
   overflow: auto;
 `;

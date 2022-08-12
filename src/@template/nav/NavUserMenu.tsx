@@ -38,11 +38,11 @@ interface StyleProps {
 }
 interface Props extends StyleProps {
   menus: UserMenuItem[];
-  openedUuids: string[];
-  selectedUuid: string;
+  openedMenuUuids: string[];
+  selectedMenuUuid: string;
 }
 
-function NavUserMenu({ opened, menus, openedUuids, selectedUuid }: Props) {
+function NavUserMenu({ opened, menus, openedMenuUuids, selectedMenuUuid }: Props) {
   const items: MenuItem[] = React.useMemo(() => {
     return getItems(menus);
   }, [menus]);
@@ -52,8 +52,8 @@ function NavUserMenu({ opened, menus, openedUuids, selectedUuid }: Props) {
       <Menu
         mode={"inline"}
         items={items}
-        defaultOpenKeys={openedUuids}
-        defaultSelectedKeys={[selectedUuid]}
+        defaultOpenKeys={openedMenuUuids}
+        defaultSelectedKeys={[selectedMenuUuid]}
         inlineIndent={28}
         inlineCollapsed={!opened}
         motion={undefined}
