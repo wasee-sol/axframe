@@ -20,35 +20,27 @@ export default {
     menus: mock_userMenus,
     openedMenuUuids: [],
     selectedMenuUuid: "",
-    onSignOut: async () => {
-      console.log("onClickSignOut");
-    },
   },
 } as ComponentMeta<typeof NavGroup>;
 
 const Template: ComponentStory<typeof NavGroup> = (args) => (
-  <PageFrameNav className={args.opened ? "opened" : "closed"}>
+  <PageFrameNav sideMenuOpened={args.sideMenuOpened}>
     <NavGroup {...args} />
   </PageFrameNav>
 );
 
-const PageFrameNav = styled.div`
-  &.opened {
-    width: 300px;
-  }
-  &.closed {
-    width: 60px;
-  }
+const PageFrameNav = styled.div<{ sideMenuOpened?: boolean }>`
+  ${({ sideMenuOpened }) => (sideMenuOpened ? "width: 301px;" : "width: 61px;")}
 `;
 
 export const Opened = Template.bind({});
 Opened.args = {
-  opened: true,
+  sideMenuOpened: true,
   openedMenuUuids: ["consulting", "consulting-2"],
 };
 
 export const Closed = Template.bind({});
 Closed.args = {
-  opened: false,
+  sideMenuOpened: false,
   openedMenuUuids: ["consulting", "consulting-2"],
 };

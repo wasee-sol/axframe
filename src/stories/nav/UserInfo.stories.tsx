@@ -20,7 +20,7 @@ export default {
 } as ComponentMeta<typeof UserInfo>;
 
 const Template: ComponentStory<typeof UserInfo> = (args) => (
-  <PageFrameNav className={args.opened ? "opened" : "closed"}>
+  <PageFrameNav className={args.sideMenuOpened ? "opened" : "closed"}>
     <UserInfo {...args} />
   </PageFrameNav>
 );
@@ -35,10 +35,10 @@ const PageFrameNav = styled.div`
 
 export const Opened = Template.bind({});
 Opened.args = {
-  opened: true,
+  sideMenuOpened: true,
 };
 
 export const Closed = Template.bind({});
 Closed.args = {
-  opened: false,
+  sideMenuOpened: false,
 };

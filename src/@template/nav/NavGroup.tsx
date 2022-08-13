@@ -6,35 +6,30 @@ import UserInfo from "@template/nav/UserInfo";
 import NavUserMenu from "@template/nav/NavUserMenu";
 import { User, UserMenuItem } from "stores/useUserStore";
 import { SMixinFlexColumn } from "styles/emotion";
+import { useNavGroupController } from "@controller/nav/NavGroupController";
+import { mergeProps } from "utils/object";
 
 interface StyleProps {
-  opened: boolean;
+  sideMenuOpened?: boolean;
 }
 interface Props extends StyleProps {
   me?: User;
-  menus: UserMenuItem[];
-  openedMenuUuids: string[];
-  selectedMenuUuid: string;
-  onSignOut: () => Promise<void>;
-  onChangeSideMenuOpened?: (opened: boolean) => void;
+  menus?: UserMenuItem[];
+  openedMenuUuids?: string[];
+  selectedMenuUuid?: string;
 }
 
-function NavGroup({ opened, me, menus, openedMenuUuids, selectedMenuUuid, onSignOut, onChangeSideMenuOpened }: Props) {
+function NavGroup(props: Props) {
+  const { sideMenuOpened, me } = mergeProps(props, useNavGroupController());
+
   return (
-    <NavGroupContainer opened={opened}>
-      <NavHeader opened={opened} onChangeSideMenuOpened={onChangeSideMenuOpened} />
+    <NavGroupContainer sideMenuOpened={sideMenuOpened}>
+      <NavHeader {...props} />
 
       {me ? (
-        <NavContent opened={opened}>
-          <UserInfo me={me} opened={opened} onSignOut={onSignOut} />
-          <NavUserMenu
-            {...{
-              opened,
-              menus,
-              openedMenuUuids,
-              selectedMenuUuid,
-            }}
-          />
+        <NavContent sideMenuOpened={sideMenuOpened}>
+          <UserInfo {...props} />
+          <NavUserMenu {...props} />
         </NavContent>
       ) : (
         <div>User Not Found</div>
@@ -46,9 +41,10 @@ function NavGroup({ opened, me, menus, openedMenuUuids, selectedMenuUuid, onSign
 const NavGroupContainer = styled.div<StyleProps>`
   flex: 1;
   border-right: 1px solid ${(p) => p.theme.border_color_base};
+  ${SMixinFlexColumn("stretch", "stretch")};
 
-  ${({ opened, theme }) => {
-    if (opened) {
+  ${({ sideMenuOpened, theme }) => {
+    if (sideMenuOpened) {
       return css``;
     }
     return css`
@@ -57,17 +53,19 @@ const NavGroupContainer = styled.div<StyleProps>`
   }}
 `;
 const NavContent = styled.div<StyleProps>`
+  flex: 1;
   overflow-x: hidden;
-  ${SMixinFlexColumn("center", "stretch")};
-  row-gap: 20px;
+  ${SMixinFlexColumn("stretch", "stretch")};
 
-  ${({ opened }) => {
-    if (opened) {
+  ${({ sideMenuOpened }) => {
+    if (sideMenuOpened) {
       return css`
-        width: 301px;
+        width: 300px;
+        row-gap: 20px;
       `;
     }
     return css`
+      padding-top: 10px;
       width: 60px;
     `;
   }}

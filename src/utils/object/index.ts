@@ -1,1 +1,2 @@
-export * from './pick';
+export * from "./pick";
+export * from "./mergeProps";

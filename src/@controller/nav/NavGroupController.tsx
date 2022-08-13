@@ -4,13 +4,14 @@ import useUserStore from "stores/useUserStore";
 import { useDialog } from "hooks/useDialog";
 import { useAppStore } from "stores";
 
-function NavGroupController() {
+export function useNavGroupController() {
+  const sideMenuOpened = useAppStore((s) => s.sideMenuOpened);
+  const setSideMenuOpened = useAppStore((s) => s.setSideMenuOpened);
   const me = useUserStore((s) => s.me);
   const menus = useUserStore((s) => s.menus);
   const openedMenuUuids = useUserStore((s) => s.openedMenuUuids);
   const selectedMenuUuid = useUserStore((s) => s.selectedMenuUuid);
-  const sideMenuOpened = useAppStore((s) => s.sideMenuOpened);
-  const setSideMenuOpened = useAppStore((s) => s.setSideMenuOpened);
+  const setOpenedMenuUuids = useUserStore((s) => s.setOpenedMenuUuids);
   const signOut = useUserStore((s) => s.signOut);
   const { errorDialog } = useDialog();
 
@@ -29,17 +30,29 @@ function NavGroupController() {
     [setSideMenuOpened]
   );
 
-  return (
-    <NavGroup
-      me={me}
-      opened={sideMenuOpened}
-      menus={menus}
-      openedMenuUuids={openedMenuUuids}
-      selectedMenuUuid={selectedMenuUuid}
-      onSignOut={handleSignOut}
-      onChangeSideMenuOpened={handleSetSideMenuOpened}
-    />
+  const onSideMenuOpenChange = React.useCallback(
+    (openKeys: string[]) => {
+      setOpenedMenuUuids(openKeys);
+    },
+    [setOpenedMenuUuids]
   );
+
+  return {
+    me,
+    menus,
+    openedMenuUuids,
+    selectedMenuUuid,
+    sideMenuOpened,
+    setSideMenuOpened,
+    signOut,
+    handleSignOut,
+    handleSetSideMenuOpened,
+    onSideMenuOpenChange,
+  };
+}
+
+function NavGroupController() {
+  return <NavGroup />;
 }
 
 export default NavGroupController;

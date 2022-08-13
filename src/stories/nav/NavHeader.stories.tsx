@@ -12,19 +12,19 @@ export default {
 } as ComponentMeta<typeof NavHeader>;
 
 const Template: ComponentStory<typeof NavHeader> = (args) => (
-  <PageFrameNav className={args.opened ? "opened" : "closed"}>
+  <PageFrameNav className={args.sideMenuOpened ? "opened" : "closed"}>
     <NavHeader {...args} />
   </PageFrameNav>
 );
 
 export const Opened = Template.bind({});
 Opened.args = {
-  opened: true,
+  sideMenuOpened: true,
 };
 
 export const Closed = Template.bind({});
 Closed.args = {
-  opened: false,
+  sideMenuOpened: false,
 };
 
 const PageFrameNav = styled.div`

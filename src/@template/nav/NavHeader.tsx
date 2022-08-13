@@ -1,39 +1,51 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
+import { Tooltip } from "antd";
 import * as React from "react";
-import { ReactFrameLogo, RFIArrowRight, RFIMenuFold } from "react-frame-icon";
-import { SMixinFlexRow } from "styles/emotion";
+import { ReactFrameLogo, RFIMenuFold, RFIMenuUnfold } from "react-frame-icon";
+import { SMixinFlexColumn, SMixinFlexRow } from "styles/emotion";
+import { useNavGroupController } from "../../@controller/nav/NavGroupController";
+import { useI18n } from "../../hooks/useI18n";
+import { mergeProps } from "../../utils/object";
 import IconText from "../common/IconText";
 
 interface Props {
-  opened: boolean;
+  sideMenuOpened?: boolean;
   onChangeSideMenuOpened?: (opened: boolean) => void;
 }
 
-function NavHeader({ opened, onChangeSideMenuOpened }: Props) {
+function NavHeader(props: Props) {
+  const { sideMenuOpened, handleSetSideMenuOpened } = mergeProps(props, useNavGroupController());
+  const { t } = useI18n();
   return (
-    <NavHeaderContainer opened={opened}>
-      <Logo opened={opened}>
-        <ReactFrameLogo fontSize={24} />
-        {opened ? "React Frame" : ""}
+    <NavHeaderContainer sideMenuOpened={sideMenuOpened}>
+      <Logo sideMenuOpened={sideMenuOpened}>
+        {sideMenuOpened ? (
+          <ReactFrameLogo fontSize={24} />
+        ) : (
+          <Tooltip title={t.appName} placement={"right"}>
+            <ReactFrameLogo fontSize={30} />
+          </Tooltip>
+        )}
+        {sideMenuOpened ? t.appName : ""}
       </Logo>
       <ToggleHandle role={"toggle-menu"}>
-        {opened ? (
+        {sideMenuOpened ? (
           <IconText
             role={"toggle-icon"}
             icon={<RFIMenuFold fontSize={18} />}
-            onClick={() => onChangeSideMenuOpened?.(false)}
+            onClick={() => handleSetSideMenuOpened?.(false)}
           />
         ) : (
           <IconText
             role={"toggle-icon"}
-            icon={<RFIArrowRight fontSize={18} />}
-            onClick={() => onChangeSideMenuOpened?.(true)}
+            icon={<RFIMenuUnfold fontSize={18} />}
+            onClick={() => handleSetSideMenuOpened?.(true)}
             block
           />
         )}
       </ToggleHandle>
-      {opened && <TabLine />}
+      {sideMenuOpened && <TabLine />}
     </NavHeaderContainer>
   );
 }
@@ -44,29 +56,20 @@ const NavHeaderContainer = styled.div<Props>`
   background: ${(p) => p.theme.header_background};
   line-height: 1.1;
 
-  ${({ opened, theme }) => {
-    if (opened) {
+  ${({ sideMenuOpened }) => {
+    if (sideMenuOpened) {
       return css`
         ${SMixinFlexRow("stretch", "center")};
         padding: 0 32px;
       `;
     }
     return css`
-      ${SMixinFlexRow("center", "center")};
-      height: 60px;
+      ${SMixinFlexColumn("center", "center")};
+      height: 70px;
       padding: 0;
 
       [role="toggle-menu"] {
-        position: absolute;
-        right: -10px;
-        top: 15px;
-        width: 20px;
-        height: 20px;
-        background: ${theme.border_color_base};
-        color: ${theme.text_heading_color};
-        border-radius: 50%;
         ${SMixinFlexRow("center", "center")};
-        cursor: pointer;
       }
     `;
   }}
@@ -79,8 +82,8 @@ const Logo = styled.div<Props>`
   font-weight: bold;
   color: ${(p) => p.theme.text_heading_color};
 
-  ${({ opened }) => {
-    if (opened) {
+  ${({ sideMenuOpened }) => {
+    if (sideMenuOpened) {
       return css`
         ${SMixinFlexRow("stretch", "center")};
       `;
@@ -102,7 +105,7 @@ const ToggleHandle = styled.div`
 const TabLine = styled.div`
   position: absolute;
   height: 3px;
-  width: 100%;
+  width: calc(100% + 1px);
   bottom: 0;
   left: 0;
   background: ${(p) => p.theme.primary_color};

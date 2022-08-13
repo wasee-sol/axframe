@@ -6,22 +6,26 @@ import * as React from "react";
 import { RFIMoreVertical } from "react-frame-icon";
 import { User } from "stores";
 import { SMixinFlexRow } from "styles/emotion";
+import { useNavGroupController } from "../../@controller/nav/NavGroupController";
+import { mergeProps } from "../../utils/object";
 import UserInfoDropdown from "./UserInfoDropdown";
 
 interface StyleProps {
-  opened: boolean;
+  sideMenuOpened?: boolean;
 }
 interface Props extends StyleProps {
-  me: User;
+  me?: User;
   onSignOut?: () => Promise<void>;
 }
 
-function UserInfo({ opened, me, onSignOut }: Props) {
-  const { name, jobTitle } = me;
+function UserInfo(props: Props) {
+  const { sideMenuOpened, me, handleSignOut } = mergeProps(props, useNavGroupController());
+  const { name, jobTitle } = me ?? {};
+
   return (
-    <UserInfoContainer opened={opened}>
-      <UserInfoBox opened={opened}>
-        {opened ? (
+    <UserInfoContainer sideMenuOpened={sideMenuOpened}>
+      <UserInfoBox sideMenuOpened={sideMenuOpened}>
+        {sideMenuOpened ? (
           <>
             <UserAvatar size={"medium"} userName={name} role='avatar' />
             <UserCard>
@@ -29,8 +33,8 @@ function UserInfo({ opened, me, onSignOut }: Props) {
               <span role='job-title'>{jobTitle}</span>
             </UserCard>
             <Dropdown
-              overlay={<UserInfoDropdown onSignOut={onSignOut} />}
-              trigger={["hover", "click"]}
+              overlay={<UserInfoDropdown onSignOut={handleSignOut} />}
+              trigger={["click"]}
               placement={"bottomRight"}
             >
               <DownDownHandle>
@@ -41,7 +45,7 @@ function UserInfo({ opened, me, onSignOut }: Props) {
         ) : (
           <>
             <Popover
-              content={<UserInfoDropdown onSignOut={onSignOut} asPopover />}
+              content={<UserInfoDropdown onSignOut={handleSignOut} asPopover />}
               placement={"rightTop"}
               align={{ targetOffset: [0, 8] }}
             >
@@ -57,14 +61,13 @@ function UserInfo({ opened, me, onSignOut }: Props) {
 }
 
 const UserInfoContainer = styled.div<StyleProps>`
-  flex: 1;
-
+  flex: none;
   [role="avatar"] {
     flex: none;
   }
 
-  ${({ opened }) => {
-    if (opened) {
+  ${({ sideMenuOpened }) => {
+    if (sideMenuOpened) {
       return css`
         padding: 28px 28px 0 28px;
       `;
@@ -77,8 +80,8 @@ const UserInfoContainer = styled.div<StyleProps>`
 const UserInfoBox = styled.div<StyleProps>`
   ${SMixinFlexRow("stretch", "center")};
   column-gap: 20px;
-  ${({ opened, theme }) => {
-    if (opened) {
+  ${({ sideMenuOpened, theme }) => {
+    if (sideMenuOpened) {
       return css`
         ${SMixinFlexRow("stretch", "center")};
         border-bottom: 1px solid ${theme.border_color_base};

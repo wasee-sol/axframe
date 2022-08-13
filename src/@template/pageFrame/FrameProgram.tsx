@@ -41,7 +41,7 @@ const PageFrameNav = styled.div<StyleProps>`
   ${({ sideMenuOpened }) => {
     if (sideMenuOpened) {
       return css`
-        width: 302px;
+        width: 301px;
       `;
     }
 
