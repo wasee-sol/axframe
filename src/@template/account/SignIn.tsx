@@ -1,13 +1,14 @@
 import { IdcardOutlined, LockOutlined } from "@ant-design/icons";
 import styled from "@emotion/styled";
 import { Button, Divider, Form, Input } from "antd";
-import { useState } from "react";
 import * as React from "react";
 import { RFIArrowLogIn } from "react-frame-icon";
 import { SMixinFlexColumn, SMixinFlexRow } from "styles/emotion";
 import { useI18n } from "hooks/useI18n";
-import { getTrimNonEmptyRegExp } from "../../utils/formPatterns/getTrimNonEmptyRegExp";
-import IconText from "../common/IconText";
+import { useSignInController } from "@controller/pages/SignInController";
+import { getTrimNonEmptyRegExp } from "utils/formPatterns/getTrimNonEmptyRegExp";
+import { mergeProps } from "utils/object";
+import IconText from "@template/common/IconText";
 
 interface Props {
   onSignIn?: (values: SignInFormItem) => Promise<void>;
@@ -17,10 +18,10 @@ export interface SignInFormItem {
   password?: string;
 }
 
-function SignIn({ onSignIn }: Props) {
+function SignIn(props: Props) {
+  const { onSignIn, signing, setSigning } = mergeProps(props, useSignInController());
   const { t, currentLanguage, setLanguage } = useI18n();
   const [form] = Form.useForm<SignInFormItem>();
-  const [signing, setSigning] = useState(false);
 
   const handleSubmit = React.useCallback(
     async (values: SignInFormItem) => {
@@ -28,7 +29,7 @@ function SignIn({ onSignIn }: Props) {
       await onSignIn?.(values);
       setSigning(false);
     },
-    [onSignIn]
+    [onSignIn, setSigning]
   );
 
   return (

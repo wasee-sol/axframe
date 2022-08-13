@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import * as React from "react";
 import { Outlet } from "react-router-dom";
 import { SMixinFlexColumn, SMixinFlexRow } from "styles/emotion";
-import TabGroupController from "../../@controller/content/tabs/TabGroupController";
+import TabGroupController from "@controller/tabs/TabGroupController";
 
 interface StyleProps {
   sideMenuOpened: boolean;

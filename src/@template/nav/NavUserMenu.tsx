@@ -6,7 +6,9 @@ import { UserMenuItem } from "stores";
 import ProgramIcon, { ProgramType } from "components/ProgramIcon";
 import { useNavGroupController } from "../../@controller/nav/NavGroupController";
 import { useLink } from "../../hooks/useLink";
+import { SMixinScrollerStyle } from "../../styles/emotion";
 import { mergeProps } from "../../utils/object";
+import { css } from "@emotion/react";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -89,6 +91,26 @@ const NavUserMenuContainer = styled.div<StyleProps>`
   flex: 1;
   overflow: auto;
   overflow-x: hidden;
+
+  ${({ sideMenuOpened, theme }) => {
+    if (sideMenuOpened) {
+      return css`
+        padding: 20px 0;
+        ${SMixinScrollerStyle({
+          track_color: theme.body_background,
+          thumb_color: theme.scroll_thumb_color,
+        })};
+      `;
+    }
+    return css`
+      padding: 10px 0;
+      ${SMixinScrollerStyle({
+        track_color: theme.component_background,
+        thumb_color: theme.scroll_thumb_color,
+      })};
+    `;
+  }}
+
   .ant-menu {
     background: inherit;
     color: ${(p) => p.theme.text_heading_color};

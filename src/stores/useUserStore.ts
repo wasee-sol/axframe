@@ -27,7 +27,7 @@ export interface UserModel {
 export interface UserActions {
   setLoaded: (loaded: boolean) => void;
   setMe: (me: User) => Promise<void>;
-  signOut: () => void;
+  signOut: () => Promise<void>;
   setMenus: (menus: UserMenuItem[]) => void;
   setOpenedMenuUuids: (uuids: string[]) => void;
   setSelectedMenuUuid: (uuid: string) => void;
@@ -49,7 +49,8 @@ const useUserStore = buildStore<UserStore>("user", (set, get) => ({
     const { menus } = await UserService.getUserMenu(me.uuid);
     set({ me, menus });
   },
-  signOut: () => {
+  signOut: async () => {
+    await UserService.signOut();
     set({ me: undefined });
   },
   setMenus: (menus) => {

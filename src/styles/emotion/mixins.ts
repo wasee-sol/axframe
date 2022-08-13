@@ -1,5 +1,6 @@
 import * as React from "react";
 import { css } from "@emotion/react";
+import { darken } from "../palette/colorUtil";
 
 type FlexDirection = React.CSSProperties["flexDirection"];
 type FlexWrap = React.CSSProperties["flexWrap"];
@@ -42,6 +43,43 @@ export const SMixinFlexColumn = (
   alignItems: AlignItems = "center",
   flexWrap: FlexWrap = "nowrap"
 ) => SMixinFlex({ direction: "column", justifyContent, alignItems, flexWrap });
+
+export interface SMixinScrollerStyleProps {
+  track_color: string;
+  thumb_color: string;
+}
+export const SMixinScrollerStyle = ({ track_color, thumb_color }: SMixinScrollerStyleProps) => css`
+  &::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${thumb_color};
+    border-radius: 4.5px;
+    border: 2px solid ${track_color};
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: ${darken(thumb_color, 0.2)};
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: ${track_color};
+  }
+  &::-webkit-scrollbar-track:vertical {
+    background-color: ${track_color};
+  }
+
+  &::-webkit-scrollbar-track:horizontal {
+    background-color: ${track_color};
+  }
+
+  &::-webkit-scrollbar-corner {
+    background-color: ${track_color};
+  }
+`;
 
 //
 

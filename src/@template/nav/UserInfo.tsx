@@ -79,7 +79,7 @@ const UserInfoContainer = styled.div<StyleProps>`
 `;
 const UserInfoBox = styled.div<StyleProps>`
   ${SMixinFlexRow("stretch", "center")};
-  column-gap: 20px;
+  column-gap: 15px;
   ${({ sideMenuOpened, theme }) => {
     if (sideMenuOpened) {
       return css`
@@ -115,7 +115,7 @@ const DownDownHandle = styled.div`
   ${SMixinFlexRow("center", "center")};
   cursor: pointer;
   flex: none;
-  font-size: 24px;
+  font-size: 20px;
   color: ${(p) => p.theme.primary_color};
 `;
 

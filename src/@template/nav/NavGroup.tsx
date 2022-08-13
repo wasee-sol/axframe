@@ -61,11 +61,9 @@ const NavContent = styled.div<StyleProps>`
     if (sideMenuOpened) {
       return css`
         width: 300px;
-        row-gap: 20px;
       `;
     }
     return css`
-      padding-top: 10px;
       width: 60px;
     `;
   }}

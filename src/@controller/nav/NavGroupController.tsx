@@ -15,6 +15,8 @@ export function useNavGroupController() {
   const signOut = useUserStore((s) => s.signOut);
   const { errorDialog } = useDialog();
 
+  const [signOutSpinning, setSignOutSpinning] = React.useState(false);
+
   const handleSignOut = React.useCallback(async () => {
     try {
       await signOut();
@@ -45,11 +47,11 @@ export function useNavGroupController() {
     openedMenuUuids,
     selectedMenuUuid,
     sideMenuOpened,
-    setSideMenuOpened,
-    signOut,
     handleSignOut,
     handleSetSideMenuOpened,
     onSideMenuOpenChange,
+    signOutSpinning,
+    setSignOutSpinning,
   };
 }
 

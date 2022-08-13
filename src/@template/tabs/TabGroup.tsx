@@ -1,18 +1,22 @@
 import * as React from "react";
 import styled from "@emotion/styled";
+import { useTabGroupController } from "@controller/tabs/TabGroupController";
+import { mergeProps } from "utils/object";
 
 interface Props {}
 
-function TabGroupController(props: Props) {
+function TabGroup(props: Props) {
+  const {} = mergeProps(props, useTabGroupController());
+
   return (
-    <TabGroupControllerContainer>
-      TabGroupController
+    <TabGroupContainer>
+      TabGroup
       <TabLine />
-    </TabGroupControllerContainer>
+    </TabGroupContainer>
   );
 }
 
-const TabGroupControllerContainer = styled.div`
+const TabGroupContainer = styled.div`
   flex: none;
   position: relative;
   height: 45px;
@@ -28,4 +32,4 @@ const TabLine = styled.div`
   background: ${(p) => p.theme.primary_color};
 `;
 
-export default TabGroupController;
+export default TabGroup;

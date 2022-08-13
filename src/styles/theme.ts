@@ -5,12 +5,12 @@ import { alpha } from "./palette/colorUtil"; // Using relative path because the 
 import DARK from "./palette/dark";
 import LIGHT from "./palette/light";
 
-const transparent = "transparent";
+// const transparent = "transparent";
 
 const lightColors = {
   // antd colors
   body_background: LIGHT.INK_10,
-  scroll_thumb_color: LIGHT.INK_70,
+  scroll_thumb_color: LIGHT.INK_30,
   border_color_base: LIGHT.INK_20,
   border_color_split: LIGHT.INK_20,
   primary_color: LIGHT.BLUE_50,

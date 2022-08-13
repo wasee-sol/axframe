@@ -1,14 +1,16 @@
+import { useState } from "react";
 import * as React from "react";
 import SignIn, { SignInFormItem } from "@template/account/SignIn";
 import { useDialog } from "hooks/useDialog";
 import useUserStore from "stores/useUserStore";
 import { UserService } from "services";
 
-function SignInController() {
+export function useSignInController() {
   const setMe = useUserStore((s) => s.setMe);
+  const [signing, setSigning] = useState(false);
   const { errorDialog } = useDialog();
 
-  const handleSignIn = React.useCallback(
+  const onSignIn = React.useCallback(
     async (values: SignInFormItem) => {
       try {
         const me = await UserService.signIn(values);
@@ -20,7 +22,10 @@ function SignInController() {
     [errorDialog, setMe]
   );
 
-  return <SignIn onSignIn={handleSignIn} />;
+  return { onSignIn, signing, setSigning };
+}
+function SignInController() {
+  return <SignIn />;
 }
 
 export default SignInController;

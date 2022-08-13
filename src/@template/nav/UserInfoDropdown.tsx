@@ -1,9 +1,10 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
-import { useState } from "react";
 import * as React from "react";
 import { RFIArrowLogOut } from "react-frame-icon";
+import { useNavGroupController } from "../../@controller/nav/NavGroupController";
 import { SMixinFlexColumn } from "../../styles/emotion";
+import { mergeProps } from "../../utils/object";
 import IconText from "../common/IconText";
 import LabelText from "../common/LabelText";
 
@@ -14,13 +15,13 @@ interface Props extends StyleProps {
   onSignOut?: () => Promise<void>;
 }
 
-function UserInfoDropdown({ asPopover, onSignOut }: Props) {
-  const [spinning, setSpinning] = useState(false);
+function UserInfoDropdown(props: Props) {
+  const { handleSignOut, asPopover, signOutSpinning, setSignOutSpinning } = mergeProps(props, useNavGroupController());
   const handleClickSignOut = React.useCallback(async () => {
-    setSpinning(true);
-    await onSignOut?.();
-    setSpinning(false);
-  }, [onSignOut]);
+    setSignOutSpinning(true);
+    await handleSignOut?.();
+    setSignOutSpinning(false);
+  }, [handleSignOut, setSignOutSpinning]);
 
   return (
     <UserInfoDropdownContainer asPopover={asPopover}>
@@ -35,7 +36,13 @@ function UserInfoDropdown({ asPopover, onSignOut }: Props) {
       </LabelText>
       <CustomDivider />
       <CustomMenus>
-        <IconText icon={<RFIArrowLogOut />} iconSize={"15px"} onClick={handleClickSignOut} block loading={spinning}>
+        <IconText
+          icon={<RFIArrowLogOut />}
+          iconSize={"15px"}
+          onClick={handleClickSignOut}
+          block
+          loading={signOutSpinning}
+        >
           Sign Out
         </IconText>
       </CustomMenus>
