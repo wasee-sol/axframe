@@ -76,7 +76,7 @@ function NavUserMenu(props: Props) {
         items={items}
         openKeys={openedMenuUuids}
         onOpenChange={onSideMenuOpenChange}
-        defaultSelectedKeys={[selectedMenuUuid]}
+        selectedKeys={[selectedMenuUuid]}
         inlineIndent={28}
         inlineCollapsed={!sideMenuOpened}
         onClick={onClick}
