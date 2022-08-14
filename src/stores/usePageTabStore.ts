@@ -14,7 +14,7 @@ export interface PagesTabModel {
 }
 
 export interface TabsActions {
-  addTab: (page: PageModel) => void;
+  addTab: (page: PageModel) => string;
   removeTab: (tabUuid: string) => void;
   updateTab: (tabUuid: string, page: PageModel) => void;
   setActiveTab: (tabUuid: string) => void;
@@ -32,10 +32,9 @@ export const tabsInitialState: PagesTabModel = {
 const usePageTabStore = buildStore<TabsStore>("tabs", (set, get) => ({
   ...tabsInitialState,
   addTab: (page) => {
-    const pages = get().pages.set(uuidv4(), page);
-
-    console.log([...get().pages]);
-    console.log([...pages]);
+    const tabUuid = uuidv4();
+    get().pages.set(tabUuid, page);
+    return tabUuid;
   },
   removeTab: (tabUuid) => {},
   updateTab: (tabUuid, page) => {},

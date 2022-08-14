@@ -6,8 +6,8 @@ import * as React from "react";
 import { RFIMoreVertical } from "react-frame-icon";
 import { User } from "stores";
 import { SMixinFlexRow } from "styles/emotion";
-import { useNavGroupController } from "../../@controller/nav/NavGroupController";
-import { mergeProps } from "../../utils/object";
+import { useNavGroupController } from "@controller/nav/NavGroupController";
+import { mergeProps } from "utils/object";
 import UserInfoDropdown from "./UserInfoDropdown";
 
 interface StyleProps {

@@ -1,6 +1,6 @@
 import * as webpack from "webpack";
 import * as path from "path";
-import * as HtmlWebpackPlugin from "html-webpack-plugin";
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
