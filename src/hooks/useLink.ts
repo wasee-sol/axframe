@@ -19,16 +19,18 @@ export function useLink() {
     const label = linkToMenu?.label ?? t.pageTab.newTab;
     const { tabUuid, page } = getActiveTabPage();
 
-    if (page.isHome) {
-      const addedTabUuid = addTab({
-        label,
-        path: to,
-        fixed: false,
-      });
-      setActiveTab(addedTabUuid);
-    } else {
+    if (page.path === "about:blank") {
       updateTab(tabUuid, { ...page, label, path: to });
+      navigate(to);
+      return;
     }
+
+    const addedTabUuid = addTab({
+      label,
+      path: to,
+      fixed: false,
+    });
+    setActiveTab(addedTabUuid);
 
     navigate(to);
   };

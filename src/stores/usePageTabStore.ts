@@ -26,6 +26,7 @@ export interface TabsActions {
   updateTab: (tabUuid: string, page: PageModel) => void;
   setActiveTab: (activeTabUuid: string) => void;
   getActiveTabPage: () => PageTab;
+  setActiveTabByPath: (path: string) => void;
   clearTab: () => void;
 }
 
@@ -87,6 +88,13 @@ const usePageTabStore = buildStore<TabsStore>("page-tab", 2, (set, get) => ({
       tabUuid,
       page: initialPage,
     };
+  },
+  setActiveTabByPath: (path) => {
+    const pagesEntries = [...get().pages];
+    const existsPageEntry = pagesEntries.find(([, _page]) => _page.path === path);
+    if (existsPageEntry) {
+      set({ activeTabUuid: existsPageEntry[0] });
+    }
   },
   clearTab: () => {
     get().pages.forEach((value, key, map) => {
