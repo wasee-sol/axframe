@@ -1,16 +1,32 @@
 import * as React from "react";
 import styled from "@emotion/styled";
-import { useTabGroupController } from "@controller/tabs/TabGroupController";
+import { RFIHome } from "react-frame-icon";
 import { mergeProps } from "utils/object";
+import { useTabGroupController } from "@controller/tabs/TabGroupController";
+import { css } from "@emotion/react";
+import { SMixinFlexColumn, SMixinFlexRow } from "../../styles/emotion";
 
 interface Props {}
+interface TabItemProps {
+  isHome?: boolean;
+  active: boolean;
+}
 
 function TabGroup(props: Props) {
-  const {} = mergeProps(props, useTabGroupController());
+  const { pages, activeTabUuid, onClickTab } = mergeProps(props, useTabGroupController());
 
   return (
     <TabGroupContainer>
-      TabGroup
+      <TabItemsGroup>
+        {pages &&
+          [...pages.entries()].map(([k, v]) => {
+            return (
+              <TabItem key={k} isHome={v.isHome} active={activeTabUuid === k} onClick={() => onClickTab(k, v.path)}>
+                {v.isHome ? <RFIHome fontSize={18} /> : v.label}
+              </TabItem>
+            );
+          })}
+      </TabItemsGroup>
       <TabLine />
     </TabGroupContainer>
   );
@@ -30,6 +46,49 @@ const TabLine = styled.div`
   bottom: 0;
   left: 0;
   background: ${(p) => p.theme.primary_color};
+`;
+
+const TabItemsGroup = styled.div`
+  position: absolute;
+  bottom: 3px;
+  ${SMixinFlexRow("flex-start", "flex-end")};
+  column-gap: 2px;
+  padding: 0 0 0 10px;
+`;
+
+const TabItem = styled.div<TabItemProps>`
+  ${SMixinFlexColumn("center", "center")};
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  height: 30px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  user-select: none;
+
+  ${({ isHome }) => {
+    if (isHome) {
+      return css`
+        padding: 0 10px;
+      `;
+    }
+    return css`
+      padding: 0 20px 0 10px;
+    `;
+  }}
+
+  ${({ active, theme }) => {
+    if (active) {
+      return css`
+        color: ${theme.white_color};
+        background: ${theme.primary_color};
+      `;
+    }
+    return css`
+      background: #f0f0f0;
+      color: ${theme.text_display_color};
+    `;
+  }}
 `;
 
 export default TabGroup;

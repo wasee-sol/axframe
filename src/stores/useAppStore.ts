@@ -33,7 +33,7 @@ const getAppStoreActions: StoreActions = (set, get) => ({
   setSideMenuOpened: (sideMenuOpened: boolean) => set({ sideMenuOpened }),
 });
 
-export const useAppStore = buildStore<AppStore>("app", (set, get) => ({
+export const useAppStore = buildStore<AppStore>("app", 1, (set, get) => ({
   ...appInitialState,
   ...getAppStoreActions(set, get),
 }));

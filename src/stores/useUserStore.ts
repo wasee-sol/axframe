@@ -1,5 +1,6 @@
 import buildStore from "stores/buildStore";
 import { UserService } from "services";
+import usePageTabStore from "./usePageTabStore";
 
 export interface User {
   uuid: string;
@@ -42,7 +43,7 @@ export const userInitialState: UserModel = {
   selectedMenuUuid: "",
 };
 
-const useUserStore = buildStore<UserStore>("user", (set, get) => ({
+const useUserStore = buildStore<UserStore>("user", 1, (set, get) => ({
   ...userInitialState,
   setLoaded: (loaded: boolean) => set({ loaded }),
   setMe: async (me) => {
@@ -52,6 +53,7 @@ const useUserStore = buildStore<UserStore>("user", (set, get) => ({
   signOut: async () => {
     await UserService.signOut();
     set({ me: undefined });
+    usePageTabStore.getState().clearTab();
   },
   setMenus: (menus) => {
     set({ menus });

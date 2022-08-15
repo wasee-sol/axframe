@@ -5,16 +5,12 @@ import FrameDefault from "@template/pageFrame/FrameDefault";
 import FrameProgram from "@template/pageFrame/FrameProgram";
 import * as React from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
-import { useAppStore, UserMenuItem } from "stores";
+import { useAppStore } from "stores";
+import useUserStore from "stores/useUserStore";
+import { getFlattedUserMenus } from "utils/store";
 import ReportController from "../@controller/pages/ReportController";
-import useUserStore from "../stores/useUserStore";
 import RequireAuth from "./RequireAuth";
 import RestrictAuth from "./RestrictAuth";
-
-export const getFlattedUserMenus = (menus: UserMenuItem[]) => {
-  const useMenuFlatFn = ({ children = [], ...rest }: UserMenuItem) => [rest, ...children.flatMap(useMenuFlatFn)];
-  return menus.flatMap(useMenuFlatFn);
-};
 
 function PageRoute() {
   const sideMenuOpened = useAppStore((s) => s.sideMenuOpened);

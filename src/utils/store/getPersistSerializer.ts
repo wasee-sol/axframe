@@ -19,20 +19,40 @@ const storage: StateStorage = {
   },
 };
 
-export function getPersistSerializer<T>(storeName: string): PersistOptions<T> {
+function replacer(key, value) {
+  if (value instanceof Map) {
+    return {
+      dataType: "Map",
+      value: Array.from(value.entries()), // or with spread: value: [...value]
+    };
+  }
+  return value;
+}
+function reviver(key, value) {
+  if (typeof value === "object" && value !== null) {
+    if (value.dataType === "Map") {
+      return new Map(value.value);
+    }
+  }
+  return value;
+}
+
+export function getPersistSerializer<T>(storeName: string, storeVersion: number = 1): PersistOptions<T> {
   return {
-    version: 1,
+    version: storeVersion,
     name: `store-${storeName}`,
     getStorage: () => storage,
-    serialize: (state) =>
-      LZUTF8.compress(JSON.stringify(state), {
+    serialize: (state) => {
+      return LZUTF8.compress(JSON.stringify(state, replacer), {
         outputEncoding: "StorageBinaryString",
-      }),
+      });
+    },
     deserialize: (str) => {
       return JSON.parse(
         LZUTF8.decompress(str, {
           inputEncoding: "StorageBinaryString",
-        })
+        }),
+        reviver
       );
     },
   };
