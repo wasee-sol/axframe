@@ -27,9 +27,10 @@ export function useNavGroupController() {
 
   const handleSetSideMenuOpened = React.useCallback(
     (opened: boolean) => {
+      setOpenedMenuUuids([]);
       setSideMenuOpened(opened);
     },
-    [setSideMenuOpened]
+    [setOpenedMenuUuids, setSideMenuOpened]
   );
 
   const onSideMenuOpenChange = React.useCallback(

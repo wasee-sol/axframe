@@ -74,6 +74,7 @@ function NavUserMenu(props: Props) {
   return (
     <NavUserMenuContainer sideMenuOpened={sideMenuOpened}>
       <Menu
+        key={`user-menu-${sideMenuOpened}`}
         mode={"inline"}
         items={items}
         openKeys={openedMenuUuids}
