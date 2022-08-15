@@ -23,5 +23,8 @@ const EN = {
     reload: "Reload",
     cancel: "Cancel",
   },
+  pageTab: {
+    newTab: "New tab",
+  },
 };
 export default EN;

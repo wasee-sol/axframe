@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "@emotion/styled";
-import { RFIHome } from "react-frame-icon";
+import { RFIAdd, RFIHome } from "react-frame-icon";
 import { mergeProps } from "utils/object";
 import { useTabGroupController } from "@controller/tabs/TabGroupController";
 import { css } from "@emotion/react";
@@ -13,7 +13,7 @@ interface TabItemProps {
 }
 
 function TabGroup(props: Props) {
-  const { pages, activeTabUuid, onClickTab } = mergeProps(props, useTabGroupController());
+  const { pages, activeTabUuid, onClickTab, onClickAddTab } = mergeProps(props, useTabGroupController());
 
   return (
     <TabGroupContainer>
@@ -26,6 +26,9 @@ function TabGroup(props: Props) {
               </TabItem>
             );
           })}
+        <AddTab onClick={onClickAddTab}>
+          <RFIAdd />
+        </AddTab>
       </TabItemsGroup>
       <TabLine />
     </TabGroupContainer>
@@ -89,6 +92,25 @@ const TabItem = styled.div<TabItemProps>`
       color: ${theme.text_display_color};
     `;
   }}
+`;
+
+const AddTab = styled.div`
+  ${SMixinFlexColumn("center", "center")};
+  position: relative;
+  cursor: pointer;
+  padding: 0 10px;
+  font-size: 16px;
+  color: ${(p) => p.theme.primary_color};
+
+  width: 25px;
+  height: 25px;
+  margin-bottom: 2.5px;
+  margin-left: 2.5px;
+  border-radius: 5px;
+
+  &:hover {
+    background: ${(p) => p.theme.border_color_base};
+  }
 `;
 
 export default TabGroup;

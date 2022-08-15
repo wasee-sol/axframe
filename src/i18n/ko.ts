@@ -25,5 +25,8 @@ const KO: typeof EN = {
     reload: "Reload",
     cancel: "Cancel",
   },
+  pageTab: {
+    newTab: "새 탭",
+  },
 };
 export default KO;

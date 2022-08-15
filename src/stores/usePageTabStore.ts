@@ -2,9 +2,9 @@ import buildStore from "stores/buildStore";
 import { v4 as uuidv4 } from "uuid";
 
 export interface PageModel {
-  fixed: boolean;
+  fixed?: boolean;
   label: string;
-  path: string;
+  path?: string;
   icon?: string;
   metaData?: Record<string, any>;
   isHome?: boolean;

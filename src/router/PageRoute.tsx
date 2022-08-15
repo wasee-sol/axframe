@@ -8,6 +8,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import { useAppStore } from "stores";
 import useUserStore from "stores/useUserStore";
 import { getFlattedUserMenus } from "utils/store";
+import BlankPageController from "../@controller/pages/BlankPageController";
 import ReportController from "../@controller/pages/ReportController";
 import RequireAuth from "./RequireAuth";
 import RestrictAuth from "./RestrictAuth";
@@ -37,6 +38,7 @@ function PageRoute() {
         <Route path='/' element={<HomeController />} />
         <Route path='/setting' element={<SettingController />} />
         <Route path='/report' element={<ReportController />} />
+        <Route path='/about:blank' element={<BlankPageController />} />
       </Route>
       <Route
         element={
