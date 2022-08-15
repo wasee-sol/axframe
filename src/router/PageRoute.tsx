@@ -1,8 +1,3 @@
-import HomeController from "@controller/pages/HomeController";
-import SettingController from "@controller/pages/SettingController";
-import SignInController from "@controller/pages/SignInController";
-import FrameDefault from "@template/pageFrame/FrameDefault";
-import FrameProgram from "@template/pageFrame/FrameProgram";
 import * as React from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { useAppStore } from "stores";
@@ -13,6 +8,12 @@ import ReportController from "../@controller/pages/ReportController";
 import usePageTabStore from "../stores/usePageTabStore";
 import RequireAuth from "./RequireAuth";
 import RestrictAuth from "./RestrictAuth";
+
+import HomeController from "@controller/pages/HomeController";
+import SettingController from "@controller/pages/SettingController";
+import SignInController from "@controller/pages/SignInController";
+import FrameDefault from "@template/pageFrame/FrameDefault";
+import FrameProgram from "@template/pageFrame/FrameProgram";
 
 function PageRoute() {
   const sideMenuOpened = useAppStore((s) => s.sideMenuOpened);

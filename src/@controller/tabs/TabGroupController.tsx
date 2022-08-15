@@ -1,8 +1,7 @@
 import * as React from "react";
 import TabGroup from "@template/tabs/TabGroup";
 import usePageTabStore from "stores/usePageTabStore";
-import { useLink } from "hooks/useLink";
-import { useI18n } from "../../hooks/useI18n";
+import { useLink, useI18n } from "hooks";
 
 export function useTabGroupController() {
   const pages = usePageTabStore((s) => s.pages);
