@@ -26,7 +26,7 @@ function TabGroup(props: Props) {
               </TabItem>
             );
           })}
-        <AddTab onClick={onClickAddTab}>
+        <AddTab onClick={onClickAddTab} style={{ display: "none" }}>
           <RFIAdd />
         </AddTab>
       </TabItemsGroup>

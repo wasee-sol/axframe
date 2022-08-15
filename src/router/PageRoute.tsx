@@ -10,6 +10,7 @@ import useUserStore from "stores/useUserStore";
 import { getFlattedUserMenus } from "utils/store";
 import BlankPageController from "../@controller/pages/BlankPageController";
 import ReportController from "../@controller/pages/ReportController";
+import usePageTabStore from "../stores/usePageTabStore";
 import RequireAuth from "./RequireAuth";
 import RestrictAuth from "./RestrictAuth";
 
@@ -17,14 +18,17 @@ function PageRoute() {
   const sideMenuOpened = useAppStore((s) => s.sideMenuOpened);
   const menus = useUserStore((s) => s.menus);
   const setSelectedMenuUuid = useUserStore((s) => s.setSelectedMenuUuid);
+  const setActiveTabByPath = usePageTabStore((s) => s.setActiveTabByPath);
   const location = useLocation();
 
   React.useEffect(() => {
     if (menus.length) {
+      console.log("React.useEffect on pageRouter");
       const currentMenu = getFlattedUserMenus(menus).find((fMenu) => fMenu.path === location.pathname);
       setSelectedMenuUuid(currentMenu?.uuid ?? "");
+      setActiveTabByPath(location.pathname);
     }
-  }, [location.pathname, menus, setSelectedMenuUuid]);
+  }, [location.pathname, menus, setActiveTabByPath, setSelectedMenuUuid]);
 
   return (
     <Routes>
