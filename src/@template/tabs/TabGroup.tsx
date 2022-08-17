@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "@emotion/styled";
-import { RFIAdd, RFIHome } from "react-frame-icon";
+import { RFIAdd, RFIHome, RFIClose } from "react-frame-icon";
 import { mergeProps } from "utils/object";
 import { useTabGroupController } from "@controller/tabs/TabGroupController";
 import { css } from "@emotion/react";
@@ -13,19 +13,36 @@ interface TabItemProps {
 }
 
 function TabGroup(props: Props) {
-  const { pages, activeTabUuid, onClickTab, onClickAddTab } = mergeProps(props, useTabGroupController());
+  const { pagesValues, activeTabUuid, onClickTab, onClickAddTab, onClickRemoveTab } = mergeProps(
+    props,
+    useTabGroupController()
+  );
 
   return (
     <TabGroupContainer>
       <TabItemsGroup>
-        {pages &&
-          [...pages.entries()].map(([k, v]) => {
-            return (
-              <TabItem key={k} isHome={v.isHome} active={activeTabUuid === k} onClick={() => onClickTab(k, v.path)}>
-                {v.isHome ? <RFIHome fontSize={18} /> : v.label}
-              </TabItem>
-            );
-          })}
+        {pagesValues.map(([k, v]) => {
+          return (
+            <TabItem key={k} isHome={v.isHome} active={activeTabUuid === k} onClick={() => onClickTab(k, v.path)}>
+              {v.isHome ? (
+                <RFIHome fontSize={18} />
+              ) : (
+                <>
+                  {v.label}
+                  <a
+                    role='tab-close'
+                    onClick={(evt) => {
+                      onClickRemoveTab(k);
+                      evt.stopPropagation();
+                    }}
+                  >
+                    <RFIClose />
+                  </a>
+                </>
+              )}
+            </TabItem>
+          );
+        })}
         <AddTab onClick={onClickAddTab} style={{ display: "none" }}>
           <RFIAdd />
         </AddTab>
@@ -60,7 +77,7 @@ const TabItemsGroup = styled.div`
 `;
 
 const TabItem = styled.div<TabItemProps>`
-  ${SMixinFlexColumn("center", "center")};
+  ${SMixinFlexRow("flex-start", "center")};
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   height: 30px;
@@ -68,6 +85,14 @@ const TabItem = styled.div<TabItemProps>`
   font-size: 13px;
   cursor: pointer;
   user-select: none;
+  position: relative;
+
+  [role="tab-close"] {
+    position: absolute;
+    right: 8px;
+    top: 9px;
+    line-height: 15px;
+  }
 
   ${({ isHome }) => {
     if (isHome) {
@@ -76,6 +101,7 @@ const TabItem = styled.div<TabItemProps>`
       `;
     }
     return css`
+      min-width: 100px;
       padding: 0 20px 0 10px;
     `;
   }}
@@ -85,6 +111,10 @@ const TabItem = styled.div<TabItemProps>`
       return css`
         color: ${theme.white_color};
         background: ${theme.primary_color};
+
+        [role="tab-close"] {
+          color: ${theme.white_color};
+        }
       `;
     }
     return css`

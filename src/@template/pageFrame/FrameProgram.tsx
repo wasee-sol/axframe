@@ -1,10 +1,11 @@
-import NavGroupController from "@controller/nav/NavGroupController";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import * as React from "react";
 import { Outlet } from "react-router-dom";
 import { SMixinFlexColumn, SMixinFlexRow } from "styles/emotion";
-import TabGroupController from "@controller/tabs/TabGroupController";
+
+const NavGroupController = React.lazy(() => import("@controller/nav/NavGroupController"));
+const TabGroupController = React.lazy(() => import("@controller/tabs/TabGroupController"));
 
 interface StyleProps {
   sideMenuOpened: boolean;

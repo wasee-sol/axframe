@@ -9,11 +9,11 @@ import usePageTabStore from "../stores/usePageTabStore";
 import RequireAuth from "./RequireAuth";
 import RestrictAuth from "./RestrictAuth";
 
-import HomeController from "@controller/pages/HomeController";
-import SettingController from "@controller/pages/SettingController";
-import SignInController from "@controller/pages/SignInController";
-import FrameDefault from "@template/pageFrame/FrameDefault";
-import FrameProgram from "@template/pageFrame/FrameProgram";
+const HomeController = React.lazy(() => import("@controller/pages/HomeController"));
+const SettingController = React.lazy(() => import("@controller/pages/SettingController"));
+const SignInController = React.lazy(() => import("@controller/pages/SignInController"));
+const FrameDefault = React.lazy(() => import("@template/pageFrame/FrameDefault"));
+const FrameProgram = React.lazy(() => import("@template/pageFrame/FrameProgram"));
 
 function PageRoute() {
   const sideMenuOpened = useAppStore((s) => s.sideMenuOpened);
@@ -24,7 +24,6 @@ function PageRoute() {
 
   React.useEffect(() => {
     if (menus.length) {
-      console.log("React.useEffect on pageRouter");
       const currentMenu = getFlattedUserMenus(menus).find((fMenu) => fMenu.path === location.pathname);
       setSelectedMenuUuid(currentMenu?.uuid ?? "");
       setActiveTabByPath(location.pathname);

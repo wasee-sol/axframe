@@ -53,7 +53,10 @@ const usePageTabStore = buildStore<TabsStore>("page-tab", 2, (set, get) => ({
     return tabUuid;
   },
   removeTab: (tabUuid) => {
-    get().pages.delete(tabUuid);
+    const pages = get().pages;
+    pages.delete(tabUuid);
+    set({ pages: new Map([...pages]) });
+    return get().getActiveTabPage();
   },
   updateTab: (tabUuid, page) => {
     get().pages.set(tabUuid, page);
@@ -72,12 +75,12 @@ const usePageTabStore = buildStore<TabsStore>("page-tab", 2, (set, get) => ({
     }
 
     const pagesEntries = [...get().pages];
-    const homePageEntry = pagesEntries.find(([, page]) => page.isHome);
-    if (homePageEntry) {
-      set({ activeTabUuid: homePageEntry[0] });
+    const pageEntry = pagesEntries[pagesEntries.length - 1];
+    if (pageEntry) {
+      set({ activeTabUuid: pageEntry[0] });
       return {
-        tabUuid: homePageEntry[0],
-        page: homePageEntry[1],
+        tabUuid: pageEntry[0],
+        page: pageEntry[1],
       };
     }
 

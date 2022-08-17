@@ -7,7 +7,7 @@
   "compilerOptions": {
     "lib": ["dom", "es2015", "es2016", "es2017", "es2018", "esnext"],
     "target": "es2019",
-    "module": "es2015",
+    "module": "esnext",
     "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
