@@ -18,19 +18,17 @@ const App: React.FC = () => {
   }, [switcher, theme, themes.dark, themes.light]);
 
   return (
-    <React.Suspense fallback={<div>Loading...</div>}>
-      <ThemeProvider theme={themePalette[theme]}>
-        <ConfigProvider>
-          {loaded ? (
-            <BrowserRouter>
-              <PageRoute />
-            </BrowserRouter>
-          ) : (
-            <div>Loading...</div>
-          )}
-        </ConfigProvider>
-      </ThemeProvider>
-    </React.Suspense>
+    <ThemeProvider theme={themePalette[theme]}>
+      <ConfigProvider>
+        {loaded ? (
+          <BrowserRouter>
+            <PageRoute />
+          </BrowserRouter>
+        ) : (
+          <div>Loading...</div>
+        )}
+      </ConfigProvider>
+    </ThemeProvider>
   );
 };
 

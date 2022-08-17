@@ -3,8 +3,6 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import { useAppStore } from "stores";
 import useUserStore from "stores/useUserStore";
 import { getFlattedUserMenus } from "utils/store";
-import BlankPageController from "../@controller/pages/BlankPageController";
-import ReportController from "../@controller/pages/ReportController";
 import usePageTabStore from "../stores/usePageTabStore";
 import RequireAuth from "./RequireAuth";
 import RestrictAuth from "./RestrictAuth";
@@ -12,6 +10,8 @@ import RestrictAuth from "./RestrictAuth";
 const HomeController = React.lazy(() => import("@controller/pages/HomeController"));
 const SettingController = React.lazy(() => import("@controller/pages/SettingController"));
 const SignInController = React.lazy(() => import("@controller/pages/SignInController"));
+const BlankPageController = React.lazy(() => import("@controller/pages/BlankPageController"));
+const ReportController = React.lazy(() => import("@controller/pages/ReportController"));
 const FrameDefault = React.lazy(() => import("@template/pageFrame/FrameDefault"));
 const FrameProgram = React.lazy(() => import("@template/pageFrame/FrameProgram"));
 
@@ -26,7 +26,7 @@ function PageRoute() {
     if (menus.length) {
       const currentMenu = getFlattedUserMenus(menus).find((fMenu) => fMenu.path === location.pathname);
       setSelectedMenuUuid(currentMenu?.uuid ?? "");
-      setActiveTabByPath(location.pathname);
+      if (currentMenu || location.pathname === "/") setActiveTabByPath(location.pathname, currentMenu);
     }
   }, [location.pathname, menus, setActiveTabByPath, setSelectedMenuUuid]);
 
@@ -35,7 +35,9 @@ function PageRoute() {
       <Route
         element={
           <RequireAuth>
-            <FrameProgram sideMenuOpened={sideMenuOpened} />
+            <React.Suspense fallback={<div>Loading...</div>}>
+              <FrameProgram sideMenuOpened={sideMenuOpened} />
+            </React.Suspense>
           </RequireAuth>
         }
       >
@@ -47,7 +49,9 @@ function PageRoute() {
       <Route
         element={
           <RestrictAuth>
-            <FrameDefault />
+            <React.Suspense fallback={<div>Loading...</div>}>
+              <FrameDefault />
+            </React.Suspense>
           </RestrictAuth>
         }
       >

@@ -1,14 +1,14 @@
-import { Menu } from "antd";
-import * as React from "react";
-import styled from "@emotion/styled";
-import { MenuProps } from "antd/lib/menu";
-import { UserMenuItem } from "stores";
-import ProgramIcon, { ProgramType } from "components/ProgramIcon";
-import { useNavGroupController } from "../../@controller/nav/NavGroupController";
-import { useLink } from "../../hooks/useLink";
-import { SMixinScrollerStyle } from "../../styles/emotion";
-import { mergeProps } from "../../utils/object";
+import { useNavGroupController } from "@controller/nav/NavGroupController";
 import { css } from "@emotion/react";
+import styled from "@emotion/styled";
+import { Menu } from "antd";
+import { MenuProps } from "antd/lib/menu";
+import ProgramIcon, { ProgramType } from "components/ProgramIcon";
+import { useLink } from "hooks/useLink";
+import * as React from "react";
+import { UserMenuItem } from "stores";
+import { SMixinScrollerStyle } from "styles/emotion";
+import { mergeProps } from "utils/object";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -71,10 +71,13 @@ function NavUserMenu(props: Props) {
     [menus, linkTo]
   );
 
+  if (items.length === 0) {
+    return null;
+  }
+
   return (
     <NavUserMenuContainer sideMenuOpened={sideMenuOpened}>
       <Menu
-        key={`user-menu-${sideMenuOpened}`}
         mode={"inline"}
         items={items}
         openKeys={openedMenuUuids}

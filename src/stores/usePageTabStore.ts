@@ -1,5 +1,6 @@
 import buildStore from "stores/buildStore";
 import { v4 as uuidv4 } from "uuid";
+import { UserMenuItem } from "./useUserStore";
 
 export interface PageModel {
   fixed?: boolean;
@@ -26,7 +27,7 @@ export interface TabsActions {
   updateTab: (tabUuid: string, page: PageModel) => void;
   setActiveTab: (activeTabUuid: string) => void;
   getActiveTabPage: () => PageTab;
-  setActiveTabByPath: (path: string) => void;
+  setActiveTabByPath: (path: string, userMenuItem?: UserMenuItem) => void;
   clearTab: () => void;
 }
 
@@ -92,11 +93,19 @@ const usePageTabStore = buildStore<TabsStore>("page-tab", 2, (set, get) => ({
       page: initialPage,
     };
   },
-  setActiveTabByPath: (path) => {
+  setActiveTabByPath: (path, userMenuItem) => {
     const pagesEntries = [...get().pages];
     const existsPageEntry = pagesEntries.find(([, _page]) => _page.path === path);
     if (existsPageEntry) {
       set({ activeTabUuid: existsPageEntry[0] });
+    } else {
+      const label = userMenuItem?.label ?? "";
+      const addedTabUuid = get().addTab({
+        label,
+        path,
+        fixed: false,
+      });
+      get().setActiveTab(addedTabUuid);
     }
   },
   clearTab: () => {

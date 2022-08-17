@@ -4,7 +4,7 @@ import { RFIAdd, RFIHome, RFIClose } from "react-frame-icon";
 import { mergeProps } from "utils/object";
 import { useTabGroupController } from "@controller/tabs/TabGroupController";
 import { css } from "@emotion/react";
-import { SMixinFlexColumn, SMixinFlexRow } from "../../styles/emotion";
+import { SMixinFlexColumn, SMixinFlexRow } from "styles/emotion";
 
 interface Props {}
 interface TabItemProps {

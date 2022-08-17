@@ -59,7 +59,7 @@ export const mock_userMenus: UserMenuItem[] = [
   {
     icon: "RFISetting",
     uuid: "setting",
-    label: "Settings",
+    label: "Setting",
     path: "/setting",
   },
 ];
