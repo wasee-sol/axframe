@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import useUserStore from "../stores/useUserStore";
+import { ROUTES } from "./Routes";
 
 interface Props {
   children: JSX.Element;
@@ -12,7 +13,7 @@ function RequireAuth({ children }: Props) {
   const location = useLocation();
 
   if (loaded && !me) {
-    return <Navigate to='/sign-in' state={{ from: location }} replace />;
+    return <Navigate to={ROUTES.SIGN_IN.path} state={{ from: location }} replace />;
   }
 
   if (!loaded) {

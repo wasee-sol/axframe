@@ -12,6 +12,9 @@ import {
 } from "react-frame-icon";
 
 export const ROUTES = {
+  ROOT: {
+    path: "/",
+  },
   COUNSELING: {
     path: "counseling",
     label: "Counseling",
