@@ -88,7 +88,7 @@ const config: webpack.Configuration = {
       async: true,
       devServer: isDev,
     }),
-    new HtmlWebpackPlugin({ template: path.join(__dirname, "public", "index.html") }),
+    new HtmlWebpackPlugin({ template: path.join(__dirname, "public", "index.html"), publicPath: "/" }),
   ],
   optimization: {
     splitChunks: {

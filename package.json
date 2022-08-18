@@ -39,7 +39,7 @@
     "@emotion/css": "^11.10.0",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
-    "antd": "^4.22.3",
+    "antd": "^4.22.6",
     "color": "^4.2.3",
     "emotion-normalize": "^11.0.1",
     "idb-keyval": "^6.2.0",

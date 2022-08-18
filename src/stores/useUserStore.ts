@@ -48,6 +48,7 @@ const useUserStore = buildStore<UserStore>("user", 1, (set, get) => ({
   setLoaded: (loaded: boolean) => set({ loaded }),
   setMe: async (me) => {
     const { menus } = await UserService.getUserMenu(me.uuid);
+    // TODO : 사용자 메뉴를 받는 식이 아니라. 사용 가능한 메뉴 목록을 내려 받는 식으로 조정 필요.
     set({ me, menus });
   },
   signOut: async () => {

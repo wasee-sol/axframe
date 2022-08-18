@@ -2,10 +2,12 @@ import * as React from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { useAppStore } from "stores";
 import useUserStore from "stores/useUserStore";
-import { getFlattedUserMenus } from "utils/store";
+import { getFlattedMenus } from "utils/store";
 import usePageTabStore from "../stores/usePageTabStore";
+import { MENUS } from "./menus";
 import RequireAuth from "./RequireAuth";
 import RestrictAuth from "./RestrictAuth";
+import { ROUTES } from "./Routes";
 
 const FrameDefault = React.lazy(() => import("@template/pageFrame/FrameDefault"));
 const FrameProgram = React.lazy(() => import("@template/pageFrame/FrameProgram"));
@@ -30,15 +32,16 @@ function PageRoute() {
 
   React.useEffect(() => {
     if (menus.length) {
-      const currentMenu = getFlattedUserMenus(menus).find((fMenu) => fMenu.path === location.pathname);
-      setSelectedMenuUuid(currentMenu?.uuid ?? "");
-      if (currentMenu || location.pathname === "/") setActiveTabByPath(location.pathname, currentMenu);
+      const currentMenu = getFlattedMenus(MENUS).find((fMenu) => fMenu.key === location.pathname);
+      setSelectedMenuUuid(currentMenu?.key ?? "");
+      if (currentMenu || location.pathname === "/") setActiveTabByPath(location.pathname, currentMenu?.label);
     }
   }, [location.pathname, menus, setActiveTabByPath, setSelectedMenuUuid]);
 
   return (
     <Routes>
       <Route
+        path={"/"}
         element={
           <RequireAuth>
             <React.Suspense fallback={<div>Loading...</div>}>
@@ -47,18 +50,21 @@ function PageRoute() {
           </RequireAuth>
         }
       >
-        <Route path='/' element={<HomeController />} />
-        <Route path='/analytics' element={<AnalyticsController />} />
-        <Route path='/counseling-registration' element={<CounselingController />} />
-        <Route path='/counseling-list' element={<CounselingController />} />
-        <Route path='/inbox' element={<InboxController />} />
-        <Route path='/project' element={<ProjectController />} />
-        <Route path='/report' element={<ReportController />} />
-        <Route path='/setting' element={<SettingController />} />
-        <Route path='/template' element={<TemplateController />} />
-        <Route path='/about:blank' element={<BlankPageController />} />
+        <Route path={ROUTES.HOME.path} element={<HomeController />} />
+        <Route path={ROUTES.ANALYTICS.path} element={<AnalyticsController />} />
+        <Route path={ROUTES.COUNSELING.path}>
+          <Route path={ROUTES.COUNSELING.children.REGISTRATION.path} element={<CounselingController />} />
+          <Route path={ROUTES.COUNSELING.children.LIST.path} element={<CounselingController />} />
+        </Route>
+        <Route path={ROUTES.INBOX.path} element={<InboxController />} />
+        <Route path={ROUTES.PROJECT.path} element={<ProjectController />} />
+        <Route path={ROUTES.REPORT.path} element={<ReportController />} />
+        <Route path={ROUTES.SETTING.path} element={<SettingController />} />
+        <Route path={ROUTES.TEMPLATE.path} element={<TemplateController />} />
+        <Route path={ROUTES.BLANK_PAGE.path} element={<BlankPageController />} />
       </Route>
       <Route
+        path={"/"}
         element={
           <RestrictAuth>
             <React.Suspense fallback={<div>Loading...</div>}>
@@ -67,7 +73,7 @@ function PageRoute() {
           </RestrictAuth>
         }
       >
-        <Route path='/sign-in' element={<SignInController />} />
+        <Route path={ROUTES.SIGN_IN.path} element={<SignInController />} />
       </Route>
     </Routes>
   );

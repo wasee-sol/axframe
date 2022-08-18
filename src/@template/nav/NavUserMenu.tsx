@@ -3,43 +3,11 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { Menu } from "antd";
 import { MenuProps } from "antd/lib/menu";
-import ProgramIcon, { ProgramType } from "components/ProgramIcon";
 import { useLink } from "hooks/useLink";
 import * as React from "react";
 import { UserMenuItem } from "stores";
 import { SMixinScrollerStyle } from "styles/emotion";
 import { mergeProps } from "utils/object";
-
-type MenuItem = Required<MenuProps>["items"][number];
-
-function getItem(
-  label: React.ReactNode,
-  key?: React.Key | null,
-  icon?: React.ReactNode,
-  path?: string,
-  children?: MenuItem[]
-): MenuItem {
-  return {
-    key,
-    icon,
-    children,
-    label,
-    path,
-  } as MenuItem;
-}
-
-function getItems(menus: UserMenuItem[]): MenuItem[] {
-  return menus.map((menu) => {
-    const { label, icon, uuid, children, path } = menu;
-    return getItem(
-      label,
-      uuid,
-      icon ? <ProgramIcon type={icon as ProgramType} /> : undefined,
-      path,
-      children && children.length > 0 ? getItems(children) : undefined
-    );
-  });
-}
 
 interface StyleProps {
   sideMenuOpened?: boolean;
@@ -56,22 +24,15 @@ function NavUserMenu(props: Props) {
     useNavGroupController()
   );
   const { linkTo } = useLink();
-  const items: MenuItem[] = React.useMemo(() => {
-    return getItems(menus);
-  }, [menus]);
 
   const onClick: MenuProps["onClick"] = React.useCallback(
-    ({ keyPath }) => {
-      const menu = keyPath.reduceRight((acc, cur) => {
-        return Array.isArray(acc) ? acc.find((m) => m.uuid === cur) : acc.children.find((m) => m.uuid === cur);
-      }, menus);
-
-      linkTo(menu.path);
+    ({ key }) => {
+      linkTo(key);
     },
-    [menus, linkTo]
+    [linkTo]
   );
 
-  if (items.length === 0) {
+  if (menus.length === 0) {
     return null;
   }
 
@@ -79,7 +40,7 @@ function NavUserMenu(props: Props) {
     <NavUserMenuContainer sideMenuOpened={sideMenuOpened}>
       <Menu
         mode={"inline"}
-        items={items}
+        items={menus}
         openKeys={openedMenuUuids}
         onOpenChange={onSideMenuOpenChange}
         selectedKeys={[selectedMenuUuid]}

@@ -102,7 +102,7 @@ const TabItem = styled.div<TabItemProps>`
     }
     return css`
       min-width: 100px;
-      padding: 0 20px 0 10px;
+      padding: 0 25px 0 10px;
     `;
   }}
 

@@ -3,12 +3,12 @@ import * as React from "react";
 import useUserStore from "stores/useUserStore";
 import { useDialog } from "hooks/useDialog";
 import { useAppStore } from "stores";
+import { MENUS } from "router/menus";
 
 export function useNavGroupController() {
   const sideMenuOpened = useAppStore((s) => s.sideMenuOpened);
   const setSideMenuOpened = useAppStore((s) => s.setSideMenuOpened);
   const me = useUserStore((s) => s.me);
-  const menus = useUserStore((s) => s.menus);
   const openedMenuUuids = useUserStore((s) => s.openedMenuUuids);
   const setOpenedMenuUuids = useUserStore((s) => s.setOpenedMenuUuids);
   const selectedMenuUuid = useUserStore((s) => s.selectedMenuUuid);
@@ -41,10 +41,9 @@ export function useNavGroupController() {
   );
 
   // useEffect 사용 금지.
-
   return {
     me,
-    menus,
+    menus: MENUS,
     openedMenuUuids,
     selectedMenuUuid,
     sideMenuOpened,
