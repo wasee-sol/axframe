@@ -8,6 +8,7 @@ import {
   RFISetting,
   RFITemplate,
   RFIWriteForm,
+  RFIListSearch,
 } from "react-frame-icon";
 
 export type ProgramType =
@@ -17,7 +18,8 @@ export type ProgramType =
   | "RFIReport"
   | "RFISetting"
   | "RFITemplate"
-  | "RFIWriteForm";
+  | "RFIWriteForm"
+  | "RFIListSearch";
 
 interface Props {
   type: ProgramType;
@@ -39,6 +41,8 @@ function ProgramIcon({ type }: Props) {
       return <RFITemplate className={"ant-menu-item-icon"} />;
     case "RFIWriteForm":
       return <RFIWriteForm className={"ant-menu-item-icon"} />;
+    case "RFIListSearch":
+      return <RFIListSearch className={"ant-menu-item-icon"} />;
     default:
       return <RFIDefaultProgram className={"ant-menu-item-icon"} />;
   }

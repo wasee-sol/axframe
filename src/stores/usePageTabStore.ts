@@ -67,7 +67,8 @@ const usePageTabStore = buildStore<TabsStore>("page-tab", 2, (set, get) => ({
   },
   getActiveTabPage: () => {
     const activeTabUuid = get().activeTabUuid;
-    const tabPage = get().pages.get(get().activeTabUuid);
+    const pages = get().pages;
+    const tabPage = pages.get(activeTabUuid);
     if (tabPage) {
       return {
         tabUuid: activeTabUuid,
@@ -75,7 +76,7 @@ const usePageTabStore = buildStore<TabsStore>("page-tab", 2, (set, get) => ({
       };
     }
 
-    const pagesEntries = [...get().pages];
+    const pagesEntries = [...pages];
     const pageEntry = pagesEntries[pagesEntries.length - 1];
     if (pageEntry) {
       set({ activeTabUuid: pageEntry[0] });
@@ -86,7 +87,7 @@ const usePageTabStore = buildStore<TabsStore>("page-tab", 2, (set, get) => ({
     }
 
     const tabUuid = uuidv4();
-    get().pages.set(tabUuid, initialPage);
+    pages.set(tabUuid, initialPage);
     set({ activeTabUuid: tabUuid });
     return {
       tabUuid,

@@ -7,13 +7,19 @@ import usePageTabStore from "../stores/usePageTabStore";
 import RequireAuth from "./RequireAuth";
 import RestrictAuth from "./RestrictAuth";
 
-const HomeController = React.lazy(() => import("@controller/pages/HomeController"));
-const SettingController = React.lazy(() => import("@controller/pages/SettingController"));
-const SignInController = React.lazy(() => import("@controller/pages/SignInController"));
-const BlankPageController = React.lazy(() => import("@controller/pages/BlankPageController"));
-const ReportController = React.lazy(() => import("@controller/pages/ReportController"));
 const FrameDefault = React.lazy(() => import("@template/pageFrame/FrameDefault"));
 const FrameProgram = React.lazy(() => import("@template/pageFrame/FrameProgram"));
+
+const AnalyticsController = React.lazy(() => import("@controller/pages/AnalyticsController"));
+const BlankPageController = React.lazy(() => import("@controller/pages/BlankPageController"));
+const CounselingController = React.lazy(() => import("@controller/pages/CounselingController"));
+const HomeController = React.lazy(() => import("@controller/pages/HomeController"));
+const InboxController = React.lazy(() => import("@controller/pages/InboxController"));
+const ProjectController = React.lazy(() => import("@controller/pages/ProjectController"));
+const ReportController = React.lazy(() => import("@controller/pages/ReportController"));
+const SettingController = React.lazy(() => import("@controller/pages/SettingController"));
+const SignInController = React.lazy(() => import("@controller/pages/SignInController"));
+const TemplateController = React.lazy(() => import("@controller/pages/TemplateController"));
 
 function PageRoute() {
   const sideMenuOpened = useAppStore((s) => s.sideMenuOpened);
@@ -42,8 +48,14 @@ function PageRoute() {
         }
       >
         <Route path='/' element={<HomeController />} />
-        <Route path='/setting' element={<SettingController />} />
+        <Route path='/analytics' element={<AnalyticsController />} />
+        <Route path='/counseling-registration' element={<CounselingController />} />
+        <Route path='/counseling-list' element={<CounselingController />} />
+        <Route path='/inbox' element={<InboxController />} />
+        <Route path='/project' element={<ProjectController />} />
         <Route path='/report' element={<ReportController />} />
+        <Route path='/setting' element={<SettingController />} />
+        <Route path='/template' element={<TemplateController />} />
         <Route path='/about:blank' element={<BlankPageController />} />
       </Route>
       <Route

@@ -95,6 +95,7 @@ const NavUserMenuContainer = styled.div<StyleProps>`
   flex: 1;
   overflow: auto;
   overflow-x: hidden;
+  user-select: none;
 
   ${({ sideMenuOpened, theme }) => {
     if (sideMenuOpened) {

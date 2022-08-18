@@ -3,26 +3,21 @@ import { UserMenuItem } from "stores";
 export const mock_userMenus: UserMenuItem[] = [
   {
     icon: "RFIWriteForm",
-    uuid: "consulting",
-    label: "Consulting",
-    path: "/consulting",
+    uuid: "Counseling",
+    label: "Counseling",
     children: [
       {
         icon: "RFIWriteForm",
-        uuid: "consulting-1",
-        label: "Write",
-        path: "/consulting-1",
+        uuid: "counseling-registration",
+        label: "Counseling Registration",
+        path: "/counseling-registration",
         children: [],
       },
       {
-        icon: "RFIWriteForm",
-        uuid: "consulting-2",
-        label: "List",
-        path: "/consulting-2",
-        children: [
-          { uuid: "consulting-2-1", label: "List-2-1", path: "/consulting-2-1", children: [] },
-          { uuid: "consulting-2-2", label: "List-2-2", path: "/consulting-2-2", children: [] },
-        ],
+        icon: "RFIListSearch",
+        uuid: "counseling-list",
+        label: "Counseling List",
+        path: "/counseling-list",
       },
     ],
   },
@@ -59,7 +54,7 @@ export const mock_userMenus: UserMenuItem[] = [
   {
     icon: "RFISetting",
     uuid: "setting",
-    label: "Setting",
+    label: "Settings",
     path: "/setting",
   },
 ];
