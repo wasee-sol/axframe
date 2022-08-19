@@ -20,8 +20,16 @@ export const ROUTES = {
     label: "Counseling",
     icon: <RFIWriteForm />,
     children: {
-      REGISTRATION: { path: "registration", label: "Counseling Registration", icon: <RFIWriteForm /> },
-      LIST: { path: "list", label: "Counseling List", icon: <RFIListSearch /> },
+      REGISTRATION: {
+        path: "registration",
+        label: "Counseling Registration",
+        icon: <RFIWriteForm />,
+      },
+      LIST: {
+        path: "list",
+        label: "Counseling List",
+        icon: <RFIListSearch />,
+      },
     },
   },
   ANALYTICS: {

@@ -25,18 +25,15 @@ const TemplateController = React.lazy(() => import("@controller/pages/TemplateCo
 
 function PageRoute() {
   const sideMenuOpened = useAppStore((s) => s.sideMenuOpened);
-  const menus = useUserStore((s) => s.menus);
   const setSelectedMenuUuid = useUserStore((s) => s.setSelectedMenuUuid);
   const setActiveTabByPath = usePageTabStore((s) => s.setActiveTabByPath);
   const location = useLocation();
 
   React.useEffect(() => {
-    if (menus.length) {
-      const currentMenu = getFlattedMenus(MENUS).find((fMenu) => fMenu.key === location.pathname);
-      setSelectedMenuUuid(currentMenu?.key ?? "");
-      if (currentMenu || location.pathname === "/") setActiveTabByPath(location.pathname, currentMenu?.label);
-    }
-  }, [location.pathname, menus, setActiveTabByPath, setSelectedMenuUuid]);
+    const currentMenu = getFlattedMenus(MENUS).find((fMenu) => fMenu.key === location.pathname);
+    setSelectedMenuUuid(`${currentMenu?.key}`);
+    if (currentMenu || location.pathname === "/") setActiveTabByPath(location.pathname, currentMenu?.label);
+  }, [location.pathname, setActiveTabByPath, setSelectedMenuUuid]);
 
   return (
     <Routes>

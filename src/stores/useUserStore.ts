@@ -1,5 +1,6 @@
 import buildStore from "stores/buildStore";
 import { UserService } from "services";
+import { MenuEnum } from "../@types";
 import usePageTabStore from "./usePageTabStore";
 
 export interface User {
@@ -20,7 +21,7 @@ export interface UserMenuItem {
 export interface UserModel {
   loaded: boolean;
   me?: User;
-  menus: UserMenuItem[];
+  accessibleMenus: MenuEnum[];
   openedMenuUuids: string[];
   selectedMenuUuid: string;
 }
@@ -29,7 +30,7 @@ export interface UserActions {
   setLoaded: (loaded: boolean) => void;
   setMe: (me: User) => Promise<void>;
   signOut: () => Promise<void>;
-  setMenus: (menus: UserMenuItem[]) => void;
+  setAccessibleMenus: (accessibleMenus: MenuEnum[]) => void;
   setOpenedMenuUuids: (uuids: string[]) => void;
   setSelectedMenuUuid: (uuid: string) => void;
 }
@@ -38,26 +39,25 @@ export interface UserStore extends UserModel, UserActions {}
 
 export const userInitialState: UserModel = {
   loaded: false,
-  menus: [],
+  accessibleMenus: [],
   openedMenuUuids: [],
   selectedMenuUuid: "",
 };
 
-const useUserStore = buildStore<UserStore>("user", 1, (set, get) => ({
+const useUserStore = buildStore<UserStore>("user", 2, (set, get) => ({
   ...userInitialState,
   setLoaded: (loaded: boolean) => set({ loaded }),
   setMe: async (me) => {
-    const { menus } = await UserService.getUserMenu(me.uuid);
-    // TODO : 사용자 메뉴를 받는 식이 아니라. 사용 가능한 메뉴 목록을 내려 받는 식으로 조정 필요.
-    set({ me, menus });
+    const { accessibleMenus } = await UserService.getUserAccessibleMenus(me.uuid);
+    set({ me, accessibleMenus });
   },
   signOut: async () => {
     await UserService.signOut();
     set({ me: undefined });
     usePageTabStore.getState().clearTab();
   },
-  setMenus: (menus) => {
-    set({ menus });
+  setAccessibleMenus: (accessibleMenus) => {
+    set({ accessibleMenus });
   },
   setOpenedMenuUuids: (uuids) => {
     set({ openedMenuUuids: uuids });

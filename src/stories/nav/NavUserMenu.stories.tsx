@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import NavUserMenu from "@template/nav/NavUserMenu";
 import * as React from "react";
-import { mock_userMenus } from "../_mock/userMenus";
+import { MENUS } from "router/menus";
 
 export default {
   title: "template/nav/NavUserMenu",
@@ -11,7 +11,7 @@ export default {
     backgroundColor: { control: "color" },
   },
   args: {
-    menus: mock_userMenus,
+    menus: MENUS,
   },
 } as ComponentMeta<typeof NavUserMenu>;
 

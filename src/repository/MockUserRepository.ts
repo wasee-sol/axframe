@@ -1,15 +1,15 @@
 import { delay } from "utils/thread/timing";
 import { SignInFormItem } from "@template/account/SignIn";
-import { mock_userMenus } from "stories/_mock/userMenus";
+import { mock_userAccessibleMenus } from "stories/_mock/userAccessibleMenus";
 import { UserRepositoryInterface } from "./UserRepositoryInterface";
 
 export class MockUserRepository implements UserRepositoryInterface {
-  public async getUserMenu(userUuid: string) {
+  public async getUserAccessibleMenus(userUuid: string) {
     console.log("userUuid", userUuid);
     await delay(500);
 
     return {
-      menus: mock_userMenus,
+      accessibleMenus: mock_userAccessibleMenus,
     };
   }
 

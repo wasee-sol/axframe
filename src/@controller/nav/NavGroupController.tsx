@@ -4,11 +4,13 @@ import useUserStore from "stores/useUserStore";
 import { useDialog } from "hooks/useDialog";
 import { useAppStore } from "stores";
 import { MENUS } from "router/menus";
+import { MenuItem } from "@types";
 
 export function useNavGroupController() {
   const sideMenuOpened = useAppStore((s) => s.sideMenuOpened);
   const setSideMenuOpened = useAppStore((s) => s.setSideMenuOpened);
   const me = useUserStore((s) => s.me);
+  const accessibleMenus = useUserStore((s) => s.accessibleMenus);
   const openedMenuUuids = useUserStore((s) => s.openedMenuUuids);
   const setOpenedMenuUuids = useUserStore((s) => s.setOpenedMenuUuids);
   const selectedMenuUuid = useUserStore((s) => s.selectedMenuUuid);
@@ -40,10 +42,32 @@ export function useNavGroupController() {
     [setOpenedMenuUuids]
   );
 
+  const menus = React.useMemo(() => {
+    const getAccessibleMenus = (menuItems: MenuItem[]) => {
+      return menuItems
+        .map((menuItem) => {
+          if (menuItem.enum === undefined || accessibleMenus.includes(menuItem.enum)) {
+            const children = menuItem.children ? getAccessibleMenus(menuItem.children) : undefined;
+            if (typeof children !== "undefined" && children.length === 0) return;
+
+            return {
+              ...menuItem,
+              children,
+            };
+          }
+
+          return;
+        })
+        .filter(Boolean) as MenuItem[];
+    };
+
+    return getAccessibleMenus(MENUS);
+  }, [accessibleMenus]);
+
   // useEffect 사용 금지.
   return {
     me,
-    menus: MENUS,
+    menus,
     openedMenuUuids,
     selectedMenuUuid,
     sideMenuOpened,

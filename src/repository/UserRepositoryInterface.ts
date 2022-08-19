@@ -1,12 +1,13 @@
-import { User, UserMenuItem } from "stores";
+import { User } from "stores";
 import { SignInFormItem } from "../@template/account/SignIn";
+import { MenuEnum } from "@types";
 
 export interface GetUserMenuResponse {
-  menus: UserMenuItem[];
+  accessibleMenus: MenuEnum[];
 }
 
 export interface UserRepositoryInterface {
   signIn(values: SignInFormItem): Promise<User>;
   signOut(): Promise<void>;
-  getUserMenu(userUuid: string): Promise<GetUserMenuResponse>;
+  getUserAccessibleMenus(userUuid: string): Promise<GetUserMenuResponse>;
 }

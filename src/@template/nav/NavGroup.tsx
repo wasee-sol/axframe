@@ -4,17 +4,18 @@ import styled from "@emotion/styled";
 import NavHeader from "@template/nav/NavHeader";
 import UserInfo from "@template/nav/UserInfo";
 import NavUserMenu from "@template/nav/NavUserMenu";
-import { User, UserMenuItem } from "stores/useUserStore";
+import { User } from "stores/useUserStore";
 import { SMixinFlexColumn } from "styles/emotion";
 import { useNavGroupController } from "@controller/nav/NavGroupController";
 import { mergeProps } from "utils/object";
+import { MenuItem } from "@types";
 
 interface StyleProps {
   sideMenuOpened?: boolean;
 }
 interface Props extends StyleProps {
   me?: User;
-  menus?: UserMenuItem[];
+  menus?: MenuItem[];
   openedMenuUuids?: string[];
   selectedMenuUuid?: string;
 }

@@ -5,15 +5,15 @@ import { Menu } from "antd";
 import { MenuProps } from "antd/lib/menu";
 import { useLink } from "hooks/useLink";
 import * as React from "react";
-import { UserMenuItem } from "stores";
 import { SMixinScrollerStyle } from "styles/emotion";
 import { mergeProps } from "utils/object";
+import { MenuItem } from "@types";
 
 interface StyleProps {
   sideMenuOpened?: boolean;
 }
 interface Props extends StyleProps {
-  menus?: UserMenuItem[];
+  menus?: MenuItem[];
   openedMenuUuids?: string[];
   selectedMenuUuid?: string;
 }

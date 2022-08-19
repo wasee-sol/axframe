@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import * as React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import NavGroup from "@template/nav/NavGroup";
-import { mock_userMenus } from "../_mock/userMenus";
+import { MENUS } from "../../router/menus";
 
 export default {
   title: "template/nav/NavGroup",
@@ -17,7 +17,7 @@ export default {
       email: "tom@axisj.com",
       jobTitle: "Software Engineer",
     },
-    menus: mock_userMenus,
+    menus: MENUS,
     openedMenuUuids: [],
     selectedMenuUuid: "",
   },

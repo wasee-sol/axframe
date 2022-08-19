@@ -1,9 +1,10 @@
+import React from "react";
 import buildStore from "stores/buildStore";
 import { v4 as uuidv4 } from "uuid";
 
 export interface PageModel {
   fixed?: boolean;
-  label: string;
+  label: React.ReactNode;
   path?: string;
   icon?: string;
   metaData?: Record<string, any>;
@@ -26,7 +27,7 @@ export interface TabsActions {
   updateTab: (tabUuid: string, page: PageModel) => void;
   setActiveTab: (activeTabUuid: string) => void;
   getActiveTabPage: () => PageTab;
-  setActiveTabByPath: (path: string, label?: string) => void;
+  setActiveTabByPath: (path: string, label?: React.ReactNode) => void;
   clearTab: () => void;
 }
 
