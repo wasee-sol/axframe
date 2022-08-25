@@ -1,53 +1,42 @@
+import { css } from "@emotion/react";
 import * as React from "react";
 import styled from "@emotion/styled";
-import { RFIHome, RFIClose, RFIArrowDown } from "react-frame-icon";
+import { RFIArrowDown } from "react-frame-icon";
 import { mergeProps } from "utils/object";
 import { useTabGroupController } from "@controller/tabs/TabGroupController";
-import { css } from "@emotion/react";
 import { SMixinFlexRow } from "styles/emotion";
+import { darken } from "../../styles/palette/colorUtil";
+import TabItem from "./TabItem";
 
 interface Props {}
 
-interface TabItemProps {
-  isHome?: boolean;
-  active: boolean;
-}
-
 function TabGroup(props: Props) {
-  const { pagesValues, activeTabUuid, onClickTab, onClickRemoveTab } = mergeProps(props, useTabGroupController());
+  const { activeTabUuid, pagesValues } = mergeProps(props, useTabGroupController());
+  const scrollerRef = React.useRef<HTMLDivElement>(null);
+
+  const onWheelScroller = React.useCallback((e: React.WheelEvent) => {
+    if (scrollerRef.current) {
+      scrollerRef.current.scroll({
+        left: scrollerRef.current.scrollLeft + e.deltaX + e.deltaY,
+      });
+    }
+  }, []);
+
+  React.useEffect(() => {}, [activeTabUuid]);
 
   return (
     <TabGroupContainer>
+      <TabLine />
       <TabItemsGroup>
-        <TabItemsScroller>
-          {pagesValues.map(([k, v]) => {
-            return (
-              <TabItem key={k} isHome={v.isHome} active={activeTabUuid === k} onClick={() => onClickTab(k, v.path)}>
-                {v.isHome ? (
-                  <RFIHome fontSize={18} />
-                ) : (
-                  <>
-                    {v.label}
-                    <a
-                      role='tab-close'
-                      onClick={(evt) => {
-                        onClickRemoveTab(k);
-                        evt.stopPropagation();
-                      }}
-                    >
-                      <RFIClose />
-                    </a>
-                  </>
-                )}
-              </TabItem>
-            );
-          })}
+        <TabItemsScroller ref={scrollerRef} onWheel={onWheelScroller}>
+          {pagesValues.map(([k, v]) => (
+            <TabItem key={k} tabUuid={k} tabInfo={v} />
+          ))}
         </TabItemsScroller>
         <TabItemsMore>
           <RFIArrowDown />
         </TabItemsMore>
       </TabItemsGroup>
-      <TabLine />
     </TabGroupContainer>
   );
 }
@@ -57,6 +46,7 @@ const TabGroupContainer = styled.div`
   position: relative;
   height: 45px;
   background: ${(p) => p.theme.header_background};
+  overflow: hidden;
 `;
 
 const TabLine = styled.div`
@@ -69,66 +59,59 @@ const TabLine = styled.div`
 `;
 
 const TabItemsGroup = styled.div`
-  position: absolute;
-  bottom: 3px;
-  padding: 0 0 0 10px;
   ${SMixinFlexRow("stretch", "center")};
-`;
-
-const TabItem = styled.div<TabItemProps>`
-  ${SMixinFlexRow("flex-start", "center")};
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  height: 30px;
-  font-weight: 600;
-  font-size: 13px;
-  cursor: pointer;
-  user-select: none;
-  position: relative;
-
-  [role="tab-close"] {
-    position: absolute;
-    right: 8px;
-    top: 9px;
-    line-height: 15px;
-  }
-
-  ${({ isHome }) => {
-    if (isHome) {
-      return css`
-        padding: 0 10px;
-      `;
-    }
-    return css`
-      min-width: 100px;
-      padding: 0 25px 0 10px;
-    `;
-  }}
-
-  ${({ active, theme }) => {
-    if (active) {
-      return css`
-        color: ${theme.white_color};
-        background: ${theme.primary_color};
-
-        [role="tab-close"] {
-          color: ${theme.white_color};
-        }
-      `;
-    }
-    return css`
-      background: #f0f0f0;
-      color: ${theme.text_display_color};
-    `;
-  }}
+  position: absolute;
+  bottom: 0;
+  padding: 0;
+  width: 100%;
+  overflow: hidden;
 `;
 
 const TabItemsScroller = styled.div`
   ${SMixinFlexRow("flex-start", "flex-end")};
+  flex: 1;
   column-gap: 2px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  padding-left: 10px;
+
+  ${({ theme }) => css`
+    &::-webkit-scrollbar {
+      width: 3px;
+      height: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: ${darken(theme.primary_color, 0.4)};
+      border-radius: 0;
+      border: 0 none;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: ${darken(theme.primary_color, 0.6)};
+    }
+
+    &::-webkit-scrollbar-track {
+      border-radius: 10px;
+      background-color: ${theme.primary_color};
+    }
+
+    &::-webkit-scrollbar-track:vertical {
+      background-color: ${theme.primary_color};
+    }
+
+    &::-webkit-scrollbar-track:horizontal {
+      background-color: ${theme.primary_color};
+    }
+
+    &::-webkit-scrollbar-corner {
+      background-color: ${theme.primary_color};
+    }
+  `}
 `;
 const TabItemsMore = styled.div`
   ${SMixinFlexRow("center", "center")};
+  flex: none;
   width: 40px;
 `;
 
