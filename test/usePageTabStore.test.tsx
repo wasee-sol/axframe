@@ -1,4 +1,4 @@
-import usePageTabStore from "../src/stores/usePageTabStore";
+import { usePageTabStore } from "../src/stores/usePageTabStore";
 
 describe("usePageTabStore", () => {
   afterEach(() => {

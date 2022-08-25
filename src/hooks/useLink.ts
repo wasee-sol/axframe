@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { MENUS } from "../router/menus";
-import usePageTabStore from "../stores/usePageTabStore";
-import { getFlattedMenus } from "../utils/store";
+import { MENUS } from "router/menus";
+import { usePageTabStore } from "stores";
+import { getFlattedMenus } from "utils/store";
 import { useI18n } from "./useI18n";
 
 export function useLink() {

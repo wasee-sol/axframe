@@ -21,9 +21,9 @@ const KO: typeof EN = {
     },
   },
   button: {
-    ok: "OK",
-    reload: "Reload",
-    cancel: "Cancel",
+    ok: "확인",
+    reload: "새로고침",
+    cancel: "취소",
   },
   pageTab: {
     newTab: "새 탭",

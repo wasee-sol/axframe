@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import useUserStore from "../stores/useUserStore";
+import { useUserStore } from "stores";
 import { getFlattedMenus } from "../utils/store";
 import { MENUS } from "./menus";
 import { ROUTES } from "./Routes";

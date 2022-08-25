@@ -1,6 +1,6 @@
 import NavGroup from "@template/nav/NavGroup";
 import * as React from "react";
-import useUserStore from "stores/useUserStore";
+import { useUserStore } from "stores";
 import { useDialog } from "hooks/useDialog";
 import { useAppStore } from "stores";
 import { MENUS } from "router/menus";

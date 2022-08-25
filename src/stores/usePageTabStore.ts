@@ -40,7 +40,7 @@ export const tabsInitialState: PagesTabModel = {
   activeTabUuid: initialUuid,
 };
 
-const usePageTabStore = buildStore<TabsStore>("page-tab", 2, (set, get) => ({
+export const usePageTabStore = buildStore<TabsStore>("page-tab", 2, (set, get) => ({
   ...tabsInitialState,
   addTab: (page) => {
     const pagesEntries = [...get().pages];
@@ -116,5 +116,3 @@ const usePageTabStore = buildStore<TabsStore>("page-tab", 2, (set, get) => ({
     });
   },
 }));
-
-export default usePageTabStore;

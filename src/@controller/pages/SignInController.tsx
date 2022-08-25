@@ -2,7 +2,7 @@ import { useState } from "react";
 import * as React from "react";
 import SignIn, { SignInFormItem } from "@template/account/SignIn";
 import { useDialog } from "hooks/useDialog";
-import useUserStore from "stores/useUserStore";
+import { useUserStore } from "stores";
 import { UserService } from "services";
 
 export function useSignInController() {
@@ -24,6 +24,7 @@ export function useSignInController() {
 
   return { onSignIn, signing, setSigning };
 }
+
 function SignInController() {
   return <SignIn />;
 }

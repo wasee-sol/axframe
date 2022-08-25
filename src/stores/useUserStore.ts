@@ -1,7 +1,7 @@
 import buildStore from "stores/buildStore";
 import { UserService } from "services";
 import { MenuEnum } from "../@types";
-import usePageTabStore from "./usePageTabStore";
+import { usePageTabStore } from "./usePageTabStore";
 
 export interface User {
   uuid: string;
@@ -44,7 +44,7 @@ export const userInitialState: UserModel = {
   selectedMenuUuid: "",
 };
 
-const useUserStore = buildStore<UserStore>("user", 2, (set, get) => ({
+export const useUserStore = buildStore<UserStore>("user", 2, (set, get) => ({
   ...userInitialState,
   setLoaded: (loaded: boolean) => set({ loaded }),
   setMe: async (me) => {
@@ -72,5 +72,3 @@ useUserStore.persist.onFinishHydration((state) => {
     state.setLoaded(true);
   }
 });
-
-export default useUserStore;

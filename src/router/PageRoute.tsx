@@ -1,9 +1,7 @@
 import * as React from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
-import { useAppStore } from "stores";
-import useUserStore from "stores/useUserStore";
+import { useAppStore, usePageTabStore, useUserStore } from "stores";
 import { getFlattedMenus } from "utils/store";
-import usePageTabStore from "../stores/usePageTabStore";
 import { MENUS } from "./menus";
 import RequireAuth from "./RequireAuth";
 import RestrictAuth from "./RestrictAuth";
