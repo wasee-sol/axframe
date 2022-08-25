@@ -60,7 +60,7 @@ const NavHeaderContainer = styled.div<Props>`
     if (sideMenuOpened) {
       return css`
         ${SMixinFlexRow("stretch", "center")};
-        padding: 0 32px;
+        padding: 0 20px;
       `;
     }
     return css`

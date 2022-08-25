@@ -1,51 +1,51 @@
 import * as React from "react";
 import styled from "@emotion/styled";
-import { RFIAdd, RFIHome, RFIClose } from "react-frame-icon";
+import { RFIHome, RFIClose, RFIArrowDown } from "react-frame-icon";
 import { mergeProps } from "utils/object";
 import { useTabGroupController } from "@controller/tabs/TabGroupController";
 import { css } from "@emotion/react";
-import { SMixinFlexColumn, SMixinFlexRow } from "styles/emotion";
+import { SMixinFlexRow } from "styles/emotion";
 
 interface Props {}
+
 interface TabItemProps {
   isHome?: boolean;
   active: boolean;
 }
 
 function TabGroup(props: Props) {
-  const { pagesValues, activeTabUuid, onClickTab, onClickAddTab, onClickRemoveTab } = mergeProps(
-    props,
-    useTabGroupController()
-  );
+  const { pagesValues, activeTabUuid, onClickTab, onClickRemoveTab } = mergeProps(props, useTabGroupController());
 
   return (
     <TabGroupContainer>
       <TabItemsGroup>
-        {pagesValues.map(([k, v]) => {
-          return (
-            <TabItem key={k} isHome={v.isHome} active={activeTabUuid === k} onClick={() => onClickTab(k, v.path)}>
-              {v.isHome ? (
-                <RFIHome fontSize={18} />
-              ) : (
-                <>
-                  {v.label}
-                  <a
-                    role='tab-close'
-                    onClick={(evt) => {
-                      onClickRemoveTab(k);
-                      evt.stopPropagation();
-                    }}
-                  >
-                    <RFIClose />
-                  </a>
-                </>
-              )}
-            </TabItem>
-          );
-        })}
-        <AddTab onClick={onClickAddTab} style={{ display: "none" }}>
-          <RFIAdd />
-        </AddTab>
+        <TabItemsScroller>
+          {pagesValues.map(([k, v]) => {
+            return (
+              <TabItem key={k} isHome={v.isHome} active={activeTabUuid === k} onClick={() => onClickTab(k, v.path)}>
+                {v.isHome ? (
+                  <RFIHome fontSize={18} />
+                ) : (
+                  <>
+                    {v.label}
+                    <a
+                      role='tab-close'
+                      onClick={(evt) => {
+                        onClickRemoveTab(k);
+                        evt.stopPropagation();
+                      }}
+                    >
+                      <RFIClose />
+                    </a>
+                  </>
+                )}
+              </TabItem>
+            );
+          })}
+        </TabItemsScroller>
+        <TabItemsMore>
+          <RFIArrowDown />
+        </TabItemsMore>
       </TabItemsGroup>
       <TabLine />
     </TabGroupContainer>
@@ -71,9 +71,8 @@ const TabLine = styled.div`
 const TabItemsGroup = styled.div`
   position: absolute;
   bottom: 3px;
-  ${SMixinFlexRow("flex-start", "flex-end")};
-  column-gap: 2px;
   padding: 0 0 0 10px;
+  ${SMixinFlexRow("stretch", "center")};
 `;
 
 const TabItem = styled.div<TabItemProps>`
@@ -124,23 +123,13 @@ const TabItem = styled.div<TabItemProps>`
   }}
 `;
 
-const AddTab = styled.div`
-  ${SMixinFlexColumn("center", "center")};
-  position: relative;
-  cursor: pointer;
-  padding: 0 10px;
-  font-size: 16px;
-  color: ${(p) => p.theme.primary_color};
-
-  width: 25px;
-  height: 25px;
-  margin-bottom: 2.5px;
-  margin-left: 2.5px;
-  border-radius: 5px;
-
-  &:hover {
-    background: ${(p) => p.theme.border_color_base};
-  }
+const TabItemsScroller = styled.div`
+  ${SMixinFlexRow("flex-start", "flex-end")};
+  column-gap: 2px;
+`;
+const TabItemsMore = styled.div`
+  ${SMixinFlexRow("center", "center")};
+  width: 40px;
 `;
 
 export default TabGroup;

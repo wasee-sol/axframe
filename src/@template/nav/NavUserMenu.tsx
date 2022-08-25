@@ -12,6 +12,7 @@ import { MenuItem } from "@types";
 interface StyleProps {
   sideMenuOpened?: boolean;
 }
+
 interface Props extends StyleProps {
   menus?: MenuItem[];
   openedMenuUuids?: string[];
@@ -76,7 +77,6 @@ const NavUserMenuContainer = styled.div<StyleProps>`
       })};
     `;
   }}
-
   .ant-menu {
     background: inherit;
     color: ${(p) => p.theme.text_heading_color};
@@ -110,10 +110,12 @@ const NavUserMenuContainer = styled.div<StyleProps>`
       font-weight: 400;
       color: ${(p) => p.theme.text_body_color};
     }
+
     .ant-menu-item-icon {
       font-size: 20px;
       color: ${(p) => p.theme.text_body_color};
     }
+
     .ant-menu-item-selected {
       .ant-menu-item-icon {
         color: ${(p) => p.theme.primary_color};
@@ -136,6 +138,7 @@ const NavUserMenuContainer = styled.div<StyleProps>`
   .ant-menu.ant-menu-inline-collapsed {
     width: 60px;
   }
+
   // !opened menu padding 조절, 아이콘 크기 조절
   .ant-menu.ant-menu-inline-collapsed > .ant-menu-item,
   .ant-menu.ant-menu-inline-collapsed > .ant-menu-item-group > .ant-menu-item-group-list > .ant-menu-item,
@@ -146,9 +149,10 @@ const NavUserMenuContainer = styled.div<StyleProps>`
     > .ant-menu-submenu-title,
   .ant-menu.ant-menu-inline-collapsed > .ant-menu-submenu > .ant-menu-submenu-title {
     padding: 0 calc(50% - 22px / 2);
+
     .ant-menu-item-icon {
-      font-size: 22px;
-      margin-top: 8px;
+      font-size: 24px;
+      margin-top: 7px;
     }
   }
 `;
