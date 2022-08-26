@@ -1,9 +1,9 @@
-import * as less from "less";
 import * as path from "path";
 import * as fs from "fs-extra";
 
 const srcPath = "../src/styles/theme.ts";
 const srcTheme = path.resolve(__dirname, srcPath);
+const less = require("less");
 const theme = require(srcPath);
 
 function compileLESS(from, to) {

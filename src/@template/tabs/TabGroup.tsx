@@ -1,12 +1,12 @@
 import { css } from "@emotion/react";
 import * as React from "react";
 import styled from "@emotion/styled";
-import { RFIArrowDown } from "react-frame-icon";
 import { mergeProps } from "utils/object";
 import { useTabGroupController } from "@controller/tabs/TabGroupController";
 import { SMixinFlexRow } from "styles/emotion";
-import { darken } from "../../styles/palette/colorUtil";
+import { darken } from "styles/palette/colorUtil";
 import TabItem from "./TabItem";
+import TabItemMore from "./TabItemMore";
 
 interface Props {}
 
@@ -33,9 +33,7 @@ function TabGroup(props: Props) {
             <TabItem key={k} tabUuid={k} tabInfo={v} />
           ))}
         </TabItemsScroller>
-        <TabItemsMore>
-          <RFIArrowDown />
-        </TabItemsMore>
+        <TabItemMore />
       </TabItemsGroup>
     </TabGroupContainer>
   );
@@ -108,11 +106,6 @@ const TabItemsScroller = styled.div`
       background-color: ${theme.primary_color};
     }
   `}
-`;
-const TabItemsMore = styled.div`
-  ${SMixinFlexRow("center", "center")};
-  flex: none;
-  width: 40px;
 `;
 
 export default TabGroup;
