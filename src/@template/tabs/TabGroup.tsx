@@ -22,7 +22,25 @@ function TabGroup(props: Props) {
     }
   }, []);
 
-  React.useEffect(() => {}, [activeTabUuid]);
+  // scroll to activeTab
+  React.useEffect(() => {
+    const refCurrent = scrollerRef.current;
+    if (refCurrent) {
+      const scrollMargin = 20;
+      const activeTabEl = refCurrent.querySelector("[role='active-tab-item']");
+      if (!activeTabEl) return;
+
+      const scrollerScrollLeft = refCurrent.scrollLeft;
+      const { left: scrollerLeft, right: scrollerRight } = refCurrent.getBoundingClientRect();
+      const { left: activeTabLeft, right: activeTabRight } = activeTabEl.getBoundingClientRect();
+
+      if (scrollerRight < activeTabRight) {
+        refCurrent.scrollLeft = scrollerScrollLeft + activeTabRight - scrollerRight + scrollMargin;
+      } else if (scrollerLeft > activeTabLeft) {
+        refCurrent.scrollLeft = scrollerScrollLeft - Math.abs(scrollerLeft - activeTabLeft) - scrollMargin;
+      }
+    }
+  }, [activeTabUuid]);
 
   return (
     <TabGroupContainer>
@@ -71,8 +89,8 @@ const TabItemsScroller = styled.div`
   column-gap: 2px;
   overflow-x: scroll;
   overflow-y: hidden;
-  padding-left: 10px;
-
+  padding: 0 20px 0 10px;
+  position: relative;
   ${({ theme }) => css`
     &::-webkit-scrollbar {
       width: 3px;

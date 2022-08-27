@@ -35,7 +35,20 @@ const TabItemMoreContainer = styled.div`
   ${SMixinFlexRow("center", "center")};
   flex: none;
   width: 40px;
+  height: 33px;
   cursor: pointer;
+  position: relative;
+
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: -20px;
+    top: 0;
+    width: 20px;
+    height: 30px;
+    background: linear-gradient(to right, #ffffff00, #ffffff);
+  }
 `;
 
 export default TabItemMore;
