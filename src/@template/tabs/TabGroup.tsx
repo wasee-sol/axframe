@@ -74,7 +74,7 @@ function TabGroup(props: Props) {
         <SortableList
           axis={"x"}
           lockAxis={"x"}
-          distance={10}
+          distance={20}
           onWheelScroller={onWheelScroller}
           scrollerRef={scrollerRef}
           pagesValues={pagesValues}
