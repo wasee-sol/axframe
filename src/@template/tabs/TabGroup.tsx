@@ -1,12 +1,37 @@
-import { css } from "@emotion/react";
-import * as React from "react";
-import styled from "@emotion/styled";
-import { mergeProps } from "utils/object";
 import { useTabGroupController } from "@controller/tabs/TabGroupController";
+import { css } from "@emotion/react";
+import styled from "@emotion/styled";
+import * as React from "react";
+import { SortableElement, SortableContainer } from "react-sortable-hoc";
+import { PageModel } from "stores";
 import { SMixinFlexRow } from "styles/emotion";
 import { darken } from "styles/palette/colorUtil";
+import { mergeProps } from "utils/object";
 import TabItem from "./TabItem";
 import TabItemMore from "./TabItemMore";
+
+interface SortableItemProps {
+  tabUuid: string;
+  pageModel: PageModel;
+}
+
+const SortableItem = SortableElement<SortableItemProps>(({ tabUuid, pageModel }) => (
+  <TabItem tabUuid={tabUuid} tabInfo={pageModel} />
+));
+
+interface SortableListProps {
+  scrollerRef: React.RefObject<HTMLDivElement>;
+  onWheelScroller: (e: React.WheelEvent) => void;
+  pagesValues: [string, PageModel][];
+}
+
+const SortableList = SortableContainer<SortableListProps>(({ pagesValues, scrollerRef, onWheelScroller }) => (
+  <TabItemsScroller ref={scrollerRef} onWheel={onWheelScroller}>
+    {pagesValues.map(([k, v], index) => (
+      <SortableItem index={index} key={k} tabUuid={k} pageModel={v} />
+    ))}
+  </TabItemsScroller>
+));
 
 interface Props {}
 
@@ -46,11 +71,14 @@ function TabGroup(props: Props) {
     <TabGroupContainer>
       <TabLine />
       <TabItemsGroup>
-        <TabItemsScroller ref={scrollerRef} onWheel={onWheelScroller}>
-          {pagesValues.map(([k, v]) => (
-            <TabItem key={k} tabUuid={k} tabInfo={v} />
-          ))}
-        </TabItemsScroller>
+        <SortableList
+          axis={"x"}
+          lockAxis={"x"}
+          distance={10}
+          onWheelScroller={onWheelScroller}
+          scrollerRef={scrollerRef}
+          pagesValues={pagesValues}
+        />
         <TabItemMore />
       </TabItemsGroup>
     </TabGroupContainer>
