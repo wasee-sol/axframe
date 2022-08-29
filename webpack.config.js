@@ -1,11 +1,13 @@
 "use strict";
+var _a;
 exports.__esModule = true;
 var path = require("path");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
 var ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 var MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var CopyPlugin = require("copy-webpack-plugin");
-var BrotliPlugin = require("brotli-webpack-plugin");
+var CompressionPlugin = require("compression-webpack-plugin");
+var zlib = require("zlib");
 var isDev = process.env.NODE_ENV === "development";
 var config = {
     mode: process.env.NODE_ENV,
@@ -64,11 +66,18 @@ var config = {
         fallback: { buffer: false }
     },
     plugins: [
-        new BrotliPlugin({
-            asset: "[path].br[query]",
+        new CompressionPlugin({
+            filename: "[path][base].br",
+            algorithm: "brotliCompress",
             test: /\.(js|css|html|svg)$/,
-            threshold: 0,
-            minRatio: 0.8
+            compressionOptions: {
+                params: (_a = {},
+                    _a[zlib.constants.BROTLI_PARAM_QUALITY] = 11,
+                    _a)
+            },
+            threshold: 10240,
+            minRatio: 0.8,
+            deleteOriginalAssets: false
         }),
         new CopyPlugin({
             patterns: [

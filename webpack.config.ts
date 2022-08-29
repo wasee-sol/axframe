@@ -1,10 +1,12 @@
 import * as webpack from "webpack";
 import * as path from "path";
+
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
-const BrotliPlugin = require("brotli-webpack-plugin");
+const CompressionPlugin = require("compression-webpack-plugin");
+const zlib = require("zlib");
 
 const isDev: boolean = process.env.NODE_ENV === "development";
 
@@ -65,11 +67,18 @@ const config: webpack.Configuration = {
     fallback: { buffer: false },
   },
   plugins: [
-    new BrotliPlugin({
-      asset: "[path].br[query]",
+    new CompressionPlugin({
+      filename: "[path][base].br",
+      algorithm: "brotliCompress",
       test: /\.(js|css|html|svg)$/,
-      threshold: 0,
+      compressionOptions: {
+        params: {
+          [zlib.constants.BROTLI_PARAM_QUALITY]: 11,
+        },
+      },
+      threshold: 10240,
       minRatio: 0.8,
+      deleteOriginalAssets: false,
     }),
     new CopyPlugin({
       patterns: [
