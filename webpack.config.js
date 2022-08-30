@@ -11,7 +11,6 @@ var zlib = require("zlib");
 var isDev = process.env.NODE_ENV === "development";
 var config = {
     mode: process.env.NODE_ENV,
-    watch: isDev,
     entry: ["/src/index.tsx"],
     output: {
         filename: "[name].bundle.js",

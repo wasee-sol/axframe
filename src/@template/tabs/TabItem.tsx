@@ -15,6 +15,7 @@ interface StyleProps {
 interface Props extends StyleProps {
   tabUuid: string;
   tabInfo: PageModel;
+  onContextMenu: (e: React.MouseEvent<HTMLDivElement>, tabUuid: string) => void;
 }
 
 function TabItem(props: Props) {
@@ -27,6 +28,7 @@ function TabItem(props: Props) {
       active={activeTabUuid === tabUuid}
       onClick={() => onClickTab(tabUuid, tabInfo.path)}
       role={activeTabUuid === tabUuid ? "active-tab-item" : "tab-item"}
+      onContextMenu={(evt) => props.onContextMenu(evt, tabUuid)}
     >
       {tabInfo.isHome ? (
         <RFIHome fontSize={18} />

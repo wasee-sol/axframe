@@ -12,7 +12,6 @@ const isDev: boolean = process.env.NODE_ENV === "development";
 
 const config: webpack.Configuration = {
   mode: process.env.NODE_ENV as "development" | "production",
-  watch: isDev,
   entry: ["/src/index.tsx"],
   output: {
     filename: "[name].bundle.js",

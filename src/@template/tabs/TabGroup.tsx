@@ -1,6 +1,7 @@
 import { useTabGroupController } from "@controller/tabs/TabGroupController";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
+import { TabGroupMenu, TabGroupMenuAction } from "components/contextMenu";
 import * as React from "react";
 import { SortableElement, SortableContainer } from "react-sortable-hoc";
 import { PageModel } from "stores";
@@ -13,39 +14,69 @@ import TabItemMore from "./TabItemMore";
 interface SortableItemProps {
   tabUuid: string;
   pageModel: PageModel;
+  onContextMenu: (e: React.MouseEvent<HTMLDivElement>, tabUuid: string) => void;
 }
 
-const SortableItem = SortableElement<SortableItemProps>(({ tabUuid, pageModel }) => (
-  <TabItem tabUuid={tabUuid} tabInfo={pageModel} />
+const SortableItem = SortableElement<SortableItemProps>(({ tabUuid, pageModel, onContextMenu }) => (
+  <TabItem tabUuid={tabUuid} tabInfo={pageModel} onContextMenu={onContextMenu} />
 ));
 
 interface SortableListProps {
   scrollerRef: React.RefObject<HTMLDivElement>;
   onWheelScroller: (e: React.WheelEvent) => void;
   pagesValues: [string, PageModel][];
+  onContextMenu: (e: React.MouseEvent<HTMLDivElement>, tabUuid: string) => void;
 }
 
-const SortableList = SortableContainer<SortableListProps>(({ pagesValues, scrollerRef, onWheelScroller }) => (
-  <TabItemsScroller ref={scrollerRef} onWheel={onWheelScroller}>
-    {pagesValues.map(([k, v], index) => (
-      <SortableItem index={index} key={k} tabUuid={k} pageModel={v} />
-    ))}
-  </TabItemsScroller>
-));
+const SortableList = SortableContainer<SortableListProps>(
+  ({ pagesValues, scrollerRef, onWheelScroller, onContextMenu }) => (
+    <TabItemsScroller ref={scrollerRef} onWheel={onWheelScroller}>
+      {pagesValues.map(([k, v], index) => (
+        <SortableItem index={index} key={k} tabUuid={k} pageModel={v} onContextMenu={onContextMenu} />
+      ))}
+    </TabItemsScroller>
+  )
+);
 
 interface Props {}
 
 function TabGroup(props: Props) {
-  const { activeTabUuid, pagesValues } = mergeProps(props, useTabGroupController());
+  const { activeTabUuid, pagesValues, onClickRemoveTab, currentLanguage } = mergeProps(props, useTabGroupController());
   const scrollerRef = React.useRef<HTMLDivElement>(null);
+  const tabGroupMenu = React.useRef<TabGroupMenu>(new TabGroupMenu());
 
-  const onWheelScroller = React.useCallback((e: React.WheelEvent) => {
+  const handleWheelScroller = React.useCallback((evt: React.WheelEvent) => {
     if (scrollerRef.current) {
       scrollerRef.current.scroll({
-        left: scrollerRef.current.scrollLeft + e.deltaX + e.deltaY,
+        left: scrollerRef.current.scrollLeft + evt.deltaX + evt.deltaY,
       });
     }
   }, []);
+
+  const handleContextMenu = React.useCallback(
+    (evt: React.MouseEvent<HTMLDivElement>, tabUuid: string) => {
+      evt.preventDefault();
+
+      tabGroupMenu.current.onClick = ({ action }) => {
+        switch (action) {
+          case TabGroupMenuAction.CLOSE_TAB:
+            onClickRemoveTab(tabUuid);
+            break;
+          case TabGroupMenuAction.CLOSE_OTHER_TABS:
+            break;
+          case TabGroupMenuAction.CLOSE_TABS_RIGHT:
+            break;
+          case TabGroupMenuAction.REFRESH:
+            break;
+          default:
+            break;
+        }
+      };
+
+      tabGroupMenu.current.popupByItem(evt);
+    },
+    [onClickRemoveTab]
+  );
 
   // scroll to activeTab
   React.useEffect(() => {
@@ -67,6 +98,10 @@ function TabGroup(props: Props) {
     }
   }, [activeTabUuid]);
 
+  React.useEffect(() => {
+    tabGroupMenu.current.language = currentLanguage;
+  }, [currentLanguage]);
+
   return (
     <TabGroupContainer>
       <TabLine />
@@ -75,9 +110,10 @@ function TabGroup(props: Props) {
           axis={"x"}
           lockAxis={"x"}
           distance={20}
-          onWheelScroller={onWheelScroller}
+          onWheelScroller={handleWheelScroller}
           scrollerRef={scrollerRef}
           pagesValues={pagesValues}
+          onContextMenu={handleContextMenu}
         />
         <TabItemMore />
       </TabItemsGroup>

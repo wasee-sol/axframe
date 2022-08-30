@@ -27,6 +27,12 @@ const KO: typeof EN = {
   },
   pageTab: {
     newTab: "새 탭",
+    contextMenu: {
+      closeTag: "닫기",
+      closeOtherTabs: "다른탭 닫기",
+      refresh: "새로고침",
+      closeTabsToRight: "오른쪽 탭 닫기",
+    },
   },
 };
 export default KO;

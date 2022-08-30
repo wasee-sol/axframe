@@ -13,7 +13,7 @@ export function useTabGroupController() {
 
   const location = useLocation();
   const { linkTo } = useLink();
-  const { t } = useI18n();
+  const { t, currentLanguage } = useI18n();
 
   const onClickTab = React.useCallback(
     (tabUuid: string, path?: string) => {
@@ -49,6 +49,7 @@ export function useTabGroupController() {
     onClickTab,
     onClickAddTab,
     onClickRemoveTab,
+    currentLanguage,
   };
 }
 

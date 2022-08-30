@@ -25,6 +25,12 @@ const EN = {
   },
   pageTab: {
     newTab: "New tab",
+    contextMenu: {
+      closeTag: "Remove Tab",
+      closeOtherTabs: "Close Other tabs",
+      refresh: "Refresh",
+      closeTabsToRight: "Close Tabs to the right",
+    },
   },
 };
 export default EN;
