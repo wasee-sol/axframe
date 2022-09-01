@@ -7,10 +7,11 @@ const LIGHT = {
   BLUE_90: "#193E58",
   BLUE_100: "#0F2635",
 
-  INK_5: "#FFFFFF",
-  INK_10: "#F7F8FA",
-  INK_20: "#E9EBF0",
-  INK_30: "#B8BFCC",
+  INK_5: "#FFFFFF", // component bg
+  INK_10: "#F7F8FA", // body bg
+  INK_20: "#f0f0f0", // tab, etc
+  INK_30: "#E9EBF0", // border
+  INK_40: "#B8BFCC",
   INK_50: "#98A2B2",
   INK_70: "#606C80",
   INK_90: "#1F2633",

@@ -23,6 +23,7 @@ function TabItemMore(props: Props) {
         />
       }
       trigger={["click"]}
+      align={{ targetOffset: [-5, 0] }}
     >
       <TabItemMoreContainer>
         <RFIArrowDown fontSize={18} />

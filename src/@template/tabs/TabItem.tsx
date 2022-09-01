@@ -19,14 +19,14 @@ interface Props extends StyleProps {
 }
 
 function TabItem(props: Props) {
-  const { activeTabUuid, onClickTab, onClickRemoveTab } = mergeProps(props, useTabGroupController());
+  const { activeTabUuid, handleClickTab, handleRemoveTab } = mergeProps(props, useTabGroupController());
   const { tabUuid, tabInfo } = props;
 
   return (
     <TabItemContainer
       isHome={tabInfo.isHome}
       active={activeTabUuid === tabUuid}
-      onClick={() => onClickTab(tabUuid, tabInfo.path)}
+      onClick={() => handleClickTab(tabUuid, tabInfo.path)}
       role={activeTabUuid === tabUuid ? "active-tab-item" : "tab-item"}
       onContextMenu={(evt) => props.onContextMenu(evt, tabUuid)}
     >
@@ -38,7 +38,7 @@ function TabItem(props: Props) {
           <a
             role='tab-close'
             onClick={(evt) => {
-              onClickRemoveTab(tabUuid);
+              handleRemoveTab(tabUuid);
               evt.stopPropagation();
             }}
           >
@@ -86,7 +86,7 @@ const TabItemContainer = styled.div<StyleProps>`
     if (active) {
       return css`
         color: ${theme.white_color};
-        background: ${theme.primary_color};
+        background: ${theme.rf_tabs_active_background};
 
         [role="tab-close"] {
           color: ${theme.white_color};
@@ -94,8 +94,12 @@ const TabItemContainer = styled.div<StyleProps>`
       `;
     }
     return css`
-      background: #f0f0f0;
+      background: ${theme.rf_tabs_background};
       color: ${theme.text_display_color};
+
+      &:hover {
+        background: ${theme.rf_tabs_hover_background};
+      }
     `;
   }}
 `;

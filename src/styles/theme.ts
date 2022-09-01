@@ -11,7 +11,7 @@ const lightColors = {
   // antd colors
   body_background: LIGHT.INK_10,
   scroll_thumb_color: LIGHT.INK_30,
-  border_color_base: LIGHT.INK_20,
+  border_color_base: LIGHT.INK_30,
   border_color_split: LIGHT.INK_20,
   primary_color: LIGHT.BLUE_50,
   text_color: LIGHT.INK_70,
@@ -29,7 +29,7 @@ const lightColors = {
   text_heading_color: LIGHT.INK_90,
   text_sub_heading_color: LIGHT.INK_50,
   text_body_color: LIGHT.INK_70,
-  text_sub_body_color: LIGHT.INK_30,
+  text_sub_body_color: LIGHT.INK_40,
   link_color: LIGHT.INK_90,
   link_hover_color: LIGHT.BLUE_50,
   link_active_color: LIGHT.INK_100,
@@ -38,6 +38,11 @@ const lightColors = {
   popover_background: LIGHT.INK_5,
 
   box_shadow_base: LIGHT.ELEVATION_03,
+
+  // TabGroup
+  rf_tabs_background: LIGHT.INK_20,
+  rf_tabs_active_background: LIGHT.BLUE_50,
+  rf_tabs_hover_background: LIGHT.INK_30,
 };
 
 // dark component colors
@@ -72,6 +77,11 @@ const darkColors: typeof lightColors = {
   popover_background: DARK.INK_5,
 
   box_shadow_base: DARK.ELEVATION_03,
+
+  // TabGroup
+  rf_tabs_background: DARK.INK_20,
+  rf_tabs_active_background: DARK.BLUE_50,
+  rf_tabs_hover_background: DARK.INK_30,
 };
 
 const commons = {

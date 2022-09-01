@@ -8,6 +8,7 @@ import { PageModel } from "stores";
 import { SMixinFlexRow } from "styles/emotion";
 import { darken } from "styles/palette/colorUtil";
 import { mergeProps } from "utils/object";
+import { arrayMove } from "utils/array";
 import TabItem from "./TabItem";
 import TabItemMore from "./TabItemMore";
 
@@ -41,7 +42,10 @@ const SortableList = SortableContainer<SortableListProps>(
 interface Props {}
 
 function TabGroup(props: Props) {
-  const { activeTabUuid, pagesValues, onClickRemoveTab, currentLanguage } = mergeProps(props, useTabGroupController());
+  const { activeTabUuid, pagesValues, setPages, handleRemoveTab, handleRemoveOtherTabs, currentLanguage } = mergeProps(
+    props,
+    useTabGroupController()
+  );
   const scrollerRef = React.useRef<HTMLDivElement>(null);
   const tabGroupMenu = React.useRef<TabGroupMenu>(new TabGroupMenu());
 
@@ -60,13 +64,16 @@ function TabGroup(props: Props) {
       tabGroupMenu.current.onClick = ({ action }) => {
         switch (action) {
           case TabGroupMenuAction.CLOSE_TAB:
-            onClickRemoveTab(tabUuid);
+            handleRemoveTab(tabUuid);
             break;
           case TabGroupMenuAction.CLOSE_OTHER_TABS:
+            handleRemoveOtherTabs(tabUuid, "OTHERS");
             break;
           case TabGroupMenuAction.CLOSE_TABS_RIGHT:
+            handleRemoveOtherTabs(tabUuid, "TO_RIGHT");
             break;
           case TabGroupMenuAction.REFRESH:
+            window.location.reload();
             break;
           default:
             break;
@@ -75,7 +82,14 @@ function TabGroup(props: Props) {
 
       tabGroupMenu.current.popupByItem(evt);
     },
-    [onClickRemoveTab]
+    [handleRemoveOtherTabs, handleRemoveTab]
+  );
+
+  const handleSortEnd = React.useCallback(
+    ({ oldIndex, newIndex }) => {
+      setPages?.(arrayMove(pagesValues.slice(), oldIndex, newIndex));
+    },
+    [pagesValues, setPages]
   );
 
   // scroll to activeTab
@@ -114,6 +128,7 @@ function TabGroup(props: Props) {
           scrollerRef={scrollerRef}
           pagesValues={pagesValues}
           onContextMenu={handleContextMenu}
+          onSortEnd={handleSortEnd}
         />
         <TabItemMore />
       </TabItemsGroup>

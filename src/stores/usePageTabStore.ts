@@ -22,8 +22,10 @@ export interface PageTab {
 }
 
 export interface TabsActions {
+  setPages: (pagesValues: [string, PageModel][]) => void;
   addTab: (page: PageModel) => string;
   removeTab: (tabUuid: string) => void;
+  removeTabs: (tabUuids: string[]) => void;
   updateTab: (tabUuid: string, page: PageModel) => void;
   setActiveTab: (activeTabUuid: string) => void;
   getActiveTabPage: () => PageTab;
@@ -42,6 +44,9 @@ export const tabsInitialState: PagesTabModel = {
 
 export const usePageTabStore = buildStore<TabsStore>("page-tab", 2, (set, get) => ({
   ...tabsInitialState,
+  setPages: (pagesValues) => {
+    set({ pages: new Map(pagesValues) });
+  },
   addTab: (page) => {
     const pagesEntries = [...get().pages];
     const existsPageEntry = pagesEntries.find(([, _page]) => _page.path === page.path);
@@ -56,6 +61,13 @@ export const usePageTabStore = buildStore<TabsStore>("page-tab", 2, (set, get) =
   removeTab: (tabUuid) => {
     const pages = get().pages;
     pages.delete(tabUuid);
+    set({ pages: new Map([...pages]) });
+    return get().getActiveTabPage();
+  },
+  removeTabs: (tabUuids) => {
+    const pages = get().pages;
+    tabUuids.forEach((tabUuid) => pages.delete(tabUuid));
+
     set({ pages: new Map([...pages]) });
     return get().getActiveTabPage();
   },

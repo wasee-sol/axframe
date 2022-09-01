@@ -1,4 +1,5 @@
 import * as React from "react";
+import { RFITemplate } from "react-frame-icon";
 import { useAppStore } from "stores";
 import { useI18n } from "../../hooks";
 
@@ -11,8 +12,10 @@ function HomeController() {
 
   return (
     <>
+      <RFITemplate fontSize={30} />
       Hello World!!! <p>description</p>
       {t.button.ok}
+      {t.formItem.user.userId.label}
       {t.button.cancel}
       <button onClick={() => setTheme("light")}>light</button>
       <button onClick={() => setTheme("dark")}>dark</button>
