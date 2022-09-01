@@ -47,7 +47,7 @@ export function useTabGroupController() {
 
   const handleRemoveOtherTabs = React.useCallback(
     (tabUuid: string, removeType: "OTHERS" | "TO_RIGHT") => {
-      const pagesValues = [...pages.entries()];
+      const pagesValues = [...pages];
 
       if (removeType === "OTHERS") {
         const removeTabUuids = pagesValues.filter(([k, v]) => !v.isHome && k !== tabUuid).map(([k]) => k);
@@ -72,7 +72,7 @@ export function useTabGroupController() {
 
   return {
     setPages,
-    pagesValues: [...pages.entries()],
+    pagesValues: [...pages],
     activeTabUuid,
     handleClickTab,
     handleAddTab,

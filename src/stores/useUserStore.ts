@@ -44,28 +44,36 @@ export const userInitialState: UserModel = {
   selectedMenuUuid: "",
 };
 
-export const useUserStore = buildStore<UserStore>("user", 2, (set, get) => ({
-  ...userInitialState,
-  setLoaded: (loaded: boolean) => set({ loaded }),
-  setMe: async (me) => {
-    const { accessibleMenus } = await UserService.getUserAccessibleMenus(me.uuid);
-    set({ me, accessibleMenus });
-  },
-  signOut: async () => {
-    await UserService.signOut();
-    set({ me: undefined });
-    usePageTabStore.getState().clearTab();
-  },
-  setAccessibleMenus: (accessibleMenus) => {
-    set({ accessibleMenus });
-  },
-  setOpenedMenuUuids: (uuids) => {
-    set({ openedMenuUuids: uuids });
-  },
-  setSelectedMenuUuid: (uuid) => {
-    set({ selectedMenuUuid: uuid });
-  },
-}));
+export const useUserStore = buildStore<UserStore>(
+  "user",
+  2,
+  (set, get) => ({
+    ...userInitialState,
+    setLoaded: (loaded: boolean) => set({ loaded }),
+    setMe: async (me) => {
+      const { accessibleMenus } = await UserService.getUserAccessibleMenus(me.uuid);
+      set({ me, accessibleMenus });
+    },
+    signOut: async () => {
+      await UserService.signOut();
+      set({ me: undefined });
+      usePageTabStore.getState().clearTab();
+    },
+    setAccessibleMenus: (accessibleMenus) => {
+      set({ accessibleMenus });
+    },
+    setOpenedMenuUuids: (uuids) => {
+      set({ openedMenuUuids: uuids });
+    },
+    setSelectedMenuUuid: (uuid) => {
+      set({ selectedMenuUuid: uuid });
+    },
+  }),
+  (storageValue) => {
+    storageValue.state.selectedMenuUuid = "";
+    return storageValue;
+  }
+);
 
 useUserStore.persist.onFinishHydration((state) => {
   if (!state.loaded) {

@@ -5,7 +5,8 @@ import { getPersistSerializer } from "utils/store";
 function buildStore<T extends Record<string, any>>(
   storeName: string,
   storeVersion: number = 1,
-  stateCreator: StateCreator<T>
+  stateCreator: StateCreator<T>,
+  deserializeFallback?: (state: { state: T; version?: number }) => void
 ) {
   const myMiddlewares = (f: StateCreator<T, any>, option: PersistOptions<T>) =>
     process.env.NODE_ENV !== "production"
@@ -13,8 +14,12 @@ function buildStore<T extends Record<string, any>>(
       : (persist<T, any>(f, option) as StateCreator<T, any, [["zustand/persist", any]]>);
 
   return create<T>()(
-    myMiddlewares(stateCreator as StateCreator<T, any>, getPersistSerializer<T>(storeName, storeVersion))
+    myMiddlewares(
+      stateCreator as StateCreator<T, any>,
+      getPersistSerializer<T>(storeName, storeVersion, deserializeFallback)
+    )
   );
 }
+
 7;
 export default buildStore;

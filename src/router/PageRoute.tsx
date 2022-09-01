@@ -28,9 +28,13 @@ function PageRoute() {
   const location = useLocation();
 
   React.useEffect(() => {
-    const currentMenu = getFlattedMenus(MENUS).find((fMenu) => fMenu.key === location.pathname);
-    setSelectedMenuUuid(`${currentMenu?.key}`);
-    if (currentMenu || location.pathname === "/") setActiveTabByPath(location.pathname, currentMenu?.label);
+    const menus = getFlattedMenus(MENUS);
+    const currentMenu = menus.find((fMenu) => fMenu.key === location.pathname);
+    setSelectedMenuUuid(`${currentMenu?.key ?? ""}`);
+
+    if (currentMenu || location.pathname === "/") {
+      setActiveTabByPath(location.pathname, currentMenu?.label);
+    }
   }, [location.pathname, setActiveTabByPath, setSelectedMenuUuid]);
 
   return (
@@ -39,7 +43,7 @@ function PageRoute() {
         path={"/"}
         element={
           <RequireAuth>
-            <React.Suspense fallback={<div>Loading...</div>}>
+            <React.Suspense fallback={<></>}>
               <FrameProgram sideMenuOpened={sideMenuOpened} />
             </React.Suspense>
           </RequireAuth>
@@ -62,7 +66,7 @@ function PageRoute() {
         path={"/"}
         element={
           <RestrictAuth>
-            <React.Suspense fallback={<div>Loading...</div>}>
+            <React.Suspense fallback={<></>}>
               <FrameDefault />
             </React.Suspense>
           </RestrictAuth>

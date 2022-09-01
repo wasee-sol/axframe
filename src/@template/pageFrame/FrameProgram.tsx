@@ -10,22 +10,23 @@ const TabGroupController = React.lazy(() => import("@controller/tabs/TabGroupCon
 interface StyleProps {
   sideMenuOpened: boolean;
 }
+
 interface Props extends StyleProps {}
 
 function FrameProgram({ sideMenuOpened }: Props) {
   return (
     <PageFrameContainer>
       <PageFrameNav sideMenuOpened={sideMenuOpened}>
-        <React.Suspense fallback={<div>Loading...</div>}>
+        <React.Suspense fallback={<></>}>
           <NavGroupController />
         </React.Suspense>
       </PageFrameNav>
       <PageFrameContent>
-        <React.Suspense fallback={<div>Loading...</div>}>
+        <React.Suspense fallback={<></>}>
           <TabGroupController />
         </React.Suspense>
         <Content>
-          <React.Suspense fallback={<div>Loading...</div>}>
+          <React.Suspense fallback={<></>}>
             <Outlet />
           </React.Suspense>
         </Content>

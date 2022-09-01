@@ -43,9 +43,3 @@ useAppStore.persist.onFinishHydration((state) => {
     state.setLoaded(true);
   }
 });
-
-useAppStore.persist.setOptions({
-  migrate: (persistedState) => {
-    return { ...(persistedState as AppStore), ...appInitialState };
-  },
-});

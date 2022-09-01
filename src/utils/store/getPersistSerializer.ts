@@ -28,6 +28,7 @@ function replacer(key, value) {
   }
   return value;
 }
+
 function reviver(key, value) {
   if (typeof value === "object" && value !== null) {
     if (value.dataType === "Map") {
@@ -37,25 +38,34 @@ function reviver(key, value) {
   return value;
 }
 
-export function getPersistSerializer<T>(storeName: string, storeVersion: number = 1): PersistOptions<T> {
+export function getPersistSerializer<T>(
+  storeName: string,
+  storeVersion: number = 1,
+  deserializeFallback?: (state: { state: T; version?: number }) => void
+): PersistOptions<T> {
   return {
     version: storeVersion,
     name: `store-${storeName}`,
     getStorage: () => storage,
     serialize: (state) => {
-      // return JSON.stringify(state, replacer);
       return LZUTF8.compress(JSON.stringify(state, replacer), {
         outputEncoding: "StorageBinaryString",
       });
     },
     deserialize: (str) => {
-      // return JSON.parse(str, reviver);
-      return JSON.parse(
+      const storageValue = JSON.parse(
         LZUTF8.decompress(str, {
           inputEncoding: "StorageBinaryString",
         }),
         reviver
       );
+
+      storageValue.state.loaded = false;
+
+      if (deserializeFallback) {
+        return deserializeFallback(storageValue);
+      }
+      return storageValue;
     },
   };
 }

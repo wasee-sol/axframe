@@ -6,7 +6,7 @@ import { SMixinFlexColumn } from "styles/emotion";
 function FrameDefault() {
   return (
     <PageFrameContainer>
-      <React.Suspense fallback={<div>Loading...</div>}>
+      <React.Suspense fallback={<></>}>
         <Outlet />
       </React.Suspense>
     </PageFrameContainer>
