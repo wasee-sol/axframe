@@ -9,7 +9,7 @@ import { mergeProps } from "utils/object";
 interface Props {}
 
 function TabItemMore(props: Props) {
-  const { pagesValues } = mergeProps(props, useTabGroupController());
+  const { pagesValues, handleClickTab } = mergeProps(props, useTabGroupController());
 
   return (
     <Dropdown
@@ -18,7 +18,15 @@ function TabItemMore(props: Props) {
         <Menu
           items={pagesValues.map(([k, v]) => ({
             key: k,
-            label: v.label,
+            label: (
+              <div
+                onClick={() => {
+                  handleClickTab(k, v.path);
+                }}
+              >
+                {v.label}
+              </div>
+            ),
           }))}
         />
       }
@@ -37,6 +45,7 @@ const TabItemMoreContainer = styled.div`
   flex: none;
   width: 40px;
   height: 33px;
+  padding-bottom: 3px;
   cursor: pointer;
   position: relative;
 
