@@ -1,11 +1,8 @@
 import * as React from "react";
+import PageSetting from "@template/pages/PageSetting";
 
 function SettingController() {
-  return (
-    <>
-      <h1>Settings</h1>
-    </>
-  );
+  return <PageSetting />;
 }
 
 export default SettingController;

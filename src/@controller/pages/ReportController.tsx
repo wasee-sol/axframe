@@ -1,11 +1,8 @@
 import * as React from "react";
+import PageReport from "@template/pages/PageReport";
 
 function ReportController() {
-  return (
-    <>
-      <h1>Report</h1>
-    </>
-  );
+  return <PageReport />;
 }
 
 export default ReportController;

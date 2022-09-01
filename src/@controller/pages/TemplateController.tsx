@@ -1,11 +1,8 @@
 import * as React from "react";
+import PageTemplate from "@template/pages/PageTemplate";
 
 function TemplateController() {
-  return (
-    <>
-      <h1>TemplateController</h1>
-    </>
-  );
+  return <PageTemplate />;
 }
 
 export default TemplateController;

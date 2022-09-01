@@ -1,11 +1,8 @@
 import * as React from "react";
+import PageAnalytics from "@template/pages/PageAnalytics";
 
 function AnalyticsController() {
-  return (
-    <>
-      <h1>AnalyticsController</h1>
-    </>
-  );
+  return <PageAnalytics />;
 }
 
 export default AnalyticsController;

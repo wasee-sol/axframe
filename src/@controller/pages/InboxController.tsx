@@ -1,11 +1,8 @@
 import * as React from "react";
+import PageInbox from "@template/pages/PageInbox";
 
 function InboxController() {
-  return (
-    <>
-      <h1>InboxController</h1>
-    </>
-  );
+  return <PageInbox />;
 }
 
 export default InboxController;
