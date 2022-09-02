@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import LabelText from "@template/common/LabelText";
+import LabelText from "components/common/LabelText";
 
 export default {
   title: "template/common/LabelText",

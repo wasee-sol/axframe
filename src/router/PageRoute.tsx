@@ -52,8 +52,11 @@ function PageRoute() {
         <Route path={ROUTES.HOME.path} element={<HomeController />} />
         <Route path={ROUTES.ANALYTICS.path} element={<AnalyticsController />} />
         <Route path={ROUTES.COUNSELING.path}>
-          <Route path={ROUTES.COUNSELING.children.REGISTRATION.path} element={<CounselingController />} />
-          <Route path={ROUTES.COUNSELING.children.LIST.path} element={<CounselingController />} />
+          <Route
+            path={ROUTES.COUNSELING.children.REGISTRATION.path}
+            element={<CounselingController pageType={"registration"} />}
+          />
+          <Route path={ROUTES.COUNSELING.children.LIST.path} element={<CounselingController pageType={"list"} />} />
         </Route>
         <Route path={ROUTES.INBOX.path} element={<InboxController />} />
         <Route path={ROUTES.PROJECT.path} element={<ProjectController />} />

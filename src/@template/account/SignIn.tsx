@@ -8,7 +8,7 @@ import { useI18n } from "hooks/useI18n";
 import { useSignInController } from "@controller/pages/SignInController";
 import { getTrimNonEmptyRegExp } from "utils/formPatterns/getTrimNonEmptyRegExp";
 import { mergeProps } from "utils/object";
-import IconText from "@template/common/IconText";
+import IconText from "components/common/IconText";
 
 interface Props {
   onSignIn?: (values: SignInFormItem) => Promise<void>;
@@ -106,7 +106,6 @@ const SignInContainer = styled.div`
     box-sizing: border-box;
     border-radius: 5px;
     padding: 4px 10px;
-    border: 1px solid ${(p) => p.theme.border_color_base};
 
     .ant-input-prefix {
       margin-right: 6px;
@@ -135,7 +134,7 @@ const SignInContainer = styled.div`
 const SignInBox = styled.div`
   width: 400px;
   background: ${(p) => p.theme.component_background};
-  border: 1px solid ${(p) => p.theme.border_color_base};
+  border: 1px solid ${(p) => p.theme.rf_border_color};
   border-radius: 4px;
   box-shadow: ${(p) => p.theme.box_shadow_base};
   padding: 32px;
@@ -155,7 +154,7 @@ const SignInBoxHeader = styled.div`
   }
 
   padding-bottom: 16px;
-  border-bottom: 1px solid ${(p) => p.theme.border_color_base};
+  border-bottom: 1px solid ${(p) => p.theme.rf_border_color};
 `;
 const SignInBoxBody = styled.div`
   padding: 20px 0;

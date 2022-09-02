@@ -84,7 +84,7 @@ const UserInfoBox = styled.div<StyleProps>`
     if (sideMenuOpened) {
       return css`
         ${SMixinFlexRow("stretch", "center")};
-        border-bottom: 1px solid ${theme.border_color_base};
+        border-bottom: 1px solid ${theme.rf_border_color};
         padding-bottom: 32px;
       `;
     }

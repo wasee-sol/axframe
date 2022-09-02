@@ -5,12 +5,13 @@ import { RFIArrowLogOut } from "react-frame-icon";
 import { useNavGroupController } from "../../@controller/nav/NavGroupController";
 import { SMixinFlexColumn } from "../../styles/emotion";
 import { mergeProps } from "../../utils/object";
-import IconText from "../common/IconText";
-import LabelText from "../common/LabelText";
+import IconText from "../../components/common/IconText";
+import LabelText from "../../components/common/LabelText";
 
 interface StyleProps {
   asPopover?: boolean;
 }
+
 interface Props extends StyleProps {
   onSignOut?: () => Promise<void>;
 }
@@ -76,7 +77,7 @@ const CustomDivider = styled.div`
   height: 1px;
   width: 100%;
   clear: both;
-  background: ${(p) => p.theme.border_color_base};
+  background: ${(p) => p.theme.rf_border_color};
 `;
 
 const CustomMenus = styled.div`

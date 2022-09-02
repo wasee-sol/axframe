@@ -67,7 +67,7 @@ const PageFrameContent = styled.div`
 const Content = styled.div`
   flex: 1;
   overflow: auto;
-  padding: 36px;
+  padding: 30px;
 `;
 
 export default FrameProgram;

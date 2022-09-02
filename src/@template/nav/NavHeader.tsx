@@ -7,7 +7,7 @@ import { SMixinFlexColumn, SMixinFlexRow } from "styles/emotion";
 import { useNavGroupController } from "../../@controller/nav/NavGroupController";
 import { useI18n } from "../../hooks/useI18n";
 import { mergeProps } from "../../utils/object";
-import IconText from "../common/IconText";
+import IconText from "../../components/common/IconText";
 
 interface Props {
   sideMenuOpened?: boolean;

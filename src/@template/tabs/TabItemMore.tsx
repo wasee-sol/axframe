@@ -1,3 +1,4 @@
+import { css } from "@emotion/react";
 import { Dropdown, Menu } from "antd";
 import * as React from "react";
 import styled from "@emotion/styled";
@@ -6,10 +7,15 @@ import { SMixinFlexRow } from "styles/emotion";
 import { useTabGroupController } from "@controller/tabs/TabGroupController";
 import { mergeProps } from "utils/object";
 
-interface Props {}
+interface StyleProps {
+  visible?: boolean;
+}
+
+interface Props extends StyleProps {}
 
 function TabItemMore(props: Props) {
   const { pagesValues, handleClickTab } = mergeProps(props, useTabGroupController());
+  const [visible, setVisible] = React.useState(false);
 
   return (
     <Dropdown
@@ -32,15 +38,17 @@ function TabItemMore(props: Props) {
       }
       trigger={["click"]}
       align={{ targetOffset: [-5, 0] }}
+      visible={visible}
+      onVisibleChange={(visible) => setVisible(visible)}
     >
-      <TabItemMoreContainer>
+      <TabItemMoreContainer visible={visible}>
         <RFIArrowDown fontSize={18} />
       </TabItemMoreContainer>
     </Dropdown>
   );
 }
 
-const TabItemMoreContainer = styled.div`
+const TabItemMoreContainer = styled.div<StyleProps>`
   ${SMixinFlexRow("center", "center")};
   flex: none;
   width: 40px;
@@ -48,6 +56,19 @@ const TabItemMoreContainer = styled.div`
   padding-bottom: 3px;
   cursor: pointer;
   position: relative;
+  color: ${(p) => p.theme.primary_color};
+
+  [role="rfi-icon"] {
+    transition: all 0.3s;
+    ${({ visible }) => {
+      if (visible) {
+        return css`
+          transform: rotateX(180deg);
+        `;
+      }
+      return css``;
+    }};
+  }
 
   &:after {
     content: "";

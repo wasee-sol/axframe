@@ -11,8 +11,8 @@ const lightColors = {
   // antd colors
   body_background: LIGHT.INK_10,
   scroll_thumb_color: LIGHT.INK_30,
-  border_color_base: LIGHT.INK_30,
-  border_color_split: LIGHT.INK_20,
+  border_color_base: LIGHT.INK_40,
+  border_color_split: LIGHT.INK_30,
   primary_color: LIGHT.BLUE_50,
   text_color: LIGHT.INK_70,
   error_color: LIGHT.RED_50,
@@ -23,6 +23,9 @@ const lightColors = {
   warning_color: LIGHT.YELLOW_50,
   white_color: LIGHT.INK_5,
   black_color: "#000",
+  label_color: LIGHT.INK_70,
+  input_border_color: LIGHT.INK_40,
+  select_border_color: LIGHT.INK_40,
 
   // custom colors
   text_display_color: LIGHT.INK_100,
@@ -35,11 +38,13 @@ const lightColors = {
   link_active_color: LIGHT.INK_100,
   header_background: LIGHT.INK_5,
   component_background: LIGHT.INK_5,
+  component_sub_background: LIGHT.INK_10,
   popover_background: LIGHT.INK_5,
 
   box_shadow_base: LIGHT.ELEVATION_03,
 
   // TabGroup
+  rf_border_color: LIGHT.INK_30,
   rf_tabs_background: LIGHT.INK_20,
   rf_tabs_active_background: LIGHT.BLUE_50,
   rf_tabs_hover_background: LIGHT.INK_30,
@@ -62,6 +67,9 @@ const darkColors: typeof lightColors = {
   warning_color: DARK.YELLOW_50,
   white_color: DARK.INK_5,
   black_color: "#000",
+  label_color: DARK.INK_80,
+  input_border_color: DARK.INK_40,
+  select_border_color: DARK.INK_40,
 
   // custom colors
   text_display_color: LIGHT.INK_100,
@@ -74,11 +82,13 @@ const darkColors: typeof lightColors = {
   link_active_color: LIGHT.INK_100,
   header_background: DARK.INK_100,
   component_background: DARK.INK_100,
+  component_sub_background: DARK.INK_80,
   popover_background: DARK.INK_5,
 
   box_shadow_base: DARK.ELEVATION_03,
 
   // TabGroup
+  rf_border_color: LIGHT.INK_30,
   rf_tabs_background: DARK.INK_20,
   rf_tabs_active_background: DARK.BLUE_50,
   rf_tabs_hover_background: DARK.INK_30,
@@ -86,7 +96,7 @@ const darkColors: typeof lightColors = {
 
 const commons = {
   heading_font_family: "system-ui",
-  border_radius_base: "2px",
+  border_radius_base: "4px",
   modal_header_height: "40px",
 
   ui_helper_zindex: 100,
@@ -98,8 +108,11 @@ const commons = {
   passed: LIGHT.BLUE_30,
 
   // antd styles
+  height_base: "36px",
+  form_item_margin_bottom: "15px",
   error_page_header_color: "#FF4040",
   error_page_color: LIGHT.BLUE_90,
+  form_vertical_label_padding: "0 0 4px",
 };
 //~
 
