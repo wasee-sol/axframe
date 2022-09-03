@@ -78,7 +78,7 @@ function PageCounselingRegistration(props: Props) {
     setPageModelMetadata({});
   }, [form, setPageModelMetadata]);
 
-  const formInitialValues = {};
+  const formInitialValues = {}; // form 의 초기값 reset해도 이값 으로 리셋됨
 
   React.useEffect(() => {
     form.setFieldsValue(pageModelMetadata);
