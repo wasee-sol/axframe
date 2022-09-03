@@ -74,7 +74,8 @@ const PageFormBox = styled.div<{ level?: 1 | 2 | 3 }>`
         background: ${theme.component_sub_background};
         border: 1px solid ${theme.rf_border_color};
         border-radius: 4px;
-        padding: 10px;
+        padding: 10px 20px;
+        margin: 0 0 15px;
 
         > * {
           max-width: 960px;
@@ -85,7 +86,12 @@ const PageFormBox = styled.div<{ level?: 1 | 2 | 3 }>`
   }}
 `;
 
-const PageFormGroupTitle = styled.div``;
+const PageFormGroupTitle = styled.div`
+  margin-bottom: 5px;
+  color: ${(p) => p.theme.text_heading_color};
+  font-weight: bold;
+  font-size: 1.1em;
+`;
 
 const ButtonGroup = styled.div`
   ${SMixinFlexRow("flex-start", "center")};
