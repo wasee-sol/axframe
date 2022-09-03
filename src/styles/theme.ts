@@ -108,7 +108,7 @@ const commons = {
   passed: LIGHT.BLUE_30,
 
   // antd styles
-  height_base: "36px",
+  height_base: "32px",
   height_sm: "28px",
   form_item_margin_bottom: "15px",
   error_page_header_color: "#FF4040",

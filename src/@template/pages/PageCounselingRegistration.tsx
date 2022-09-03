@@ -4,8 +4,46 @@ import styled from "@emotion/styled";
 import { RFIWriteForm } from "react-frame-icon";
 import { PageLayout } from "styles/pageStyled";
 import IconText from "components/common/IconText";
+import { useCounselingRegistrationController } from "../../@controller/pages/CounselingRegistrationController";
+import { mergeProps } from "../../utils/object";
 
 interface Props {}
+
+interface FormField {
+  area: string;
+  cnsltUserCd: string;
+  cnsltDt: string;
+  cnsltHow: string;
+  cnsltHowEtc: string;
+  cnsltPath: string;
+  cnsltPathDtl: string;
+  cnsltPathPerson: string;
+  cnsltPathDirect: string;
+  cnsltPathOrg: string;
+  cnsltPathOrgPerson: string;
+  cnsltPathOrgPhone: string;
+  name: string;
+  birthDt: string;
+  sex: string;
+  phone1: string;
+  phone2: string;
+  hndcapYn: string;
+  hndcapGrade: string;
+  hndcapTyp: string;
+  zipNum: string;
+  addr: string;
+  addrDtls: string;
+  hopePoint: string;
+  hopePoint1: string;
+  hopePoint1Etc: string;
+  hopePoint2: string;
+  hopePoint2Etc: string;
+  hopePoint3: string;
+  hopePoint3Etc: string;
+  hopePoint4Etc: string;
+  hopePoint5Etc: string;
+  fldT: string;
+}
 
 const areas: { label: string; value: string }[] = [
   { label: "중구", value: "중구" },
@@ -19,6 +57,7 @@ const areas: { label: string; value: string }[] = [
 ];
 
 function PageCounselingRegistration(props: Props) {
+  const { pageModelMetadata, setPageModelMetadata } = mergeProps(props, useCounselingRegistrationController());
   const [form] = Form.useForm();
   const cnsltHow = Form.useWatch("cnsltHow", form);
   const cnsltPath = Form.useWatch("cnsltPath", form);
@@ -27,6 +66,25 @@ function PageCounselingRegistration(props: Props) {
   const hopePoint2 = Form.useWatch("hopePoint2", form);
   const hopePoint3 = Form.useWatch("hopePoint3", form);
 
+  const handleFormValuesChange = React.useCallback(
+    (changedValues: any, values: FormField) => {
+      setPageModelMetadata(values);
+    },
+    [setPageModelMetadata]
+  );
+
+  const handleFormReset = React.useCallback(() => {
+    form.resetFields();
+    setPageModelMetadata({});
+  }, [form, setPageModelMetadata]);
+
+  const formInitialValues = {};
+
+  React.useEffect(() => {
+    form.setFieldsValue(pageModelMetadata);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form]);
+
   return (
     <Container>
       <Header>
@@ -34,11 +92,17 @@ function PageCounselingRegistration(props: Props) {
 
         <ButtonGroup>
           <Button>임시저장목록 불러오기</Button>
-          <Button>초기화</Button>
+          <Button onClick={handleFormReset}>초기화</Button>
         </ButtonGroup>
       </Header>
       <Body>
-        <Form form={form} layout={"vertical"} colon={false}>
+        <Form<FormField>
+          form={form}
+          layout={"vertical"}
+          colon={false}
+          initialValues={formInitialValues}
+          onValuesChange={handleFormValuesChange}
+        >
           <FormBox>
             <Row gutter={20}>
               <Col xs={24} sm={8}>
@@ -79,6 +143,7 @@ function PageCounselingRegistration(props: Props) {
 
             <Form.Item label={"상담경로"} required name={"cnsltPath"} style={{ marginBottom: 5 }}>
               <Radio.Group>
+                <Radio value=''>선택안함</Radio>
                 <Radio value='관련기관'>관련기관</Radio>
                 <Radio value='개인소개'>개인소개</Radio>
                 <Radio value='본인직접'>본인직접</Radio>
@@ -331,7 +396,6 @@ function PageCounselingRegistration(props: Props) {
         <Button type={"primary"}>저장히기</Button>
         <Button>임시저장하기</Button>
       </ButtonGroup>
-      ;
     </Container>
   );
 }

@@ -1,17 +1,32 @@
-import { useState, useEffect } from "react";
+import * as React from "react";
+import moment from "moment";
 import { usePageTabStore, PageModel } from "stores";
 
-export function usePageModel() {
-  const activeTabUuid = usePageTabStore((s) => s.activeTabUuid);
-  const getActiveTabPage = usePageTabStore((s) => s.getActiveTabPage);
-  const [pageModel, setPageModel] = useState<PageModel>({ label: "" });
+export function usePageModel(path: string) {
+  const pages = usePageTabStore((s) => s.pages);
+  const tabUuid = React.useMemo(() => [...pages].find(([, v]) => v.path === path)?.[0] ?? "", [pages, path]);
+  const pageModel = React.useMemo(() => pages.get(tabUuid) ?? ({ label: "" } as PageModel), [pages, tabUuid]);
 
-  useEffect(() => {
-    const { page } = getActiveTabPage();
-    setPageModel(page);
-  }, [activeTabUuid, getActiveTabPage]);
+  const setPageModelMetadata = React.useCallback(
+    (metaData: Record<string, any>) => {
+      pageModel.metaData = metaData;
+    },
+    [pageModel]
+  );
+
+  const pageModelMetadata = React.useMemo(() => {
+    for (const metaDataKey in pageModel.metaData) {
+      if (moment(pageModel.metaData[metaDataKey], moment.ISO_8601, true).isValid()) {
+        pageModel.metaData[metaDataKey] = moment(pageModel.metaData[metaDataKey]);
+      }
+    }
+
+    return pageModel.metaData;
+  }, [pageModel.metaData]);
 
   return {
     pageModel,
+    pageModelMetadata,
+    setPageModelMetadata,
   };
 }

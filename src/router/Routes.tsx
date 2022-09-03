@@ -81,3 +81,7 @@ export const ROUTES = {
     hideMenu: true,
   },
 };
+
+export const getRoutesPath = (paths: string[]) => {
+  return ROUTES.ROOT.path + paths.join("/");
+};

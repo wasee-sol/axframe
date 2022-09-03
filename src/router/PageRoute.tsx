@@ -12,7 +12,8 @@ const FrameProgram = React.lazy(() => import("@template/pageFrame/FrameProgram")
 
 const AnalyticsController = React.lazy(() => import("@controller/pages/AnalyticsController"));
 const BlankPageController = React.lazy(() => import("@controller/pages/BlankPageController"));
-const CounselingController = React.lazy(() => import("@controller/pages/CounselingController"));
+const CounselingRegistrationController = React.lazy(() => import("@controller/pages/CounselingRegistrationController"));
+const CounselingListController = React.lazy(() => import("@controller/pages/CounselingListController"));
 const HomeController = React.lazy(() => import("@controller/pages/HomeController"));
 const InboxController = React.lazy(() => import("@controller/pages/InboxController"));
 const ProjectController = React.lazy(() => import("@controller/pages/ProjectController"));
@@ -52,11 +53,8 @@ function PageRoute() {
         <Route path={ROUTES.HOME.path} element={<HomeController />} />
         <Route path={ROUTES.ANALYTICS.path} element={<AnalyticsController />} />
         <Route path={ROUTES.COUNSELING.path}>
-          <Route
-            path={ROUTES.COUNSELING.children.REGISTRATION.path}
-            element={<CounselingController pageType={"registration"} />}
-          />
-          <Route path={ROUTES.COUNSELING.children.LIST.path} element={<CounselingController pageType={"list"} />} />
+          <Route path={ROUTES.COUNSELING.children.REGISTRATION.path} element={<CounselingRegistrationController />} />
+          <Route path={ROUTES.COUNSELING.children.LIST.path} element={<CounselingListController />} />
         </Route>
         <Route path={ROUTES.INBOX.path} element={<InboxController />} />
         <Route path={ROUTES.PROJECT.path} element={<ProjectController />} />

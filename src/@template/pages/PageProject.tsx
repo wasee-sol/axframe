@@ -12,8 +12,8 @@ function PageProject(props: Props) {
   return (
     <ProjectPageContainer>
       <h1>ProjectPage</h1>
-      <p>{pageModel.path}</p>
-      <b>{pageModel.label}</b>
+      <p>{pageModel?.path}</p>
+      <b>{pageModel?.label}</b>
       <button>button</button>
 
       <DatePicker.RangePicker showTime />
