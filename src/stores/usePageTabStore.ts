@@ -135,6 +135,7 @@ export const usePageTabStore = buildStore<TabsStore>(
           map.delete(key);
         }
       });
+      set({ pages: new Map([...get().pages]) });
     },
   }),
   (storageValue) => {
