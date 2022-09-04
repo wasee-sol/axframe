@@ -4,8 +4,9 @@ import styled from "@emotion/styled";
 import { RFIWriteForm } from "react-frame-icon";
 import { PageLayout } from "styles/pageStyled";
 import IconText from "components/common/IconText";
-import { useCounselingRegistrationController } from "../../@controller/pages/CounselingRegistrationController";
-import { mergeProps } from "../../utils/object";
+import { useCounselingRegistrationController } from "@controller/pages/CounselingRegistrationController";
+import { mergeProps } from "utils/object";
+import moment from "moment";
 
 interface Props {}
 
@@ -65,6 +66,7 @@ function PageCounselingRegistration(props: Props) {
   const hopePoint1 = Form.useWatch("hopePoint1", form);
   const hopePoint2 = Form.useWatch("hopePoint2", form);
   const hopePoint3 = Form.useWatch("hopePoint3", form);
+  const birthDt = Form.useWatch("birthDt", form);
 
   const handleFormValuesChange = React.useCallback(
     (changedValues: any, values: FormField) => {
@@ -79,6 +81,13 @@ function PageCounselingRegistration(props: Props) {
   }, [form, setPageModelMetadata]);
 
   const formInitialValues = {}; // form 의 초기값 reset해도 이값 으로 리셋됨
+
+  React.useEffect(() => {
+    if (birthDt) {
+      const age = moment().diff(moment(birthDt), "years");
+      form.setFieldValue("age", age);
+    }
+  }, [birthDt, form]);
 
   React.useEffect(() => {
     form.setFieldsValue(pageModelMetadata);
@@ -100,6 +109,7 @@ function PageCounselingRegistration(props: Props) {
           form={form}
           layout={"vertical"}
           colon={false}
+          scrollToFirstError
           initialValues={formInitialValues}
           onValuesChange={handleFormValuesChange}
         >
@@ -197,8 +207,15 @@ function PageCounselingRegistration(props: Props) {
                 </Form.Item>
               </Col>
               <Col xs={24} sm={8}>
-                <Form.Item label={"생년월일"} name={"birthDt"} required>
-                  <DatePicker picker={"date"} />
+                <Form.Item label={"생년월일"}>
+                  <Input.Group compact>
+                    <Form.Item name={"birthDt"} noStyle required>
+                      <DatePicker picker={"date"} />
+                    </Form.Item>
+                    <Form.Item name={"age"} noStyle>
+                      <Input readOnly style={{ width: 80 }} prefix={"만"} suffix={"세"} />
+                    </Form.Item>
+                  </Input.Group>
                 </Form.Item>
               </Col>
               <Col xs={24} sm={8}>
