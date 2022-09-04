@@ -80,6 +80,7 @@ export const usePageTabStore = buildStore<TabsStore>(
     },
     updateTab: (tabUuid, page) => {
       get().pages.set(tabUuid, page);
+      set({ pages: new Map([...get().pages]) });
     },
     setActiveTab: (activeTabUuid) => {
       set({ activeTabUuid });

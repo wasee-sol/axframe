@@ -1,11 +1,12 @@
 import { Form, Select, DatePicker, Radio, Input, Row, Col, Button, Space, Checkbox } from "antd";
 import * as React from "react";
 import styled from "@emotion/styled";
+import { useDaumPostcodePopup } from "react-daum-postcode";
 import { RFIWriteForm } from "react-frame-icon";
 import { PageLayout } from "styles/pageStyled";
 import IconText from "components/common/IconText";
 import { useCounselingRegistrationController } from "@controller/pages/CounselingRegistrationController";
-import { mergeProps } from "utils/object";
+import { mergeProps, convertToDate } from "utils/object";
 import moment from "moment";
 
 interface Props {}
@@ -59,6 +60,8 @@ const areas: { label: string; value: string }[] = [
 
 function PageCounselingRegistration(props: Props) {
   const { pageModelMetadata, setPageModelMetadata } = mergeProps(props, useCounselingRegistrationController());
+  const openZipCodeFinder = useDaumPostcodePopup("//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js");
+
   const [form] = Form.useForm();
   const cnsltHow = Form.useWatch("cnsltHow", form);
   const cnsltPath = Form.useWatch("cnsltPath", form);
@@ -80,6 +83,18 @@ function PageCounselingRegistration(props: Props) {
     setPageModelMetadata({});
   }, [form, setPageModelMetadata]);
 
+  const handleFindZipCode = React.useCallback(async () => {
+    await openZipCodeFinder({
+      onComplete: (data) => {
+        form.setFieldsValue({
+          zipNum: data.zonecode,
+          addr: data.address,
+        });
+        form.getFieldInstance("addrDtls").focus();
+      },
+    });
+  }, [form, openZipCodeFinder]);
+
   const formInitialValues = {}; // form 의 초기값 reset해도 이값 으로 리셋됨
 
   React.useEffect(() => {
@@ -90,7 +105,7 @@ function PageCounselingRegistration(props: Props) {
   }, [birthDt, form]);
 
   React.useEffect(() => {
-    form.setFieldsValue(pageModelMetadata);
+    form.setFieldsValue(convertToDate(pageModelMetadata, ["cnsltDt", "birthDt"]));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form]);
 
@@ -282,15 +297,17 @@ function PageCounselingRegistration(props: Props) {
               <Row gutter={[10, 10]}>
                 <Col xs={12} sm={3}>
                   <Form.Item noStyle name={"zipNum"}>
-                    <Input />
+                    <Input readOnly />
                   </Form.Item>
                 </Col>
                 <Col xs={12} sm={3}>
-                  <Button block>주소찾기</Button>
+                  <Button block onClick={handleFindZipCode}>
+                    주소찾기
+                  </Button>
                 </Col>
                 <Col xs={24} sm={9}>
                   <Form.Item noStyle name={"addr"}>
-                    <Input />
+                    <Input readOnly />
                   </Form.Item>
                 </Col>
                 <Col xs={24} sm={9}>
