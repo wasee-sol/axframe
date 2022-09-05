@@ -417,11 +417,11 @@ function PageCounselingRegistration(props: Props) {
             </FormGroupTitle>
 
             <Form.Item name={"hopePoint5Etc"}>
-              <Input.TextArea disabled={!hopePoint?.["세부내용"]} />
+              <Input.TextArea disabled={!hopePoint?.["세부내용"]} showCount maxLength={200} />
             </Form.Item>
 
             <Form.Item label={"주요상담내용"} name={"fldT"} required>
-              <Input.TextArea rows={4} />
+              <Input.TextArea rows={4} showCount maxLength={200} />
             </Form.Item>
           </FormBox>
         </Form>

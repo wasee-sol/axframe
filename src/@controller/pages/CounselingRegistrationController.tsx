@@ -1,11 +1,13 @@
 import * as React from "react";
 import PageCounselingRegistration from "@template/pages/PageCounselingRegistration";
 import { usePageModel } from "hooks/usePageModel";
-import { getRoutesPath, ROUTES } from "router/Routes";
+import { ROUTES } from "router/Routes";
 
 export function useCounselingRegistrationController() {
-  const path = getRoutesPath([ROUTES.COUNSELING.path, ROUTES.COUNSELING.children.REGISTRATION.path]);
-  const { pageModel, pageModelMetadata, setPageModelMetadata } = usePageModel(path);
+  const { pageModel, pageModelMetadata, setPageModelMetadata } = usePageModel([
+    ROUTES.COUNSELING.path,
+    ROUTES.COUNSELING.children.REGISTRATION.path,
+  ]);
 
   return {
     pageModel,
