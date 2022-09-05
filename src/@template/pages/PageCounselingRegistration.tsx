@@ -115,8 +115,10 @@ function PageCounselingRegistration(props: Props) {
         <IconText icon={<RFIWriteForm />}>상담 기록지 등록</IconText>
 
         <ButtonGroup>
-          <Button>임시저장목록 불러오기</Button>
-          <Button onClick={handleFormReset}>초기화</Button>
+          <Button size='small'>임시저장목록 불러오기</Button>
+          <Button size='small' onClick={handleFormReset}>
+            초기화
+          </Button>
         </ButtonGroup>
       </Header>
       <Body>

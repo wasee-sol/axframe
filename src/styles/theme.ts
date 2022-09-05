@@ -99,21 +99,23 @@ const commons = {
   border_radius_base: "4px",
   modal_header_height: "40px",
 
-  ui_helper_zindex: 100,
-  ui_drag_zindex: 500,
-  ui_header_zindex: 900,
-  ui_max_zindex: 9999,
-
   active: LIGHT.BLUE_50,
   passed: LIGHT.BLUE_30,
 
-  // antd styles
+  btn_font_size_sm: "13px",
   height_base: "32px",
+  height_lg: "40px",
   height_sm: "28px",
   form_item_margin_bottom: "15px",
   error_page_header_color: "#FF4040",
   error_page_color: LIGHT.BLUE_90,
   form_vertical_label_padding: "0 0 4px",
+
+  // custom styles
+  ui_helper_zindex: 100,
+  ui_drag_zindex: 500,
+  ui_header_zindex: 900,
+  ui_max_zindex: 9999,
 };
 //~
 

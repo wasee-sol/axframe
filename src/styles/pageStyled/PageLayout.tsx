@@ -23,8 +23,6 @@ const PageHeader = styled.div`
   font-size: 1.6em;
 `;
 
-const PageSearchBar = styled.div``;
-
 const PageBody = styled.div`
   margin: 15px 0;
 `;
@@ -100,7 +98,6 @@ const ButtonGroup = styled.div`
 
 export class PageLayout extends React.Component<Props> {
   public static Header = PageHeader;
-  public static SearchBar = PageSearchBar;
   public static Body = PageBody;
   public static FormBoxHeader = PageFormBoxHeader;
   public static FormBox = PageFormBox;

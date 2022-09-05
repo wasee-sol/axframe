@@ -1,5 +1,3 @@
-import * as React from "react";
-import PageCounselingRegistration from "@template/pages/PageCounselingRegistration";
 import { usePageModel } from "hooks/usePageModel";
 import { ROUTES } from "router/Routes";
 
@@ -15,11 +13,3 @@ export function useCounselingRegistrationController() {
     setPageModelMetadata,
   };
 }
-
-interface Props {}
-
-function CounselingRegistrationController(props: Props) {
-  return <PageCounselingRegistration />;
-}
-
-export default CounselingRegistrationController;

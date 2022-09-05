@@ -1,7 +1,5 @@
-import * as React from "react";
-import PageCounselingList from "@template/pages/PageCounselingList";
-import { usePageModel } from "../../hooks/usePageModel";
-import { ROUTES } from "../../router/Routes";
+import { usePageModel } from "hooks/usePageModel";
+import { ROUTES } from "router/Routes";
 
 export function useCounselingListController() {
   const { pageModel, pageModelMetadata, setPageModelMetadata } = usePageModel([
@@ -15,11 +13,3 @@ export function useCounselingListController() {
     setPageModelMetadata,
   };
 }
-
-interface Props {}
-
-function CounselingListController(props: Props) {
-  return <PageCounselingList />;
-}
-
-export default CounselingListController;
