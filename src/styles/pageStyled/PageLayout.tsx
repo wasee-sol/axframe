@@ -57,7 +57,7 @@ const PageFormBox = styled.div<{ level?: 1 | 2 | 3 }>`
   ${({ level = 1, theme }) => {
     if (level === 1) {
       return css`
-        background: ${theme.component_background};
+        background: ${theme.form_box_bg};
         border: 1px solid ${theme.rf_border_color};
         border-radius: 4px;
         padding: 20px;

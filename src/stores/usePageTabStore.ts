@@ -69,8 +69,10 @@ export const usePageTabStore = buildStore<TabsStore>(
     },
     removeTab: (tabUuid) => {
       const pages = get().pages;
-      pages.delete(tabUuid);
-      set({ pages: new Map([...pages]) });
+      if (!pages.get(tabUuid)?.isHome) {
+        pages.delete(tabUuid);
+        set({ pages: new Map([...pages]) });
+      }
       return get().getActiveTabPage();
     },
     removeTabs: (tabUuids) => {

@@ -1,4 +1,4 @@
-import { Button, DatePicker } from "antd";
+import { Button } from "antd";
 import * as React from "react";
 import styled from "@emotion/styled";
 import { RFIListSearch, RFIWriteForm } from "react-frame-icon";
@@ -6,17 +6,21 @@ import { PageLayout } from "styles/pageStyled";
 import { IconText } from "components/common";
 import SearchTool from "@template/searchTool/SearchTool";
 import { FilterType } from "@template/searchTool/SearchFilter";
+import { useCounselingListController } from "@controller/pages/CounselingListController";
+import { mergeProps } from "utils/object";
 
 interface Props {}
 
 function PageCounselingList(props: Props) {
+  const { t } = mergeProps(props, useCounselingListController());
+
   return (
     <Container>
       <Header>
-        <IconText icon={<RFIListSearch />}>상담 기록지 목록</IconText>
+        <IconText icon={<RFIListSearch />}>{t.pages.counseling.list.title}</IconText>
 
         <ButtonGroup>
-          <Button size='small'>엑셀변환하기</Button>
+          <Button size='small'>{t.button.excel}</Button>
         </ButtonGroup>
       </Header>
       <SearchTool
@@ -55,11 +59,7 @@ function PageCounselingList(props: Props) {
         }}
         onChangeValues={() => {}}
       />
-      <Body>
-        <DatePicker picker='year' />
-        <DatePicker />
-      </Body>
-      /
+      <Body></Body>
     </Container>
   );
 }

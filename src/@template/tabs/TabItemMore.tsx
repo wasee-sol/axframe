@@ -6,6 +6,7 @@ import { RFIArrowDown } from "react-frame-icon";
 import { SMixinFlexRow } from "styles/emotion";
 import { useTabGroupController } from "@controller/tabs/TabGroupController";
 import { mergeProps } from "utils/object";
+import { alpha } from "styles/palette/colorUtil";
 
 interface StyleProps {
   visible?: boolean;
@@ -78,8 +79,11 @@ const TabItemMoreContainer = styled.div<StyleProps>`
     top: 0;
     width: 20px;
     height: 30px;
-    background: linear-gradient(to right, #ffffff00, #ffffff);
-  }
+    ${({ theme }) => {
+      return css`
+        background: linear-gradient(to right, ${alpha(theme.header_background, 0)}, ${theme.header_background});
+      `;
+    }}
 `;
 
 export default TabItemMore;
