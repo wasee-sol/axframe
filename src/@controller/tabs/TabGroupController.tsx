@@ -1,5 +1,4 @@
 import * as React from "react";
-import TabGroup from "@template/tabs/TabGroup";
 import { useLocation } from "react-router-dom";
 import { usePageTabStore } from "stores";
 import { useLink, useI18n } from "hooks";
@@ -81,9 +80,3 @@ export function useTabGroupController() {
     currentLanguage,
   };
 }
-
-function TabGroupController() {
-  return <TabGroup />;
-}
-
-export default TabGroupController;

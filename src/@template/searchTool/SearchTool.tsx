@@ -2,7 +2,7 @@ import * as React from "react";
 import styled from "@emotion/styled";
 import { Divider, Input, Select } from "antd";
 import { RFISearch, RFIRevert } from "react-frame-icon";
-import IconText from "../../components/common/IconText";
+import { IconText } from "components/common";
 import { SMixinFlexRow } from "../../styles/emotion";
 import SearchFilter, { FilterType } from "./SearchFilter";
 

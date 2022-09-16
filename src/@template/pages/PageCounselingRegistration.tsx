@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import { useDaumPostcodePopup } from "react-daum-postcode";
 import { RFIWriteForm } from "react-frame-icon";
 import { PageLayout } from "styles/pageStyled";
-import IconText from "components/common/IconText";
+import { IconText } from "components/common";
 import { useCounselingRegistrationController } from "@controller/pages/CounselingRegistrationController";
 import { mergeProps, convertToDate } from "utils/object";
 import moment from "moment";
@@ -59,7 +59,7 @@ const areas: { label: string; value: string }[] = [
 ];
 
 function PageCounselingRegistration(props: Props) {
-  const { pageModelMetadata, setPageModelMetadata } = mergeProps(props, useCounselingRegistrationController());
+  const { pageModelMetadata, setPageModelMetadata, t } = mergeProps(props, useCounselingRegistrationController());
   const openZipCodeFinder = useDaumPostcodePopup("//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js");
 
   const [form] = Form.useForm();
@@ -112,7 +112,7 @@ function PageCounselingRegistration(props: Props) {
   return (
     <Container>
       <Header>
-        <IconText icon={<RFIWriteForm />}>상담 기록지 등록</IconText>
+        <IconText icon={<RFIWriteForm />}>{t.pages.counseling.registration.title}</IconText>
 
         <ButtonGroup>
           <Button size='small'>임시저장목록 불러오기</Button>

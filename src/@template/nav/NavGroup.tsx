@@ -9,10 +9,12 @@ import { SMixinFlexColumn } from "styles/emotion";
 import { useNavGroupController } from "@controller/nav/NavGroupController";
 import { mergeProps } from "utils/object";
 import { MenuItem } from "@types";
+import NavFooter from "./NavFooter";
 
 interface StyleProps {
   sideMenuOpened?: boolean;
 }
+
 interface Props extends StyleProps {
   me?: User;
   menus?: MenuItem[];
@@ -35,6 +37,8 @@ function NavGroup(props: Props) {
       ) : (
         <div>User Not Found</div>
       )}
+
+      <NavFooter />
     </NavGroupContainer>
   );
 }

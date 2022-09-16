@@ -2,11 +2,10 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import * as React from "react";
 import { RFIArrowLogOut } from "react-frame-icon";
-import { useNavGroupController } from "../../@controller/nav/NavGroupController";
-import { SMixinFlexColumn } from "../../styles/emotion";
-import { mergeProps } from "../../utils/object";
-import IconText from "../../components/common/IconText";
-import LabelText from "../../components/common/LabelText";
+import { useNavGroupController } from "@controller/nav/NavGroupController";
+import { SMixinFlexColumn } from "styles/emotion";
+import { mergeProps } from "utils/object";
+import { IconText, LabelText } from "components/common";
 
 interface StyleProps {
   asPopover?: boolean;

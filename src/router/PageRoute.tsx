@@ -10,17 +10,16 @@ import { ROUTES } from "./Routes";
 const FrameDefault = React.lazy(() => import("@template/pageFrame/FrameDefault"));
 const FrameProgram = React.lazy(() => import("@template/pageFrame/FrameProgram"));
 
-const AnalyticsController = React.lazy(() => import("@controller/pages/AnalyticsController"));
-const BlankPageController = React.lazy(() => import("@controller/pages/BlankPageController"));
+const Analytics = React.lazy(() => import("@template/pages/PageAnalytics"));
 const PageCounselingRegistration = React.lazy(() => import("@template/pages/PageCounselingRegistration"));
 const PageCounselingList = React.lazy(() => import("@template/pages/PageCounselingList"));
-const HomeController = React.lazy(() => import("@controller/pages/HomeController"));
-const InboxController = React.lazy(() => import("@controller/pages/InboxController"));
-const ProjectController = React.lazy(() => import("@controller/pages/ProjectController"));
-const ReportController = React.lazy(() => import("@controller/pages/ReportController"));
-const SettingController = React.lazy(() => import("@controller/pages/SettingController"));
-const SignInController = React.lazy(() => import("@controller/pages/SignInController"));
-const TemplateController = React.lazy(() => import("@controller/pages/TemplateController"));
+const Home = React.lazy(() => import("@template/pages/PageHome"));
+const Inbox = React.lazy(() => import("@template/pages/PageInbox"));
+const Project = React.lazy(() => import("@template/pages/PageProject"));
+const Report = React.lazy(() => import("@template/pages/PageReport"));
+const Setting = React.lazy(() => import("@template/pages/PageSetting"));
+const SignIn = React.lazy(() => import("@template/account/SignIn"));
+const Template = React.lazy(() => import("@template/pages/PageTemplate"));
 
 function PageRoute() {
   const sideMenuOpened = useAppStore((s) => s.sideMenuOpened);
@@ -50,18 +49,18 @@ function PageRoute() {
           </RequireAuth>
         }
       >
-        <Route path={ROUTES.HOME.path} element={<HomeController />} />
-        <Route path={ROUTES.ANALYTICS.path} element={<AnalyticsController />} />
+        <Route path={ROUTES.HOME.path} element={<Home />} />
+        <Route path={ROUTES.ANALYTICS.path} element={<Analytics />} />
         <Route path={ROUTES.COUNSELING.path}>
           <Route path={ROUTES.COUNSELING.children.REGISTRATION.path} element={<PageCounselingRegistration />} />
           <Route path={ROUTES.COUNSELING.children.LIST.path} element={<PageCounselingList />} />
         </Route>
-        <Route path={ROUTES.INBOX.path} element={<InboxController />} />
-        <Route path={ROUTES.PROJECT.path} element={<ProjectController />} />
-        <Route path={ROUTES.REPORT.path} element={<ReportController />} />
-        <Route path={ROUTES.SETTING.path} element={<SettingController />} />
-        <Route path={ROUTES.TEMPLATE.path} element={<TemplateController />} />
-        <Route path={ROUTES.BLANK_PAGE.path} element={<BlankPageController />} />
+        <Route path={ROUTES.INBOX.path} element={<Inbox />} />
+        <Route path={ROUTES.PROJECT.path} element={<Project />} />
+        <Route path={ROUTES.REPORT.path} element={<Report />} />
+        <Route path={ROUTES.SETTING.path} element={<Setting />} />
+        <Route path={ROUTES.TEMPLATE.path} element={<Template />} />
+        <Route path={ROUTES.BLANK_PAGE.path} element={<></>} />
       </Route>
       <Route
         path={"/"}
@@ -73,7 +72,7 @@ function PageRoute() {
           </RestrictAuth>
         }
       >
-        <Route path={ROUTES.SIGN_IN.path} element={<SignInController />} />
+        <Route path={ROUTES.SIGN_IN.path} element={<SignIn />} />
       </Route>
     </Routes>
   );

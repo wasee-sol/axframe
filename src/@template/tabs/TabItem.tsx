@@ -19,7 +19,10 @@ interface Props extends StyleProps {
 }
 
 function TabItem(props: Props) {
-  const { activeTabUuid, handleClickTab, handleRemoveTab } = mergeProps(props, useTabGroupController());
+  const { activeTabUuid, handleClickTab, handleRemoveTab, currentLanguage } = mergeProps(
+    props,
+    useTabGroupController()
+  );
   const { tabUuid, tabInfo } = props;
 
   return (
@@ -34,7 +37,7 @@ function TabItem(props: Props) {
         <RFIHome fontSize={18} />
       ) : (
         <>
-          {tabInfo.label}
+          {tabInfo.i18nlabel?.[currentLanguage] ?? tabInfo.label}
           <a
             role='tab-close'
             onClick={(evt) => {

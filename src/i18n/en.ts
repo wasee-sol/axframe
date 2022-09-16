@@ -32,5 +32,12 @@ const EN = {
       closeTabsToRight: "Close Tabs to the right",
     },
   },
+  pages: {
+    counseling: {
+      registration: {
+        title: "Counseling Registration",
+      },
+    },
+  },
 };
 export default EN;

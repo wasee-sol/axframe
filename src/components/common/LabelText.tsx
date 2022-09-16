@@ -7,7 +7,7 @@ interface Props {
   children?: React.ReactNode;
 }
 
-function LabelText({ role, label, children }: Props) {
+export function LabelText({ role, label, children }: Props) {
   return (
     <TextContainer role={role}>
       <Label>{label}</Label>
@@ -27,5 +27,3 @@ const Label = styled.div`
   margin-bottom: 3px;
   font-weight: bold;
 `;
-
-export default LabelText;

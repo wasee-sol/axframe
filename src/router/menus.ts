@@ -51,7 +51,7 @@ function getMenus(menus: RawMenu[], parentPath: string): MenuItem[] {
   return menus.map((menu) => ({
     enum: menu.menuId,
     key: parentPath + menu.route.path,
-    label: menu.route.label,
+    i18nlabel: menu.route.i18nLabel,
     icon: menu.route.icon,
     children: menu.children ? getMenus(menu.children, parentPath + menu.route.path + "/") : undefined,
   }));

@@ -14,69 +14,70 @@ import {
 export const ROUTES = {
   ROOT: {
     path: "/",
+    i18nLabel: { en: "HOME", ko: "홈" },
   },
   COUNSELING: {
     path: "counseling",
-    label: "Counseling",
+    i18nLabel: { en: "Counseling", ko: "상담" },
     icon: <RFIWriteForm />,
     children: {
       REGISTRATION: {
         path: "registration",
-        label: "Counseling Registration",
+        i18nLabel: { en: "Counseling Registration", ko: "상담 등록" },
         icon: <RFIWriteForm />,
       },
       LIST: {
         path: "list",
-        label: "Counseling List",
+        i18nLabel: { en: "Counseling List", ko: "상담 목록" },
         icon: <RFIListSearch />,
       },
     },
   },
   ANALYTICS: {
     path: "analytics",
-    label: "Analytics",
+    i18nLabel: { en: "Analytics", ko: "분석/통계" },
     icon: <RFIGraph />,
   },
   INBOX: {
     path: "inbox",
-    label: "Inbox",
+    i18nLabel: { en: "Inbox", ko: "받은문서함" },
     icon: <RFIInbox />,
   },
   PROJECT: {
     path: "project",
-    label: "Project",
+    i18nLabel: { en: "Project", ko: "프로젝트" },
     icon: <RFIProject />,
   },
   REPORT: {
     path: "report",
-    label: "Report",
+    i18nLabel: { en: "Report", ko: "리포트" },
     icon: <RFIReport />,
   },
   SETTING: {
     path: "setting",
-    label: "Setting",
+    i18nLabel: { en: "Setting", ko: "환경설정" },
     icon: <RFISetting />,
   },
   TEMPLATE: {
     path: "template",
-    label: "Template",
+    i18nLabel: { en: "Template", ko: "템플릿" },
     icon: <RFITemplate />,
   },
   HOME: {
     path: "",
-    label: "",
+    i18nLabel: { en: "HOME", ko: "홈" },
     icon: <RFIHome />,
     hideMenu: true,
   },
   BLANK_PAGE: {
     path: "about:blank",
-    label: "",
+    i18nLabel: { en: "" },
     icon: null,
     hideMenu: true,
   },
   SIGN_IN: {
     path: "sign-in",
-    label: "SignIn",
+    i18nLabel: { en: "SignIn", ko: "로그인" },
     icon: null,
     hideMenu: true,
   },

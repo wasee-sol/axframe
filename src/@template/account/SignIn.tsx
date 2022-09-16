@@ -8,7 +8,7 @@ import { useI18n } from "hooks/useI18n";
 import { useSignInController } from "@controller/pages/SignInController";
 import { getTrimNonEmptyRegExp } from "utils/formPatterns/getTrimNonEmptyRegExp";
 import { mergeProps } from "utils/object";
-import IconText from "components/common/IconText";
+import { IconText } from "components/common";
 
 interface Props {
   onSignIn?: (values: SignInFormItem) => Promise<void>;

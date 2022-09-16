@@ -1,9 +1,9 @@
-import { Button } from "antd";
+import { Button, DatePicker } from "antd";
 import * as React from "react";
 import styled from "@emotion/styled";
 import { RFIListSearch, RFIWriteForm } from "react-frame-icon";
 import { PageLayout } from "styles/pageStyled";
-import IconText from "components/common/IconText";
+import { IconText } from "components/common";
 import SearchTool from "@template/searchTool/SearchTool";
 import { FilterType } from "@template/searchTool/SearchFilter";
 
@@ -55,7 +55,11 @@ function PageCounselingList(props: Props) {
         }}
         onChangeValues={() => {}}
       />
-      <Body></Body>
+      <Body>
+        <DatePicker picker='year' />
+        <DatePicker />
+      </Body>
+      /
     </Container>
   );
 }

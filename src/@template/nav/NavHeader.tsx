@@ -4,10 +4,10 @@ import { Tooltip } from "antd";
 import * as React from "react";
 import { ReactFrameLogo, RFIMenuFold, RFIMenuUnfold } from "react-frame-icon";
 import { SMixinFlexColumn, SMixinFlexRow } from "styles/emotion";
-import { useNavGroupController } from "../../@controller/nav/NavGroupController";
-import { useI18n } from "../../hooks/useI18n";
-import { mergeProps } from "../../utils/object";
-import IconText from "../../components/common/IconText";
+import { useNavGroupController } from "@controller/nav/NavGroupController";
+import { useI18n } from "hooks/useI18n";
+import { mergeProps } from "utils/object";
+import { IconText } from "components/common";
 
 interface Props {
   sideMenuOpened?: boolean;

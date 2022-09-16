@@ -34,5 +34,12 @@ const KO: typeof EN = {
       closeTabsToRight: "오른쪽 탭 닫기",
     },
   },
+  pages: {
+    counseling: {
+      registration: {
+        title: "상담 기록지 등록",
+      },
+    },
+  },
 };
 export default KO;

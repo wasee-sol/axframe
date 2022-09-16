@@ -1,10 +1,12 @@
 import React from "react";
 import buildStore from "stores/buildStore";
 import { v4 as uuidv4 } from "uuid";
+import { LanguageType } from "../i18n";
 
 export interface PageModel {
   fixed?: boolean;
   label: React.ReactNode;
+  i18nlabel?: Record<LanguageType, string>;
   path?: string;
   icon?: string;
   metaData?: Record<string, any>;

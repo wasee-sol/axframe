@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import IconText from "components/common/IconText";
+import { IconText } from "components/common";
 import { RFIAdd } from "react-frame-icon";
 
 export default {

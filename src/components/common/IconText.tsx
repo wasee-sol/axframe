@@ -16,12 +16,24 @@ interface StyleProps {
   block?: boolean;
   loading?: boolean;
 }
+
 interface Props extends StyleProps {
   icon?: React.ReactNode;
   children?: React.ReactNode;
 }
 
-function IconText({ role, iconSize, icon, iconPlacement, onClick, children, disabled, active, block, loading }: Props) {
+export function IconText({
+  role,
+  iconSize,
+  icon,
+  iconPlacement,
+  onClick,
+  children,
+  disabled,
+  active,
+  block,
+  loading,
+}: Props) {
   const handleClick = React.useCallback(
     (evt: React.MouseEvent<HTMLAnchorElement>) => {
       if (loading || disabled) return;
@@ -52,9 +64,11 @@ const IconTextContainer = styled.span<StyleProps>`
   ${SMixinFlexRow("flex-start", "center")};
   color: inherit;
   column-gap: 5px;
+
   & + & {
     margin-left: 5px;
   }
+
   ${({ block }) => {
     if (!block) {
       return css`
@@ -68,9 +82,11 @@ const IconTextContainer = styled.span<StyleProps>`
       return css`
         cursor: pointer;
         color: ${theme.link_color};
+
         &:hover {
           color: ${theme.link_hover_color};
         }
+
         &:active {
           color: ${theme.link_active_color};
         }
@@ -128,5 +144,3 @@ const TextContainer = styled.span<StyleProps>`
     return css``;
   }}
 `;
-
-export default IconText;

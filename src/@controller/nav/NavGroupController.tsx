@@ -1,4 +1,3 @@
-import NavGroup from "@template/nav/NavGroup";
 import * as React from "react";
 import { useUserStore } from "stores";
 import { useDialog } from "hooks/useDialog";
@@ -15,6 +14,11 @@ export function useNavGroupController() {
   const setOpenedMenuUuids = useUserStore((s) => s.setOpenedMenuUuids);
   const selectedMenuUuid = useUserStore((s) => s.selectedMenuUuid);
   const signOut = useUserStore((s) => s.signOut);
+  const currentLanguage = useAppStore((s) => s.currentLanguage);
+  const setLanguage = useAppStore((s) => s.setLanguage);
+  const theme = useAppStore((s) => s.theme);
+  const setTheme = useAppStore((s) => s.setTheme);
+
   const { errorDialog } = useDialog();
 
   const [signOutSpinning, setSignOutSpinning] = React.useState(false);
@@ -50,6 +54,8 @@ export function useNavGroupController() {
             const children = menuItem.children ? getAccessibleMenus(menuItem.children) : undefined;
             if (typeof children !== "undefined" && children.length === 0) return;
 
+            menuItem.label = menuItem.i18nlabel?.[currentLanguage];
+
             return {
               ...menuItem,
               children,
@@ -62,7 +68,7 @@ export function useNavGroupController() {
     };
 
     return getAccessibleMenus(MENUS);
-  }, [accessibleMenus]);
+  }, [accessibleMenus, currentLanguage]);
 
   // useEffect 사용 금지.
   return {
@@ -76,11 +82,9 @@ export function useNavGroupController() {
     onSideMenuOpenChange,
     signOutSpinning,
     setSignOutSpinning,
+    currentLanguage,
+    setLanguage,
+    theme,
+    setTheme,
   };
 }
-
-function NavGroupController() {
-  return <NavGroup />;
-}
-
-export default NavGroupController;
