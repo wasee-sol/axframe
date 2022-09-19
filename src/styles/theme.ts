@@ -43,7 +43,7 @@ const lightColors = {
   popover_background: LIGHT.INK_5,
 
   box_shadow_base: LIGHT.ELEVATION_03,
-  form_box_bg: LIGHT.INK_10,
+  form_box_bg: LIGHT.INK_5,
 
   // TabGroup
   rf_border_color: LIGHT.INK_30,
