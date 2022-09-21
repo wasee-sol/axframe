@@ -28,7 +28,9 @@ const lightColors = {
   input_border_color: LIGHT.INK_40,
   select_border_color: LIGHT.INK_40,
   component_background: LIGHT.INK_5,
-  menu_item_active_bg: LIGHT.INK_30,
+  item_active_bg: LIGHT.BLUE_5,
+  item_hover_bg: LIGHT.INK_10,
+  menu_item_active_bg: LIGHT.BLUE_5,
 
   // custom colors
   text_display_color: LIGHT.INK_100,
@@ -75,7 +77,9 @@ const darkColors: typeof lightColors = {
   input_border_color: DARK.INK_80,
   select_border_color: DARK.INK_80,
   component_background: DARK.INK_90,
-  menu_item_active_bg: DARK.INK_80,
+  item_active_bg: DARK.INK_100,
+  item_hover_bg: DARK.INK_70,
+  menu_item_active_bg: DARK.INK_100,
 
   // custom colors
   text_display_color: DARK.INK_5,
