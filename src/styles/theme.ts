@@ -10,7 +10,7 @@ import LIGHT from "./palette/light";
 const lightColors = {
   // antd colors
   body_background: LIGHT.INK_10,
-  scroll_thumb_color: LIGHT.INK_30,
+  scroll_thumb_color: LIGHT.INK_50,
   border_color_base: LIGHT.INK_40,
   border_color_split: LIGHT.INK_30,
   primary_color: LIGHT.BLUE_50,
@@ -28,6 +28,7 @@ const lightColors = {
   input_border_color: LIGHT.INK_40,
   select_border_color: LIGHT.INK_40,
   component_background: LIGHT.INK_5,
+  menu_item_active_bg: LIGHT.INK_30,
 
   // custom colors
   text_display_color: LIGHT.INK_100,
@@ -56,7 +57,7 @@ const lightColors = {
 const darkColors: typeof lightColors = {
   // antd colors
   body_background: DARK.INK_90,
-  scroll_thumb_color: DARK.INK_30,
+  scroll_thumb_color: DARK.INK_100,
   border_color_base: DARK.INK_80,
   border_color_split: DARK.INK_80,
   primary_color: DARK.BLUE_50,
@@ -74,6 +75,7 @@ const darkColors: typeof lightColors = {
   input_border_color: DARK.INK_80,
   select_border_color: DARK.INK_80,
   component_background: DARK.INK_90,
+  menu_item_active_bg: DARK.INK_80,
 
   // custom colors
   text_display_color: DARK.INK_5,

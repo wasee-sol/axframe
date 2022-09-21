@@ -71,7 +71,7 @@ export function useTabGroupController() {
 
   return {
     setPages,
-    pagesValues: [...pages],
+    tabItemList: [...pages].map(([k, v]) => ({ id: k, pageModel: v })),
     activeTabUuid,
     handleClickTab,
     handleAddTab,

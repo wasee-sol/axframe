@@ -3,49 +3,21 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { TabGroupMenu, TabGroupMenuAction } from "components/contextMenu";
 import * as React from "react";
-import { SortableElement, SortableContainer } from "react-sortable-hoc";
-import { PageModel } from "stores";
+import { ReactSortable } from "react-sortablejs";
 import { SMixinFlexRow } from "styles/emotion";
 import { darken } from "styles/palette/colorUtil";
 import { mergeProps } from "utils/object";
-import { arrayMove } from "utils/array";
 import TabItem from "./TabItem";
 import TabItemMore from "./TabItemMore";
-
-interface SortableItemProps {
-  tabUuid: string;
-  pageModel: PageModel;
-  onContextMenu: (e: React.MouseEvent<HTMLDivElement>, tabUuid: string) => void;
-}
-
-const SortableItem = SortableElement<SortableItemProps>(({ tabUuid, pageModel, onContextMenu }) => (
-  <TabItem tabUuid={tabUuid} tabInfo={pageModel} onContextMenu={onContextMenu} />
-));
-
-interface SortableListProps {
-  scrollerRef: React.RefObject<HTMLDivElement>;
-  onWheelScroller: (e: React.WheelEvent) => void;
-  pagesValues: [string, PageModel][];
-  onContextMenu: (e: React.MouseEvent<HTMLDivElement>, tabUuid: string) => void;
-}
-
-const SortableList = SortableContainer<SortableListProps>(
-  ({ pagesValues, scrollerRef, onWheelScroller, onContextMenu }) => (
-    <TabItemsScroller ref={scrollerRef} onWheel={onWheelScroller}>
-      {pagesValues.map(([k, v], index) => (
-        <SortableItem index={index} key={k} tabUuid={k} pageModel={v} onContextMenu={onContextMenu} />
-      ))}
-    </TabItemsScroller>
-  )
-);
 
 interface Props {}
 
 function TabGroup(props: Props) {
-  const { activeTabUuid, pagesValues, setPages, handleRemoveTab, handleRemoveOtherTabs, currentLanguage } = mergeProps(
+  const { activeTabUuid, tabItemList, setPages, handleRemoveTab, handleRemoveOtherTabs, currentLanguage } = mergeProps(
     props,
     useTabGroupController()
   );
+
   const scrollerRef = React.useRef<HTMLDivElement>(null);
   const tabGroupMenu = React.useRef<TabGroupMenu>(new TabGroupMenu());
 
@@ -85,13 +57,6 @@ function TabGroup(props: Props) {
     [handleRemoveOtherTabs, handleRemoveTab]
   );
 
-  const handleSortEnd = React.useCallback(
-    ({ oldIndex, newIndex }) => {
-      setPages?.(arrayMove(pagesValues.slice(), oldIndex, newIndex));
-    },
-    [pagesValues, setPages]
-  );
-
   // scroll to activeTab
   React.useEffect(() => {
     const refCurrent = scrollerRef.current;
@@ -120,16 +85,24 @@ function TabGroup(props: Props) {
     <TabGroupContainer>
       <TabLine />
       <TabItemsGroup>
-        <SortableList
-          axis={"x"}
-          lockAxis={"x"}
-          distance={20}
-          onWheelScroller={handleWheelScroller}
-          scrollerRef={scrollerRef}
-          pagesValues={pagesValues}
-          onContextMenu={handleContextMenu}
-          onSortEnd={handleSortEnd}
-        />
+        <TabItemsScroller ref={scrollerRef} onWheel={handleWheelScroller}>
+          <ReactSortable
+            animation={300}
+            delayOnTouchOnly
+            delay={30}
+            list={tabItemList}
+            setList={(newState) => {
+              setPages?.(newState.map((tabItem) => [tabItem.id, tabItem.pageModel]));
+            }}
+            onEnd={(evt) => {
+              evt.item.click();
+            }}
+          >
+            {tabItemList.map((tabItem, index) => (
+              <TabItem key={index} tabUuid={tabItem.id} tabInfo={tabItem.pageModel} onContextMenu={handleContextMenu} />
+            ))}
+          </ReactSortable>
+        </TabItemsScroller>
         <TabItemMore />
       </TabItemsGroup>
     </TabGroupContainer>
@@ -163,13 +136,12 @@ const TabItemsGroup = styled.div`
 `;
 
 const TabItemsScroller = styled.div`
-  ${SMixinFlexRow("flex-start", "flex-end")};
+  position: relative;
   flex: 1;
-  column-gap: 2px;
   overflow-x: scroll;
   overflow-y: hidden;
-  padding: 0 20px 0 10px;
-  position: relative;
+  padding: 0 0 0 10px;
+
   ${({ theme }) => css`
     &::-webkit-scrollbar {
       width: 3px;
@@ -203,6 +175,14 @@ const TabItemsScroller = styled.div`
       background-color: ${theme.primary_color};
     }
   `}
+  > div {
+    ${SMixinFlexRow("flex-start", "flex-end")};
+    display: flex;
+    flex: 1;
+    column-gap: 2px;
+    position: relative;
+    padding-right: 20px;
+  }
 `;
 
 export default TabGroup;

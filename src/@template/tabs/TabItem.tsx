@@ -1,11 +1,12 @@
 import * as React from "react";
 import styled from "@emotion/styled";
 import { RFIHome, RFIClose } from "react-frame-icon";
-import { useTabGroupController } from "../../@controller/tabs/TabGroupController";
-import { PageModel } from "../../stores";
-import { SMixinFlexRow } from "../../styles/emotion";
+import { useTabGroupController } from "@controller/tabs/TabGroupController";
+import { PageModel } from "stores";
+import { SMixinFlexRow } from "styles/emotion";
 import { css } from "@emotion/react";
-import { mergeProps } from "../../utils/object";
+import { darken } from "styles/palette/colorUtil";
+import { mergeProps } from "utils/object";
 
 interface StyleProps {
   isHome?: boolean;
@@ -84,7 +85,6 @@ const TabItemContainer = styled.div<StyleProps>`
       padding: 0 25px 0 10px;
     `;
   }}
-
   ${({ active, theme }) => {
     if (active) {
       return css`
@@ -105,6 +105,10 @@ const TabItemContainer = styled.div<StyleProps>`
       }
     `;
   }}
+  &.sortable-ghost {
+    color: ${(p) => p.theme.white_color};
+    background: ${(p) => darken(p.theme.rf_tabs_active_background, 0.6)};
+  }
 `;
 
 export default TabItem;

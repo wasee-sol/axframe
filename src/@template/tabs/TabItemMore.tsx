@@ -15,7 +15,7 @@ interface StyleProps {
 interface Props extends StyleProps {}
 
 function TabItemMore(props: Props) {
-  const { pagesValues, handleClickTab } = mergeProps(props, useTabGroupController());
+  const { tabItemList, handleClickTab } = mergeProps(props, useTabGroupController());
   const [visible, setVisible] = React.useState(false);
 
   return (
@@ -23,15 +23,15 @@ function TabItemMore(props: Props) {
       overlayClassName={"tab-item-more-dropdown"}
       overlay={
         <Menu
-          items={pagesValues.map(([k, v]) => ({
-            key: k,
+          items={tabItemList.map((tabItem) => ({
+            key: tabItem.id,
             label: (
               <div
                 onClick={() => {
-                  handleClickTab(k, v.path);
+                  handleClickTab(tabItem.id, tabItem.pageModel.path);
                 }}
               >
-                {v.label}
+                {tabItem.pageModel.label}
               </div>
             ),
           }))}
