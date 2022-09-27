@@ -8,6 +8,8 @@ export interface AppModel {
   currentLanguage: LanguageType;
   theme: ThemeType;
   sideMenuOpened: boolean;
+  width: number;
+  height: number;
 }
 
 export interface AppActions {
@@ -15,6 +17,7 @@ export interface AppActions {
   setTheme: (theme: ThemeType) => void;
   setLoaded: (loaded: boolean) => void;
   setSideMenuOpened: (sideMenuOpened: boolean) => void;
+  setWidthHeight: (width: number, height: number) => void;
 }
 
 export interface AppStore extends AppModel, AppActions {}
@@ -24,6 +27,8 @@ export const appInitialState: AppModel = {
   currentLanguage: "ko",
   theme: "light",
   sideMenuOpened: true,
+  width: 0,
+  height: 0,
 };
 
 const getAppStoreActions: StoreActions = (set, get) => ({
@@ -31,6 +36,7 @@ const getAppStoreActions: StoreActions = (set, get) => ({
   setTheme: (theme: ThemeType) => set({ theme }),
   setLoaded: (loaded: boolean) => set({ loaded }),
   setSideMenuOpened: (sideMenuOpened: boolean) => set({ sideMenuOpened }),
+  setWidthHeight: (width, height) => set({ width, height }),
 });
 
 export const useAppStore = buildStore<AppStore>("app", 1, (set, get) => ({

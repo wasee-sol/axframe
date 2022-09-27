@@ -1,30 +1,43 @@
 import { css } from "@emotion/react";
 import React from "react";
 import styled from "@emotion/styled";
-import { SMixinFlexRow } from "styles/emotion/mixins";
+import { SMixinFlexRow, SMixinFlexColumn } from "styles/emotion/mixins";
 
 interface Props {
   id?: string;
   style?: React.CSSProperties;
   className?: string;
   children?: React.ReactNode;
+  role?: string;
+  stretch?: boolean;
 }
 
 type HeaderSize = "small" | "medium" | "large";
 
-const PageLayoutContainer = styled.div``;
+const PageLayoutContainer = styled.div<Props>`
+  ${({ stretch }) => {
+    if (stretch) {
+      return css`
+        flex: 1;
+        ${SMixinFlexColumn("stretch", "stretch")};
+      `;
+    }
+
+    return;
+  }}
+`;
 
 const PageHeader = styled.div`
   ${SMixinFlexRow("space-between", "center")};
 
   font-weight: 600;
   color: ${(p) => p.theme.text_heading_color};
-  margin: 0;
+  margin: 0 0 15px 0;
   font-size: 1.6em;
 `;
 
 const PageBody = styled.div`
-  margin: 15px 0;
+  flex: 1;
 `;
 
 const PageFormBoxHeader = styled.div<{ size?: HeaderSize }>`

@@ -8,14 +8,20 @@ import SearchTool from "@template/searchTool/SearchTool";
 import { FilterType } from "@template/searchTool/SearchFilter";
 import { useCounselingListController } from "@controller/pages/CounselingListController";
 import { mergeProps } from "utils/object";
+import DataGrid from "../../components/DataGrid";
+import { useContainerSize } from "../../hooks/useContainerSize";
 
 interface Props {}
 
 function PageCounselingList(props: Props) {
   const { t } = mergeProps(props, useCounselingListController());
 
+  const bodyContainer = React.useRef<HTMLDivElement>(null);
+
+  const { width: containerWidth, height: containerHeight } = useContainerSize(bodyContainer);
+
   return (
-    <Container>
+    <Container stretch role={"page-container"}>
       <Header>
         <IconText icon={<RFIListSearch />}>{t.pages.counseling.list.title}</IconText>
 
@@ -59,7 +65,14 @@ function PageCounselingList(props: Props) {
         }}
         onChangeValues={() => {}}
       />
-      <Body></Body>
+      <Body ref={bodyContainer}>
+        <DataGrid
+          width={containerWidth}
+          height={containerHeight}
+          columns={[{ key: "test", label: "test", width: 100 }]}
+          data={[]}
+        />
+      </Body>
     </Container>
   );
 }

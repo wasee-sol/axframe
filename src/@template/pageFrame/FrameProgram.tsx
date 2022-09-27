@@ -67,6 +67,7 @@ const Content = styled.div`
   flex: 1;
   overflow: auto;
   padding: 30px;
+  ${SMixinFlexColumn("stretch", "stretch")};
 `;
 
 export default FrameProgram;

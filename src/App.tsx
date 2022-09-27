@@ -13,6 +13,7 @@ const App: React.FC = () => {
   const { switcher, themes } = useThemeSwitcher();
   const [storeLoaded, setStoreLoaded] = React.useState(false);
   const appStoreLoaded = useAppStore((s) => s.loaded);
+  const setWidthHeight = useAppStore((s) => s.setWidthHeight);
   const pageStoreLoaded = usePageTabStore((s) => s.loaded);
   const userStoreLoaded = useUserStore((s) => s.loaded);
   const theme = useAppStore((s) => s.theme);
@@ -26,6 +27,20 @@ const App: React.FC = () => {
       setTimeout(() => setStoreLoaded(true), 200);
     }
   }, [appStoreLoaded, pageStoreLoaded, userStoreLoaded]);
+
+  const handleGetWindowSize = React.useCallback(() => {
+    setWidthHeight(window.innerWidth, window.innerHeight);
+  }, [setWidthHeight]);
+
+  React.useEffect(() => {
+    handleGetWindowSize();
+    document.body.style.overscrollBehavior = "contain"; // prevent history move by wheel event
+    window.addEventListener("resize", handleGetWindowSize);
+
+    return () => {
+      window.removeEventListener("resize", handleGetWindowSize);
+    };
+  }, [handleGetWindowSize]);
 
   return (
     <ThemeProvider theme={themePalette[theme]}>
