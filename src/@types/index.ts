@@ -17,3 +17,17 @@ export enum MenuEnum {
   SETTING = "SETTING",
   TEMPLATE = "TEMPLATE",
 }
+
+export interface ApiListResponse {
+  result: string;
+  msg: string;
+  ds: Record<string, any>[];
+  rs: Record<string, any>;
+}
+
+export interface ApiPageResponse {
+  pgCount: number;
+  total: number;
+  pageNumber: number;
+  pageSize: number;
+}

@@ -66,7 +66,7 @@ function SearchTool({ filters, values, onChangeValues }: Props) {
 const Container = styled.div`
   ${SMixinFlexRow("stretch", "center")};
   gap: 10px;
-  margin: 15px 0;
+  margin-bottom: 15px;
 `;
 
 const FilterTools = styled.div`

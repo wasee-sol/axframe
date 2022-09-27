@@ -1,51 +1,18 @@
-import { Form, Select, DatePicker, Radio, Input, Row, Col, Button, Space, Checkbox } from "antd";
-import * as React from "react";
+import { useCounselingRegistrationController } from "@controller/pages/CounselingRegistrationController";
 import styled from "@emotion/styled";
+import { Form, Select, DatePicker, Radio, Input, Row, Col, Button, Space, Checkbox } from "antd";
+import { IconText } from "components/common";
+import moment from "moment";
+import * as React from "react";
 import { useDaumPostcodePopup } from "react-daum-postcode";
 import { RFIWriteForm } from "react-frame-icon";
+import { CounselingItem } from "repository/CounselingRepositoryInterface";
 import { PageLayout } from "styles/pageStyled";
-import { IconText } from "components/common";
-import { useCounselingRegistrationController } from "@controller/pages/CounselingRegistrationController";
 import { mergeProps, convertToDate } from "utils/object";
-import moment from "moment";
 
 interface Props {}
 
-interface FormField {
-  area: string;
-  cnsltUserCd: string;
-  cnsltDt: string;
-  cnsltHow: string;
-  cnsltHowEtc: string;
-  cnsltPath: string;
-  cnsltPathDtl: string;
-  cnsltPathPerson: string;
-  cnsltPathDirect: string;
-  cnsltPathOrg: string;
-  cnsltPathOrgPerson: string;
-  cnsltPathOrgPhone: string;
-  name: string;
-  birthDt: string;
-  sex: string;
-  phone1: string;
-  phone2: string;
-  hndcapYn: string;
-  hndcapGrade: string;
-  hndcapTyp: string;
-  zipNum: string;
-  addr: string;
-  addrDtls: string;
-  hopePoint: string;
-  hopePoint1: string;
-  hopePoint1Etc: string;
-  hopePoint2: string;
-  hopePoint2Etc: string;
-  hopePoint3: string;
-  hopePoint3Etc: string;
-  hopePoint4Etc: string;
-  hopePoint5Etc: string;
-  fldT: string;
-}
+interface FormField extends CounselingItem {}
 
 const areas: { label: string; value: string }[] = [
   { label: "중구", value: "중구" },

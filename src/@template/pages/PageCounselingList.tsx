@@ -10,24 +10,31 @@ import { useCounselingListController } from "@controller/pages/CounselingListCon
 import { mergeProps } from "utils/object";
 import DataGrid from "../../components/DataGrid";
 import { useContainerSize } from "../../hooks/useContainerSize";
+import { CounselingItem } from "../../repository/CounselingRepositoryInterface";
 
 interface Props {}
 
 function PageCounselingList(props: Props) {
-  const { t } = mergeProps(props, useCounselingListController());
+  const { t, columns, counselingList, getList, listSpinning } = mergeProps(props, useCounselingListController());
 
   const bodyContainer = React.useRef<HTMLDivElement>(null);
 
   const { width: containerWidth, height: containerHeight } = useContainerSize(bodyContainer);
+
+  React.useEffect(() => {
+    (async () => {
+      await getList({});
+    })();
+  }, [getList]);
 
   return (
     <Container stretch role={"page-container"}>
       <Header>
         <IconText icon={<RFIListSearch />}>{t.pages.counseling.list.title}</IconText>
 
-        <ButtonGroup>
+        <HeaderButtonGroup>
           <Button size='small'>{t.button.excel}</Button>
-        </ButtonGroup>
+        </HeaderButtonGroup>
       </Header>
       <SearchTool
         filters={[
@@ -66,11 +73,13 @@ function PageCounselingList(props: Props) {
         onChangeValues={() => {}}
       />
       <Body ref={bodyContainer}>
-        <DataGrid
+        <DataGrid<CounselingItem>
+          frozenColumnIndex={2}
           width={containerWidth}
           height={containerHeight}
-          columns={[{ key: "test", label: "test", width: 100 }]}
-          data={[]}
+          columns={columns}
+          data={counselingList}
+          spinning={listSpinning}
         />
       </Body>
     </Container>
@@ -79,7 +88,7 @@ function PageCounselingList(props: Props) {
 
 const Container = styled(PageLayout)``;
 const Header = styled(PageLayout.Header)``;
+const HeaderButtonGroup = styled(PageLayout.HeaderButtonGroup)``;
 const Body = styled(PageLayout.Body)``;
-const ButtonGroup = styled(PageLayout.ButtonGroup)``;
 
 export default PageCounselingList;
