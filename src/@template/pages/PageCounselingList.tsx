@@ -21,6 +21,14 @@ function PageCounselingList(props: Props) {
 
   const { width: containerWidth, height: containerHeight } = useContainerSize(bodyContainer);
 
+  const onSearch = React.useCallback(async () => {
+    await getList({});
+  }, [getList]);
+
+  const onReload = React.useCallback(async () => {
+    await getList({});
+  }, [getList]);
+
   React.useEffect(() => {
     (async () => {
       await getList({});
@@ -71,10 +79,12 @@ function PageCounselingList(props: Props) {
           timeRange: "14d",
         }}
         onChangeValues={() => {}}
+        onSearch={onSearch}
+        onReload={onReload}
       />
       <Body ref={bodyContainer}>
         <DataGrid<CounselingItem>
-          frozenColumnIndex={2}
+          frozenColumnIndex={0}
           width={containerWidth}
           height={containerHeight}
           columns={columns}
