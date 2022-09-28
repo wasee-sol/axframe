@@ -7,7 +7,11 @@ interface Props<T> extends RFDGProps<T> {}
 function DataGrid<T>({ frozenColumnIndex, width, height, columns, data, spinning }: Props<T>) {
   return (
     <Container>
-      <RFDataGrid {...{ frozenColumnIndex, width, height, columns, data, spinning }} />
+      <RFDataGrid
+        headerHeight={35}
+        itemHeight={20}
+        {...{ frozenColumnIndex, width, height, columns, data, spinning }}
+      />
     </Container>
   );
 }
