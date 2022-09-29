@@ -73,7 +73,7 @@ const lightColors = {
   rfdg_scroll_thumb_radius: "6px",
   rfdg_scroll_thumb_bg: lightAntdColors.scroll_thumb_color,
   rfdg_scroll_thumb_hover_bg: LIGHT.INK_70,
-  rfdg_loading_bg: alpha(LIGHT.INK_40, 0.5),
+  rfdg_loading_bg: alpha(LIGHT.INK_30, 0.5),
   rfdg_loading_color: alpha(LIGHT.INK_70, 0.1),
   rfdg_loading_second_color: LIGHT.INK_70,
 };

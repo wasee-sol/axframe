@@ -20,14 +20,26 @@ export interface Filter {
 }
 
 interface Props {
-  filters: Filter[];
-  values: Record<string, any>;
+  filters?: Filter[];
+  filterTypeOptions?: { value: string; label: string }[];
+  filterType?: string;
+  filterValue?: string;
+  values?: Record<string, any>;
   onChangeValues?: (values: Record<string, any>) => void;
   onSearch?: (values: Record<string, any>) => void;
   onReload?: () => void;
 }
 
-export function SearchTool({ filters, values, onChangeValues, onSearch, onReload }: Props) {
+export function SearchTool({
+  filterTypeOptions,
+  filterType,
+  filterValue,
+  filters,
+  values,
+  onChangeValues,
+  onSearch,
+  onReload,
+}: Props) {
   const [form] = Form.useForm();
   const handleSearch = React.useCallback(() => {
     const values = form.getFieldsValue();
@@ -45,6 +57,14 @@ export function SearchTool({ filters, values, onChangeValues, onSearch, onReload
     [onChangeValues]
   );
 
+  React.useEffect(() => {
+    form.setFieldValue("filterValue", filterValue);
+  }, [form, filterValue]);
+
+  React.useEffect(() => {
+    form.setFieldValue("filterType", filterType);
+  }, [form, filterType]);
+
   return (
     <Form
       form={form}
@@ -54,7 +74,7 @@ export function SearchTool({ filters, values, onChangeValues, onSearch, onReload
       }}
     >
       <Container>
-        {filters.length > 0 && (
+        {filters && filters?.length > 0 && (
           <FilterTools>
             {filters.map((filter, idx) => (
               <React.Fragment key={idx}>
@@ -63,7 +83,7 @@ export function SearchTool({ filters, values, onChangeValues, onSearch, onReload
                   title={filter.title}
                   type={filter.type}
                   icon={filter.icon}
-                  value={values[filter.key]}
+                  value={values?.[filter.key]}
                   options={filter.options}
                 />
               </React.Fragment>
@@ -73,12 +93,17 @@ export function SearchTool({ filters, values, onChangeValues, onSearch, onReload
 
         <SearchInput>
           <Input.Group compact>
-            <Form.Item name={"filterType"} noStyle>
-              <Select>
-                <Select.Option value='title'>Title</Select.Option>
-                <Select.Option value='writer'>Writer</Select.Option>
-              </Select>
-            </Form.Item>
+            {filterTypeOptions && (
+              <Form.Item name={"filterType"} noStyle>
+                <Select>
+                  {filterTypeOptions.map((option, idx) => (
+                    <Select.Option key={idx} value={option.value}>
+                      {option.label}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            )}
             <Form.Item name={"filterValue"} noStyle>
               <Input placeholder={"search"} />
             </Form.Item>
@@ -103,7 +128,7 @@ const Container = styled.div`
 const FilterTools = styled.div`
   ${SMixinFlexRow("flex-start", "center")};
   padding: 0 10px;
-  border: 1px solid ${(p) => p.theme.border_color_base};
+  border: 1px solid ${(p) => p.theme.input_border_color};
   height: ${(p) => p.theme.height_base};
   border-radius: ${(p) => p.theme.border_radius_base};
   background: ${(p) => p.theme.component_background};
