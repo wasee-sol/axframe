@@ -16,6 +16,7 @@ const SearchFilterSelect: SearchFilterComponent = ({ icon, value, title }) => {
 
 const Container = styled.div`
   ${SMixinFlexRow("flex-start", "center")};
+  gap: 3px;
 `;
 
 export default SearchFilterSelect;

@@ -20,35 +20,37 @@ export interface Filter {
 }
 
 interface Props {
-  filters?: Filter[];
-  filterTypeOptions?: { value: string; label: string }[];
-  filterType?: string;
-  filterValue?: string;
-  values?: Record<string, any>;
+  paramKeyOptions?: { value: string; label: string }[];
+  paramKey?: string;
+  paramValue?: string;
+  extraParams?: Filter[];
+  extraParamsValue?: Record<string, any>;
   onChangeValues?: (values: Record<string, any>) => void;
   onSearch?: (values: Record<string, any>) => void;
   onReload?: () => void;
 }
 
 export function SearchTool({
-  filterTypeOptions,
-  filterType,
-  filterValue,
-  filters,
-  values,
+  paramKeyOptions,
+  paramKey,
+  paramValue,
+  extraParams,
+  extraParamsValue,
   onChangeValues,
   onSearch,
   onReload,
 }: Props) {
   const [form] = Form.useForm();
+
   const handleSearch = React.useCallback(() => {
     const values = form.getFieldsValue();
-    console.log(values);
     onSearch?.(values);
   }, [form, onSearch]);
+
   const handleReload = React.useCallback(() => {
     onReload?.();
   }, [onReload]);
+
   const onValuesChange = React.useCallback(
     (changedValues: any, values: Record<string, any>) => {
       console.log("onValuesChange", values);
@@ -58,12 +60,12 @@ export function SearchTool({
   );
 
   React.useEffect(() => {
-    form.setFieldValue("filterValue", filterValue);
-  }, [form, filterValue]);
+    form.setFieldValue("filterValue", paramValue);
+  }, [form, paramValue]);
 
   React.useEffect(() => {
-    form.setFieldValue("filterType", filterType);
-  }, [form, filterType]);
+    form.setFieldValue("filterType", paramKey);
+  }, [form, paramKey]);
 
   return (
     <Form
@@ -74,16 +76,16 @@ export function SearchTool({
       }}
     >
       <Container>
-        {filters && filters?.length > 0 && (
+        {extraParams && extraParams?.length > 0 && (
           <FilterTools>
-            {filters.map((filter, idx) => (
+            {extraParams.map((filter, idx) => (
               <React.Fragment key={idx}>
                 {idx > 0 && <Divider type={"vertical"} />}
                 <SearchFilter
                   title={filter.title}
                   type={filter.type}
                   icon={filter.icon}
-                  value={values?.[filter.key]}
+                  value={extraParamsValue?.[filter.key]}
                   options={filter.options}
                 />
               </React.Fragment>
@@ -93,10 +95,10 @@ export function SearchTool({
 
         <SearchInput>
           <Input.Group compact>
-            {filterTypeOptions && (
+            {paramKeyOptions && (
               <Form.Item name={"filterType"} noStyle>
                 <Select>
-                  {filterTypeOptions.map((option, idx) => (
+                  {paramKeyOptions.map((option, idx) => (
                     <Select.Option key={idx} value={option.value}>
                       {option.label}
                     </Select.Option>

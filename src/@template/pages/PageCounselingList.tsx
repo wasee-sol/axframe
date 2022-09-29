@@ -55,8 +55,8 @@ function PageCounselingList(props: Props) {
         </HeaderButtonGroup>
       </Header>
       <SearchTool
-        filters={filters}
-        values={apiRequestParams}
+        extraParams={filters}
+        extraParamsValue={apiRequestParams}
         onChangeValues={() => {}}
         onSearch={onSearch}
         onReload={onReload}
