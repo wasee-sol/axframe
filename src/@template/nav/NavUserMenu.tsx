@@ -1,4 +1,4 @@
-import { useNavGroupController } from "@controller/nav/NavGroupController";
+import { useNavGroup } from "@hooks/nav/useNavGroup";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { Menu } from "antd";
@@ -22,7 +22,7 @@ interface Props extends StyleProps {
 function NavUserMenu(props: Props) {
   const { sideMenuOpened, menus, openedMenuUuids, selectedMenuUuid, onSideMenuOpenChange } = mergeProps(
     props,
-    useNavGroupController()
+    useNavGroup()
   );
   const { linkTo } = useLink();
 

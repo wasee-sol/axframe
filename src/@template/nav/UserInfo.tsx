@@ -6,7 +6,7 @@ import * as React from "react";
 import { RFIMoreVertical } from "react-frame-icon";
 import { User } from "stores";
 import { SMixinFlexRow } from "styles/emotion";
-import { useNavGroupController } from "@controller/nav/NavGroupController";
+import { useNavGroup } from "@hooks/nav/useNavGroup";
 import { mergeProps } from "utils/object";
 import UserInfoDropdown from "./UserInfoDropdown";
 
@@ -19,7 +19,7 @@ interface Props extends StyleProps {
 }
 
 function UserInfo(props: Props) {
-  const { sideMenuOpened, me, handleSignOut } = mergeProps(props, useNavGroupController());
+  const { sideMenuOpened, me, handleSignOut } = mergeProps(props, useNavGroup());
   const { name, jobTitle } = me ?? {};
 
   return (

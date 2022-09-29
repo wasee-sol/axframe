@@ -4,7 +4,7 @@ import * as React from "react";
 import styled from "@emotion/styled";
 import { RFIArrowDown } from "react-frame-icon";
 import { SMixinFlexRow } from "styles/emotion";
-import { useTabGroupController } from "@controller/tabs/TabGroupController";
+import { useTabGroup } from "@hooks/tabs/useTabGroup";
 import { mergeProps } from "utils/object";
 import { alpha } from "styles/palette/colorUtil";
 
@@ -15,7 +15,7 @@ interface StyleProps {
 interface Props extends StyleProps {}
 
 function TabItemMore(props: Props) {
-  const { tabItemList, handleClickTab } = mergeProps(props, useTabGroupController());
+  const { tabItemList, handleClickTab } = mergeProps(props, useTabGroup());
   const [visible, setVisible] = React.useState(false);
 
   return (

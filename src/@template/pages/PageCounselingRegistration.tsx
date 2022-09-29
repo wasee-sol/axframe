@@ -1,4 +1,4 @@
-import { useCounselingRegistrationController } from "@controller/pages/CounselingRegistrationController";
+import { useCounselingRegistration } from "@hooks/pages/useCounselingRegistration";
 import styled from "@emotion/styled";
 import { Form, Select, DatePicker, Radio, Input, Row, Col, Button, Space, Checkbox } from "antd";
 import { IconText } from "components/common";
@@ -26,7 +26,7 @@ const areas: { label: string; value: string }[] = [
 ];
 
 function PageCounselingRegistration(props: Props) {
-  const { pageModelMetadata, setPageModelMetadata, t } = mergeProps(props, useCounselingRegistrationController());
+  const { pageModelMetadata, setPageModelMetadata, t } = mergeProps(props, useCounselingRegistration());
   const openZipCodeFinder = useDaumPostcodePopup("//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js");
 
   const [form] = Form.useForm();

@@ -32,4 +32,4 @@ const SearchFilter: SearchFilterComponent = (props) => {
   return <Comp {...props} />;
 };
 
-export default SearchFilter;
+export { SearchFilter };

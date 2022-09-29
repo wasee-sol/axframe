@@ -3,7 +3,7 @@ import PageProject from "@template/pages/PageProject";
 import { usePageModel } from "hooks/usePageModel";
 import { ROUTES } from "router/Routes";
 
-export function useProjectController() {
+export function useProject() {
   const { pageModel, pageModelMetadata, setPageModelMetadata } = usePageModel([ROUTES.PROJECT.path]);
 
   return {
@@ -13,8 +13,8 @@ export function useProjectController() {
   };
 }
 
-function ProjectController() {
+function UseProject() {
   return <PageProject />;
 }
 
-export default ProjectController;
+export default UseProject;

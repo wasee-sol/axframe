@@ -1,13 +1,13 @@
 import * as React from "react";
 import styled from "@emotion/styled";
-import { useProjectController } from "@controller/pages/ProjectController";
+import { useProject } from "@hooks/pages/useProject";
 import { mergeProps } from "utils/object";
 import { DatePicker } from "antd";
 
 interface Props {}
 
 function PageProject(props: Props) {
-  const { pageModel } = mergeProps(props, useProjectController());
+  const { pageModel } = mergeProps(props, useProject());
 
   return (
     <ProjectPageContainer>

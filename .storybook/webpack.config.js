@@ -3,7 +3,7 @@ const path = require("path");
 module.exports = ({ config }) => {
   config.resolve.alias = {
     ...config.resolve.alias,
-    "@controller": path.resolve(__dirname, "../src/@controller"),
+    "@hooks": path.resolve(__dirname, "../src/@hooks"),
     "@template": path.resolve(__dirname, "../src/@template"),
     "@types": path.resolve(__dirname, "../src/@types"),
     components: path.resolve(__dirname, "../src/components"),

@@ -4,7 +4,7 @@ import { RFDGProps, RFDataGrid } from "react-frame-datagrid";
 
 interface Props<T> extends RFDGProps<T> {}
 
-function DataGrid<T>({ frozenColumnIndex, width, height, columns, data, spinning }: Props<T>) {
+export function DataGrid<T>({ frozenColumnIndex, width, height, columns, data, spinning }: Props<T>) {
   return (
     <Container>
       <RFDataGrid
@@ -23,5 +23,3 @@ const Container = styled.div`
     //transition: all 0.1s;
   }
 `;
-
-export default DataGrid;

@@ -4,7 +4,7 @@ import { Tooltip } from "antd";
 import * as React from "react";
 import { ReactFrameLogo, RFIMenuFold, RFIMenuUnfold } from "react-frame-icon";
 import { SMixinFlexColumn, SMixinFlexRow } from "styles/emotion";
-import { useNavGroupController } from "@controller/nav/NavGroupController";
+import { useNavGroup } from "@hooks/nav/useNavGroup";
 import { useI18n } from "hooks/useI18n";
 import { mergeProps } from "utils/object";
 import { IconText } from "components/common";
@@ -15,7 +15,7 @@ interface Props {
 }
 
 function NavHeader(props: Props) {
-  const { sideMenuOpened, handleSetSideMenuOpened } = mergeProps(props, useNavGroupController());
+  const { sideMenuOpened, handleSetSideMenuOpened } = mergeProps(props, useNavGroup());
   const { t } = useI18n();
   return (
     <NavHeaderContainer sideMenuOpened={sideMenuOpened}>

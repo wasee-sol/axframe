@@ -1,6 +1,7 @@
 import * as React from "react";
 import { usePageModel } from "hooks/usePageModel";
 import { RFDGColumn, RFDGDataItem } from "react-frame-datagrid";
+import { RFIWriteForm } from "react-frame-icon";
 import { ROUTES } from "router/Routes";
 import { useI18n } from "hooks";
 import {
@@ -10,8 +11,9 @@ import {
 } from "../../repository/CounselingRepositoryInterface";
 import { CounselingService } from "../../services";
 import { useAppStore } from "../../stores";
+import { Filter, FilterType } from "components/searchTool";
 
-export function useCounselingListController() {
+export function useCounselingList() {
   const windowWidth = useAppStore((s) => s.width);
   const windowHeight = useAppStore((s) => s.height);
   const { pageModel, pageModelMetadata, setPageModelMetadata } = usePageModel([
@@ -19,6 +21,36 @@ export function useCounselingListController() {
     ROUTES.COUNSELING.children.LIST.path,
   ]);
   const { t, currentLanguage } = useI18n();
+
+  const [filters, setFilters] = React.useState<Filter[]>([
+    {
+      title: "행정구역",
+      key: "select1",
+      icon: <RFIWriteForm />,
+      type: FilterType.SELECT,
+      options: [
+        { value: "중구", label: "중구" },
+        { value: "동구", label: "동구" },
+        { value: "서구", label: "서구" },
+        { value: "남구", label: "남구" },
+        { value: "북구", label: "북구" },
+      ],
+    },
+    {
+      title: "상담방법",
+      key: "select2",
+      type: FilterType.SELECT,
+      options: [
+        { value: "유선", label: "유선" },
+        { value: "내방", label: "내방" },
+      ],
+    },
+    {
+      title: "상담일자",
+      key: "timeRange",
+      type: FilterType.TIME_RANGE,
+    },
+  ]);
 
   const [columns, setColumns] = React.useState<RFDGColumn<CounselingItem>[]>([
     { key: "id", label: "번호", align: "left", width: 80 },
@@ -36,27 +68,31 @@ export function useCounselingListController() {
     { key: "updatedByNm", label: "상담원", align: "left", width: 120 },
   ]);
 
+  const [apiRequestParams, setApiRequestParams] = React.useState({});
   const [apiResponse, setApiResponse] = React.useState<CounselingListResponse>();
   const [counselingList, setCounselingList] = React.useState<RFDGDataItem<CounselingItem>[]>();
   const [listSpinning, setListSpinning] = React.useState(false);
 
-  const getList = React.useCallback(async (params: CounselingListRequest) => {
-    setListSpinning(true);
+  const getList = React.useCallback(
+    async (params?: CounselingListRequest) => {
+      setListSpinning(true);
 
-    try {
-      const res = await CounselingService.list(params);
-      setApiResponse(res);
-      setCounselingList(
-        res.ds.map((values) => ({
-          values,
-        }))
-      );
-      return res;
-    } catch (e) {
-    } finally {
-      setListSpinning(false);
-    }
-  }, []);
+      try {
+        const res = await CounselingService.list(params ?? apiRequestParams);
+        setApiResponse(res);
+        setCounselingList(
+          res.ds.map((values) => ({
+            values,
+          }))
+        );
+        return res;
+      } catch (e) {
+      } finally {
+        setListSpinning(false);
+      }
+    },
+    [apiRequestParams]
+  );
 
   return {
     windowWidth,
@@ -66,6 +102,8 @@ export function useCounselingListController() {
     setPageModelMetadata,
     t,
     currentLanguage,
+    filters,
+    setFilters,
     columns,
     setColumns,
     apiResponse,
@@ -74,5 +112,7 @@ export function useCounselingListController() {
     counselingList,
     listSpinning,
     setListSpinning,
+    apiRequestParams,
+    setApiRequestParams,
   };
 }

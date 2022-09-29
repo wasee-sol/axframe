@@ -3,8 +3,8 @@ import styled from "@emotion/styled";
 import { Divider, Input, Select, Form } from "antd";
 import { RFISearch, RFIRevert } from "react-frame-icon";
 import { IconText } from "components/common";
-import { SMixinFlexRow } from "../../styles/emotion";
-import SearchFilter, { FilterType } from "./SearchFilter";
+import { SMixinFlexRow } from "styles/emotion";
+import { SearchFilter, FilterType } from "./SearchFilter";
 
 export interface FilterOption {
   value: string;
@@ -27,7 +27,7 @@ interface Props {
   onReload?: () => void;
 }
 
-function SearchTool({ filters, values, onChangeValues, onSearch, onReload }: Props) {
+export function SearchTool({ filters, values, onChangeValues, onSearch, onReload }: Props) {
   const [form] = Form.useForm();
   const handleSearch = React.useCallback(() => {
     const values = form.getFieldsValue();
@@ -122,5 +122,3 @@ const Buttons = styled.div`
   ${SMixinFlexRow("flex-start", "center")};
   flex: none;
 `;
-
-export default SearchTool;
