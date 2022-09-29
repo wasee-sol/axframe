@@ -9,13 +9,18 @@ const SearchFilterTimeRange: SearchFilterComponent = ({ value }) => {
     <Container>
       <RFICalendarEvent />
       {value}
-      <RFIArrowDown />
+      <RFIArrowDown role={"arrow-down"} />
     </Container>
   );
 };
 
 const Container = styled.div`
   ${SMixinFlexRow("flex-start", "center")};
+
+  [role="arrow-down"] {
+    color: ${(p) => p.theme.disabled_color};
+    font-size: 14px;
+  }
 `;
 
 export default SearchFilterTimeRange;

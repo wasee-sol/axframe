@@ -51,6 +51,7 @@ export interface CounselingItem {
 export interface CounselingListRequest {
   sttDt?: string;
   endDt?: string;
+  filterType?: string;
   filter?: string;
   sort1?: string;
   sort2?: string;

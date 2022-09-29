@@ -14,21 +14,10 @@ import { mergeProps } from "utils/object";
 interface Props {}
 
 function PageCounselingList(props: Props) {
-  const {
-    t,
-    filters,
-    columns,
-    counselingList,
-    getList,
-    listSpinning,
-    apiRequestParams,
-    setApiRequestParams,
-    pageModelMetadata,
-    setPageModelMetadata,
-  } = mergeProps(props, useCounselingList());
+  const { t, paramKeyOptions, extraParams, columns, counselingList, getList, listSpinning, apiRequestParams } =
+    mergeProps(props, useCounselingList());
 
   const bodyContainer = React.useRef<HTMLDivElement>(null);
-
   const { width: containerWidth, height: containerHeight } = useContainerSize(bodyContainer);
 
   const onSearch = React.useCallback(async () => {
@@ -55,8 +44,9 @@ function PageCounselingList(props: Props) {
         </HeaderButtonGroup>
       </Header>
       <SearchTool
-        extraParams={filters}
-        extraParamsValue={apiRequestParams}
+        filterTypeOptions={paramKeyOptions}
+        extraParamOptions={extraParams}
+        values={apiRequestParams}
         onChangeValues={() => {}}
         onSearch={onSearch}
         onReload={onReload}

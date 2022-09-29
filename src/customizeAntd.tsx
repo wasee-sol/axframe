@@ -43,8 +43,8 @@ const _Cascader = Cascader as React.FC<CascaderProps<BaseOptionType>>;
 _Cascader.defaultProps ??= {};
 const cascaderDefaultProps = _Cascader.defaultProps;
 if (cascaderDefaultProps) {
-  cascaderDefaultProps.expandIcon = <RFIArrowLeft fontSize={12} />;
-  cascaderDefaultProps.suffixIcon = <RFIArrowDown fontSize={16} />;
+  cascaderDefaultProps.expandIcon = <RFIArrowLeft />;
+  cascaderDefaultProps.suffixIcon = <RFIArrowDown />;
 }
 
 /*
@@ -55,7 +55,7 @@ const _Select = Select as React.FC<SelectProps>;
 _Select.defaultProps ??= {};
 const selectDefaultProps = _Select.defaultProps;
 if (selectDefaultProps) {
-  selectDefaultProps.suffixIcon = <RFIArrowDown fontSize={16} />;
+  selectDefaultProps.suffixIcon = <RFIArrowDown fontSize={14} />;
   // selectDefaultProps.menuItemSelectedIcon = <QICheck fontSize={16} />;
 }
 
@@ -80,8 +80,8 @@ _InputNumber.defaultProps ??= {};
 const inputNumberDefaultProps = _InputNumber.defaultProps;
 
 if (inputNumberDefaultProps) {
-  inputNumberDefaultProps.upHandler = <RFIArrowUp fontSize={12} />;
-  inputNumberDefaultProps.downHandler = <RFIArrowDown fontSize={12} />;
+  inputNumberDefaultProps.upHandler = <RFIArrowUp />;
+  inputNumberDefaultProps.downHandler = <RFIArrowDown />;
 }
 
 if (Input.defaultProps) {

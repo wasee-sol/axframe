@@ -9,7 +9,7 @@ const SearchFilterSelect: SearchFilterComponent = ({ icon, value, title }) => {
     <Container>
       {icon}
       {value ?? title}
-      <RFIArrowDown />
+      <RFIArrowDown role={"arrow-down"} />
     </Container>
   );
 };
@@ -17,6 +17,11 @@ const SearchFilterSelect: SearchFilterComponent = ({ icon, value, title }) => {
 const Container = styled.div`
   ${SMixinFlexRow("flex-start", "center")};
   gap: 3px;
+
+  [role="arrow-down"] {
+    color: ${(p) => p.theme.disabled_color};
+    font-size: 14px;
+  }
 `;
 
 export default SearchFilterSelect;

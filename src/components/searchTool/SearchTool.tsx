@@ -19,23 +19,24 @@ export interface Filter {
   options?: FilterOption[];
 }
 
+export interface SearchToolValues extends Record<string, any> {
+  filter?: string;
+  filterType?: string;
+}
+
 interface Props {
-  paramKeyOptions?: { value: string; label: string }[];
-  paramKey?: string;
-  paramValue?: string;
-  extraParams?: Filter[];
-  extraParamsValue?: Record<string, any>;
+  filterTypeOptions?: { value: string; label: string }[];
+  extraParamOptions?: Filter[];
+  values?: SearchToolValues;
   onChangeValues?: (values: Record<string, any>) => void;
   onSearch?: (values: Record<string, any>) => void;
   onReload?: () => void;
 }
 
 export function SearchTool({
-  paramKeyOptions,
-  paramKey,
-  paramValue,
-  extraParams,
-  extraParamsValue,
+  filterTypeOptions,
+  extraParamOptions,
+  values,
   onChangeValues,
   onSearch,
   onReload,
@@ -60,12 +61,8 @@ export function SearchTool({
   );
 
   React.useEffect(() => {
-    form.setFieldValue("filterValue", paramValue);
-  }, [form, paramValue]);
-
-  React.useEffect(() => {
-    form.setFieldValue("filterType", paramKey);
-  }, [form, paramKey]);
+    form.setFieldsValue(values);
+  }, [form, values]);
 
   return (
     <Form
@@ -76,16 +73,16 @@ export function SearchTool({
       }}
     >
       <Container>
-        {extraParams && extraParams?.length > 0 && (
+        {extraParamOptions && extraParamOptions?.length > 0 && (
           <FilterTools>
-            {extraParams.map((filter, idx) => (
+            {extraParamOptions.map((filter, idx) => (
               <React.Fragment key={idx}>
                 {idx > 0 && <Divider type={"vertical"} />}
                 <SearchFilter
                   title={filter.title}
                   type={filter.type}
                   icon={filter.icon}
-                  value={extraParamsValue?.[filter.key]}
+                  value={values?.[filter.key]}
                   options={filter.options}
                 />
               </React.Fragment>
@@ -95,10 +92,10 @@ export function SearchTool({
 
         <SearchInput>
           <Input.Group compact>
-            {paramKeyOptions && (
+            {filterTypeOptions && (
               <Form.Item name={"filterType"} noStyle>
                 <Select>
-                  {paramKeyOptions.map((option, idx) => (
+                  {filterTypeOptions.map((option, idx) => (
                     <Select.Option key={idx} value={option.value}>
                       {option.label}
                     </Select.Option>
@@ -106,7 +103,7 @@ export function SearchTool({
                 </Select>
               </Form.Item>
             )}
-            <Form.Item name={"filterValue"} noStyle>
+            <Form.Item name={"filter"} noStyle>
               <Input placeholder={"search"} />
             </Form.Item>
           </Input.Group>

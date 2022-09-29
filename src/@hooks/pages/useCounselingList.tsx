@@ -1,6 +1,6 @@
 import * as React from "react";
 import { usePageModel } from "hooks/usePageModel";
-import { RFDGColumn, RFDGDataItem } from "react-frame-datagrid";
+import { RFDGColumn } from "react-frame-datagrid";
 import { RFIWriteForm } from "react-frame-icon";
 import { ROUTES } from "router/Routes";
 import { useI18n } from "hooks";
@@ -22,7 +22,11 @@ export function useCounselingList() {
   ]);
   const { t, currentLanguage } = useI18n();
 
-  const [filters, setFilters] = React.useState<Filter[]>([
+  const [filterTypeOptions, setFilterTypeOptions] = React.useState([
+    { value: "title", label: "TITLE" },
+    { value: "writer", label: "WRITER" },
+  ]);
+  const [extraParamOptions, setExtraParamOptions] = React.useState<Filter[]>([
     {
       title: "행정구역",
       key: "select1",
@@ -68,9 +72,11 @@ export function useCounselingList() {
     { key: "updatedByNm", label: "상담원", align: "left", width: 120 },
   ]);
 
-  const [apiRequestParams, setApiRequestParams] = React.useState({});
+  const [apiRequestParams, setApiRequestParams] = React.useState<CounselingListRequest>({
+    pageNumber: 1,
+    pageSize: 100,
+  });
   const [apiResponse, setApiResponse] = React.useState<CounselingListResponse>();
-  const [counselingList, setCounselingList] = React.useState<RFDGDataItem<CounselingItem>[]>();
   const [listSpinning, setListSpinning] = React.useState(false);
 
   const getList = React.useCallback(
@@ -80,11 +86,7 @@ export function useCounselingList() {
       try {
         const res = await CounselingService.list(params ?? apiRequestParams);
         setApiResponse(res);
-        setCounselingList(
-          res.ds.map((values) => ({
-            values,
-          }))
-        );
+
         return res;
       } catch (e) {
       } finally {
@@ -102,14 +104,18 @@ export function useCounselingList() {
     setPageModelMetadata,
     t,
     currentLanguage,
-    filters,
-    setFilters,
+    paramKeyOptions: filterTypeOptions,
+    extraParams: extraParamOptions,
+    setExtraParams: setExtraParamOptions,
     columns,
     setColumns,
     apiResponse,
     setApiResponse,
     getList,
-    counselingList,
+    counselingList:
+      apiResponse?.ds.map((values) => ({
+        values,
+      })) ?? [],
     listSpinning,
     setListSpinning,
     apiRequestParams,

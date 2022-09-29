@@ -18,14 +18,11 @@ Default.args = {};
 
 export const WithFilter = Template.bind({});
 WithFilter.args = {
-  paramKeyOptions: [
+  filterTypeOptions: [
     { value: "title", label: "TITLE" },
     { value: "writer", label: "WRITER" },
   ],
-  paramKey: "writer",
-  paramValue: "TEST",
-
-  extraParams: [
+  extraParamOptions: [
     {
       title: "행정구역",
       key: "select1",
@@ -54,4 +51,8 @@ WithFilter.args = {
       type: FilterType.TIME_RANGE,
     },
   ],
+  values: {
+    filterType: "title",
+    filter: "sss",
+  },
 };
