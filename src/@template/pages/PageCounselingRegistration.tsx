@@ -9,6 +9,7 @@ import { RFIWriteForm } from "react-frame-icon";
 import { CounselingItem } from "repository/CounselingRepositoryInterface";
 import { PageLayout } from "styles/pageStyled";
 import { mergeProps, convertToDate } from "utils/object";
+import { useDidMountEffect } from "../../hooks/useDidMountEffect";
 
 interface Props {}
 
@@ -71,17 +72,16 @@ function PageCounselingRegistration(props: Props) {
     }
   }, [birthDt, form]);
 
-  React.useEffect(() => {
+  useDidMountEffect(() => {
     form.setFieldsValue(convertToDate(pageModelMetadata, ["cnsltDt", "birthDt"]));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [form]);
+  });
 
   return (
     <Container>
       <Header>
         <IconText icon={<RFIWriteForm />}>{t.pages.counseling.registration.title}</IconText>
 
-        <ButtonGroup>
+        <ButtonGroup compact>
           <Button size='small'>{t.button.temporaryStorageList}</Button>
           <Button size='small' onClick={handleFormReset}>
             {t.button.reset}

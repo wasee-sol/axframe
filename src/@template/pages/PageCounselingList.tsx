@@ -14,42 +14,42 @@ import { mergeProps } from "utils/object";
 interface Props {}
 
 function PageCounselingList(props: Props) {
-  const { t, paramKeyOptions, extraParams, columns, counselingList, getList, listSpinning, apiRequestParams } =
-    mergeProps(props, useCounselingList());
+  const {
+    t,
+    filterTypeOptions,
+    extraParamOptions,
+    columns,
+    counselingList,
+    listSpinning,
+    apiRequestParams,
+    handleSearch,
+    handleReload,
+    handleReset,
+    handleChangeSearchValue,
+  } = mergeProps(props, useCounselingList());
 
   const bodyContainer = React.useRef<HTMLDivElement>(null);
   const { width: containerWidth, height: containerHeight } = useContainerSize(bodyContainer);
-
-  const onSearch = React.useCallback(async () => {
-    await getList({});
-  }, [getList]);
-
-  const onReload = React.useCallback(async () => {
-    await getList();
-  }, [getList]);
-
-  React.useEffect(() => {
-    (async () => {
-      await getList();
-    })();
-  }, [getList]);
 
   return (
     <Container stretch role={"page-container"}>
       <Header>
         <IconText icon={<RFIListSearch />}>{t.pages.counseling.list.title}</IconText>
 
-        <HeaderButtonGroup>
+        <ButtonGroup compact>
           <Button size='small'>{t.button.excel}</Button>
-        </HeaderButtonGroup>
+          <Button size='small' onClick={handleReset}>
+            {t.button.reset}
+          </Button>
+        </ButtonGroup>
       </Header>
       <SearchTool
-        filterTypeOptions={paramKeyOptions}
-        extraParamOptions={extraParams}
+        filterTypeOptions={filterTypeOptions}
+        extraParamOptions={extraParamOptions}
         values={apiRequestParams}
-        onChangeValues={() => {}}
-        onSearch={onSearch}
-        onReload={onReload}
+        onChangeValues={handleChangeSearchValue}
+        onSearch={handleSearch}
+        onReload={handleReload}
       />
       <Body ref={bodyContainer}>
         <DataGrid<CounselingItem>
@@ -67,7 +67,7 @@ function PageCounselingList(props: Props) {
 
 const Container = styled(PageLayout)``;
 const Header = styled(PageLayout.Header)``;
-const HeaderButtonGroup = styled(PageLayout.HeaderButtonGroup)``;
+const ButtonGroup = styled(PageLayout.ButtonGroup)``;
 const Body = styled(PageLayout.Body)``;
 
 export default PageCounselingList;

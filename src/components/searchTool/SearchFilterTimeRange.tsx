@@ -17,6 +17,11 @@ const SearchFilterTimeRange: SearchFilterComponent = ({ value, title }) => {
 const Container = styled.div`
   ${SMixinFlexRow("flex-start", "center")};
   gap: 3px;
+  cursor: pointer;
+
+  &:hover {
+    color: ${(p) => p.theme.link_hover_color};
+  }
 
   [role="arrow-down"] {
     color: ${(p) => p.theme.disabled_color};

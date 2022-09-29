@@ -4,6 +4,7 @@ import { RFDGColumn } from "react-frame-datagrid";
 import { RFIWriteForm } from "react-frame-icon";
 import { ROUTES } from "router/Routes";
 import { useI18n } from "hooks";
+import { useDidMountEffect } from "../../hooks/useDidMountEffect";
 import {
   CounselingListResponse,
   CounselingListRequest,
@@ -22,7 +23,8 @@ export function useCounselingList() {
   ]);
   const { t, currentLanguage } = useI18n();
 
-  const [filterTypeOptions, setFilterTypeOptions] = React.useState([
+  const [filterTypeOptions] = React.useState([
+    { value: "", label: "ALL" },
     { value: "title", label: "TITLE" },
     { value: "writer", label: "WRITER" },
   ]);
@@ -55,46 +57,82 @@ export function useCounselingList() {
       type: FilterType.TIME_RANGE,
     },
   ]);
-
   const [columns, setColumns] = React.useState<RFDGColumn<CounselingItem>[]>([
     { key: "id", label: "번호", align: "left", width: 80 },
     { key: "name", label: "성명", align: "left", width: 80 },
     { key: "cnsltDt", label: "상담일", align: "left", width: 100 },
     { key: "area", label: "행정구", align: "left", width: 80 },
-    { key: "birthDt", label: "생년월일", align: "center", width: 80 },
-    { key: "phone1", label: "연락처1", align: "center", width: 100 },
-    { key: "cnsltHow", label: "상담방법", align: "left", width: 200 },
-    { key: "cnsltPath", label: "상담경로", align: "left", width: 100 },
-    { key: "fmTyp", label: "가구유형", align: "left", width: 250 },
+    { key: "birthDt", label: "생년월일", align: "center", width: 120 },
+    { key: "phone1", label: "연락처1", align: "center", width: 150 },
+    { key: "cnsltHow", label: "상담방법", align: "left", width: 100 },
+    { key: "cnsltPath", label: "상담경로", align: "left", width: 150 },
+    { key: "fmTyp", label: "가구유형", align: "left", width: 100 },
     { key: "homeTyp", label: "거주형태", align: "left", width: 100 },
-    { key: "fldA", label: "수급", align: "left", width: 250 },
-    { key: "hopePoint", label: "주요욕구", align: "left", width: 250 },
+    { key: "fldA", label: "수급", align: "left", width: 100 },
+    { key: "hopePoint", label: "주요욕구", align: "left", width: 150 },
     { key: "updatedByNm", label: "상담원", align: "left", width: 120 },
   ]);
 
-  const [apiRequestParams, setApiRequestParams] = React.useState<CounselingListRequest>({
+  const defaultRequestParams = React.useRef<CounselingListRequest>({
     pageNumber: 1,
     pageSize: 100,
-  });
+  }).current;
+
+  const [apiRequestParams, setApiRequestParams] = React.useState<CounselingListRequest>(defaultRequestParams);
   const [apiResponse, setApiResponse] = React.useState<CounselingListResponse>();
   const [listSpinning, setListSpinning] = React.useState(false);
 
-  const getList = React.useCallback(
-    async (params?: CounselingListRequest) => {
-      setListSpinning(true);
+  const getList = React.useCallback(async (params: CounselingListRequest) => {
+    setListSpinning(true);
 
-      try {
-        const res = await CounselingService.list(params ?? apiRequestParams);
-        setApiResponse(res);
+    try {
+      const res = await CounselingService.list(params);
+      setApiResponse(res);
 
-        return res;
-      } catch (e) {
-      } finally {
-        setListSpinning(false);
-      }
+      return res;
+    } catch (e) {
+    } finally {
+      setListSpinning(false);
+    }
+  }, []);
+
+  const handleSearch = React.useCallback(async () => {
+    await getList(apiRequestParams);
+  }, [getList, apiRequestParams]);
+
+  const handleReload = React.useCallback(async () => {
+    await getList(apiRequestParams);
+  }, [getList, apiRequestParams]);
+
+  const handleReset = React.useCallback(() => {
+    setPageModelMetadata({ ...defaultRequestParams });
+    setApiRequestParams({ ...defaultRequestParams });
+  }, [setPageModelMetadata, defaultRequestParams]);
+
+  const handleChangeSearchValue = React.useCallback(
+    (values: Record<string, any>) => {
+      const requestParams = {
+        ...apiRequestParams,
+        ...values,
+      } as CounselingListRequest;
+
+      setPageModelMetadata(requestParams);
+      setApiRequestParams(requestParams);
     },
-    [apiRequestParams]
+    [apiRequestParams, setPageModelMetadata]
   );
+
+  useDidMountEffect(() => {
+    const requestParams = {
+      ...defaultRequestParams,
+      ...pageModelMetadata,
+    } as CounselingListRequest;
+    setApiRequestParams(requestParams);
+
+    (async () => {
+      await getList(requestParams);
+    })();
+  });
 
   return {
     windowWidth,
@@ -104,9 +142,9 @@ export function useCounselingList() {
     setPageModelMetadata,
     t,
     currentLanguage,
-    paramKeyOptions: filterTypeOptions,
-    extraParams: extraParamOptions,
-    setExtraParams: setExtraParamOptions,
+    filterTypeOptions,
+    extraParamOptions,
+    setExtraParamOptions,
     columns,
     setColumns,
     apiResponse,
@@ -120,5 +158,10 @@ export function useCounselingList() {
     setListSpinning,
     apiRequestParams,
     setApiRequestParams,
+
+    handleSearch,
+    handleReload,
+    handleReset,
+    handleChangeSearchValue,
   };
 }

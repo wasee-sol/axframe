@@ -54,15 +54,22 @@ export function SearchTool({
 
   const onValuesChange = React.useCallback(
     (changedValues: any, values: Record<string, any>) => {
-      console.log("onValuesChange", values);
       onChangeValues?.(values);
     },
     [onChangeValues]
   );
 
   React.useEffect(() => {
-    form.setFieldsValue(values);
-  }, [form, values]);
+    const formValues = {
+      filterType: "",
+      filter: "",
+    };
+    extraParamOptions?.forEach((filter) => {
+      formValues[filter.key] = "";
+    });
+
+    form.setFieldsValue({ ...formValues, ...values });
+  }, [extraParamOptions, form, values]);
 
   return (
     <Form
@@ -104,7 +111,7 @@ export function SearchTool({
               </Form.Item>
             )}
             <Form.Item name={"filter"} noStyle>
-              <Input placeholder={"search"} />
+              <Input placeholder={"search"} allowClear />
             </Form.Item>
           </Input.Group>
         </SearchInput>
