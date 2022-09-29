@@ -69,7 +69,7 @@ export function SearchTool({
       form={form}
       onValuesChange={onValuesChange}
       initialValues={{
-        filterType: "title",
+        filterType: values?.filter ?? filterTypeOptions?.[0]?.value,
       }}
     >
       <Container>

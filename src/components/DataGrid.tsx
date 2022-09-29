@@ -18,6 +18,7 @@ export function DataGrid<T>({ frozenColumnIndex, width, height, columns, data, s
 
 const Container = styled.div`
   position: absolute;
+  overflow: hidden;
 
   [role="react-frame-datagrid"] {
     //transition: all 0.1s;

@@ -4,11 +4,11 @@ import { RFICalendarEvent, RFIArrowDown } from "react-frame-icon";
 import { SMixinFlexRow } from "styles/emotion";
 import { SearchFilterComponent } from "./SearchFilter";
 
-const SearchFilterTimeRange: SearchFilterComponent = ({ value }) => {
+const SearchFilterTimeRange: SearchFilterComponent = ({ value, title }) => {
   return (
     <Container>
       <RFICalendarEvent />
-      {value}
+      {value ?? title}
       <RFIArrowDown role={"arrow-down"} />
     </Container>
   );
@@ -16,6 +16,7 @@ const SearchFilterTimeRange: SearchFilterComponent = ({ value }) => {
 
 const Container = styled.div`
   ${SMixinFlexRow("flex-start", "center")};
+  gap: 3px;
 
   [role="arrow-down"] {
     color: ${(p) => p.theme.disabled_color};

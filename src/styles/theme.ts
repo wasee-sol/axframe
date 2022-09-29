@@ -168,6 +168,7 @@ const commons = {
   error_page_header_color: "#FF4040",
   error_page_color: LIGHT.BLUE_90,
   form_vertical_label_padding: "0 0 4px",
+  side_menu_open_width: 250,
 
   // custom styles
   ui_helper_zindex: 100,
@@ -175,7 +176,6 @@ const commons = {
   ui_header_zindex: 900,
   ui_max_zindex: 9999,
 };
-//~
 
 const light = {
   themeType: "LIGHT",

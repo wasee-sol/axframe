@@ -62,10 +62,10 @@ const NavContent = styled.div<StyleProps>`
   overflow-x: hidden;
   ${SMixinFlexColumn("stretch", "stretch")};
 
-  ${({ sideMenuOpened }) => {
+  ${({ sideMenuOpened, theme }) => {
     if (sideMenuOpened) {
       return css`
-        width: 300px;
+        width: ${theme.side_menu_open_width}px;
       `;
     }
     return css`
