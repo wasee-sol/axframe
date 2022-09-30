@@ -1,7 +1,6 @@
 import * as React from "react";
 import { usePageModel } from "hooks/usePageModel";
 import { RFDGColumn } from "react-frame-datagrid";
-import { RFIWriteForm } from "react-frame-icon";
 import { ROUTES } from "router/Routes";
 import { useI18n } from "hooks";
 import { useDidMountEffect } from "../../hooks/useDidMountEffect";
@@ -12,7 +11,16 @@ import {
 } from "../../repository/CounselingRepositoryInterface";
 import { CounselingService } from "../../services";
 import { useAppStore } from "../../stores";
-import { Filter, FilterType } from "components/searchTool";
+import { Filter, FilterType, FilterTypeOption } from "components/searchTool";
+import moment, { Moment } from "moment";
+
+export interface SearchFilterParams extends CounselingListRequest {
+  select1?: string;
+  select2?: string;
+  timeRange?: Moment[];
+  filterType?: string;
+  filter?: string;
+}
 
 export function useCounselingList() {
   const windowWidth = useAppStore((s) => s.width);
@@ -22,62 +30,14 @@ export function useCounselingList() {
     ROUTES.COUNSELING.children.LIST.path,
   ]);
   const { t, currentLanguage } = useI18n();
-
-  const [filterTypeOptions] = React.useState([
-    { value: "", label: "ALL" },
-    { value: "title", label: "TITLE" },
-    { value: "writer", label: "WRITER" },
-  ]);
-  const [extraParamOptions, setExtraParamOptions] = React.useState<Filter[]>([
-    {
-      title: "행정구역",
-      key: "select1",
-      icon: <RFIWriteForm />,
-      type: FilterType.SELECT,
-      options: [
-        { value: "중구", label: "중구" },
-        { value: "동구", label: "동구" },
-        { value: "서구", label: "서구" },
-        { value: "남구", label: "남구" },
-        { value: "북구", label: "북구" },
-      ],
-    },
-    {
-      title: "상담방법",
-      key: "select2",
-      type: FilterType.SELECT,
-      options: [
-        { value: "유선", label: "유선" },
-        { value: "내방", label: "내방" },
-      ],
-    },
-    {
-      title: "상담일자",
-      key: "timeRange",
-      type: FilterType.TIME_RANGE,
-    },
-  ]);
-  const [columns, setColumns] = React.useState<RFDGColumn<CounselingItem>[]>([
-    { key: "id", label: "번호", align: "left", width: 80 },
-    { key: "name", label: "성명", align: "left", width: 80 },
-    { key: "cnsltDt", label: "상담일", align: "left", width: 100 },
-    { key: "area", label: "행정구", align: "left", width: 80 },
-    { key: "birthDt", label: "생년월일", align: "center", width: 120 },
-    { key: "phone1", label: "연락처1", align: "center", width: 150 },
-    { key: "cnsltHow", label: "상담방법", align: "left", width: 100 },
-    { key: "cnsltPath", label: "상담경로", align: "left", width: 150 },
-    { key: "fmTyp", label: "가구유형", align: "left", width: 100 },
-    { key: "homeTyp", label: "거주형태", align: "left", width: 100 },
-    { key: "fldA", label: "수급", align: "left", width: 100 },
-    { key: "hopePoint", label: "주요욕구", align: "left", width: 150 },
-    { key: "updatedByNm", label: "상담원", align: "left", width: 120 },
-  ]);
-
   const defaultRequestParams = React.useRef<CounselingListRequest>({
     pageNumber: 1,
     pageSize: 100,
   }).current;
 
+  const [filterTypeOptions, setFilterTypeOptions] = React.useState<FilterTypeOption[]>([]);
+  const [extraParamOptions, setExtraParamOptions] = React.useState<Filter[]>([]);
+  const [columns, setColumns] = React.useState<RFDGColumn<CounselingItem>[]>([]);
   const [apiRequestParams, setApiRequestParams] = React.useState<CounselingListRequest>(defaultRequestParams);
   const [apiResponse, setApiResponse] = React.useState<CounselingListResponse>();
   const [listSpinning, setListSpinning] = React.useState(false);
@@ -110,10 +70,24 @@ export function useCounselingList() {
   }, [setPageModelMetadata, defaultRequestParams]);
 
   const handleChangeSearchValue = React.useCallback(
-    (values: Record<string, any>) => {
+    (values: SearchFilterParams) => {
+      // adapter start
+      const _values: CounselingListRequest = {};
+      if (values.timeRange) {
+        _values.sttDt = values.timeRange[0].format("YYYY-MM-DD");
+        _values.endDt = values.timeRange[1].format("YYYY-MM-DD");
+      } else {
+        _values.sttDt = "";
+        _values.endDt = "";
+        apiRequestParams["timeRange"] = null;
+      }
+      // adapter end
+
       const requestParams = {
         ...apiRequestParams,
         ...values,
+        sttDt: _values.sttDt,
+        endDt: _values.endDt,
       } as CounselingListRequest;
 
       setPageModelMetadata(requestParams);
@@ -122,11 +96,62 @@ export function useCounselingList() {
     [apiRequestParams, setPageModelMetadata]
   );
 
+  React.useEffect(() => {
+    setFilterTypeOptions([
+      { value: "", label: t.filterType.전체 },
+      { value: "title", label: t.filterType.제목 },
+      { value: "writer", label: t.filterType.작성자 },
+    ]);
+    setColumns([
+      { key: "id", label: t.datagrid.id, align: "left", width: 80 },
+      { key: "name", label: t.datagrid.성명, align: "left", width: 80 },
+      { key: "cnsltDt", label: t.datagrid.상담일, align: "left", width: 100 },
+      { key: "area", label: t.datagrid.행정구, align: "left", width: 80 },
+      { key: "birthDt", label: t.datagrid.생년월일, align: "center", width: 120 },
+      { key: "phone1", label: t.datagrid.연락처, align: "center", width: 150 },
+      { key: "cnsltHow", label: t.datagrid.상담방법, align: "left", width: 100 },
+      { key: "cnsltPath", label: t.datagrid.상담경로, align: "left", width: 150 },
+      { key: "fmTyp", label: t.datagrid.가구유형, align: "left", width: 100 },
+      { key: "homeTyp", label: t.datagrid.거주형태, align: "left", width: 100 },
+      { key: "fldA", label: t.datagrid.수급, align: "left", width: 100 },
+      { key: "hopePoint", label: t.datagrid.주요욕구, align: "left", width: 150 },
+      { key: "updatedByNm", label: t.datagrid.상담원, align: "left", width: 120 },
+    ]);
+    setExtraParamOptions([
+      {
+        title: t.formItem.counseling.area.label,
+        name: "select1",
+        type: FilterType.SELECT,
+        options: t.formItem.counseling.area.options,
+      },
+      {
+        title: t.formItem.counseling.cnsltHow.label,
+        name: "select2",
+        type: FilterType.SELECT,
+        options: t.formItem.counseling.cnsltHow.options,
+      },
+      {
+        title: t.formItem.counseling.cnsltDt.label,
+        name: "timeRange",
+        type: FilterType.TIME_RANGE,
+      },
+    ]);
+  }, [t]);
+
   useDidMountEffect(() => {
     const requestParams = {
       ...defaultRequestParams,
       ...pageModelMetadata,
     } as CounselingListRequest;
+
+    // adapter start
+    if (requestParams.sttDt && requestParams.endDt) {
+      requestParams["timeRange"] = [moment(requestParams.sttDt), moment(requestParams.endDt)];
+    } else {
+      delete requestParams["timeRange"];
+    }
+    // adapter end
+
     setApiRequestParams(requestParams);
 
     (async () => {

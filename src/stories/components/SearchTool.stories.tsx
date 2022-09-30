@@ -1,6 +1,5 @@
 import * as React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { RFIWriteForm } from "react-frame-icon";
 import { SearchTool, FilterType } from "../../components/searchTool";
 
 export default {
@@ -25,8 +24,7 @@ WithFilter.args = {
   extraParamOptions: [
     {
       title: "행정구역",
-      key: "select1",
-      icon: <RFIWriteForm />,
+      name: "select1",
       type: FilterType.SELECT,
       options: [
         { value: "중구", label: "중구" },
@@ -38,7 +36,7 @@ WithFilter.args = {
     },
     {
       title: "상담방법",
-      key: "select2",
+      name: "select2",
       type: FilterType.SELECT,
       options: [
         { value: "유선", label: "유선" },
@@ -47,7 +45,7 @@ WithFilter.args = {
     },
     {
       title: "상담일자",
-      key: "timeRange",
+      name: "timeRange",
       type: FilterType.TIME_RANGE,
     },
   ],

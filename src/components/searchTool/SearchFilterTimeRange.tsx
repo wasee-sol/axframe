@@ -1,32 +1,56 @@
+import moment, { Moment } from "moment";
 import * as React from "react";
-import styled from "@emotion/styled";
-import { RFICalendarEvent, RFIArrowDown } from "react-frame-icon";
-import { SMixinFlexRow } from "styles/emotion";
 import { SearchFilterComponent } from "./SearchFilter";
+import { DatePicker, Form, Space, Button } from "antd";
 
-const SearchFilterTimeRange: SearchFilterComponent = ({ value, title }) => {
+enum RangeType {
+  TODAY = "TODAY",
+  D3 = "D3",
+  D7 = "D7",
+}
+
+const SearchFilterTimeRange: SearchFilterComponent = ({ name, onClickExtraButton }) => {
+  const onClickButton = React.useCallback(
+    (rangeType: RangeType) => {
+      let range: Moment[] = [];
+      switch (rangeType) {
+        case RangeType.D3:
+          range = [moment().add(-3, "d"), moment()];
+          break;
+        case RangeType.D7:
+          range = [moment().add(-7, "d"), moment()];
+          break;
+        case RangeType.TODAY:
+          range = [moment(), moment()];
+          break;
+      }
+
+      onClickExtraButton?.({ [name]: range });
+    },
+    [name, onClickExtraButton]
+  );
+
   return (
-    <Container>
-      <RFICalendarEvent />
-      {value ?? title}
-      <RFIArrowDown role={"arrow-down"} />
-    </Container>
+    <Form.Item name={name} noStyle>
+      <DatePicker.RangePicker
+        style={{ width: 240 }}
+        showNow
+        renderExtraFooter={() => (
+          <Space direction={"horizontal"} size={4}>
+            <Button type={"link"} size='small' onClick={() => onClickButton(RangeType.TODAY)}>
+              Today
+            </Button>
+            <Button type={"link"} size='small' onClick={() => onClickButton(RangeType.D3)}>
+              3D
+            </Button>
+            <Button type={"link"} size='small' onClick={() => onClickButton(RangeType.D7)}>
+              7D
+            </Button>
+          </Space>
+        )}
+      />
+    </Form.Item>
   );
 };
-
-const Container = styled.div`
-  ${SMixinFlexRow("flex-start", "center")};
-  gap: 3px;
-  cursor: pointer;
-
-  &:hover {
-    color: ${(p) => p.theme.link_hover_color};
-  }
-
-  [role="arrow-down"] {
-    color: ${(p) => p.theme.disabled_color};
-    font-size: 14px;
-  }
-`;
 
 export default SearchFilterTimeRange;

@@ -1,10 +1,10 @@
 import * as React from "react";
 import styled from "@emotion/styled";
-import { Divider, Input, Select, Form } from "antd";
-import { RFISearch, RFIRevert } from "react-frame-icon";
+import { Input, Select, Form } from "antd";
+import { RFISearch } from "react-frame-icon";
 import { IconText } from "components/common";
 import { SMixinFlexRow } from "styles/emotion";
-import { SearchFilter, FilterType } from "./SearchFilter";
+import { FilterType, SearchFilter } from "./SearchFilter";
 
 export interface FilterOption {
   value: string;
@@ -13,8 +13,7 @@ export interface FilterOption {
 
 export interface Filter {
   title: React.ReactNode;
-  key: string;
-  icon?: React.ReactNode;
+  name: string;
   type: FilterType;
   options?: FilterOption[];
 }
@@ -24,8 +23,13 @@ export interface SearchToolValues extends Record<string, any> {
   filterType?: string;
 }
 
+export interface FilterTypeOption {
+  value: string;
+  label: string;
+}
+
 interface Props {
-  filterTypeOptions?: { value: string; label: string }[];
+  filterTypeOptions?: FilterTypeOption[];
   extraParamOptions?: Filter[];
   values?: SearchToolValues;
   onChangeValues?: (values: Record<string, any>) => void;
@@ -59,13 +63,21 @@ export function SearchTool({
     [onChangeValues]
   );
 
+  const onClickExtraButton = React.useCallback(
+    (params: Record<string, any>) => {
+      form.setFieldsValue(params);
+      onChangeValues?.(form.getFieldsValue());
+    },
+    [form, onChangeValues]
+  );
+
   React.useEffect(() => {
     const formValues = {
       filterType: "",
       filter: "",
     };
     extraParamOptions?.forEach((filter) => {
-      formValues[filter.key] = "";
+      formValues[filter.name] = undefined;
     });
 
     form.setFieldsValue({ ...formValues, ...values });
@@ -75,26 +87,28 @@ export function SearchTool({
     <Form
       form={form}
       onValuesChange={onValuesChange}
+      onChange={() => {
+        console.log("vvvv");
+      }}
       initialValues={{
         filterType: values?.filter ?? filterTypeOptions?.[0]?.value,
       }}
     >
       <Container>
         {extraParamOptions && extraParamOptions?.length > 0 && (
-          <FilterTools>
+          <Input.Group compact style={{ width: "auto" }}>
             {extraParamOptions.map((filter, idx) => (
-              <React.Fragment key={idx}>
-                {idx > 0 && <Divider type={"vertical"} />}
-                <SearchFilter
-                  title={filter.title}
-                  type={filter.type}
-                  icon={filter.icon}
-                  value={values?.[filter.key]}
-                  options={filter.options}
-                />
-              </React.Fragment>
+              <SearchFilter
+                key={idx}
+                name={filter.name}
+                title={filter.title}
+                type={filter.type}
+                value={values?.[filter.name]}
+                options={filter.options}
+                onClickExtraButton={onClickExtraButton}
+              />
             ))}
-          </FilterTools>
+          </Input.Group>
         )}
 
         <SearchInput>
@@ -118,7 +132,6 @@ export function SearchTool({
 
         <Buttons>
           <IconText icon={<RFISearch fontSize={18} />} onClick={handleSearch} />
-          <IconText icon={<RFIRevert fontSize={18} />} onClick={handleReload} />
         </Buttons>
       </Container>
     </Form>
@@ -131,15 +144,14 @@ const Container = styled.div`
   margin-bottom: 15px;
 `;
 
-const FilterTools = styled.div`
-  ${SMixinFlexRow("flex-start", "center")};
-  padding: 0 10px;
-  border: 1px solid ${(p) => p.theme.input_border_color};
-  height: ${(p) => p.theme.height_base};
-  border-radius: ${(p) => p.theme.border_radius_base};
-  background: ${(p) => p.theme.component_background};
-  flex: none;
-`;
+// const FilterTools = styled.div`
+//   ${SMixinFlexRow("flex-start", "center")};
+//   border: 1px solid ${(p) => p.theme.input_border_color};
+//   height: ${(p) => p.theme.height_base};
+//   border-radius: ${(p) => p.theme.border_radius_base};
+//   background: ${(p) => p.theme.component_background};
+//   flex: none;
+// `;
 
 const SearchInput = styled.div`
   flex: 1;

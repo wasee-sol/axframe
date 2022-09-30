@@ -39,8 +39,8 @@ function TabItemMore(props: Props) {
       }
       trigger={["click"]}
       align={{ targetOffset: [-5, 0] }}
-      visible={visible}
-      onVisibleChange={(visible) => setVisible(visible)}
+      open={visible}
+      onOpenChange={(visible) => setVisible(visible)}
     >
       <TabItemMoreContainer visible={visible}>
         <RFIArrowDown fontSize={18} />

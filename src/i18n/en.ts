@@ -22,6 +22,16 @@ const EN = {
       title2: "Details of consultation",
       area: {
         label: "Districts",
+        options: [
+          { label: "중구", value: "중구" },
+          { label: "동구", value: "동구" },
+          { label: "서구", value: "서구" },
+          { label: "남구", value: "남구" },
+          { label: "북구", value: "북구" },
+          { label: "수성구", value: "수성구" },
+          { label: "달서구", value: "달서구" },
+          { label: "달성군", value: "달성군" },
+        ],
       },
       cnsltUserCd: {
         label: "consultant",
@@ -210,6 +220,26 @@ const EN = {
         label: "Major consultation details",
       },
     },
+  },
+  datagrid: {
+    id: "Id",
+    성명: "Name",
+    상담일: "Date",
+    행정구: "Area",
+    생년월일: "BirthDay",
+    연락처: "Phone",
+    상담방법: "Way1",
+    상담경로: "WayPath",
+    가구유형: "HomeType",
+    거주형태: "HomeST",
+    수급: "ETC",
+    주요욕구: "Main Desire",
+    상담원: "Employee",
+  },
+  filterType: {
+    전체: "All",
+    제목: "Title",
+    작성자: "Writer",
   },
   button: {
     ok: "OK",

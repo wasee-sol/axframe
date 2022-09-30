@@ -9,11 +9,12 @@ export enum FilterType {
 }
 
 interface Props {
+  name: string;
   title: React.ReactNode;
-  icon?: React.ReactNode;
   type: FilterType;
   value: any;
   options?: FilterOption[];
+  onClickExtraButton?: (params: Record<string, any>) => void;
 }
 
 export type SearchFilterComponentProp<R> = {

@@ -15,17 +15,6 @@ interface Props {}
 
 interface FormField extends CounselingItem {}
 
-const areas: { label: string; value: string }[] = [
-  { label: "중구", value: "중구" },
-  { label: "동구", value: "동구" },
-  { label: "서구", value: "서구" },
-  { label: "남구", value: "남구" },
-  { label: "북구", value: "북구" },
-  { label: "수성구", value: "수성구" },
-  { label: "달서구", value: "달서구" },
-  { label: "달성군", value: "달성군" },
-];
-
 function PageCounselingRegistration(props: Props) {
   const { pageModelMetadata, setPageModelMetadata, t } = mergeProps(props, useCounselingRegistration());
   const openZipCodeFinder = useDaumPostcodePopup("//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js");
@@ -101,7 +90,7 @@ function PageCounselingRegistration(props: Props) {
             <Row gutter={20}>
               <Col xs={24} sm={8}>
                 <Form.Item label={t.formItem.counseling.area.label} name={"area"} required>
-                  <Select options={areas} />
+                  <Select options={t.formItem.counseling.area.options} />
                 </Form.Item>
               </Col>
               <Col xs={24} sm={8}>
