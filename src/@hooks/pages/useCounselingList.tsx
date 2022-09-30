@@ -11,7 +11,7 @@ import {
 } from "../../repository/CounselingRepositoryInterface";
 import { CounselingService } from "../../services";
 import { useAppStore } from "../../stores";
-import { Filter, FilterType, FilterTypeOption } from "components/searchTool";
+import { ParamObject, ParamType, ParamOption } from "components/search";
 import moment, { Moment } from "moment";
 
 export interface SearchFilterParams extends CounselingListRequest {
@@ -35,10 +35,10 @@ export function useCounselingList() {
     pageSize: 100,
   }).current;
 
-  const [filterTypeOptions, setFilterTypeOptions] = React.useState<FilterTypeOption[]>([]);
-  const [extraParamOptions, setExtraParamOptions] = React.useState<Filter[]>([]);
+  const [filterTypeOptions, setFilterTypeOptions] = React.useState<ParamOption[]>([]);
+  const [paramObjects, setParamObjects] = React.useState<ParamObject[]>([]);
   const [columns, setColumns] = React.useState<RFDGColumn<CounselingItem>[]>([]);
-  const [apiRequestParams, setApiRequestParams] = React.useState<CounselingListRequest>(defaultRequestParams);
+  const [paramValues, setParamValues] = React.useState<CounselingListRequest>(defaultRequestParams);
   const [apiResponse, setApiResponse] = React.useState<CounselingListResponse>();
   const [listSpinning, setListSpinning] = React.useState(false);
 
@@ -57,16 +57,16 @@ export function useCounselingList() {
   }, []);
 
   const handleSearch = React.useCallback(async () => {
-    await getList(apiRequestParams);
-  }, [getList, apiRequestParams]);
+    await getList(paramValues);
+  }, [getList, paramValues]);
 
   const handleReload = React.useCallback(async () => {
-    await getList(apiRequestParams);
-  }, [getList, apiRequestParams]);
+    await getList(paramValues);
+  }, [getList, paramValues]);
 
   const handleReset = React.useCallback(() => {
     setPageModelMetadata({ ...defaultRequestParams });
-    setApiRequestParams({ ...defaultRequestParams });
+    setParamValues({ ...defaultRequestParams });
   }, [setPageModelMetadata, defaultRequestParams]);
 
   const handleChangeSearchValue = React.useCallback(
@@ -79,21 +79,21 @@ export function useCounselingList() {
       } else {
         _values.sttDt = "";
         _values.endDt = "";
-        apiRequestParams["timeRange"] = null;
+        paramValues["timeRange"] = null;
       }
       // adapter end
 
       const requestParams = {
-        ...apiRequestParams,
+        ...paramValues,
         ...values,
         sttDt: _values.sttDt,
         endDt: _values.endDt,
       } as CounselingListRequest;
 
       setPageModelMetadata(requestParams);
-      setApiRequestParams(requestParams);
+      setParamValues(requestParams);
     },
-    [apiRequestParams, setPageModelMetadata]
+    [paramValues, setPageModelMetadata]
   );
 
   React.useEffect(() => {
@@ -117,23 +117,23 @@ export function useCounselingList() {
       { key: "hopePoint", label: t.datagrid.주요욕구, align: "left", width: 150 },
       { key: "updatedByNm", label: t.datagrid.상담원, align: "left", width: 120 },
     ]);
-    setExtraParamOptions([
+    setParamObjects([
       {
         title: t.formItem.counseling.area.label,
         name: "select1",
-        type: FilterType.SELECT,
+        type: ParamType.SELECT,
         options: t.formItem.counseling.area.options,
       },
       {
         title: t.formItem.counseling.cnsltHow.label,
         name: "select2",
-        type: FilterType.SELECT,
+        type: ParamType.SELECT,
         options: t.formItem.counseling.cnsltHow.options,
       },
       {
         title: t.formItem.counseling.cnsltDt.label,
         name: "timeRange",
-        type: FilterType.TIME_RANGE,
+        type: ParamType.TIME_RANGE,
       },
     ]);
   }, [t]);
@@ -152,7 +152,7 @@ export function useCounselingList() {
     }
     // adapter end
 
-    setApiRequestParams(requestParams);
+    setParamValues(requestParams);
 
     (async () => {
       await getList(requestParams);
@@ -168,8 +168,8 @@ export function useCounselingList() {
     t,
     currentLanguage,
     filterTypeOptions,
-    extraParamOptions,
-    setExtraParamOptions,
+    paramObjects,
+    setParamObjects,
     columns,
     setColumns,
     apiResponse,
@@ -181,8 +181,8 @@ export function useCounselingList() {
       })) ?? [],
     listSpinning,
     setListSpinning,
-    apiRequestParams,
-    setApiRequestParams,
+    paramValues,
+    setParamValues,
 
     handleSearch,
     handleReload,

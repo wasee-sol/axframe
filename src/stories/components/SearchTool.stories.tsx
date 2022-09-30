@@ -1,16 +1,16 @@
 import * as React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { SearchTool, FilterType } from "../../components/searchTool";
+import { SearchParams, ParamType } from "../../components/search";
 
 export default {
-  title: "template/components/SearchTool",
-  component: SearchTool,
+  title: "template/components/SearchParams",
+  component: SearchParams,
   argTypes: {
     backgroundColor: { control: "color" },
   },
-} as ComponentMeta<typeof SearchTool>;
+} as ComponentMeta<typeof SearchParams>;
 
-const Template: ComponentStory<typeof SearchTool> = (args) => <SearchTool {...args} />;
+const Template: ComponentStory<typeof SearchParams> = (args) => <SearchParams {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {};
@@ -21,11 +21,11 @@ WithFilter.args = {
     { value: "title", label: "TITLE" },
     { value: "writer", label: "WRITER" },
   ],
-  extraParamOptions: [
+  paramObjects: [
     {
       title: "행정구역",
       name: "select1",
-      type: FilterType.SELECT,
+      type: ParamType.SELECT,
       options: [
         { value: "중구", label: "중구" },
         { value: "동구", label: "동구" },
@@ -37,7 +37,7 @@ WithFilter.args = {
     {
       title: "상담방법",
       name: "select2",
-      type: FilterType.SELECT,
+      type: ParamType.SELECT,
       options: [
         { value: "유선", label: "유선" },
         { value: "내방", label: "내방" },
@@ -46,10 +46,10 @@ WithFilter.args = {
     {
       title: "상담일자",
       name: "timeRange",
-      type: FilterType.TIME_RANGE,
+      type: ParamType.TIME_RANGE,
     },
   ],
-  values: {
+  paramValues: {
     filterType: "title",
     filter: "sss",
   },

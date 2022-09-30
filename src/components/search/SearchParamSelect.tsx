@@ -1,8 +1,8 @@
 import { Form, Select } from "antd";
 import * as React from "react";
-import { SearchFilterComponent } from "./SearchFilter";
+import { SearchParamComponent } from "./SearchParam";
 
-const SearchFilterSelect: SearchFilterComponent = ({ name, title, options }) => {
+export const SearchParamSelect: SearchParamComponent = ({ name, title, options }) => {
   return (
     <Form.Item name={name} noStyle>
       <Select onChange={(v) => console.log(v)} placeholder={title} allowClear>
@@ -15,5 +15,3 @@ const SearchFilterSelect: SearchFilterComponent = ({ name, title, options }) => 
     </Form.Item>
   );
 };
-
-export default SearchFilterSelect;

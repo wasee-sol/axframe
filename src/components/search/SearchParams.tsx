@@ -4,47 +4,29 @@ import { Input, Select, Form } from "antd";
 import { RFISearch } from "react-frame-icon";
 import { IconText } from "components/common";
 import { SMixinFlexRow } from "styles/emotion";
-import { FilterType, SearchFilter } from "./SearchFilter";
+import { ParamType, SearchParam, ParamOption } from "./SearchParam";
 
-export interface FilterOption {
-  value: string;
-  label: React.ReactNode;
-}
-
-export interface Filter {
+export interface ParamObject {
   title: React.ReactNode;
   name: string;
-  type: FilterType;
-  options?: FilterOption[];
+  type: ParamType;
+  options?: ParamOption[];
 }
 
-export interface SearchToolValues extends Record<string, any> {
+export interface ParamValues extends Record<string, any> {
   filter?: string;
   filterType?: string;
 }
 
-export interface FilterTypeOption {
-  value: string;
-  label: string;
-}
-
 interface Props {
-  filterTypeOptions?: FilterTypeOption[];
-  extraParamOptions?: Filter[];
-  values?: SearchToolValues;
-  onChangeValues?: (values: Record<string, any>) => void;
-  onSearch?: (values: Record<string, any>) => void;
-  onReload?: () => void;
+  filterTypeOptions?: ParamOption[];
+  paramObjects?: ParamObject[];
+  paramValues?: ParamValues;
+  onChangeParams?: (params: Record<string, any>) => void;
+  onSearch?: (params: Record<string, any>) => void;
 }
 
-export function SearchTool({
-  filterTypeOptions,
-  extraParamOptions,
-  values,
-  onChangeValues,
-  onSearch,
-  onReload,
-}: Props) {
+export function SearchParams({ filterTypeOptions, paramObjects, paramValues, onChangeParams, onSearch }: Props) {
   const [form] = Form.useForm();
 
   const handleSearch = React.useCallback(() => {
@@ -52,23 +34,19 @@ export function SearchTool({
     onSearch?.(values);
   }, [form, onSearch]);
 
-  const handleReload = React.useCallback(() => {
-    onReload?.();
-  }, [onReload]);
-
   const onValuesChange = React.useCallback(
     (changedValues: any, values: Record<string, any>) => {
-      onChangeValues?.(values);
+      onChangeParams?.(values);
     },
-    [onChangeValues]
+    [onChangeParams]
   );
 
   const onClickExtraButton = React.useCallback(
     (params: Record<string, any>) => {
       form.setFieldsValue(params);
-      onChangeValues?.(form.getFieldsValue());
+      onChangeParams?.(form.getFieldsValue());
     },
-    [form, onChangeValues]
+    [form, onChangeParams]
   );
 
   React.useEffect(() => {
@@ -76,34 +54,25 @@ export function SearchTool({
       filterType: "",
       filter: "",
     };
-    extraParamOptions?.forEach((filter) => {
+    paramObjects?.forEach((filter) => {
       formValues[filter.name] = undefined;
     });
 
-    form.setFieldsValue({ ...formValues, ...values });
-  }, [extraParamOptions, form, values]);
+    form.setFieldsValue({ ...formValues, ...paramValues });
+  }, [paramObjects, form, paramValues]);
 
   return (
-    <Form
-      form={form}
-      onValuesChange={onValuesChange}
-      onChange={() => {
-        console.log("vvvv");
-      }}
-      initialValues={{
-        filterType: values?.filter ?? filterTypeOptions?.[0]?.value,
-      }}
-    >
+    <Form form={form} onValuesChange={onValuesChange}>
       <Container>
-        {extraParamOptions && extraParamOptions?.length > 0 && (
+        {paramObjects && paramObjects?.length > 0 && (
           <Input.Group compact style={{ width: "auto" }}>
-            {extraParamOptions.map((filter, idx) => (
-              <SearchFilter
+            {paramObjects.map((filter, idx) => (
+              <SearchParam
                 key={idx}
                 name={filter.name}
                 title={filter.title}
                 type={filter.type}
-                value={values?.[filter.name]}
+                value={paramValues?.[filter.name]}
                 options={filter.options}
                 onClickExtraButton={onClickExtraButton}
               />
@@ -114,7 +83,11 @@ export function SearchTool({
         <SearchInput>
           <Input.Group compact>
             {filterTypeOptions && (
-              <Form.Item name={"filterType"} noStyle>
+              <Form.Item
+                name={"filterType"}
+                noStyle
+                initialValue={paramValues?.filter ?? filterTypeOptions?.[0]?.value}
+              >
                 <Select>
                   {filterTypeOptions.map((option, idx) => (
                     <Select.Option key={idx} value={option.value}>
@@ -144,14 +117,8 @@ const Container = styled.div`
   margin-bottom: 15px;
 `;
 
-// const FilterTools = styled.div`
-//   ${SMixinFlexRow("flex-start", "center")};
-//   border: 1px solid ${(p) => p.theme.input_border_color};
-//   height: ${(p) => p.theme.height_base};
-//   border-radius: ${(p) => p.theme.border_radius_base};
-//   background: ${(p) => p.theme.component_background};
-//   flex: none;
-// `;
+const DefaultWrap = styled.div``;
+const AdditionalWrap = styled.div``;
 
 const SearchInput = styled.div`
   flex: 1;

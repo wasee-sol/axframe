@@ -3,7 +3,7 @@ import { useCounselingList } from "@hooks/pages/useCounselingList";
 import { Button } from "antd";
 import { IconText } from "components/common";
 import { DataGrid } from "components/DataGrid";
-import { SearchTool } from "components/searchTool";
+import { SearchParams } from "components/search";
 import { useContainerSize } from "hooks/useContainerSize";
 import * as React from "react";
 import { RFIListSearch } from "react-frame-icon";
@@ -17,13 +17,12 @@ function PageCounselingList(props: Props) {
   const {
     t,
     filterTypeOptions,
-    extraParamOptions,
+    paramObjects,
     columns,
     counselingList,
     listSpinning,
-    apiRequestParams,
+    paramValues,
     handleSearch,
-    handleReload,
     handleReset,
     handleChangeSearchValue,
   } = mergeProps(props, useCounselingList());
@@ -43,13 +42,12 @@ function PageCounselingList(props: Props) {
           </Button>
         </ButtonGroup>
       </Header>
-      <SearchTool
+      <SearchParams
         filterTypeOptions={filterTypeOptions}
-        extraParamOptions={extraParamOptions}
-        values={apiRequestParams}
-        onChangeValues={handleChangeSearchValue}
+        paramObjects={paramObjects}
+        paramValues={paramValues}
+        onChangeParams={handleChangeSearchValue}
         onSearch={handleSearch}
-        onReload={handleReload}
       />
       <Body ref={bodyContainer}>
         <DataGrid<CounselingItem>

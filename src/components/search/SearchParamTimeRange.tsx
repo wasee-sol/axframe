@@ -1,6 +1,6 @@
 import moment, { Moment } from "moment";
 import * as React from "react";
-import { SearchFilterComponent } from "./SearchFilter";
+import { SearchParamComponent } from "./SearchParam";
 import { DatePicker, Form, Space, Button } from "antd";
 
 enum RangeType {
@@ -9,7 +9,7 @@ enum RangeType {
   D7 = "D7",
 }
 
-const SearchFilterTimeRange: SearchFilterComponent = ({ name, onClickExtraButton }) => {
+export const SearchParamTimeRange: SearchParamComponent = ({ name, onClickExtraButton }) => {
   const onClickButton = React.useCallback(
     (rangeType: RangeType) => {
       let range: Moment[] = [];
@@ -52,5 +52,3 @@ const SearchFilterTimeRange: SearchFilterComponent = ({ name, onClickExtraButton
     </Form.Item>
   );
 };
-
-export default SearchFilterTimeRange;

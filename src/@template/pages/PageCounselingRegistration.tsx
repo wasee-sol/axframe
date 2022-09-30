@@ -4,22 +4,21 @@ import { Form, Select, DatePicker, Radio, Input, Row, Col, Button, Space, Checkb
 import { IconText } from "components/common";
 import moment from "moment";
 import * as React from "react";
-import { useDaumPostcodePopup } from "react-daum-postcode";
 import { RFIWriteForm } from "react-frame-icon";
 import { CounselingItem } from "repository/CounselingRepositoryInterface";
 import { PageLayout } from "styles/pageStyled";
-import { mergeProps, convertToDate } from "utils/object";
-import { useDidMountEffect } from "../../hooks/useDidMountEffect";
+import { mergeProps } from "utils/object";
 
 interface Props {}
 
 interface FormField extends CounselingItem {}
 
 function PageCounselingRegistration(props: Props) {
-  const { pageModelMetadata, setPageModelMetadata, t } = mergeProps(props, useCounselingRegistration());
-  const openZipCodeFinder = useDaumPostcodePopup("//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js");
+  const { form, t, handleFormValuesChange, handleFormReset, handleFindZipCode } = mergeProps(
+    props,
+    useCounselingRegistration()
+  );
 
-  const [form] = Form.useForm();
   const cnsltHow = Form.useWatch("cnsltHow", form);
   const cnsltPath = Form.useWatch("cnsltPath", form);
   const hopePoint = Form.useWatch("hopePoint", form);
@@ -27,30 +26,6 @@ function PageCounselingRegistration(props: Props) {
   const hopePoint2 = Form.useWatch("hopePoint2", form);
   const hopePoint3 = Form.useWatch("hopePoint3", form);
   const birthDt = Form.useWatch("birthDt", form);
-
-  const handleFormValuesChange = React.useCallback(
-    (changedValues: any, values: FormField) => {
-      setPageModelMetadata(values);
-    },
-    [setPageModelMetadata]
-  );
-
-  const handleFormReset = React.useCallback(() => {
-    form.resetFields();
-    setPageModelMetadata({});
-  }, [form, setPageModelMetadata]);
-
-  const handleFindZipCode = React.useCallback(async () => {
-    await openZipCodeFinder({
-      onComplete: (data) => {
-        form.setFieldsValue({
-          zipNum: data.zonecode,
-          addr: data.address,
-        });
-        form.getFieldInstance("addrDtls").focus();
-      },
-    });
-  }, [form, openZipCodeFinder]);
 
   const formInitialValues = {}; // form 의 초기값 reset해도 이값 으로 리셋됨
 
@@ -60,10 +35,6 @@ function PageCounselingRegistration(props: Props) {
       form.setFieldValue("age", age);
     }
   }, [birthDt, form]);
-
-  useDidMountEffect(() => {
-    form.setFieldsValue(convertToDate(pageModelMetadata, ["cnsltDt", "birthDt"]));
-  });
 
   return (
     <Container>
