@@ -29,6 +29,7 @@ function PageCounselingList(props: Props) {
     handleReset,
     handleChangeSearchValue,
     onChangeVisibleChildren,
+    onPageChange,
   } = mergeProps(props, useCounselingList());
 
   const bodyContainer = React.useRef<HTMLDivElement>(null);
@@ -113,16 +114,16 @@ function PageCounselingList(props: Props) {
           columns={columns}
           data={counselingList}
           spinning={listSpinning}
-          page={
-            page && {
-              currentPage: page.pageNumber,
-              pageSize: page.pageSize,
-              totalPages: page.pgCount,
-              totalElements: counselingList.length,
-              loading: false,
-              onChange: () => {},
-            }
-          }
+          page={{
+            currentPage: page?.pageNumber ?? 1,
+            pageSize: page?.pageSize ?? 0,
+            totalPages: page?.pgCount ?? 0,
+            totalElements: counselingList.length,
+            loading: false,
+            onChange: (currentPage, pageSize) => {
+              onPageChange(currentPage, pageSize);
+            },
+          }}
         />
       </Body>
     </Container>

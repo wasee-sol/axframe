@@ -94,8 +94,6 @@ export function useCounselingList() {
         endDt: _values.endDt,
       } as CounselingListRequest;
 
-      console.log(requestParams);
-
       setPageModelMetadata(requestParams);
       setParamValues(requestParams);
     },
@@ -107,6 +105,22 @@ export function useCounselingList() {
       setPageModelMetadata({ ...pageModelMetadata, _visibleChildren: visible });
     },
     [pageModelMetadata, setPageModelMetadata]
+  );
+
+  const onPageChange = React.useCallback(
+    async (pageNo: number, pageSize?: number) => {
+      console.log("onPageChange", pageNo);
+      const requestParams = {
+        ...paramValues,
+        pageNumber: pageNo,
+        pageSize: pageSize,
+      } as CounselingListRequest;
+
+      setPageModelMetadata(requestParams);
+      setParamValues(requestParams);
+      await getList(requestParams);
+    },
+    [paramValues, setPageModelMetadata, getList]
   );
 
   React.useEffect(() => {
@@ -209,5 +223,6 @@ export function useCounselingList() {
     handleReset,
     handleChangeSearchValue,
     onChangeVisibleChildren,
+    onPageChange,
   };
 }
