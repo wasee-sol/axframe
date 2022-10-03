@@ -1,6 +1,8 @@
+import { Form } from "antd";
 import * as React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentMeta } from "@storybook/react";
 import { SearchParams, ParamType } from "../../components/search";
+import { useI18n } from "../../hooks";
 
 export default {
   title: "template/components/SearchParams",
@@ -10,47 +12,56 @@ export default {
   },
 } as ComponentMeta<typeof SearchParams>;
 
-const Template: ComponentStory<typeof SearchParams> = (args) => <SearchParams {...args} />;
+export const Default = () => {
+  const [form] = Form.useForm();
+  return <SearchParams form={form} />;
+};
 
-export const Default = Template.bind({});
-Default.args = {};
+export const Filtertype = () => {
+  const { t } = useI18n();
+  const [form] = Form.useForm();
+  return (
+    <SearchParams
+      form={form}
+      filterTypeOptions={[
+        { value: "", label: t.filterType.전체 },
+        { value: "title", label: t.filterType.제목 },
+        { value: "writer", label: t.filterType.작성자 },
+      ]}
+    />
+  );
+};
 
-export const WithFilter = Template.bind({});
-WithFilter.args = {
-  filterTypeOptions: [
-    { value: "title", label: "TITLE" },
-    { value: "writer", label: "WRITER" },
-  ],
-  paramObjects: [
-    {
-      title: "행정구역",
-      name: "select1",
-      type: ParamType.SELECT,
-      options: [
-        { value: "중구", label: "중구" },
-        { value: "동구", label: "동구" },
-        { value: "서구", label: "서구" },
-        { value: "남구", label: "남구" },
-        { value: "북구", label: "북구" },
-      ],
-    },
-    {
-      title: "상담방법",
-      name: "select2",
-      type: ParamType.SELECT,
-      options: [
-        { value: "유선", label: "유선" },
-        { value: "내방", label: "내방" },
-      ],
-    },
-    {
-      title: "상담일자",
-      name: "timeRange",
-      type: ParamType.TIME_RANGE,
-    },
-  ],
-  paramValues: {
-    filterType: "title",
-    filter: "sss",
-  },
+export const ParamObjects = () => {
+  const { t } = useI18n();
+  const [form] = Form.useForm();
+  return (
+    <SearchParams
+      form={form}
+      filterTypeOptions={[
+        { value: "", label: t.filterType.전체 },
+        { value: "title", label: t.filterType.제목 },
+        { value: "writer", label: t.filterType.작성자 },
+      ]}
+      paramObjects={[
+        {
+          title: t.formItem.counseling.area.label,
+          name: "select1",
+          type: ParamType.SELECT,
+          options: t.formItem.counseling.area.options,
+        },
+        {
+          title: t.formItem.counseling.cnsltHow.label,
+          name: "select2",
+          type: ParamType.SELECT,
+          options: t.formItem.counseling.cnsltHow.options,
+        },
+        {
+          title: t.formItem.counseling.cnsltDt.label,
+          name: "timeRange",
+          type: ParamType.TIME_RANGE,
+        },
+      ]}
+    />
+  );
 };
