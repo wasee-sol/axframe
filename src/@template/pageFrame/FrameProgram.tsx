@@ -45,10 +45,10 @@ const PageFrameNav = styled.div<StyleProps>`
   flex: none;
   position: relative;
 
-  ${({ sideMenuOpened }) => {
+  ${({ sideMenuOpened, theme }) => {
     if (sideMenuOpened) {
       return css`
-        width: 301px;
+        width: ${theme.side_menu_open_width + 1}px;
       `;
     }
 

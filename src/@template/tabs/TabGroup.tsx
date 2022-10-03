@@ -1,4 +1,4 @@
-import { useTabGroupController } from "@controller/tabs/TabGroupController";
+import { useTabGroup } from "@hooks/tabs/useTabGroup";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { TabGroupMenu, TabGroupMenuAction } from "components/contextMenu";
@@ -15,7 +15,7 @@ interface Props {}
 function TabGroup(props: Props) {
   const { activeTabUuid, tabItemList, setPages, handleRemoveTab, handleRemoveOtherTabs, currentLanguage } = mergeProps(
     props,
-    useTabGroupController()
+    useTabGroup()
   );
 
   const scrollerRef = React.useRef<HTMLDivElement>(null);

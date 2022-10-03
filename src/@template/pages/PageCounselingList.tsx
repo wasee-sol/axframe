@@ -1,85 +1,129 @@
-import { Button } from "antd";
-import * as React from "react";
 import styled from "@emotion/styled";
-import { RFIListSearch, RFIWriteForm } from "react-frame-icon";
-import { PageLayout } from "styles/pageStyled";
+import { useCounselingList } from "@hooks/pages/useCounselingList";
+import { Button, Row, Col, Form, Input } from "antd";
 import { IconText } from "components/common";
-import SearchTool from "@template/searchTool/SearchTool";
-import { FilterType } from "@template/searchTool/SearchFilter";
-import { useCounselingListController } from "@controller/pages/CounselingListController";
+import { DataGrid } from "components/DataGrid";
+import { SearchParams } from "components/search";
+import { useContainerSize } from "hooks/useContainerSize";
+import * as React from "react";
+import { RFIListSearch } from "react-frame-icon";
+import { CounselingItem } from "repository/CounselingRepositoryInterface";
+import { PageLayout } from "styles/pageStyled";
 import { mergeProps } from "utils/object";
-import DataGrid from "../../components/DataGrid";
-import { useContainerSize } from "../../hooks/useContainerSize";
-import { CounselingItem } from "../../repository/CounselingRepositoryInterface";
 
 interface Props {}
 
 function PageCounselingList(props: Props) {
-  const { t, columns, counselingList, getList, listSpinning } = mergeProps(props, useCounselingListController());
+  const {
+    searchForm,
+    t,
+    pageModelMetadata,
+    filterTypeOptions,
+    paramObjects,
+    columns,
+    counselingList,
+    page,
+    listSpinning,
+    paramValues,
+    handleSearch,
+    handleReset,
+    handleChangeSearchValue,
+    onChangeVisibleChildren,
+    onPageChange,
+  } = mergeProps(props, useCounselingList());
 
   const bodyContainer = React.useRef<HTMLDivElement>(null);
-
   const { width: containerWidth, height: containerHeight } = useContainerSize(bodyContainer);
-
-  React.useEffect(() => {
-    (async () => {
-      await getList({});
-    })();
-  }, [getList]);
 
   return (
     <Container stretch role={"page-container"}>
       <Header>
         <IconText icon={<RFIListSearch />}>{t.pages.counseling.list.title}</IconText>
 
-        <HeaderButtonGroup>
+        <ButtonGroup compact>
           <Button size='small'>{t.button.excel}</Button>
-        </HeaderButtonGroup>
+          <Button size='small' onClick={handleReset}>
+            {t.button.reset}
+          </Button>
+        </ButtonGroup>
       </Header>
-      <SearchTool
-        filters={[
-          {
-            title: "행정구역",
-            key: "select1",
-            icon: <RFIWriteForm />,
-            type: FilterType.SELECT,
-            options: [
-              { value: "중구", label: "중구" },
-              { value: "동구", label: "동구" },
-              { value: "서구", label: "서구" },
-              { value: "남구", label: "남구" },
-              { value: "북구", label: "북구" },
-            ],
-          },
-          {
-            title: "상담방법",
-            key: "select2",
-            type: FilterType.SELECT,
-            options: [
-              { value: "유선", label: "유선" },
-              { value: "내방", label: "내방" },
-            ],
-          },
-          {
-            title: "상담일자",
-            key: "timeRange",
-            type: FilterType.TIME_RANGE,
-          },
-        ]}
-        values={{
-          select1: "ABC",
-          timeRange: "14d",
-        }}
-        onChangeValues={() => {}}
-      />
+
+      <SearchParams
+        form={searchForm}
+        filterTypeOptions={filterTypeOptions}
+        paramObjects={paramObjects}
+        paramValues={paramValues}
+        onChangeParams={handleChangeSearchValue}
+        onSearch={handleSearch}
+        visibleChildren={pageModelMetadata?._visibleChildren}
+        onChangeVisibleChildren={onChangeVisibleChildren}
+        spinning={listSpinning}
+      >
+        <>
+          <Row gutter={15}>
+            <Col xs={12} sm={6}>
+              <Form.Item name={"ext1"} label={"Ext1"} colon={false}>
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col xs={12} sm={6}>
+              <Form.Item name={"ext2"} label={"Ext2"} colon={false}>
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col xs={12} sm={6}>
+              <Form.Item name={"ext3"} label={"Ext3"} colon={false}>
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col xs={12} sm={6}>
+              <Form.Item name={"ext4"} label={"Ext4"} colon={false}>
+                <Input />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={15}>
+            <Col xs={12} sm={6}>
+              <Form.Item name={"ext2_1"} label={"Ext1_1"} colon={false}>
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col xs={12} sm={6}>
+              <Form.Item name={"ext2_2"} label={"Ext1_2"} colon={false}>
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col xs={12} sm={6}>
+              <Form.Item name={"ext2_3"} label={"Ext1_3"} colon={false}>
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col xs={12} sm={6}>
+              <Form.Item name={"ext2_4"} label={"Ext1_4"} colon={false}>
+                <Input />
+              </Form.Item>
+            </Col>
+          </Row>
+        </>
+      </SearchParams>
       <Body ref={bodyContainer}>
         <DataGrid<CounselingItem>
-          frozenColumnIndex={2}
+          frozenColumnIndex={0}
           width={containerWidth}
           height={containerHeight}
           columns={columns}
           data={counselingList}
           spinning={listSpinning}
+          page={{
+            currentPage: page?.pageNumber ?? 1,
+            pageSize: page?.pageSize ?? 0,
+            totalPages: page?.pgCount ?? 0,
+            totalElements: counselingList.length,
+            loading: false,
+            onChange: (currentPage, pageSize) => {
+              onPageChange(currentPage, pageSize);
+            },
+          }}
         />
       </Body>
     </Container>
@@ -88,7 +132,7 @@ function PageCounselingList(props: Props) {
 
 const Container = styled(PageLayout)``;
 const Header = styled(PageLayout.Header)``;
-const HeaderButtonGroup = styled(PageLayout.HeaderButtonGroup)``;
+const ButtonGroup = styled(PageLayout.ButtonGroup)``;
 const Body = styled(PageLayout.Body)``;
 
 export default PageCounselingList;

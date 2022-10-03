@@ -1,35 +1,24 @@
-import { useCounselingRegistrationController } from "@controller/pages/CounselingRegistrationController";
+import { useCounselingRegistration } from "@hooks/pages/useCounselingRegistration";
 import styled from "@emotion/styled";
 import { Form, Select, DatePicker, Radio, Input, Row, Col, Button, Space, Checkbox } from "antd";
 import { IconText } from "components/common";
 import moment from "moment";
 import * as React from "react";
-import { useDaumPostcodePopup } from "react-daum-postcode";
 import { RFIWriteForm } from "react-frame-icon";
 import { CounselingItem } from "repository/CounselingRepositoryInterface";
 import { PageLayout } from "styles/pageStyled";
-import { mergeProps, convertToDate } from "utils/object";
+import { mergeProps } from "utils/object";
 
 interface Props {}
 
 interface FormField extends CounselingItem {}
 
-const areas: { label: string; value: string }[] = [
-  { label: "중구", value: "중구" },
-  { label: "동구", value: "동구" },
-  { label: "서구", value: "서구" },
-  { label: "남구", value: "남구" },
-  { label: "북구", value: "북구" },
-  { label: "수성구", value: "수성구" },
-  { label: "달서구", value: "달서구" },
-  { label: "달성군", value: "달성군" },
-];
-
 function PageCounselingRegistration(props: Props) {
-  const { pageModelMetadata, setPageModelMetadata, t } = mergeProps(props, useCounselingRegistrationController());
-  const openZipCodeFinder = useDaumPostcodePopup("//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js");
+  const { form, t, handleFormValuesChange, handleFormReset, handleFindZipCode } = mergeProps(
+    props,
+    useCounselingRegistration()
+  );
 
-  const [form] = Form.useForm();
   const cnsltHow = Form.useWatch("cnsltHow", form);
   const cnsltPath = Form.useWatch("cnsltPath", form);
   const hopePoint = Form.useWatch("hopePoint", form);
@@ -37,30 +26,6 @@ function PageCounselingRegistration(props: Props) {
   const hopePoint2 = Form.useWatch("hopePoint2", form);
   const hopePoint3 = Form.useWatch("hopePoint3", form);
   const birthDt = Form.useWatch("birthDt", form);
-
-  const handleFormValuesChange = React.useCallback(
-    (changedValues: any, values: FormField) => {
-      setPageModelMetadata(values);
-    },
-    [setPageModelMetadata]
-  );
-
-  const handleFormReset = React.useCallback(() => {
-    form.resetFields();
-    setPageModelMetadata({});
-  }, [form, setPageModelMetadata]);
-
-  const handleFindZipCode = React.useCallback(async () => {
-    await openZipCodeFinder({
-      onComplete: (data) => {
-        form.setFieldsValue({
-          zipNum: data.zonecode,
-          addr: data.address,
-        });
-        form.getFieldInstance("addrDtls").focus();
-      },
-    });
-  }, [form, openZipCodeFinder]);
 
   const formInitialValues = {}; // form 의 초기값 reset해도 이값 으로 리셋됨
 
@@ -71,17 +36,12 @@ function PageCounselingRegistration(props: Props) {
     }
   }, [birthDt, form]);
 
-  React.useEffect(() => {
-    form.setFieldsValue(convertToDate(pageModelMetadata, ["cnsltDt", "birthDt"]));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [form]);
-
   return (
     <Container>
       <Header>
         <IconText icon={<RFIWriteForm />}>{t.pages.counseling.registration.title}</IconText>
 
-        <ButtonGroup>
+        <ButtonGroup compact>
           <Button size='small'>{t.button.temporaryStorageList}</Button>
           <Button size='small' onClick={handleFormReset}>
             {t.button.reset}
@@ -101,7 +61,7 @@ function PageCounselingRegistration(props: Props) {
             <Row gutter={20}>
               <Col xs={24} sm={8}>
                 <Form.Item label={t.formItem.counseling.area.label} name={"area"} required>
-                  <Select options={areas} />
+                  <Select options={t.formItem.counseling.area.options} />
                 </Form.Item>
               </Col>
               <Col xs={24} sm={8}>

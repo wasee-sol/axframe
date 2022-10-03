@@ -8,6 +8,7 @@ import "styles/index.less";
 import { themePalette } from "styles/theme";
 import PageRoute from "router/PageRoute";
 import StoreSpinner from "./components/StoreSpinner";
+import "./customizeAntd";
 
 const App: React.FC = () => {
   const { switcher, themes } = useThemeSwitcher();

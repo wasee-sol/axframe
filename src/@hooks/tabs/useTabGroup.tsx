@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { usePageTabStore } from "stores";
 import { useLink, useI18n } from "hooks";
 
-export function useTabGroupController() {
+export function useTabGroup() {
   const pages = usePageTabStore((s) => s.pages);
   const setPages = usePageTabStore((s) => s.setPages);
   const addTab = usePageTabStore((s) => s.addTab);

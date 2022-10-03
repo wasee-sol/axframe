@@ -1,4 +1,4 @@
-import { useNavGroupController } from "@controller/nav/NavGroupController";
+import { useNavGroup } from "@hooks/nav/useNavGroup";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { Dropdown, Menu } from "antd";
@@ -19,7 +19,7 @@ const LanguageLabel = {
 };
 
 function NavFooter(props: Props) {
-  const { sideMenuOpened, currentLanguage, setLanguage, theme, setTheme } = mergeProps(props, useNavGroupController());
+  const { sideMenuOpened, currentLanguage, setLanguage, theme, setTheme } = mergeProps(props, useNavGroup());
 
   const handleChangeTheme = React.useCallback(() => {
     setTheme(theme === "light" ? "dark" : "light");

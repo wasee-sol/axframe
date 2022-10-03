@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "@emotion/styled";
 import { RFIHome, RFIClose } from "react-frame-icon";
-import { useTabGroupController } from "@controller/tabs/TabGroupController";
+import { useTabGroup } from "@hooks/tabs/useTabGroup";
 import { PageModel } from "stores";
 import { SMixinFlexRow } from "styles/emotion";
 import { css } from "@emotion/react";
@@ -20,10 +20,7 @@ interface Props extends StyleProps {
 }
 
 function TabItem(props: Props) {
-  const { activeTabUuid, handleClickTab, handleRemoveTab, currentLanguage } = mergeProps(
-    props,
-    useTabGroupController()
-  );
+  const { activeTabUuid, handleClickTab, handleRemoveTab, currentLanguage } = mergeProps(props, useTabGroup());
   const { tabUuid, tabInfo } = props;
 
   return (

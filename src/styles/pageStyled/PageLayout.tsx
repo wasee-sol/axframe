@@ -104,15 +104,17 @@ const PageFormGroupTitle = styled.div`
   font-size: 1.1em;
 `;
 
-const HeaderButtonGroup = styled.div`
+const ButtonGroup = styled.div<{ compact?: boolean }>`
   ${SMixinFlexRow("flex-start", "center")};
   gap: 6px;
-`;
 
-const ButtonGroup = styled.div`
-  ${SMixinFlexRow("flex-start", "center")};
-  gap: 6px;
-  margin: 15px 0;
+  ${({ compact }) => {
+    if (!compact) {
+      return css`
+        margin: 15px 0;
+      `;
+    }
+  }};
 `;
 
 export class PageLayout extends React.Component<Props> {
@@ -121,7 +123,6 @@ export class PageLayout extends React.Component<Props> {
   public static FormBoxHeader = PageFormBoxHeader;
   public static FormBox = PageFormBox;
   public static FormGroupTitle = PageFormGroupTitle;
-  public static HeaderButtonGroup = HeaderButtonGroup;
   public static ButtonGroup = ButtonGroup;
 
   public render(): React.ReactElement {

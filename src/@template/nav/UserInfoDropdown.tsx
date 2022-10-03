@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import * as React from "react";
 import { RFIArrowLogOut } from "react-frame-icon";
-import { useNavGroupController } from "@controller/nav/NavGroupController";
+import { useNavGroup } from "@hooks/nav/useNavGroup";
 import { SMixinFlexColumn } from "styles/emotion";
 import { mergeProps } from "utils/object";
 import { IconText, LabelText } from "components/common";
@@ -16,7 +16,7 @@ interface Props extends StyleProps {
 }
 
 function UserInfoDropdown(props: Props) {
-  const { handleSignOut, asPopover, signOutSpinning, setSignOutSpinning } = mergeProps(props, useNavGroupController());
+  const { handleSignOut, asPopover, signOutSpinning, setSignOutSpinning } = mergeProps(props, useNavGroup());
   const handleClickSignOut = React.useCallback(async () => {
     setSignOutSpinning(true);
     await handleSignOut?.();

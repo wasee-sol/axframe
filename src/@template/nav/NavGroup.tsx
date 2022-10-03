@@ -6,7 +6,7 @@ import UserInfo from "@template/nav/UserInfo";
 import NavUserMenu from "@template/nav/NavUserMenu";
 import { User } from "stores/useUserStore";
 import { SMixinFlexColumn } from "styles/emotion";
-import { useNavGroupController } from "@controller/nav/NavGroupController";
+import { useNavGroup } from "@hooks/nav/useNavGroup";
 import { mergeProps } from "utils/object";
 import { MenuItem } from "@types";
 import NavFooter from "./NavFooter";
@@ -23,7 +23,7 @@ interface Props extends StyleProps {
 }
 
 function NavGroup(props: Props) {
-  const { sideMenuOpened, me } = mergeProps(props, useNavGroupController());
+  const { sideMenuOpened, me } = mergeProps(props, useNavGroup());
 
   return (
     <NavGroupContainer sideMenuOpened={sideMenuOpened}>
@@ -62,10 +62,10 @@ const NavContent = styled.div<StyleProps>`
   overflow-x: hidden;
   ${SMixinFlexColumn("stretch", "stretch")};
 
-  ${({ sideMenuOpened }) => {
+  ${({ sideMenuOpened, theme }) => {
     if (sideMenuOpened) {
       return css`
-        width: 300px;
+        width: ${theme.side_menu_open_width}px;
       `;
     }
     return css`

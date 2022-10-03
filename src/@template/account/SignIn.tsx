@@ -5,7 +5,7 @@ import * as React from "react";
 import { RFIArrowLogIn } from "react-frame-icon";
 import { SMixinFlexColumn, SMixinFlexRow } from "styles/emotion";
 import { useI18n } from "hooks/useI18n";
-import { useSignInController } from "@controller/pages/SignInController";
+import { useSignIn } from "@hooks/pages/useSignIn";
 import { getTrimNonEmptyRegExp } from "utils/formPatterns/getTrimNonEmptyRegExp";
 import { mergeProps } from "utils/object";
 import { IconText } from "components/common";
@@ -20,7 +20,7 @@ export interface SignInFormItem {
 }
 
 function SignIn(props: Props) {
-  const { onSignIn, signing, setSigning } = mergeProps(props, useSignInController());
+  const { onSignIn, signing, setSigning } = mergeProps(props, useSignIn());
   const { t, currentLanguage, setLanguage } = useI18n();
   const [form] = Form.useForm<SignInFormItem>();
 

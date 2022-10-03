@@ -5,7 +5,7 @@ import { useAppStore } from "stores";
 import { MENUS } from "router/menus";
 import { MenuItem } from "@types";
 
-export function useNavGroupController() {
+export function useNavGroup() {
   const sideMenuOpened = useAppStore((s) => s.sideMenuOpened);
   const setSideMenuOpened = useAppStore((s) => s.setSideMenuOpened);
   const me = useUserStore((s) => s.me);

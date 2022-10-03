@@ -5,7 +5,7 @@ import { useDialog } from "hooks/useDialog";
 import { useUserStore } from "stores";
 import { UserService } from "services";
 
-export function useSignInController() {
+export function useSignIn() {
   const setMe = useUserStore((s) => s.setMe);
   const [signing, setSigning] = useState(false);
   const { errorDialog } = useDialog();
