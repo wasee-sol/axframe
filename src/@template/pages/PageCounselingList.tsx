@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { useCounselingList } from "@hooks/pages/useCounselingList";
-import { Button } from "antd";
+import { Button, Row, Col, Form, Input } from "antd";
 import { IconText } from "components/common";
 import { DataGrid } from "components/DataGrid";
 import { SearchParams } from "components/search";
@@ -15,16 +15,20 @@ interface Props {}
 
 function PageCounselingList(props: Props) {
   const {
+    searchForm,
     t,
+    pageModelMetadata,
     filterTypeOptions,
     paramObjects,
     columns,
     counselingList,
+    page,
     listSpinning,
     paramValues,
     handleSearch,
     handleReset,
     handleChangeSearchValue,
+    onChangeVisibleChildren,
   } = mergeProps(props, useCounselingList());
 
   const bodyContainer = React.useRef<HTMLDivElement>(null);
@@ -42,13 +46,65 @@ function PageCounselingList(props: Props) {
           </Button>
         </ButtonGroup>
       </Header>
+
       <SearchParams
+        form={searchForm}
         filterTypeOptions={filterTypeOptions}
         paramObjects={paramObjects}
         paramValues={paramValues}
         onChangeParams={handleChangeSearchValue}
         onSearch={handleSearch}
-      />
+        visibleChildren={pageModelMetadata?._visibleChildren}
+        onChangeVisibleChildren={onChangeVisibleChildren}
+        spinning={listSpinning}
+      >
+        <>
+          <Row gutter={15}>
+            <Col xs={12} sm={6}>
+              <Form.Item name={"ext1"} label={"Ext1"} colon={false}>
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col xs={12} sm={6}>
+              <Form.Item name={"ext2"} label={"Ext2"} colon={false}>
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col xs={12} sm={6}>
+              <Form.Item name={"ext3"} label={"Ext3"} colon={false}>
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col xs={12} sm={6}>
+              <Form.Item name={"ext4"} label={"Ext4"} colon={false}>
+                <Input />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={15}>
+            <Col xs={12} sm={6}>
+              <Form.Item name={"ext2_1"} label={"Ext1_1"} colon={false}>
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col xs={12} sm={6}>
+              <Form.Item name={"ext2_2"} label={"Ext1_2"} colon={false}>
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col xs={12} sm={6}>
+              <Form.Item name={"ext2_3"} label={"Ext1_3"} colon={false}>
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col xs={12} sm={6}>
+              <Form.Item name={"ext2_4"} label={"Ext1_4"} colon={false}>
+                <Input />
+              </Form.Item>
+            </Col>
+          </Row>
+        </>
+      </SearchParams>
       <Body ref={bodyContainer}>
         <DataGrid<CounselingItem>
           frozenColumnIndex={0}
@@ -57,6 +113,16 @@ function PageCounselingList(props: Props) {
           columns={columns}
           data={counselingList}
           spinning={listSpinning}
+          page={
+            page && {
+              currentPage: page.pageNumber,
+              pageSize: page.pageSize,
+              totalPages: page.pgCount,
+              totalElements: counselingList.length,
+              loading: false,
+              onChange: () => {},
+            }
+          }
         />
       </Body>
     </Container>

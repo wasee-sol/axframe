@@ -4,8 +4,8 @@ import * as React from "react";
 import { useDaumPostcodePopup } from "react-daum-postcode";
 import { ROUTES } from "router/Routes";
 import { useI18n } from "hooks";
-import { useDidMountEffect } from "../../hooks/useDidMountEffect";
-import { convertToDate } from "../../utils/object";
+import { useDidMountEffect } from "hooks/useDidMountEffect";
+import { convertToDate } from "utils/object";
 
 export function useCounselingRegistration() {
   const [form] = Form.useForm();
