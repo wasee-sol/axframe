@@ -5,6 +5,7 @@ import { RFISearch, RFIArrowDown, RFIArrowUp } from "react-frame-icon";
 import { IconText, Spinner } from "components/common";
 import { SMixinFlexRow } from "styles/emotion";
 import { useDidMountEffect } from "../../hooks/useDidMountEffect";
+import { PageLayout } from "../../styles/pageStyled";
 import { ParamType, SearchParam, ParamOption } from "./SearchParam";
 
 export interface ParamObject {
@@ -89,7 +90,7 @@ export function SearchParams({
   });
 
   return (
-    <Form layout='horizontal' form={form} onValuesChange={onValuesChange} scrollToFirstError>
+    <Form layout='vertical' form={form} onValuesChange={onValuesChange} scrollToFirstError>
       <Container>
         <DefaultWrap>
           {paramObjects && paramObjects?.length > 0 && (
@@ -137,7 +138,7 @@ export function SearchParams({
             )}
           </Buttons>
         </DefaultWrap>
-        {children && showChildren && <ChildrenWrap>{children}</ChildrenWrap>}
+        {children && showChildren && <FormBox>{children}</FormBox>}
       </Container>
     </Form>
   );
@@ -152,9 +153,6 @@ const DefaultWrap = styled.div`
   gap: 10px;
   margin-bottom: 15px;
 `;
-const ChildrenWrap = styled.div`
-  margin-top: 10px;
-`;
 
 const SearchInput = styled.div`
   flex: 1;
@@ -167,4 +165,13 @@ const SearchInput = styled.div`
 const Buttons = styled.div`
   ${SMixinFlexRow("flex-start", "center")};
   flex: none;
+`;
+
+const FormBox = styled(PageLayout.FormBox)`
+  margin-top: 10px;
+  margin-bottom: 15px;
+
+  > * {
+    max-width: none;
+  }
 `;

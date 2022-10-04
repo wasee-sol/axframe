@@ -6,7 +6,7 @@ export const getRoutesPath = (paths: string[]) => {
   return ROUTES.ROOT.path + paths.join("/");
 };
 
-export function usePageModel(paths: string[]) {
+export function usePageModel<T = Record<string, any>>(paths: string[]) {
   const path = React.useMemo(() => getRoutesPath(paths), [paths]);
   const pages = usePageTabStore((s) => s.pages);
   const updateTab = usePageTabStore((s) => s.updateTab);
@@ -14,14 +14,14 @@ export function usePageModel(paths: string[]) {
   const pageModel = React.useMemo(() => pages.get(tabUuid) ?? ({ label: "" } as PageModel), [pages, tabUuid]);
 
   const setPageModelMetadata = React.useCallback(
-    (metaData: Record<string, any>) => {
-      pageModel.metaData = metaData;
+    (metaData: T) => {
+      pageModel.metaData = metaData as Record<string, any>;
       updateTab(tabUuid, pageModel);
     },
     [pageModel, tabUuid, updateTab]
   );
 
-  const pageModelMetadata = pageModel.metaData;
+  const pageModelMetadata = pageModel.metaData as T;
 
   return {
     pageModel,

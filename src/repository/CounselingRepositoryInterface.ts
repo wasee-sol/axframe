@@ -53,8 +53,7 @@ export interface CounselingListRequest {
   endDt?: string;
   filterType?: string;
   filter?: string;
-  sort1?: string;
-  sort2?: string;
+  sort?: string;
   pageSize?: number;
   pageNumber?: number;
 }

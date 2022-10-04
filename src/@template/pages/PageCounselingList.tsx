@@ -17,7 +17,6 @@ function PageCounselingList(props: Props) {
   const {
     searchForm,
     t,
-    pageModelMetadata,
     filterTypeOptions,
     paramObjects,
     columns,
@@ -28,8 +27,9 @@ function PageCounselingList(props: Props) {
     handleSearch,
     handleReset,
     handleChangeSearchValue,
-    onChangeVisibleChildren,
     onPageChange,
+    showSearchParamChildren,
+    setShowSearchParamChildren,
   } = mergeProps(props, useCounselingList());
 
   const bodyContainer = React.useRef<HTMLDivElement>(null);
@@ -55,8 +55,8 @@ function PageCounselingList(props: Props) {
         paramValues={paramValues}
         onChangeParams={handleChangeSearchValue}
         onSearch={handleSearch}
-        visibleChildren={pageModelMetadata?._visibleChildren}
-        onChangeVisibleChildren={onChangeVisibleChildren}
+        visibleChildren={showSearchParamChildren}
+        onChangeVisibleChildren={(visible) => setShowSearchParamChildren(visible)}
         spinning={listSpinning}
       >
         <>
@@ -90,16 +90,6 @@ function PageCounselingList(props: Props) {
             </Col>
             <Col xs={12} sm={6}>
               <Form.Item name={"ext2_2"} label={"Ext1_2"} colon={false}>
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col xs={12} sm={6}>
-              <Form.Item name={"ext2_3"} label={"Ext1_3"} colon={false}>
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col xs={12} sm={6}>
-              <Form.Item name={"ext2_4"} label={"Ext1_4"} colon={false}>
                 <Input />
               </Form.Item>
             </Col>

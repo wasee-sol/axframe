@@ -104,7 +104,7 @@ const darkAntdColors: typeof lightAntdColors = {
   label_color: DARK.INK_5,
   input_border_color: DARK.INK_80,
   select_border_color: DARK.INK_80,
-  component_background: DARK.INK_90,
+  component_background: DARK.INK_100,
   item_active_bg: DARK.INK_100,
   item_hover_bg: DARK.INK_70,
   menu_item_active_bg: DARK.INK_100,
@@ -123,7 +123,7 @@ const darkCustomColors: typeof lightCustomColors = {
   popover_background: DARK.INK_5,
 
   box_shadow_base: DARK.ELEVATION_03,
-  form_box_bg: DARK.INK_100,
+  form_box_bg: DARK.INK_90,
 };
 const darkColors: typeof lightColors = {
   ...darkAntdColors,

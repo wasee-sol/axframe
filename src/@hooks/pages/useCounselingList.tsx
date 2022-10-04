@@ -4,7 +4,7 @@ import { usePageModel } from "hooks/usePageModel";
 import { RFDGColumn } from "react-frame-datagrid";
 import { ROUTES } from "router/Routes";
 import { useI18n } from "hooks";
-import { useDidMountEffect } from "hooks/useDidMountEffect";
+import { useDidMountEffect } from "hooks";
 import {
   CounselingListResponse,
   CounselingListRequest,
@@ -23,11 +23,15 @@ export interface SearchFilterParams extends CounselingListRequest {
   filter?: string;
 }
 
+interface PageModalMetaData extends SearchFilterParams {
+  showSearchParamChildren: boolean;
+}
+
 export function useCounselingList() {
   const [searchForm] = Form.useForm();
   const windowWidth = useAppStore((s) => s.width);
   const windowHeight = useAppStore((s) => s.height);
-  const { pageModel, pageModelMetadata, setPageModelMetadata } = usePageModel([
+  const { pageModel, pageModelMetadata, setPageModelMetadata } = usePageModel<PageModalMetaData>([
     ROUTES.COUNSELING.path,
     ROUTES.COUNSELING.children.LIST.path,
   ]);
@@ -43,6 +47,7 @@ export function useCounselingList() {
   const [paramValues, setParamValues] = React.useState<CounselingListRequest>(defaultRequestParams);
   const [apiResponse, setApiResponse] = React.useState<CounselingListResponse>();
   const [listSpinning, setListSpinning] = React.useState(false);
+  const [showSearchParamChildren, setShowSearchParamChildren] = React.useState(false);
 
   const getList = React.useCallback(async (params: CounselingListRequest) => {
     setListSpinning(true);
@@ -67,10 +72,9 @@ export function useCounselingList() {
   }, [getList, paramValues]);
 
   const handleReset = React.useCallback(() => {
-    setPageModelMetadata({ ...defaultRequestParams });
     setParamValues({ ...defaultRequestParams });
     searchForm.resetFields();
-  }, [defaultRequestParams, searchForm, setPageModelMetadata]);
+  }, [defaultRequestParams, searchForm]);
 
   const handleChangeSearchValue = React.useCallback(
     (values: SearchFilterParams) => {
@@ -87,40 +91,29 @@ export function useCounselingList() {
       // adapter end
 
       const requestParams = {
-        ...pageModelMetadata,
         ...paramValues,
         ...values,
         sttDt: _values.sttDt,
         endDt: _values.endDt,
       } as CounselingListRequest;
 
-      setPageModelMetadata(requestParams);
       setParamValues(requestParams);
     },
-    [paramValues, pageModelMetadata, setPageModelMetadata]
-  );
-
-  const onChangeVisibleChildren = React.useCallback(
-    (visible: boolean) => {
-      setPageModelMetadata({ ...pageModelMetadata, _visibleChildren: visible });
-    },
-    [pageModelMetadata, setPageModelMetadata]
+    [paramValues]
   );
 
   const onPageChange = React.useCallback(
     async (pageNo: number, pageSize?: number) => {
-      console.log("onPageChange", pageNo);
       const requestParams = {
         ...paramValues,
         pageNumber: pageNo,
         pageSize: pageSize,
       } as CounselingListRequest;
 
-      setPageModelMetadata(requestParams);
       setParamValues(requestParams);
       await getList(requestParams);
     },
-    [paramValues, setPageModelMetadata, getList]
+    [paramValues, getList]
   );
 
   React.useEffect(() => {
@@ -185,11 +178,20 @@ export function useCounselingList() {
     // adapter end
 
     setParamValues(requestParams);
+    setShowSearchParamChildren(pageModelMetadata?.showSearchParamChildren ?? false);
 
     (async () => {
       await getList(requestParams);
     })();
   });
+
+  // sync pageModelMetadata
+  React.useEffect(() => {
+    setPageModelMetadata({
+      ...paramValues,
+      showSearchParamChildren,
+    });
+  }, [paramValues, setPageModelMetadata, showSearchParamChildren]);
 
   return {
     searchForm,
@@ -222,7 +224,8 @@ export function useCounselingList() {
     handleReload,
     handleReset,
     handleChangeSearchValue,
-    onChangeVisibleChildren,
     onPageChange,
+    showSearchParamChildren,
+    setShowSearchParamChildren,
   };
 }
