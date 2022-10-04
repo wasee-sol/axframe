@@ -24,13 +24,13 @@ function NavUserMenu(props: Props) {
     props,
     useNavGroup()
   );
-  const { linkTo } = useLink();
+  const { linkByTo } = useLink();
 
   const onClick: MenuProps["onClick"] = React.useCallback(
     ({ key }) => {
-      linkTo(key);
+      linkByTo(key);
     },
-    [linkTo]
+    [linkByTo]
   );
 
   if (menus.length === 0) {

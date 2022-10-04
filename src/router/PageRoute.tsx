@@ -13,6 +13,7 @@ const FrameProgram = React.lazy(() => import("@template/pageFrame/FrameProgram")
 const Analytics = React.lazy(() => import("@template/pages/PageAnalytics"));
 const PageCounselingRegistration = React.lazy(() => import("@template/pages/PageCounselingRegistration"));
 const PageCounselingList = React.lazy(() => import("@template/pages/PageCounselingList"));
+const PageCounselingDetail = React.lazy(() => import("@template/pages/PageCounselingDetail"));
 const Home = React.lazy(() => import("@template/pages/PageHome"));
 const Inbox = React.lazy(() => import("@template/pages/PageInbox"));
 const Project = React.lazy(() => import("@template/pages/PageProject"));
@@ -32,6 +33,7 @@ function PageRoute() {
     const currentMenu = menus.find((fMenu) => fMenu.key === location.pathname);
     setSelectedMenuUuid(`${currentMenu?.key ?? ""}`);
 
+    // TODO : find current tab
     if (currentMenu || location.pathname === "/") {
       setActiveTabByPath(location.pathname, currentMenu?.label);
     }
@@ -54,6 +56,7 @@ function PageRoute() {
         <Route path={ROUTES.COUNSELING.path}>
           <Route path={ROUTES.COUNSELING.children.REGISTRATION.path} element={<PageCounselingRegistration />} />
           <Route path={ROUTES.COUNSELING.children.LIST.path} element={<PageCounselingList />} />
+          <Route path={ROUTES.COUNSELING.children.DETAIL.path} element={<PageCounselingDetail />} />
         </Route>
         <Route path={ROUTES.INBOX.path} element={<Inbox />} />
         <Route path={ROUTES.PROJECT.path} element={<Project />} />

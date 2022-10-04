@@ -4,14 +4,14 @@ import { RFDGProps, RFDataGrid } from "react-frame-datagrid";
 
 interface Props<T> extends RFDGProps<T> {}
 
-export function DataGrid<T>({ frozenColumnIndex, width, height, columns, data, spinning, page }: Props<T>) {
+export function DataGrid<T>({ frozenColumnIndex, width, height, columns, data, spinning, page, onClick }: Props<T>) {
   return (
     <Container>
       <RFDataGrid
         headerHeight={35}
         itemHeight={20}
         footerHeight={35}
-        {...{ frozenColumnIndex, width, height, columns, data, spinning, page }}
+        {...{ frozenColumnIndex, width, height, columns, data, spinning, page, onClick }}
       />
     </Container>
   );

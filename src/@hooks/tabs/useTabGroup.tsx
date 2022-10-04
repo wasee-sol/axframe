@@ -13,15 +13,15 @@ export function useTabGroup() {
   const getActiveTabPage = usePageTabStore((s) => s.getActiveTabPage);
 
   const location = useLocation();
-  const { linkTo } = useLink();
+  const { linkByTo } = useLink();
   const { t, currentLanguage } = useI18n();
 
   const handleClickTab = React.useCallback(
     (tabUuid: string, path?: string) => {
       if (!path) return;
-      linkTo(path);
+      linkByTo(path);
     },
-    [linkTo]
+    [linkByTo]
   );
 
   const handleAddTab = React.useCallback(() => {
@@ -30,18 +30,18 @@ export function useTabGroup() {
       label: t.pageTab.newTab,
       path,
     });
-    linkTo(path);
-  }, [addTab, t.pageTab.newTab, linkTo]);
+    linkByTo(path);
+  }, [addTab, t.pageTab.newTab, linkByTo]);
 
   const handleRemoveTab = React.useCallback(
     (tabUuid: string) => {
       removeTab(tabUuid);
       const activePageInfo = getActiveTabPage();
       if (activePageInfo.page.path && activePageInfo.page.path !== location.pathname) {
-        linkTo(activePageInfo.page.path);
+        linkByTo(activePageInfo.page.path);
       }
     },
-    [getActiveTabPage, linkTo, location.pathname, removeTab]
+    [getActiveTabPage, linkByTo, location.pathname, removeTab]
   );
 
   const handleRemoveOtherTabs = React.useCallback(
@@ -63,10 +63,10 @@ export function useTabGroup() {
 
       const activePageInfo = getActiveTabPage();
       if (activePageInfo.page.path && activePageInfo.page.path !== location.pathname) {
-        linkTo(activePageInfo.page.path);
+        linkByTo(activePageInfo.page.path);
       }
     },
-    [getActiveTabPage, linkTo, location.pathname, pages, removeTabs]
+    [getActiveTabPage, linkByTo, location.pathname, pages, removeTabs]
   );
 
   return {

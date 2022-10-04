@@ -10,10 +10,9 @@ import { convertToDate } from "utils/object";
 export function useCounselingRegistration() {
   const [form] = Form.useForm();
   const openZipCodeFinder = useDaumPostcodePopup("//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js");
-  const { pageModel, pageModelMetadata, setPageModelMetadata } = usePageModel([
-    ROUTES.COUNSELING.path,
-    ROUTES.COUNSELING.children.REGISTRATION.path,
-  ]);
+  const { pageModel, pageModelMetadata, setPageModelMetadata } = usePageModel(
+    ROUTES.COUNSELING.children.REGISTRATION.path
+  );
   const { t, currentLanguage } = useI18n();
 
   const handleFormValuesChange = React.useCallback(

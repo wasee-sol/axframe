@@ -30,6 +30,7 @@ function PageCounselingList(props: Props) {
     onPageChange,
     showSearchParamChildren,
     setShowSearchParamChildren,
+    onClickItem,
   } = mergeProps(props, useCounselingList());
 
   const bodyContainer = React.useRef<HTMLDivElement>(null);
@@ -104,6 +105,7 @@ function PageCounselingList(props: Props) {
           columns={columns}
           data={counselingList}
           spinning={listSpinning}
+          onClick={onClickItem}
           page={{
             currentPage: page?.pageNumber ?? 1,
             pageSize: page?.pageSize ?? 0,

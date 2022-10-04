@@ -5,6 +5,7 @@ export interface MenuItem extends MenuItemType {
   children?: MenuItem[];
   enum?: MenuEnum;
   i18nlabel?: Record<LanguageType, string>;
+  route?: Record<string, any>;
 }
 
 export enum MenuEnum {

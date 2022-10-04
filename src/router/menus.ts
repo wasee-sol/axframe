@@ -47,14 +47,14 @@ export const menus: RawMenu[] = [
   },
 ];
 
-function getMenus(menus: RawMenu[], parentPath: string): MenuItem[] {
+function getMenus(menus: RawMenu[]): MenuItem[] {
   return menus.map((menu) => ({
     enum: menu.menuId,
-    key: parentPath + menu.route.path,
-    i18nlabel: menu.route.i18nLabel,
+    key: menu.route.path,
+    i18nlabel: menu.route.i18nlabel,
     icon: menu.route.icon,
-    children: menu.children ? getMenus(menu.children, parentPath + menu.route.path + "/") : undefined,
+    children: menu.children ? getMenus(menu.children) : undefined,
   }));
 }
 
-export const MENUS = getMenus(menus, "/");
+export const MENUS = getMenus(menus);

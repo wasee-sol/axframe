@@ -4,7 +4,7 @@ import { usePageModel } from "hooks/usePageModel";
 import { ROUTES } from "router/Routes";
 
 export function useProject() {
-  const { pageModel, pageModelMetadata, setPageModelMetadata } = usePageModel([ROUTES.PROJECT.path]);
+  const { pageModel, pageModelMetadata, setPageModelMetadata } = usePageModel(ROUTES.PROJECT.path);
 
   return {
     pageModel,

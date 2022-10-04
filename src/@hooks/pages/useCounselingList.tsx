@@ -2,8 +2,9 @@ import { Form } from "antd";
 import * as React from "react";
 import { usePageModel } from "hooks/usePageModel";
 import { RFDGColumn } from "react-frame-datagrid";
+import { RFDGClickParams } from "react-frame-datagrid/dist/commonjs/types";
 import { ROUTES } from "router/Routes";
-import { useI18n } from "hooks";
+import { useI18n, useLink } from "hooks";
 import { useDidMountEffect } from "hooks";
 import {
   CounselingListResponse,
@@ -31,11 +32,11 @@ export function useCounselingList() {
   const [searchForm] = Form.useForm();
   const windowWidth = useAppStore((s) => s.width);
   const windowHeight = useAppStore((s) => s.height);
-  const { pageModel, pageModelMetadata, setPageModelMetadata } = usePageModel<PageModalMetaData>([
-    ROUTES.COUNSELING.path,
-    ROUTES.COUNSELING.children.LIST.path,
-  ]);
+  const { pageModel, pageModelMetadata, setPageModelMetadata } = usePageModel<PageModalMetaData>(
+    ROUTES.COUNSELING.children.LIST.path
+  );
   const { t, currentLanguage } = useI18n();
+  const { linkByPattern } = useLink();
   const defaultRequestParams = React.useRef<CounselingListRequest>({
     pageNumber: 1,
     pageSize: 100,
@@ -114,6 +115,13 @@ export function useCounselingList() {
       await getList(requestParams);
     },
     [paramValues, getList]
+  );
+
+  const onClickItem = React.useCallback(
+    (params: RFDGClickParams<CounselingItem>) => {
+      linkByPattern(ROUTES.COUNSELING.children.DETAIL, { id: params.item.id });
+    },
+    [linkByPattern]
   );
 
   React.useEffect(() => {
@@ -227,5 +235,6 @@ export function useCounselingList() {
     onPageChange,
     showSearchParamChildren,
     setShowSearchParamChildren,
+    onClickItem,
   };
 }
