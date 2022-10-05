@@ -7,13 +7,13 @@ import { DatePicker } from "antd";
 interface Props {}
 
 function PageProject(props: Props) {
-  const { pageModel } = mergeProps(props, useProject());
+  const { pageModel, currentLanguage } = mergeProps(props, useProject());
 
   return (
     <ProjectPageContainer>
       <h1>ProjectPage</h1>
       <p>{pageModel?.path}</p>
-      <b>{pageModel?.label}</b>
+      <b>{pageModel?.labels?.[currentLanguage]}</b>
       <button>button</button>
 
       <DatePicker.RangePicker showTime />

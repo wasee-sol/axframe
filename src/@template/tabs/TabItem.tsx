@@ -35,7 +35,7 @@ function TabItem(props: Props) {
         <RFIHome fontSize={18} />
       ) : (
         <>
-          {tabInfo.i18nlabel?.[currentLanguage] ?? tabInfo.label}
+          {tabInfo.labels?.[currentLanguage] ?? ""}
           <a
             role='tab-close'
             onClick={(evt) => {

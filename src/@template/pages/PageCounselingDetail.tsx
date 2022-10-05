@@ -8,12 +8,14 @@ import { useCounselingDetail } from "@hooks/pages/useCounselingDetail";
 interface Props {}
 
 function PageCounselingDetail(props: Props) {
-  const { t } = mergeProps(props, useCounselingDetail());
+  const { t, urlParams } = mergeProps(props, useCounselingDetail());
 
   return (
     <Container>
       <Header>
-        <IconText icon={null}>조회 하기</IconText>
+        <IconText icon={null}>
+          {t.pages.counseling.detail.title} ({urlParams.id})
+        </IconText>
 
         <ButtonGroup compact></ButtonGroup>
       </Header>

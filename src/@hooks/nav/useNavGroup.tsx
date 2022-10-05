@@ -54,7 +54,7 @@ export function useNavGroup() {
             const children = menuItem.children ? getAccessibleMenus(menuItem.children) : undefined;
             if (typeof children !== "undefined" && children.length === 0) return;
 
-            menuItem.label = menuItem.i18nlabel?.[currentLanguage];
+            menuItem.label = menuItem.labels?.[currentLanguage];
 
             return {
               ...menuItem,

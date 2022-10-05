@@ -1,9 +1,9 @@
 import { MenuEnum, MenuItem } from "@types";
-import { ROUTES } from "./Routes";
+import { ROUTES, RawRoute } from "./Routes";
 
 interface RawMenu {
   menuId?: MenuEnum;
-  route: Record<string, any>;
+  route: RawRoute;
   children?: RawMenu[];
 }
 
@@ -51,7 +51,7 @@ function getMenus(menus: RawMenu[]): MenuItem[] {
   return menus.map((menu) => ({
     enum: menu.menuId,
     key: menu.route.path,
-    i18nlabel: menu.route.i18nlabel,
+    labels: menu.route.labels,
     icon: menu.route.icon,
     children: menu.children ? getMenus(menu.children) : undefined,
   }));

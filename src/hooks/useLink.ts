@@ -19,19 +19,17 @@ export function useLink() {
     (to: string) => {
       const linkToMenu = getFlattedMenus(MENUS).find((fMenu) => fMenu?.key === to);
 
-      const i18nlabel = linkToMenu?.i18nlabel;
-      const label = linkToMenu?.label ?? t.pageTab.newTab;
+      const labels = linkToMenu?.labels;
       const { tabUuid, page } = getActiveTabPage();
 
       if (page.path === "about:blank") {
-        updateTab(tabUuid, { ...page, label, i18nlabel, path: to });
+        updateTab(tabUuid, { ...page, labels, path: to });
         navigate(to);
         return;
       }
 
       const addedTabUuid = addTab({
-        label,
-        i18nlabel,
+        labels,
         path: to,
         fixed: false,
       });
@@ -39,24 +37,23 @@ export function useLink() {
 
       navigate(to);
     },
-    [addTab, getActiveTabPage, navigate, setActiveTab, t.pageTab.newTab, updateTab]
+    [addTab, getActiveTabPage, navigate, setActiveTab, updateTab]
   );
 
   const linkByPattern = React.useCallback(
     (route: RawRoute, params: Record<string, any>) => {
-      const i18nlabel = { en: stringFormat(route.i18nlabel.en, params), ko: stringFormat(route.i18nlabel.ko, params) };
+      const labels = { en: stringFormat(route.labels.en, params), ko: stringFormat(route.labels.ko, params) };
       const { tabUuid, page } = getActiveTabPage();
       const path = generatePath(route.path, params);
 
       if (page.path === "about:blank") {
-        updateTab(tabUuid, { ...page, i18nlabel, path });
+        updateTab(tabUuid, { ...page, labels, path });
         navigate(path);
         return;
       }
 
       const addedTabUuid = addTab({
-        label: "",
-        i18nlabel,
+        labels,
         path,
         fixed: false,
       });

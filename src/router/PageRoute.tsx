@@ -33,10 +33,7 @@ function PageRoute() {
     const currentMenu = menus.find((fMenu) => fMenu.key === location.pathname);
     setSelectedMenuUuid(`${currentMenu?.key ?? ""}`);
 
-    // TODO : find current tab
-    if (currentMenu || location.pathname === "/") {
-      setActiveTabByPath(location.pathname, currentMenu?.label);
-    }
+    setActiveTabByPath(location.pathname);
   }, [location.pathname, setActiveTabByPath, setSelectedMenuUuid]);
 
   return (

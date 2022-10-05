@@ -4,7 +4,7 @@ import { LanguageType } from "../i18n";
 export interface MenuItem extends MenuItemType {
   children?: MenuItem[];
   enum?: MenuEnum;
-  i18nlabel?: Record<LanguageType, string>;
+  labels?: Record<LanguageType, string>;
   route?: Record<string, any>;
 }
 

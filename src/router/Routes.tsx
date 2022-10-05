@@ -10,101 +10,101 @@ import {
   RFITemplate,
   RFIListSearch,
 } from "react-frame-icon";
+import { getFlattedRoutes } from "../utils/store/getFlattedRoutes";
 
 export interface RawRoute {
   key?: string;
   path: string;
-  i18nlabel: {
+  labels: {
     en: string;
     ko: string;
   };
   icon?: React.ReactNode;
   children?: RawRoutes;
+  hideTab?: boolean;
 }
 
-type RawRoutes = Record<string, RawRoute>;
+export type RawRoutes = Record<string, RawRoute>;
 
 const routes = {
-  ROOT: {
-    path: "",
-    i18nlabel: { en: "HOME", ko: "홈" },
-  },
   COUNSELING: {
     path: "counseling",
-    i18nlabel: { en: "Counseling", ko: "상담" },
+    labels: { en: "Counseling", ko: "상담" },
     icon: <RFIWriteForm />,
     children: {
       REGISTRATION: {
         path: "registration",
-        i18nlabel: { en: "Counseling Registration", ko: "상담 등록" },
+        labels: { en: "Counseling Registration", ko: "상담 등록" },
         icon: <RFIWriteForm />,
       },
       LIST: {
         path: "list",
-        i18nlabel: { en: "Counseling List", ko: "상담 목록" },
+        labels: { en: "Counseling List", ko: "상담 목록" },
         icon: <RFIListSearch />,
       },
       DETAIL: {
         path: "detail/:id",
-        i18nlabel: { en: `Counseling View #{id}`, ko: "상담 조회 #{id}" },
+        labels: { en: `Counseling View #{id}`, ko: "상담 조회 #{id}" },
       },
     },
   },
   ANALYTICS: {
     path: "analytics",
-    i18nlabel: { en: "Analytics", ko: "분석/통계" },
+    labels: { en: "Analytics", ko: "분석/통계" },
     icon: <RFIGraph />,
   },
   INBOX: {
     path: "inbox",
-    i18nlabel: { en: "Inbox", ko: "받은문서함" },
+    labels: { en: "Inbox", ko: "받은문서함" },
     icon: <RFIInbox />,
   },
   PROJECT: {
     path: "project",
-    i18nlabel: { en: "Project", ko: "프로젝트" },
+    labels: { en: "Project", ko: "프로젝트" },
     icon: <RFIProject />,
   },
   REPORT: {
     path: "report",
-    i18nlabel: { en: "Report", ko: "리포트" },
+    labels: { en: "Report", ko: "리포트" },
     icon: <RFIReport />,
   },
   SETTING: {
     path: "setting",
-    i18nlabel: { en: "Setting", ko: "환경설정" },
+    labels: { en: "Setting", ko: "환경설정" },
     icon: <RFISetting />,
   },
   TEMPLATE: {
     path: "template",
-    i18nlabel: { en: "Template", ko: "템플릿" },
+    labels: { en: "Template", ko: "템플릿" },
     icon: <RFITemplate />,
   },
   HOME: {
     path: "",
-    i18nlabel: { en: "HOME", ko: "홈" },
+    labels: { en: "HOME", ko: "홈" },
     icon: <RFIHome />,
+    hideTab: true,
   },
   BLANK_PAGE: {
     path: "about:blank",
-    i18nlabel: { en: "", ko: "" },
+    labels: { en: "", ko: "" },
+    hideTab: true,
   },
   SIGN_IN: {
     path: "sign-in",
-    i18nlabel: { en: "SignIn", ko: "로그인" },
+    labels: { en: "SignIn", ko: "로그인" },
+    hideTab: true,
   },
 };
 
 function getRoutes(routes: RawRoutes, parentPath: string): RawRoutes {
-  const routeList: RawRoute[] = Object.keys(routes).map((key) => {
+  const routeList: RawRoute[] = Object.entries(routes).map(([key, { path, labels, icon, hideTab, children }]) => {
     return {
       key,
-      path: parentPath + routes[key].path,
-      i18nlabel: routes[key].i18nlabel,
-      icon: routes[key].icon,
-      children: routes[key].children
-        ? getRoutes(routes[key].children ?? {}, parentPath + routes[key].path + "/")
-        : undefined,
+      path: parentPath + path,
+      labels,
+      icon,
+      hideTab,
+      children: children ? getRoutes(children ?? {}, parentPath + path + "/") : undefined,
     };
   });
 
@@ -112,3 +112,4 @@ function getRoutes(routes: RawRoutes, parentPath: string): RawRoutes {
 }
 
 export const ROUTES = getRoutes(routes, "/") as typeof routes;
+export const ROUTES_LIST: RawRoute[] = getFlattedRoutes(ROUTES);
