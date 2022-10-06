@@ -1,15 +1,5 @@
 import * as React from "react";
-import {
-  RFIWriteForm,
-  RFIGraph,
-  RFIHome,
-  RFIInbox,
-  RFIProject,
-  RFIReport,
-  RFISetting,
-  RFITemplate,
-  RFIListSearch,
-} from "react-frame-icon";
+import { RFIWriteForm, RFIGraph, RFIHome, RFISetting, RFIListSearch, RFIDefaultProgram } from "react-frame-icon";
 import { getFlattedRoutes } from "../utils/store/getFlattedRoutes";
 
 export interface RawRoute {
@@ -27,57 +17,64 @@ export interface RawRoute {
 export type RawRoutes = Record<string, RawRoute>;
 
 const routes = {
-  COUNSELING: {
-    path: "counseling",
-    labels: { en: "Counseling", ko: "상담" },
-    icon: <RFIWriteForm />,
+  DASHBOARD: {
+    path: "dashboard",
+    labels: { en: "Dashboard", ko: "대시보드" },
+    icon: <RFIGraph />,
+  },
+  DASHBOARD_VIEWER: {
+    path: "dashboard/:id",
+    labels: { en: "Dashboard {id}", ko: "대시보드 {id}" },
+    icon: <RFIGraph />,
+  },
+
+  EXAMPLES: {
+    path: "examples",
+    labels: { en: "Examples", ko: "예제화면들" },
+    icon: <RFIDefaultProgram />,
     children: {
-      REGISTRATION: {
-        path: "registration",
-        labels: { en: "Counseling Registration", ko: "상담 등록" },
+      LIST_DETAIL: {
+        path: "listAndDetail",
+        labels: { en: "Example(List&Detail)", ko: "샘플(목록&상세)" },
         icon: <RFIWriteForm />,
+        children: {
+          REGISTRATION: {
+            path: "registration",
+            labels: { en: "Registration", ko: "등록화면" },
+            icon: <RFIWriteForm />,
+          },
+          LIST: {
+            path: "list",
+            labels: { en: "List", ko: "목록화면" },
+            icon: <RFIListSearch />,
+          },
+          DETAIL: {
+            path: "detail/:id",
+            labels: { en: `List Sample #{id}`, ko: "목록상세 #{id}" },
+          },
+        },
       },
-      LIST: {
-        path: "list",
-        labels: { en: "Counseling List", ko: "상담 목록" },
+
+      LIST_WITH_MODAL: {
+        path: "listWithModal",
+        labels: { en: "Example(List&Detail)", ko: "샘플(목록&상세)" },
         icon: <RFIListSearch />,
       },
-      DETAIL: {
-        path: "detail/:id",
-        labels: { en: `Counseling View #{id}`, ko: "상담 조회 #{id}" },
+
+      LIST_WITH_DRAWER: {
+        path: "listWithDrawer",
+        labels: { en: "Example(List&Detail)", ko: "샘플(목록&상세)" },
+        icon: <RFIWriteForm />,
       },
     },
   },
-  ANALYTICS: {
-    path: "analytics",
-    labels: { en: "Analytics", ko: "분석/통계" },
-    icon: <RFIGraph />,
-  },
-  INBOX: {
-    path: "inbox",
-    labels: { en: "Inbox", ko: "받은문서함" },
-    icon: <RFIInbox />,
-  },
-  PROJECT: {
-    path: "project",
-    labels: { en: "Project", ko: "프로젝트" },
-    icon: <RFIProject />,
-  },
-  REPORT: {
-    path: "report",
-    labels: { en: "Report", ko: "리포트" },
-    icon: <RFIReport />,
-  },
+
   SETTING: {
     path: "setting",
     labels: { en: "Setting", ko: "환경설정" },
     icon: <RFISetting />,
   },
-  TEMPLATE: {
-    path: "template",
-    labels: { en: "Template", ko: "템플릿" },
-    icon: <RFITemplate />,
-  },
+
   HOME: {
     path: "",
     labels: { en: "HOME", ko: "홈" },

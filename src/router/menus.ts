@@ -9,41 +9,38 @@ interface RawMenu {
 
 export const menus: RawMenu[] = [
   {
-    route: ROUTES.COUNSELING,
+    menuId: MenuEnum.DASHBOARD,
+    route: ROUTES.DASHBOARD,
+  },
+  {
+    route: ROUTES.EXAMPLES,
     children: [
       {
-        menuId: MenuEnum.COUNSELING_REGISTRATION,
-        route: ROUTES.COUNSELING.children.REGISTRATION,
+        route: ROUTES.EXAMPLES.children.LIST_DETAIL,
+        children: [
+          {
+            menuId: MenuEnum.SAMPLE_REGISTRATION,
+            route: ROUTES.EXAMPLES.children.LIST_DETAIL.children.REGISTRATION,
+          },
+          {
+            menuId: MenuEnum.SAMPLE_LIST,
+            route: ROUTES.EXAMPLES.children.LIST_DETAIL.children.LIST,
+          },
+        ],
       },
       {
-        menuId: MenuEnum.COUNSELING_LIST,
-        route: ROUTES.COUNSELING.children.LIST,
+        menuId: MenuEnum.SAMPLE_LIST_WITH_MODAL,
+        route: ROUTES.EXAMPLES.children.LIST_WITH_MODAL,
+      },
+      {
+        menuId: MenuEnum.SAMPLE_LIST_WITH_DRAWER,
+        route: ROUTES.EXAMPLES.children.LIST_WITH_DRAWER,
       },
     ],
   },
   {
-    menuId: MenuEnum.ANALYTICS,
-    route: ROUTES.ANALYTICS,
-  },
-  {
-    menuId: MenuEnum.INBOX,
-    route: ROUTES.INBOX,
-  },
-  {
-    menuId: MenuEnum.PROJECT,
-    route: ROUTES.PROJECT,
-  },
-  {
-    menuId: MenuEnum.REPORT,
-    route: ROUTES.REPORT,
-  },
-  {
     menuId: MenuEnum.SETTING,
     route: ROUTES.SETTING,
-  },
-  {
-    menuId: MenuEnum.TEMPLATE,
-    route: ROUTES.TEMPLATE,
   },
 ];
 

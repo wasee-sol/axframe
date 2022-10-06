@@ -1,25 +1,23 @@
+import * as React from "react";
 import styled from "@emotion/styled";
 import { IconText } from "components/common";
-import * as React from "react";
 import { PageLayout } from "styles/pageStyled";
 import { mergeProps } from "utils/object";
-import { useCounselingDetail } from "@hooks/pages/useCounselingDetail";
+import { useDashboard } from "@hooks/pages/useDashboard";
 
 interface Props {}
 
-function PageCounselingDetail(props: Props) {
-  const { t, urlParams } = mergeProps(props, useCounselingDetail());
+function PageDashboard(props: Props) {
+  const { t } = mergeProps(props, useDashboard());
 
   return (
     <Container>
       <Header>
-        <IconText icon={null}>
-          {t.pages.counseling.detail.title} ({urlParams.id})
-        </IconText>
+        <IconText icon={null}>TITLE</IconText>
 
         <ButtonGroup compact></ButtonGroup>
       </Header>
-      <Body>조회내용</Body>
+      <Body>테스트</Body>
     </Container>
   );
 }
@@ -32,4 +30,4 @@ const FormBox = styled(PageLayout.FormBox)``;
 const FormGroupTitle = styled(PageLayout.FormGroupTitle)``;
 const ButtonGroup = styled(PageLayout.ButtonGroup)``;
 
-export default PageCounselingDetail;
+export default PageDashboard;

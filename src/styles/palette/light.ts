@@ -14,6 +14,7 @@ const LIGHT = {
   INK_30: "#E9EBF0", // border
   INK_40: "#CED4DA", // form border
   INK_50: "#98A2B2",
+  INK_60: "#757c86",
   INK_70: "#606C80",
   INK_80: "#212529",
   INK_90: "#1F2633",

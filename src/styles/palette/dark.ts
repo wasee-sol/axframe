@@ -16,6 +16,7 @@ const DARK: typeof LIGHT = {
   INK_30: "#d2d2d2",
   INK_40: "#383B42",
   INK_50: "#2B2E35",
+  INK_60: "#444954",
   INK_70: "#3c414b",
   INK_80: "#333841",
   INK_90: "#282C34",

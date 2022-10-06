@@ -10,17 +10,14 @@ import { ROUTES } from "./Routes";
 const FrameDefault = React.lazy(() => import("@template/pageFrame/FrameDefault"));
 const FrameProgram = React.lazy(() => import("@template/pageFrame/FrameProgram"));
 
-const Analytics = React.lazy(() => import("@template/pages/PageAnalytics"));
-const PageCounselingRegistration = React.lazy(() => import("@template/pages/PageCounselingRegistration"));
-const PageCounselingList = React.lazy(() => import("@template/pages/PageCounselingList"));
-const PageCounselingDetail = React.lazy(() => import("@template/pages/PageCounselingDetail"));
+const ExampleRegistration = React.lazy(() => import("@template/examples/ExampleRegistration"));
+const ExampleList = React.lazy(() => import("@template/examples/ExampleList"));
+const ExampleDetail = React.lazy(() => import("@template/examples/ExampleDetail"));
+const Dashboard = React.lazy(() => import("@template/pages/PageDashboard"));
+const DashboardViewer = React.lazy(() => import("@template/pages/PageDashboardViewer"));
 const Home = React.lazy(() => import("@template/pages/PageHome"));
-const Inbox = React.lazy(() => import("@template/pages/PageInbox"));
-const Project = React.lazy(() => import("@template/pages/PageProject"));
-const Report = React.lazy(() => import("@template/pages/PageReport"));
 const Setting = React.lazy(() => import("@template/pages/PageSetting"));
 const SignIn = React.lazy(() => import("@template/account/SignIn"));
-const Template = React.lazy(() => import("@template/pages/PageTemplate"));
 
 function PageRoute() {
   const sideMenuOpened = useAppStore((s) => s.sideMenuOpened);
@@ -49,17 +46,19 @@ function PageRoute() {
         }
       >
         <Route path={ROUTES.HOME.path} element={<Home />} />
-        <Route path={ROUTES.ANALYTICS.path} element={<Analytics />} />
-        <Route path={ROUTES.COUNSELING.path}>
-          <Route path={ROUTES.COUNSELING.children.REGISTRATION.path} element={<PageCounselingRegistration />} />
-          <Route path={ROUTES.COUNSELING.children.LIST.path} element={<PageCounselingList />} />
-          <Route path={ROUTES.COUNSELING.children.DETAIL.path} element={<PageCounselingDetail />} />
+        <Route path={ROUTES.DASHBOARD.path} element={<Dashboard />} />
+        <Route path={ROUTES.DASHBOARD_VIEWER.path} element={<DashboardViewer />} />
+        <Route path={ROUTES.EXAMPLES.path}>
+          <Route path={ROUTES.EXAMPLES.children.LIST_DETAIL.path}>
+            <Route
+              path={ROUTES.EXAMPLES.children.LIST_DETAIL.children.REGISTRATION.path}
+              element={<ExampleRegistration />}
+            />
+            <Route path={ROUTES.EXAMPLES.children.LIST_DETAIL.children.LIST.path} element={<ExampleList />} />
+            <Route path={ROUTES.EXAMPLES.children.LIST_DETAIL.children.DETAIL.path} element={<ExampleDetail />} />
+          </Route>
         </Route>
-        <Route path={ROUTES.INBOX.path} element={<Inbox />} />
-        <Route path={ROUTES.PROJECT.path} element={<Project />} />
-        <Route path={ROUTES.REPORT.path} element={<Report />} />
         <Route path={ROUTES.SETTING.path} element={<Setting />} />
-        <Route path={ROUTES.TEMPLATE.path} element={<Template />} />
         <Route path={ROUTES.BLANK_PAGE.path} element={<></>} />
       </Route>
       <Route

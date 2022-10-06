@@ -1,17 +1,17 @@
 import * as React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import PageCounselingRegistration from "@template/pages/PageCounselingRegistration";
+import ExampleRegistration from "@template/examples/ExampleRegistration";
 
 export default {
-  title: "template/pages/PageCounselingRegistration",
-  component: PageCounselingRegistration,
+  title: "template/pages/ExampleRegistration",
+  component: ExampleRegistration,
   argTypes: {
     backgroundColor: { control: "color" },
   },
-} as ComponentMeta<typeof PageCounselingRegistration>;
+} as ComponentMeta<typeof ExampleRegistration>;
 
-const Template: ComponentStory<typeof PageCounselingRegistration> = (args) => {
-  return <PageCounselingRegistration {...args} />;
+const Template: ComponentStory<typeof ExampleRegistration> = (args) => {
+  return <ExampleRegistration {...args} />;
 };
 
 export const Default = Template.bind({});

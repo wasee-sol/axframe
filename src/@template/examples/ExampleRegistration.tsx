@@ -1,4 +1,4 @@
-import { useCounselingRegistration } from "@hooks/pages/useCounselingRegistration";
+import { useExampleRegistration } from "@hooks/examples/useExampleRegistration";
 import styled from "@emotion/styled";
 import { Form, Select, DatePicker, Radio, Input, Row, Col, Button, Space, Checkbox } from "antd";
 import { IconText } from "components/common";
@@ -13,10 +13,10 @@ interface Props {}
 
 interface FormField extends CounselingItem {}
 
-function PageCounselingRegistration(props: Props) {
+function ExampleRegistration(props: Props) {
   const { form, t, handleFormValuesChange, handleFormReset, handleFindZipCode } = mergeProps(
     props,
-    useCounselingRegistration()
+    useExampleRegistration()
   );
 
   const cnsltHow = Form.useWatch("cnsltHow", form);
@@ -369,4 +369,4 @@ const FormBox = styled(PageLayout.FormBox)``;
 const FormGroupTitle = styled(PageLayout.FormGroupTitle)``;
 const ButtonGroup = styled(PageLayout.ButtonGroup)``;
 
-export default PageCounselingRegistration;
+export default ExampleRegistration;

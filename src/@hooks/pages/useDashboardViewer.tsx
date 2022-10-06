@@ -1,12 +1,10 @@
 import { usePageModel } from "hooks/usePageModel";
-import { useParams } from "react-router-dom";
 import { ROUTES } from "router/Routes";
 import { useI18n } from "hooks";
 
-export function useCounselingDetail() {
-  const { pageModel, pageModelMetadata, setPageModelMetadata } = usePageModel(ROUTES.COUNSELING.children.DETAIL.path);
+export function useDashboardViewer() {
+  const { pageModel, pageModelMetadata, setPageModelMetadata } = usePageModel(ROUTES.DASHBOARD_VIEWER.path);
   const { t, currentLanguage } = useI18n();
-  const urlParams = useParams<{ id: string }>();
 
   return {
     pageModel,
@@ -14,6 +12,5 @@ export function useCounselingDetail() {
     setPageModelMetadata,
     t,
     currentLanguage,
-    urlParams,
   };
 }

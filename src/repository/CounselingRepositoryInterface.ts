@@ -1,3 +1,4 @@
+import { RFDGSortParam } from "react-frame-datagrid";
 import { ApiListResponse, ApiPageResponse } from "../@types";
 
 export interface CounselingItem {
@@ -53,7 +54,7 @@ export interface CounselingListRequest {
   endDt?: string;
   filterType?: string;
   filter?: string;
-  sort?: string;
+  sorts?: RFDGSortParam[];
   pageSize?: number;
   pageNumber?: number;
 }
