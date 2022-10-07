@@ -267,6 +267,9 @@ const EN = {
       list: {
         title: "Counseling List",
       },
+      detail: {
+        title: "Counseling Detail",
+      },
     },
   },
 };

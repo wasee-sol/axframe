@@ -12,7 +12,7 @@ function RestrictAuth({ children }: Props) {
   const location = useLocation();
 
   if (me) {
-    return <Navigate to={ROUTES.ROOT.path} state={{ from: location }} replace />;
+    return <Navigate to={ROUTES.HOME.path} state={{ from: location }} replace />;
   }
 
   return children;

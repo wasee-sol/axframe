@@ -15,7 +15,7 @@ interface StyleProps {
 interface Props extends StyleProps {}
 
 function TabItemMore(props: Props) {
-  const { tabItemList, handleClickTab } = mergeProps(props, useTabGroup());
+  const { currentLanguage, tabItemList, handleClickTab } = mergeProps(props, useTabGroup());
   const [visible, setVisible] = React.useState(false);
 
   return (
@@ -31,7 +31,7 @@ function TabItemMore(props: Props) {
                   handleClickTab(tabItem.id, tabItem.pageModel.path);
                 }}
               >
-                {tabItem.pageModel.label}
+                {tabItem.pageModel.labels?.[currentLanguage]}
               </div>
             ),
           }))}

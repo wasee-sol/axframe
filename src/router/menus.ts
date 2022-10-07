@@ -1,60 +1,57 @@
 import { MenuEnum, MenuItem } from "@types";
-import { ROUTES } from "./Routes";
+import { ROUTES, RawRoute } from "./Routes";
 
 interface RawMenu {
   menuId?: MenuEnum;
-  route: Record<string, any>;
+  route: RawRoute;
   children?: RawMenu[];
 }
 
 export const menus: RawMenu[] = [
   {
-    route: ROUTES.COUNSELING,
+    menuId: MenuEnum.DASHBOARD,
+    route: ROUTES.DASHBOARD,
+  },
+  {
+    route: ROUTES.EXAMPLES,
     children: [
       {
-        menuId: MenuEnum.COUNSELING_REGISTRATION,
-        route: ROUTES.COUNSELING.children.REGISTRATION,
+        route: ROUTES.EXAMPLES.children.LIST_DETAIL,
+        children: [
+          {
+            menuId: MenuEnum.SAMPLE_REGISTRATION,
+            route: ROUTES.EXAMPLES.children.LIST_DETAIL.children.REGISTRATION,
+          },
+          {
+            menuId: MenuEnum.SAMPLE_LIST,
+            route: ROUTES.EXAMPLES.children.LIST_DETAIL.children.LIST,
+          },
+        ],
       },
       {
-        menuId: MenuEnum.COUNSELING_LIST,
-        route: ROUTES.COUNSELING.children.LIST,
+        menuId: MenuEnum.SAMPLE_LIST_WITH_MODAL,
+        route: ROUTES.EXAMPLES.children.LIST_WITH_MODAL,
+      },
+      {
+        menuId: MenuEnum.SAMPLE_LIST_WITH_DRAWER,
+        route: ROUTES.EXAMPLES.children.LIST_WITH_DRAWER,
       },
     ],
-  },
-  {
-    menuId: MenuEnum.ANALYTICS,
-    route: ROUTES.ANALYTICS,
-  },
-  {
-    menuId: MenuEnum.INBOX,
-    route: ROUTES.INBOX,
-  },
-  {
-    menuId: MenuEnum.PROJECT,
-    route: ROUTES.PROJECT,
-  },
-  {
-    menuId: MenuEnum.REPORT,
-    route: ROUTES.REPORT,
   },
   {
     menuId: MenuEnum.SETTING,
     route: ROUTES.SETTING,
   },
-  {
-    menuId: MenuEnum.TEMPLATE,
-    route: ROUTES.TEMPLATE,
-  },
 ];
 
-function getMenus(menus: RawMenu[], parentPath: string): MenuItem[] {
+function getMenus(menus: RawMenu[]): MenuItem[] {
   return menus.map((menu) => ({
     enum: menu.menuId,
-    key: parentPath + menu.route.path,
-    i18nlabel: menu.route.i18nLabel,
+    key: menu.route.path,
+    labels: menu.route.labels,
     icon: menu.route.icon,
-    children: menu.children ? getMenus(menu.children, parentPath + menu.route.path + "/") : undefined,
+    children: menu.children ? getMenus(menu.children) : undefined,
   }));
 }
 
-export const MENUS = getMenus(menus, "/");
+export const MENUS = getMenus(menus);

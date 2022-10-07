@@ -1,84 +1,112 @@
 import * as React from "react";
-import {
-  RFIWriteForm,
-  RFIGraph,
-  RFIHome,
-  RFIInbox,
-  RFIProject,
-  RFIReport,
-  RFISetting,
-  RFITemplate,
-  RFIListSearch,
-} from "react-frame-icon";
+import { RFIWriteForm, RFIGraph, RFIHome, RFISetting, RFIListSearch, RFIDefaultProgram } from "react-frame-icon";
+import { getFlattedRoutes } from "../utils/store/getFlattedRoutes";
 
-export const ROUTES = {
-  ROOT: {
-    path: "/",
-    i18nLabel: { en: "HOME", ko: "홈" },
+export interface RawRoute {
+  key?: string;
+  path: string;
+  labels: {
+    en: string;
+    ko: string;
+  };
+  icon?: React.ReactNode;
+  children?: RawRoutes;
+  hideTab?: boolean;
+}
+
+export type RawRoutes = Record<string, RawRoute>;
+
+const routes = {
+  DASHBOARD: {
+    path: "dashboard",
+    labels: { en: "Dashboard", ko: "대시보드" },
+    icon: <RFIGraph />,
   },
-  COUNSELING: {
-    path: "counseling",
-    i18nLabel: { en: "Counseling", ko: "상담" },
-    icon: <RFIWriteForm />,
+  DASHBOARD_VIEWER: {
+    path: "dashboard/:id",
+    labels: { en: "Dashboard {id}", ko: "대시보드 {id}" },
+    icon: <RFIGraph />,
+  },
+
+  EXAMPLES: {
+    path: "examples",
+    labels: { en: "Examples", ko: "예제화면들" },
+    icon: <RFIDefaultProgram />,
     children: {
-      REGISTRATION: {
-        path: "registration",
-        i18nLabel: { en: "Counseling Registration", ko: "상담 등록" },
+      LIST_DETAIL: {
+        path: "listAndDetail",
+        labels: { en: "Example(List&Detail)", ko: "샘플(목록&상세)" },
         icon: <RFIWriteForm />,
+        children: {
+          REGISTRATION: {
+            path: "registration",
+            labels: { en: "Registration", ko: "등록화면" },
+            icon: <RFIWriteForm />,
+          },
+          LIST: {
+            path: "list",
+            labels: { en: "List", ko: "목록화면" },
+            icon: <RFIListSearch />,
+          },
+          DETAIL: {
+            path: "detail/:id",
+            labels: { en: `List Sample #{id}`, ko: "목록상세 #{id}" },
+          },
+        },
       },
-      LIST: {
-        path: "list",
-        i18nLabel: { en: "Counseling List", ko: "상담 목록" },
+
+      LIST_WITH_MODAL: {
+        path: "listWithModal",
+        labels: { en: "Example(List&Detail)", ko: "샘플(목록&상세)" },
         icon: <RFIListSearch />,
+      },
+
+      LIST_WITH_DRAWER: {
+        path: "listWithDrawer",
+        labels: { en: "Example(List&Detail)", ko: "샘플(목록&상세)" },
+        icon: <RFIWriteForm />,
       },
     },
   },
-  ANALYTICS: {
-    path: "analytics",
-    i18nLabel: { en: "Analytics", ko: "분석/통계" },
-    icon: <RFIGraph />,
-  },
-  INBOX: {
-    path: "inbox",
-    i18nLabel: { en: "Inbox", ko: "받은문서함" },
-    icon: <RFIInbox />,
-  },
-  PROJECT: {
-    path: "project",
-    i18nLabel: { en: "Project", ko: "프로젝트" },
-    icon: <RFIProject />,
-  },
-  REPORT: {
-    path: "report",
-    i18nLabel: { en: "Report", ko: "리포트" },
-    icon: <RFIReport />,
-  },
+
   SETTING: {
     path: "setting",
-    i18nLabel: { en: "Setting", ko: "환경설정" },
+    labels: { en: "Setting", ko: "환경설정" },
     icon: <RFISetting />,
   },
-  TEMPLATE: {
-    path: "template",
-    i18nLabel: { en: "Template", ko: "템플릿" },
-    icon: <RFITemplate />,
-  },
+
   HOME: {
     path: "",
-    i18nLabel: { en: "HOME", ko: "홈" },
+    labels: { en: "HOME", ko: "홈" },
     icon: <RFIHome />,
-    hideMenu: true,
+    hideTab: true,
   },
   BLANK_PAGE: {
     path: "about:blank",
-    i18nLabel: { en: "" },
-    icon: null,
-    hideMenu: true,
+    labels: { en: "", ko: "" },
+    hideTab: true,
   },
   SIGN_IN: {
     path: "sign-in",
-    i18nLabel: { en: "SignIn", ko: "로그인" },
-    icon: null,
-    hideMenu: true,
+    labels: { en: "SignIn", ko: "로그인" },
+    hideTab: true,
   },
 };
+
+function getRoutes(routes: RawRoutes, parentPath: string): RawRoutes {
+  const routeList: RawRoute[] = Object.entries(routes).map(([key, { path, labels, icon, hideTab, children }]) => {
+    return {
+      key,
+      path: parentPath + path,
+      labels,
+      icon,
+      hideTab,
+      children: children ? getRoutes(children ?? {}, parentPath + path + "/") : undefined,
+    };
+  });
+
+  return routeList.reduce((acc, cur) => ({ ...acc, [cur.key ?? ""]: cur }), {});
+}
+
+export const ROUTES = getRoutes(routes, "/") as typeof routes;
+export const ROUTES_LIST: RawRoute[] = getFlattedRoutes(ROUTES);

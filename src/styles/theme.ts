@@ -37,7 +37,7 @@ const lightCustomColors = {
   text_heading_color: LIGHT.INK_90,
   text_sub_heading_color: LIGHT.INK_50,
   text_body_color: LIGHT.INK_70,
-  text_sub_body_color: LIGHT.INK_40,
+  text_sub_body_color: LIGHT.INK_50,
   link_color: LIGHT.INK_90,
   link_hover_color: lightAntdColors.primary_color,
   link_active_color: LIGHT.INK_100,

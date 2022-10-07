@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useCounselingList } from "@hooks/pages/useCounselingList";
+import { useExampleList } from "@hooks/examples/useExampleList";
 import { Button, Row, Col, Form, Input } from "antd";
 import { IconText } from "components/common";
 import { DataGrid } from "components/DataGrid";
@@ -13,7 +13,7 @@ import { mergeProps } from "utils/object";
 
 interface Props {}
 
-function PageCounselingList(props: Props) {
+function ExampleList(props: Props) {
   const {
     searchForm,
     t,
@@ -22,15 +22,19 @@ function PageCounselingList(props: Props) {
     columns,
     counselingList,
     page,
+    sortParams,
     listSpinning,
     paramValues,
     handleSearch,
     handleReset,
     handleChangeSearchValue,
-    onPageChange,
+    handlePageChange,
+    handleSortChange,
+    handleColumnsChange,
     showSearchParamChildren,
     setShowSearchParamChildren,
-  } = mergeProps(props, useCounselingList());
+    onClickItem,
+  } = mergeProps(props, useExampleList());
 
   const bodyContainer = React.useRef<HTMLDivElement>(null);
   const { width: containerWidth, height: containerHeight } = useContainerSize(bodyContainer);
@@ -104,16 +108,20 @@ function PageCounselingList(props: Props) {
           columns={columns}
           data={counselingList}
           spinning={listSpinning}
+          onClick={onClickItem}
           page={{
             currentPage: page?.pageNumber ?? 1,
             pageSize: page?.pageSize ?? 0,
             totalPages: page?.pgCount ?? 0,
             totalElements: counselingList.length,
             loading: false,
-            onChange: (currentPage, pageSize) => {
-              onPageChange(currentPage, pageSize);
-            },
+            onChange: handlePageChange,
           }}
+          sort={{
+            sortParams,
+            onChange: handleSortChange,
+          }}
+          onChangeColumns={handleColumnsChange}
         />
       </Body>
     </Container>
@@ -125,4 +133,4 @@ const Header = styled(PageLayout.Header)``;
 const ButtonGroup = styled(PageLayout.ButtonGroup)``;
 const Body = styled(PageLayout.Body)``;
 
-export default PageCounselingList;
+export default ExampleList;

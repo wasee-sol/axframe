@@ -1,9 +1,11 @@
 import { Form } from "antd";
+import { omit } from "lodash";
 import * as React from "react";
 import { usePageModel } from "hooks/usePageModel";
-import { RFDGColumn } from "react-frame-datagrid";
+import { RFDGColumn, RFDGSortParam } from "react-frame-datagrid";
+import { RFDGClickParams } from "react-frame-datagrid/dist/commonjs/types";
 import { ROUTES } from "router/Routes";
-import { useI18n } from "hooks";
+import { useI18n, useLink } from "hooks";
 import { useDidMountEffect } from "hooks";
 import {
   CounselingListResponse,
@@ -11,7 +13,6 @@ import {
   CounselingItem,
 } from "repository/CounselingRepositoryInterface";
 import { CounselingService } from "services";
-import { useAppStore } from "stores";
 import { ParamObject, ParamType, ParamOption } from "components/search";
 import moment, { Moment } from "moment";
 
@@ -25,17 +26,16 @@ export interface SearchFilterParams extends CounselingListRequest {
 
 interface PageModalMetaData extends SearchFilterParams {
   showSearchParamChildren: boolean;
+  colWidths: number[];
 }
 
-export function useCounselingList() {
+export function useExampleList() {
   const [searchForm] = Form.useForm();
-  const windowWidth = useAppStore((s) => s.width);
-  const windowHeight = useAppStore((s) => s.height);
-  const { pageModel, pageModelMetadata, setPageModelMetadata } = usePageModel<PageModalMetaData>([
-    ROUTES.COUNSELING.path,
-    ROUTES.COUNSELING.children.LIST.path,
-  ]);
+  const { pageModel, pageModelMetadata, setPageModelMetadata } = usePageModel<PageModalMetaData>(
+    ROUTES.EXAMPLES.children.LIST_DETAIL.children.LIST.path
+  );
   const { t, currentLanguage } = useI18n();
+  const { linkByPattern } = useLink();
   const defaultRequestParams = React.useRef<CounselingListRequest>({
     pageNumber: 1,
     pageSize: 100,
@@ -48,6 +48,18 @@ export function useCounselingList() {
   const [apiResponse, setApiResponse] = React.useState<CounselingListResponse>();
   const [listSpinning, setListSpinning] = React.useState(false);
   const [showSearchParamChildren, setShowSearchParamChildren] = React.useState(false);
+  const [sortParams, setSortParams] = React.useState<RFDGSortParam[]>([]);
+  const [colWidths, setColWidths] = React.useState<number[]>([]);
+
+  const counselingList = React.useMemo(
+    () =>
+      apiResponse?.ds.map((values) => ({
+        values,
+      })) ?? [],
+    [apiResponse?.ds]
+  );
+
+  const page = React.useMemo(() => apiResponse?.rs, [apiResponse]);
 
   const getList = React.useCallback(async (params: CounselingListRequest) => {
     setListSpinning(true);
@@ -71,10 +83,17 @@ export function useCounselingList() {
     await getList(paramValues);
   }, [getList, paramValues]);
 
-  const handleReset = React.useCallback(() => {
-    setParamValues({ ...defaultRequestParams });
+  const handleReset = React.useCallback(async () => {
+    const requestParams = {
+      ...defaultRequestParams,
+    } as CounselingListRequest;
+
+    setParamValues(requestParams);
+    setSortParams([]);
+    setColWidths([]);
     searchForm.resetFields();
-  }, [defaultRequestParams, searchForm]);
+    await getList(requestParams);
+  }, [defaultRequestParams, getList, searchForm]);
 
   const handleChangeSearchValue = React.useCallback(
     (values: SearchFilterParams) => {
@@ -102,7 +121,7 @@ export function useCounselingList() {
     [paramValues]
   );
 
-  const onPageChange = React.useCallback(
+  const handlePageChange = React.useCallback(
     async (pageNo: number, pageSize?: number) => {
       const requestParams = {
         ...paramValues,
@@ -110,10 +129,38 @@ export function useCounselingList() {
         pageSize: pageSize,
       } as CounselingListRequest;
 
-      setParamValues(requestParams);
+      await setParamValues(requestParams);
       await getList(requestParams);
     },
     [paramValues, getList]
+  );
+
+  const handleSortChange = React.useCallback(
+    async (sortParams: RFDGSortParam[]) => {
+      const requestParams = {
+        ...paramValues,
+        sorts: sortParams,
+      } as CounselingListRequest;
+
+      setSortParams(sortParams);
+      setParamValues(requestParams);
+      await getList(requestParams);
+    },
+    [getList, paramValues]
+  );
+
+  const handleColumnsChange = React.useCallback(
+    (columnIndex: number, width: number, columns: RFDGColumn<CounselingItem>[]) => {
+      setColWidths(columns.map((column) => column.width));
+    },
+    []
+  );
+
+  const onClickItem = React.useCallback(
+    (params: RFDGClickParams<CounselingItem>) => {
+      linkByPattern(ROUTES.EXAMPLES.children.LIST_DETAIL.children.DETAIL, { id: params.item.id });
+    },
+    [linkByPattern]
   );
 
   React.useEffect(() => {
@@ -142,8 +189,10 @@ export function useCounselingList() {
         type: ParamType.TIME_RANGE,
       },
     ]);
+  }, [t]);
 
-    setColumns([
+  React.useEffect(() => {
+    const _columns = [
       { key: "id", label: t.datagrid.id, align: "left", width: 80 },
       { key: "name", label: t.datagrid.성명, align: "left", width: 80 },
       { key: "cnsltDt", label: t.datagrid.상담일, align: "left", width: 100 },
@@ -157,8 +206,26 @@ export function useCounselingList() {
       { key: "fldA", label: t.datagrid.수급, align: "left", width: 100 },
       { key: "hopePoint", label: t.datagrid.주요욕구, align: "left", width: 150 },
       { key: "updatedByNm", label: t.datagrid.상담원, align: "left", width: 120 },
-    ]);
-  }, [t]);
+    ].map((column, colIndex) => {
+      if (colWidths.length > 0) {
+        column.width = colWidths[colIndex];
+        return column;
+      }
+
+      return column;
+    }) as RFDGColumn<CounselingItem>[];
+
+    setColumns(_columns);
+  }, [t, colWidths]);
+
+  // sync pageModelMetadata
+  React.useEffect(() => {
+    setPageModelMetadata({
+      ...paramValues,
+      showSearchParamChildren,
+      colWidths,
+    });
+  }, [colWidths, paramValues, setPageModelMetadata, showSearchParamChildren]);
 
   useDidMountEffect(() => {
     const requestParams = {
@@ -177,26 +244,18 @@ export function useCounselingList() {
     }
     // adapter end
 
-    setParamValues(requestParams);
+    setParamValues(omit(requestParams, ["showSearchParamChildren", "colWidths"]));
     setShowSearchParamChildren(pageModelMetadata?.showSearchParamChildren ?? false);
+    setSortParams(requestParams.sorts ?? []);
+    setColWidths(pageModelMetadata?.colWidths ?? []);
 
     (async () => {
       await getList(requestParams);
     })();
   });
 
-  // sync pageModelMetadata
-  React.useEffect(() => {
-    setPageModelMetadata({
-      ...paramValues,
-      showSearchParamChildren,
-    });
-  }, [paramValues, setPageModelMetadata, showSearchParamChildren]);
-
   return {
     searchForm,
-    windowWidth,
-    windowHeight,
     pageModel,
     pageModelMetadata,
     setPageModelMetadata,
@@ -206,26 +265,25 @@ export function useCounselingList() {
     paramObjects,
     setParamObjects,
     columns,
-    setColumns,
     apiResponse,
     setApiResponse,
     getList,
-    counselingList:
-      apiResponse?.ds.map((values) => ({
-        values,
-      })) ?? [],
-    page: apiResponse?.rs,
+    counselingList,
+    page,
+    sortParams,
     listSpinning,
     setListSpinning,
     paramValues,
-    setParamValues,
 
     handleSearch,
     handleReload,
     handleReset,
     handleChangeSearchValue,
-    onPageChange,
+    handlePageChange,
+    handleSortChange,
+    handleColumnsChange,
     showSearchParamChildren,
     setShowSearchParamChildren,
+    onClickItem,
   };
 }

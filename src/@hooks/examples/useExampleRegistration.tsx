@@ -7,13 +7,12 @@ import { useI18n } from "hooks";
 import { useDidMountEffect } from "hooks/useDidMountEffect";
 import { convertToDate } from "utils/object";
 
-export function useCounselingRegistration() {
+export function useExampleRegistration() {
   const [form] = Form.useForm();
   const openZipCodeFinder = useDaumPostcodePopup("//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js");
-  const { pageModel, pageModelMetadata, setPageModelMetadata } = usePageModel([
-    ROUTES.COUNSELING.path,
-    ROUTES.COUNSELING.children.REGISTRATION.path,
-  ]);
+  const { pageModel, pageModelMetadata, setPageModelMetadata } = usePageModel(
+    ROUTES.EXAMPLES.children.LIST_DETAIL.children.REGISTRATION.path
+  );
   const { t, currentLanguage } = useI18n();
 
   const handleFormValuesChange = React.useCallback(

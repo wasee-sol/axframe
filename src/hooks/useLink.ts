@@ -1,7 +1,10 @@
-import { useNavigate } from "react-router-dom";
+import * as React from "react";
+import { useNavigate, generatePath } from "react-router-dom";
 import { MENUS } from "router/menus";
 import { usePageTabStore } from "stores";
 import { getFlattedMenus } from "utils/store";
+import { RawRoute } from "../router/Routes";
+import { stringFormat } from "../utils/string";
 import { useI18n } from "./useI18n";
 
 export function useLink() {
@@ -12,30 +15,57 @@ export function useLink() {
   const getActiveTabPage = usePageTabStore((s) => s.getActiveTabPage);
   const { t } = useI18n();
 
-  const linkTo = (to: string) => {
-    const linkToMenu = getFlattedMenus(MENUS).find((fMenu) => fMenu?.key === to);
-    const i18nlabel = linkToMenu?.i18nlabel;
-    const label = linkToMenu?.label ?? t.pageTab.newTab;
-    const { tabUuid, page } = getActiveTabPage();
+  const linkByTo = React.useCallback(
+    (to: string) => {
+      const linkToMenu = getFlattedMenus(MENUS).find((fMenu) => fMenu?.key === to);
 
-    if (page.path === "about:blank") {
-      updateTab(tabUuid, { ...page, label, i18nlabel, path: to });
+      const labels = linkToMenu?.labels;
+      const { tabUuid, page } = getActiveTabPage();
+
+      if (page.path === "about:blank") {
+        updateTab(tabUuid, { ...page, labels, path: to });
+        navigate(to);
+        return;
+      }
+
+      const addedTabUuid = addTab({
+        labels,
+        path: to,
+        fixed: false,
+      });
+      setActiveTab(addedTabUuid);
+
       navigate(to);
-      return;
-    }
+    },
+    [addTab, getActiveTabPage, navigate, setActiveTab, updateTab]
+  );
 
-    const addedTabUuid = addTab({
-      label,
-      i18nlabel,
-      path: to,
-      fixed: false,
-    });
-    setActiveTab(addedTabUuid);
+  const linkByPattern = React.useCallback(
+    (route: RawRoute, params: Record<string, any>) => {
+      const labels = { en: stringFormat(route.labels.en, params), ko: stringFormat(route.labels.ko, params) };
+      const { tabUuid, page } = getActiveTabPage();
+      const path = generatePath(route.path, params);
 
-    navigate(to);
-  };
+      if (page.path === "about:blank") {
+        updateTab(tabUuid, { ...page, labels, path });
+        navigate(path);
+        return;
+      }
+
+      const addedTabUuid = addTab({
+        labels,
+        path,
+        fixed: false,
+      });
+      setActiveTab(addedTabUuid);
+
+      navigate(path);
+    },
+    [addTab, getActiveTabPage, navigate, setActiveTab, updateTab]
+  );
 
   return {
-    linkTo,
+    linkByTo,
+    linkByPattern,
   };
 }

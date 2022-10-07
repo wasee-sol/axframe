@@ -24,13 +24,13 @@ function NavUserMenu(props: Props) {
     props,
     useNavGroup()
   );
-  const { linkTo } = useLink();
+  const { linkByTo } = useLink();
 
   const onClick: MenuProps["onClick"] = React.useCallback(
     ({ key }) => {
-      linkTo(key);
+      linkByTo(key);
     },
-    [linkTo]
+    [linkByTo]
   );
 
   if (menus.length === 0) {
@@ -99,7 +99,6 @@ const NavUserMenuContainer = styled.div<StyleProps>`
   .ant-menu-item .ant-menu-item-icon,
   .ant-menu-submenu-title .ant-menu-item-icon {
     font-size: 22px;
-    color: ${(p) => p.theme.primary_color};
   }
 
   // 그룹메뉴 색상 및 스타일 조정
@@ -113,7 +112,6 @@ const NavUserMenuContainer = styled.div<StyleProps>`
 
     .ant-menu-item-icon {
       font-size: 20px;
-      color: ${(p) => p.theme.text_body_color};
     }
 
     .ant-menu-item-selected {
@@ -154,6 +152,12 @@ const NavUserMenuContainer = styled.div<StyleProps>`
       font-size: 24px;
       margin-top: 7px;
     }
+  }
+
+  .ant-menu-sub .ant-menu-sub > .ant-menu-item {
+    height: 35px;
+    line-height: 35px;
+    font-size: 12px;
   }
 `;
 

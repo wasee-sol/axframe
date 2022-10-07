@@ -2,11 +2,11 @@ import React from "react";
 import buildStore from "stores/buildStore";
 import { v4 as uuidv4 } from "uuid";
 import { LanguageType } from "../i18n";
+import { ROUTES, ROUTES_LIST } from "../router/Routes";
 
 export interface PageModel {
   fixed?: boolean;
-  label: React.ReactNode;
-  i18nlabel?: Record<LanguageType, string>;
+  labels?: Record<LanguageType, string>;
   path?: string;
   icon?: string;
   metaData?: Record<string, any>;
@@ -40,7 +40,8 @@ export interface TabsActions {
 export interface TabsStore extends PagesTabModel, TabsActions {}
 
 const initialUuid = "home-tab";
-const initialPage: PageModel = { label: "HOME", path: "/", fixed: true, isHome: true };
+
+const initialPage: PageModel = { labels: ROUTES.HOME.labels, path: ROUTES.HOME.path, fixed: true, isHome: true };
 export const tabsInitialState: PagesTabModel = {
   loaded: false,
   pages: new Map<string, PageModel>([[initialUuid, initialPage]]),
@@ -65,6 +66,7 @@ export const usePageTabStore = buildStore<TabsStore>(
 
       const tabUuid = uuidv4();
       get().pages.set(tabUuid, page);
+      set({ pages: new Map([...get().pages]) });
       return tabUuid;
     },
     removeTab: (tabUuid) => {
@@ -118,19 +120,23 @@ export const usePageTabStore = buildStore<TabsStore>(
         page: initialPage,
       };
     },
-    setActiveTabByPath: (path, label = "") => {
+    setActiveTabByPath: (path) => {
       const pagesEntries = [...get().pages];
       const existsPageEntry = pagesEntries.find(([, _page]) => _page.path === path);
 
       if (existsPageEntry) {
         set({ activeTabUuid: existsPageEntry[0] });
       } else {
-        const addedTabUuid = get().addTab({
-          label,
-          path,
-          fixed: false,
-        });
-        get().setActiveTab(addedTabUuid);
+        const existsRoute = ROUTES_LIST.find((route) => route.path === path);
+        if (existsRoute && !existsRoute.hideTab) {
+          debugger;
+          const addedTabUuid = get().addTab({
+            labels: existsRoute.labels,
+            path,
+            fixed: false,
+          });
+          get().setActiveTab(addedTabUuid);
+        }
       }
     },
     clearTab: () => {

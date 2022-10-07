@@ -269,6 +269,9 @@ const KO: typeof EN = {
       list: {
         title: "상담 기록지 목록",
       },
+      detail: {
+        title: "상담 상세",
+      },
     },
   },
 };

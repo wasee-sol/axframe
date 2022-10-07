@@ -8,7 +8,7 @@ import {
 export class MockCounselingRepository implements CounselingRepositoryInterface {
   public async list(params: CounselingListRequest): Promise<CounselingListResponse> {
     console.log("CounselingListRequest", params);
-    await delay(500);
+    await delay(300);
     return {
       result: "00",
       msg: "",

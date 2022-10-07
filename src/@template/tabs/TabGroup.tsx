@@ -181,7 +181,14 @@ const TabItemsScroller = styled.div`
     flex: 1;
     column-gap: 2px;
     position: relative;
-    padding-right: 20px;
+
+    &:after {
+      display: block;
+      content: "";
+      width: 20px;
+      height: 30px;
+      flex: none;
+    }
   }
 `;
 

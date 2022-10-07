@@ -9,17 +9,17 @@ describe("usePageTabStore", () => {
     const addTab = usePageTabStore.getState().addTab;
     const pages = usePageTabStore.getState().pages;
 
-    const addedTabUuid = addTab({ label: "NEW PAGE", path: "/", fixed: false });
+    const addedTabUuid = addTab({ labels: { en: "NEW PAGE", ko: "" }, path: "/", fixed: false });
 
     expect(pages.size).toBe(2);
-    expect(pages.get(addedTabUuid)?.label).toBe("NEW PAGE");
+    expect(pages.get(addedTabUuid)?.labels).toBe("NEW PAGE");
   });
   it("updateTab", () => {
     const pages = usePageTabStore.getState().pages;
     const updateTab = usePageTabStore.getState().updateTab;
     const addTab = usePageTabStore.getState().addTab;
 
-    const addedTabUuid = addTab({ label: "NEW PAGE", path: "/", metaData: {}, fixed: false });
+    const addedTabUuid = addTab({ labels: { en: "NEW PAGE", ko: "" }, path: "/", metaData: {}, fixed: false });
     const addedTabPage = pages.get(addedTabUuid);
     if (addedTabPage) {
       updateTab(addedTabUuid, { ...addedTabPage, metaData: { test: "test" } });
@@ -31,7 +31,7 @@ describe("usePageTabStore", () => {
     const removeTab = usePageTabStore.getState().removeTab;
     const pages = usePageTabStore.getState().pages;
 
-    const addedTabUuid = addTab({ label: "NEW PAGE", path: "/", fixed: false });
+    const addedTabUuid = addTab({ labels: { en: "NEW PAGE", ko: "" }, path: "/", fixed: false });
     removeTab(addedTabUuid);
 
     expect(pages.size).toBe(1);

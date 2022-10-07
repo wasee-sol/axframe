@@ -4,18 +4,17 @@ import { LanguageType } from "../i18n";
 export interface MenuItem extends MenuItemType {
   children?: MenuItem[];
   enum?: MenuEnum;
-  i18nlabel?: Record<LanguageType, string>;
+  labels?: Record<LanguageType, string>;
+  route?: Record<string, any>;
 }
 
 export enum MenuEnum {
-  COUNSELING_REGISTRATION = "COUNSELING_REGISTRATION",
-  COUNSELING_LIST = "COUNSELING_LIST",
-  ANALYTICS = "ANALYTICS",
-  INBOX = "INBOX",
-  PROJECT = "PROJECT",
-  REPORT = "REPORT",
+  SAMPLE_REGISTRATION = "SAMPLE_REGISTRATION",
+  SAMPLE_LIST = "SAMPLE_LIST",
+  SAMPLE_LIST_WITH_MODAL = "SAMPLE_LIST_WITH_MODAL",
+  SAMPLE_LIST_WITH_DRAWER = "SAMPLE_LIST_WITH_DRAWER",
+  DASHBOARD = "DASHBOARD",
   SETTING = "SETTING",
-  TEMPLATE = "TEMPLATE",
 }
 
 export interface ApiListResponse {

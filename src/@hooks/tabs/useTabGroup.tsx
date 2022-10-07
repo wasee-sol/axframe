@@ -6,42 +6,36 @@ import { useLink, useI18n } from "hooks";
 export function useTabGroup() {
   const pages = usePageTabStore((s) => s.pages);
   const setPages = usePageTabStore((s) => s.setPages);
-  const addTab = usePageTabStore((s) => s.addTab);
   const removeTab = usePageTabStore((s) => s.removeTab);
   const removeTabs = usePageTabStore((s) => s.removeTabs);
   const activeTabUuid = usePageTabStore((s) => s.activeTabUuid);
   const getActiveTabPage = usePageTabStore((s) => s.getActiveTabPage);
 
   const location = useLocation();
-  const { linkTo } = useLink();
+  const { linkByTo } = useLink();
   const { t, currentLanguage } = useI18n();
+
+  const tabItemList = React.useMemo(() => {
+    return [...pages].map(([k, v]) => ({ id: k, pageModel: v }));
+  }, [pages]);
 
   const handleClickTab = React.useCallback(
     (tabUuid: string, path?: string) => {
       if (!path) return;
-      linkTo(path);
+      linkByTo(path);
     },
-    [linkTo]
+    [linkByTo]
   );
-
-  const handleAddTab = React.useCallback(() => {
-    const path = "about:blank";
-    addTab({
-      label: t.pageTab.newTab,
-      path,
-    });
-    linkTo(path);
-  }, [addTab, t.pageTab.newTab, linkTo]);
 
   const handleRemoveTab = React.useCallback(
     (tabUuid: string) => {
       removeTab(tabUuid);
       const activePageInfo = getActiveTabPage();
       if (activePageInfo.page.path && activePageInfo.page.path !== location.pathname) {
-        linkTo(activePageInfo.page.path);
+        linkByTo(activePageInfo.page.path);
       }
     },
-    [getActiveTabPage, linkTo, location.pathname, removeTab]
+    [getActiveTabPage, linkByTo, location.pathname, removeTab]
   );
 
   const handleRemoveOtherTabs = React.useCallback(
@@ -63,18 +57,17 @@ export function useTabGroup() {
 
       const activePageInfo = getActiveTabPage();
       if (activePageInfo.page.path && activePageInfo.page.path !== location.pathname) {
-        linkTo(activePageInfo.page.path);
+        linkByTo(activePageInfo.page.path);
       }
     },
-    [getActiveTabPage, linkTo, location.pathname, pages, removeTabs]
+    [getActiveTabPage, linkByTo, location.pathname, pages, removeTabs]
   );
 
   return {
     setPages,
-    tabItemList: [...pages].map(([k, v]) => ({ id: k, pageModel: v })),
+    tabItemList,
     activeTabUuid,
     handleClickTab,
-    handleAddTab,
     handleRemoveTab,
     handleRemoveOtherTabs,
     currentLanguage,
