@@ -40,30 +40,30 @@ const routes = {
         children: {
           REGISTRATION: {
             path: "registration",
-            labels: { en: "Registration", ko: "등록화면" },
+            labels: { en: "Example(Registration)", ko: "샘플(등록화면)" },
             icon: <RFIWriteForm />,
           },
           LIST: {
             path: "list",
-            labels: { en: "List", ko: "목록화면" },
+            labels: { en: "Example(List)", ko: "샘플(목록화면)" },
             icon: <RFIListSearch />,
           },
           DETAIL: {
             path: "detail/:id",
-            labels: { en: `List Sample #{id}`, ko: "목록상세 #{id}" },
+            labels: { en: `Example(detail#{id})`, ko: "샘플(상세#{id})" },
           },
         },
       },
 
       LIST_WITH_MODAL: {
         path: "listWithModal",
-        labels: { en: "Example(List&Detail)", ko: "샘플(목록&상세)" },
+        labels: { en: "Example(List&Modal)", ko: "샘플(목록&모달)" },
         icon: <RFIListSearch />,
       },
 
       LIST_WITH_DRAWER: {
         path: "listWithDrawer",
-        labels: { en: "Example(List&Detail)", ko: "샘플(목록&상세)" },
+        labels: { en: "Example(List&Drawer)", ko: "샘플(목록&드로워)" },
         icon: <RFIWriteForm />,
       },
     },
