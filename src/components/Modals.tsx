@@ -1,0 +1,31 @@
+import * as React from "react";
+import { useModalStore } from "stores/useModalStore";
+
+function Modals() {
+  const modals = useModalStore((s) => s.modals);
+  console.log(modals.size);
+  return (
+    <>
+      {[...modals].map(
+        ([
+          key,
+          {
+            modal: { modalFactory },
+            resolve,
+            reject,
+            open,
+            afterClose,
+          },
+        ]) => {
+          if (modalFactory) {
+            return <React.Fragment key={key}>{modalFactory(open, resolve, reject, afterClose)}</React.Fragment>;
+          }
+
+          return null;
+        }
+      )}
+    </>
+  );
+}
+
+export default Modals;

@@ -15,6 +15,7 @@ import {
 import { CounselingService } from "services";
 import { ParamObject, ParamType, ParamOption } from "components/search";
 import moment, { Moment } from "moment";
+import { openExampleModal } from "../../@template/examples/ExampleModal";
 
 export interface SearchFilterParams extends CounselingListRequest {
   select1?: string;
@@ -156,12 +157,14 @@ export function useExampleListWithModal() {
     []
   );
 
-  const onClickItem = React.useCallback(
-    (params: RFDGClickParams<CounselingItem>) => {
-      linkByPattern(ROUTES.EXAMPLES.children.LIST_DETAIL.children.DETAIL, { id: params.item.id });
-    },
-    [linkByPattern]
-  );
+  const onClickItem = React.useCallback(async (params: RFDGClickParams<CounselingItem>) => {
+    // linkByPattern(ROUTES.EXAMPLES.children.LIST_DETAIL.children.DETAIL, { id: params.item.id });
+    try {
+      await openExampleModal({});
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
 
   React.useEffect(() => {
     setFilterTypeOptions([
