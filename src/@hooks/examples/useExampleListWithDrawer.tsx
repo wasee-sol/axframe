@@ -1,22 +1,18 @@
+import { openExampleDrawer } from "@template/examples/ExampleDrawer";
 import { Form, message } from "antd";
+import { ParamObject, ParamType, ParamOption } from "components/search";
+import { usePageModel, useI18n, useDidMountEffect, useSpinning } from "hooks";
 import { omit } from "lodash";
+import { Moment } from "moment";
 import * as React from "react";
-import { usePageModel } from "hooks/usePageModel";
-import { RFDGColumn, RFDGSortParam } from "react-frame-datagrid";
-import { RFDGClickParams } from "react-frame-datagrid/dist/commonjs/types";
-import { ROUTES } from "router/Routes";
-import { useI18n } from "hooks";
-import { useDidMountEffect } from "hooks";
+import { RFDGColumn, RFDGSortParam, RFDGClickParams } from "react-frame-datagrid";
 import {
   CounselingListResponse,
   CounselingListRequest,
   CounselingItem,
 } from "repository/CounselingRepositoryInterface";
+import { ROUTES } from "router/Routes";
 import { CounselingService } from "services";
-import { ParamObject, ParamType, ParamOption } from "components/search";
-import moment, { Moment } from "moment";
-import { openExampleDrawer } from "../../@template/examples/ExampleDrawer";
-import { useSpinning } from "../../hooks/useSpinning";
 
 export interface SearchFilterParams extends CounselingListRequest {
   select1?: string;
@@ -190,11 +186,6 @@ export function useExampleListWithDrawer() {
         type: ParamType.SELECT,
         options: t.formItem.counseling.cnsltHow.options,
       },
-      {
-        title: t.formItem.counseling.cnsltDt.label,
-        name: "timeRange",
-        type: ParamType.TIME_RANGE,
-      },
     ]);
   }, [t]);
 
@@ -241,14 +232,7 @@ export function useExampleListWithDrawer() {
     } as CounselingListRequest;
 
     // adapter start
-    Object.keys(requestParams).forEach((key) => {
-      if (key.startsWith("_")) {
-        delete requestParams[key];
-      }
-    });
-    if (requestParams.sttDt && requestParams.endDt) {
-      requestParams["timeRange"] = [moment(requestParams.sttDt), moment(requestParams.endDt)];
-    }
+    //--
     // adapter end
 
     setParamValues(omit(requestParams, ["showSearchParamChildren", "colWidths"]));

@@ -1,22 +1,18 @@
+import { openExampleModal } from "@template/examples/ExampleModal";
 import { Form, message } from "antd";
+import { ParamObject, ParamType, ParamOption } from "components/search";
+import { usePageModel, useI18n, useDidMountEffect, useSpinning } from "hooks";
 import { omit } from "lodash";
+import moment, { Moment } from "moment";
 import * as React from "react";
-import { usePageModel } from "hooks/usePageModel";
-import { RFDGColumn, RFDGSortParam } from "react-frame-datagrid";
-import { RFDGClickParams } from "react-frame-datagrid/dist/commonjs/types";
-import { ROUTES } from "router/Routes";
-import { useI18n } from "hooks";
-import { useDidMountEffect } from "hooks";
+import { RFDGColumn, RFDGSortParam, RFDGClickParams } from "react-frame-datagrid";
 import {
   CounselingListResponse,
   CounselingListRequest,
   CounselingItem,
 } from "repository/CounselingRepositoryInterface";
+import { ROUTES } from "router/Routes";
 import { CounselingService } from "services";
-import { ParamObject, ParamType, ParamOption } from "components/search";
-import moment, { Moment } from "moment";
-import { openExampleModal } from "../../@template/examples/ExampleModal";
-import { useSpinning } from "../../hooks/useSpinning";
 
 export interface SearchFilterParams extends CounselingListRequest {
   select1?: string;
@@ -182,18 +178,6 @@ export function useExampleListWithModal() {
 
     setParamObjects([
       {
-        title: t.formItem.counseling.area.label,
-        name: "select1",
-        type: ParamType.SELECT,
-        options: t.formItem.counseling.area.options,
-      },
-      {
-        title: t.formItem.counseling.cnsltHow.label,
-        name: "select2",
-        type: ParamType.SELECT,
-        options: t.formItem.counseling.cnsltHow.options,
-      },
-      {
         title: t.formItem.counseling.cnsltDt.label,
         name: "timeRange",
         type: ParamType.TIME_RANGE,
@@ -244,11 +228,6 @@ export function useExampleListWithModal() {
     } as CounselingListRequest;
 
     // adapter start
-    Object.keys(requestParams).forEach((key) => {
-      if (key.startsWith("_")) {
-        delete requestParams[key];
-      }
-    });
     if (requestParams.sttDt && requestParams.endDt) {
       requestParams["timeRange"] = [moment(requestParams.sttDt), moment(requestParams.endDt)];
     }

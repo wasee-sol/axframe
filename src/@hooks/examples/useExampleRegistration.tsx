@@ -1,10 +1,8 @@
 import { Form } from "antd";
-import { usePageModel } from "hooks/usePageModel";
+import { usePageModel, useI18n, useDidMountEffect } from "hooks";
 import * as React from "react";
 import { useDaumPostcodePopup } from "react-daum-postcode";
 import { ROUTES } from "router/Routes";
-import { useI18n } from "hooks";
-import { useDidMountEffect } from "hooks/useDidMountEffect";
 import { convertToDate } from "utils/object";
 
 export function useExampleRegistration() {

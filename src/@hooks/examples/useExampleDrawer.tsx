@@ -1,6 +1,6 @@
 import { message } from "antd";
 import * as React from "react";
-import { useSpinning } from "hooks/useSpinning";
+import { useSpinning } from "hooks";
 import { delay } from "utils/thread/timing";
 import { ExampleDrawerResponse } from "@template/examples/ExampleDrawer";
 

@@ -2,8 +2,8 @@ import styled from "@emotion/styled";
 import { Modal, Button } from "antd";
 import * as React from "react";
 import { ModalLayout } from "styles/pageStyled";
-import useExampleModal from "../../@hooks/examples/useExampleModal";
-import { useModalStore } from "../../stores/useModalStore";
+import useExampleModal from "@hooks/examples/useExampleModal";
+import { useModalStore } from "stores/useModalStore";
 
 export interface ExampleModalRequest {
   query?: Record<string, any>;

@@ -1,7 +1,7 @@
 import { Drawer, Space, Button } from "antd";
 import * as React from "react";
-import useExampleDrawer from "../../@hooks/examples/useExampleDrawer";
-import { useDrawerStore } from "../../stores/useDrawerStore";
+import useExampleDrawer from "@hooks/examples/useExampleDrawer";
+import { useDrawerStore } from "stores/useDrawerStore";
 
 export interface ExampleDrawerRequest {
   query?: Record<string, any>;

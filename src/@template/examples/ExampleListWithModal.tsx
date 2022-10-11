@@ -1,15 +1,15 @@
 import styled from "@emotion/styled";
-import { Button, Row, Col, Form, Input } from "antd";
+import { useExampleListWithModal } from "@hooks/examples/useExampleListWithModal";
+import { Button } from "antd";
 import { IconText } from "components/common";
 import { DataGrid } from "components/DataGrid";
 import { SearchParams } from "components/search";
-import { useContainerSize } from "hooks/useContainerSize";
+import { useContainerSize } from "hooks";
 import * as React from "react";
 import { RFIListSearch } from "react-frame-icon";
 import { CounselingItem } from "repository/CounselingRepositoryInterface";
 import { PageLayout } from "styles/pageStyled";
 import { mergeProps } from "utils/object";
-import { useExampleListWithModal } from "../../@hooks/examples/useExampleListWithModal";
 
 interface Props {}
 
@@ -62,44 +62,7 @@ function ExampleListWidthModal(props: Props) {
         visibleChildren={showSearchParamChildren}
         onChangeVisibleChildren={(visible) => setShowSearchParamChildren(visible)}
         spinning={listSpinning}
-      >
-        <>
-          <Row gutter={15}>
-            <Col xs={12} sm={6}>
-              <Form.Item name={"ext1"} label={"Ext1"} colon={false}>
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col xs={12} sm={6}>
-              <Form.Item name={"ext2"} label={"Ext2"} colon={false}>
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col xs={12} sm={6}>
-              <Form.Item name={"ext3"} label={"Ext3"} colon={false}>
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col xs={12} sm={6}>
-              <Form.Item name={"ext4"} label={"Ext4"} colon={false}>
-                <Input />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={15}>
-            <Col xs={12} sm={6}>
-              <Form.Item name={"ext2_1"} label={"Ext1_1"} colon={false}>
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col xs={12} sm={6}>
-              <Form.Item name={"ext2_2"} label={"Ext1_2"} colon={false}>
-                <Input />
-              </Form.Item>
-            </Col>
-          </Row>
-        </>
-      </SearchParams>
+      />
       <Body ref={bodyContainer}>
         <DataGrid<CounselingItem>
           frozenColumnIndex={0}
