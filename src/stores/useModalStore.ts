@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export type ModalFactory<T> = (
   open: boolean,
-  resolve: (value: T) => void,
+  resolve: (value: any) => T,
   reject: (reason?: any) => void,
   onClose: (evt: React.MouseEvent) => void,
   afterClose: () => void
@@ -23,7 +23,7 @@ export class ModalModelClass {
   public resolve!: (value?: unknown) => void;
   public reject!: (reason?: unknown) => void;
   public onClose!: (evt: React.MouseEvent) => void;
-  public afterClose!: (id?: string) => void;
+  public afterClose!: () => void;
 
   public constructor(value: IModalModel) {
     this.modal = value;

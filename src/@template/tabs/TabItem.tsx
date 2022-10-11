@@ -66,9 +66,15 @@ const TabItemContainer = styled.div<StyleProps>`
 
   [role="tab-close"] {
     position: absolute;
+    display: block;
     right: 8px;
-    top: 9px;
-    line-height: 15px;
+    top: 7px;
+    padding: 2px;
+    border-radius: 50%;
+
+    svg {
+      display: block;
+    }
   }
 
   ${({ isHome }) => {
@@ -79,7 +85,7 @@ const TabItemContainer = styled.div<StyleProps>`
     }
     return css`
       min-width: 100px;
-      padding: 0 25px 0 10px;
+      padding: 0 30px 0 10px;
     `;
   }}
   ${({ active, theme }) => {
@@ -90,6 +96,11 @@ const TabItemContainer = styled.div<StyleProps>`
 
         [role="tab-close"] {
           color: ${theme.white_color};
+
+          &:hover {
+            background: ${theme.white_color};
+            color: ${theme.rf_tabs_active_background};
+          }
         }
       `;
     }
@@ -99,6 +110,13 @@ const TabItemContainer = styled.div<StyleProps>`
 
       &:hover {
         background: ${theme.rf_tabs_hover_background};
+      }
+
+      [role="tab-close"] {
+        &:hover {
+          background: ${theme.white_color};
+          color: ${theme.rf_tabs_active_background};
+        }
       }
     `;
   }}

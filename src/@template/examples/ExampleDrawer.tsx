@@ -1,35 +1,64 @@
-import styled from "@emotion/styled";
-import { IconText } from "components/common";
+import { Drawer, Space, Button } from "antd";
 import * as React from "react";
-import { PageLayout } from "styles/pageStyled";
-import { mergeProps } from "utils/object";
-import { useExampleDetail } from "@hooks/examples/useExampleDetail";
+import useExampleDrawer from "../../@hooks/examples/useExampleDrawer";
+import { useDrawerStore } from "../../stores/useDrawerStore";
 
-interface Props {}
+export interface ExampleDrawerRequest {
+  query?: Record<string, any>;
+}
 
-function ExampleDrawer(props: Props) {
-  const { t, urlParams } = mergeProps(props, useExampleDetail());
+export interface ExampleDrawerResponse {
+  save?: boolean;
+  delete?: boolean;
+}
+
+interface Props {
+  open: boolean;
+  onOk: (value: any) => ExampleDrawerResponse;
+  onCancel: (reason?: any) => void;
+  params: ExampleDrawerRequest;
+  afterOpenChange: (open: boolean) => void;
+}
+
+function ExampleDrawer({ open, onOk, onCancel, params, afterOpenChange }: Props) {
+  const { handleTest, handleSave, handleDelete, saveSpinning, deleteSpinning, testSpinning } = useExampleDrawer({
+    onOk,
+    onCancel,
+  });
 
   return (
-    <Container>
-      <Header>
-        <IconText icon={null}>
-          {t.pages.counseling.detail.title} ({urlParams.id})
-        </IconText>
-
-        <ButtonGroup compact></ButtonGroup>
-      </Header>
-      <Body>조회내용</Body>
-    </Container>
+    <Drawer
+      title={`샘플(상세#${params.query?.id})`}
+      width={600}
+      open={open}
+      bodyStyle={{ paddingBottom: 80 }}
+      afterOpenChange={afterOpenChange}
+      onClose={onCancel}
+      extra={
+        <Space>
+          <Button onClick={handleTest} loading={testSpinning}>
+            TEST
+          </Button>
+          <Button type='primary' onClick={handleSave} loading={saveSpinning}>
+            수정하기
+          </Button>
+          <Button onClick={handleDelete} loading={deleteSpinning}>
+            삭제하기
+          </Button>
+          <Button onClick={onCancel}>취소</Button>
+        </Space>
+      }
+    >
+      TEST {params.query?.id}
+    </Drawer>
   );
 }
 
-const Container = styled(PageLayout)``;
-const Header = styled(PageLayout.Header)``;
-const Body = styled(PageLayout.Body)``;
-const FormBoxHeader = styled(PageLayout.FormBoxHeader)``;
-const FormBox = styled(PageLayout.FormBox)``;
-const FormGroupTitle = styled(PageLayout.FormGroupTitle)``;
-const ButtonGroup = styled(PageLayout.ButtonGroup)``;
+export async function openExampleDrawer(params: ExampleDrawerRequest = {}) {
+  const openDrawer = useDrawerStore.getState().openDrawer;
+  return await openDrawer<ExampleDrawerResponse>((open, resolve, reject, onClose, afterOpenChange) => (
+    <ExampleDrawer open={open} onOk={resolve} onCancel={onClose} afterOpenChange={afterOpenChange} params={params} />
+  ));
+}
 
 export default ExampleDrawer;

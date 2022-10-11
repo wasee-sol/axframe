@@ -15,6 +15,7 @@ import {
 import { CounselingService } from "services";
 import { ParamObject, ParamType, ParamOption } from "components/search";
 import moment, { Moment } from "moment";
+import { useSpinning } from "../../hooks/useSpinning";
 
 export interface SearchFilterParams extends CounselingListRequest {
   select1?: string;
@@ -36,6 +37,7 @@ export function useExampleList() {
   );
   const { t, currentLanguage } = useI18n();
   const { linkByPattern } = useLink();
+  const { isBusy, spinning, setSpinning } = useSpinning<{ getApi: boolean }>();
   const defaultRequestParams = React.useRef<CounselingListRequest>({
     pageNumber: 1,
     pageSize: 100,
@@ -46,7 +48,6 @@ export function useExampleList() {
   const [columns, setColumns] = React.useState<RFDGColumn<CounselingItem>[]>([]);
   const [paramValues, setParamValues] = React.useState<CounselingListRequest>(defaultRequestParams);
   const [apiResponse, setApiResponse] = React.useState<CounselingListResponse>();
-  const [listSpinning, setListSpinning] = React.useState(false);
   const [showSearchParamChildren, setShowSearchParamChildren] = React.useState(false);
   const [sortParams, setSortParams] = React.useState<RFDGSortParam[]>([]);
   const [colWidths, setColWidths] = React.useState<number[]>([]);
@@ -61,19 +62,23 @@ export function useExampleList() {
 
   const page = React.useMemo(() => apiResponse?.rs, [apiResponse]);
 
-  const getList = React.useCallback(async (params: CounselingListRequest) => {
-    setListSpinning(true);
+  const getList = React.useCallback(
+    async (params: CounselingListRequest) => {
+      if (isBusy) return;
+      setSpinning({ getApi: true });
 
-    try {
-      const res = await CounselingService.list(params);
-      setApiResponse(res);
+      try {
+        const res = await CounselingService.list(params);
+        setApiResponse(res);
 
-      return res;
-    } catch (e) {
-    } finally {
-      setListSpinning(false);
-    }
-  }, []);
+        return res;
+      } catch (e) {
+      } finally {
+        setSpinning({ getApi: false });
+      }
+    },
+    [isBusy, setSpinning]
+  );
 
   const handleSearch = React.useCallback(async () => {
     await getList(paramValues);
@@ -271,8 +276,7 @@ export function useExampleList() {
     counselingList,
     page,
     sortParams,
-    listSpinning,
-    setListSpinning,
+    listSpinning: spinning?.getApi,
     paramValues,
 
     handleSearch,
