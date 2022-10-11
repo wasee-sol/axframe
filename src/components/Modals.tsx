@@ -3,7 +3,6 @@ import { useModalStore } from "stores/useModalStore";
 
 function Modals() {
   const modals = useModalStore((s) => s.modals);
-  console.log(modals.size);
   return (
     <>
       {[...modals].map(
@@ -14,11 +13,14 @@ function Modals() {
             resolve,
             reject,
             open,
+            onClose,
             afterClose,
           },
         ]) => {
           if (modalFactory) {
-            return <React.Fragment key={key}>{modalFactory(open, resolve, reject, afterClose)}</React.Fragment>;
+            return (
+              <React.Fragment key={key}>{modalFactory(open, resolve, reject, onClose, afterClose)}</React.Fragment>
+            );
           }
 
           return null;

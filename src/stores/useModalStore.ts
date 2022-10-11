@@ -1,3 +1,4 @@
+import * as React from "react";
 import create from "zustand";
 import { v4 as uuidv4 } from "uuid";
 
@@ -5,6 +6,7 @@ export type ModalFactory<T> = (
   open: boolean,
   resolve: (value: T) => void,
   reject: (reason?: any) => void,
+  onClose: (evt: React.MouseEvent) => void,
   afterClose: () => void
 ) => any;
 
@@ -20,6 +22,7 @@ export class ModalModelClass {
   public params: unknown;
   public resolve!: (value?: unknown) => void;
   public reject!: (reason?: unknown) => void;
+  public onClose!: (evt: React.MouseEvent) => void;
   public afterClose!: (id?: string) => void;
 
   public constructor(value: IModalModel) {
@@ -53,6 +56,13 @@ export const useModalStore = create<ModalStore>((set, get) => ({
       modal.reject = (reason) => {
         reject(reason);
         get().closeModal(id);
+      };
+      modal.onClose = (evt) => {
+        if (evt.target["tagName"] !== "INPUT" && evt.target["tagName"] !== "TEXTAREA") {
+          modal.reject();
+          return;
+        }
+        evt.currentTarget["focus"]();
       };
       modal.afterClose = () => {
         get().removeModal(id);

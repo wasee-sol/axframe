@@ -21,9 +21,14 @@ import { RFIArrowLeft, RFIArrowDown, RFIClose, RFIArrowUp } from "react-frame-ic
  * Modal
  */
 if (Modal.defaultProps) {
-  // Modal.defaultProps.transitionName = "slidedown";
+  Modal.defaultProps.transitionName = "slide-down";
   Modal.defaultProps.maskClosable = false;
-  // Modal.defaultProps.closeIcon = <QIClose fontSize={16} />;
+  Modal.defaultProps.closeIcon = <RFIClose fontSize={16} />;
+  Modal.defaultProps.bodyStyle = { padding: 0 };
+  Modal.defaultProps.title = null;
+  Modal.defaultProps.footer = null;
+  Modal.defaultProps.closable = true;
+  Modal.defaultProps.destroyOnClose = true;
 }
 
 /*

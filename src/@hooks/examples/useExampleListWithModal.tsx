@@ -160,7 +160,9 @@ export function useExampleListWithModal() {
   const onClickItem = React.useCallback(async (params: RFDGClickParams<CounselingItem>) => {
     // linkByPattern(ROUTES.EXAMPLES.children.LIST_DETAIL.children.DETAIL, { id: params.item.id });
     try {
-      await openExampleModal({});
+      await openExampleModal({
+        query: params.item,
+      });
     } catch (err) {
       console.log(err);
     }
