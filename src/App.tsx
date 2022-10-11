@@ -7,6 +7,8 @@ import { useAppStore, usePageTabStore, useUserStore } from "stores";
 import "styles/index.less";
 import { themePalette } from "styles/theme";
 import PageRoute from "router/PageRoute";
+import Drawers from "./components/Drawers";
+import Modals from "./components/Modals";
 import StoreSpinner from "./components/StoreSpinner";
 import "./customizeAntd";
 
@@ -50,6 +52,8 @@ const App: React.FC = () => {
         {storeLoaded && (
           <BrowserRouter>
             <PageRoute />
+            <Drawers />
+            <Modals />
           </BrowserRouter>
         )}
       </ConfigProvider>

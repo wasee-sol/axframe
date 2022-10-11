@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "@emotion/styled";
-import { SMixinFlexRow } from "../../styles/emotion";
+import { SMixinFlexRow } from "styles/emotion";
 import { css } from "@emotion/react";
 
 export type AvatarSize = "small" | "medium" | "large";
@@ -8,6 +8,7 @@ export type AvatarSize = "small" | "medium" | "large";
 interface StyleProps {
   size: AvatarSize;
 }
+
 interface Props extends StyleProps {
   userName?: string;
   profileImgUrl?: string;

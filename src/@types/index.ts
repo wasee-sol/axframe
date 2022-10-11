@@ -30,3 +30,10 @@ export interface ApiPageResponse {
   pageNumber: number;
   pageSize: number;
 }
+
+export interface MousePosition {
+  pageX: number;
+  pageY: number;
+  clientX: number;
+  clientY: number;
+}

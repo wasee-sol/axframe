@@ -1,6 +1,7 @@
-import { Form } from "antd";
+import { openExampleModal } from "@template/examples/ExampleModal";
+import { Form, message } from "antd";
 import { ParamObject, ParamType, ParamOption } from "components/search";
-import { usePageModel, useI18n, useLink, useDidMountEffect, useSpinning } from "hooks";
+import { usePageModel, useI18n, useDidMountEffect, useSpinning } from "hooks";
 import { omit } from "lodash";
 import moment, { Moment } from "moment";
 import * as React from "react";
@@ -26,13 +27,12 @@ interface PageModalMetaData extends SearchFilterParams {
   colWidths: number[];
 }
 
-export function useExampleList() {
+export function useExampleListWithModal() {
   const [searchForm] = Form.useForm();
   const { pageModel, pageModelMetadata, setPageModelMetadata } = usePageModel<PageModalMetaData>(
     ROUTES.EXAMPLES.children.LIST_DETAIL.children.LIST.path
   );
   const { t, currentLanguage } = useI18n();
-  const { linkByPattern } = useLink();
   const { isBusy, spinning, setSpinning } = useSpinning<{ getApi: boolean }>();
   const defaultRequestParams = React.useRef<CounselingListRequest>({
     pageNumber: 1,
@@ -157,12 +157,17 @@ export function useExampleList() {
     []
   );
 
-  const onClickItem = React.useCallback(
-    (params: RFDGClickParams<CounselingItem>) => {
-      linkByPattern(ROUTES.EXAMPLES.children.LIST_DETAIL.children.DETAIL, { id: params.item.id });
-    },
-    [linkByPattern]
-  );
+  const onClickItem = React.useCallback(async (params: RFDGClickParams<CounselingItem>) => {
+    try {
+      const data = await openExampleModal({
+        query: params.item,
+      });
+
+      message.info(JSON.stringify(data ?? {}));
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
 
   React.useEffect(() => {
     setFilterTypeOptions([
@@ -172,18 +177,6 @@ export function useExampleList() {
     ]);
 
     setParamObjects([
-      {
-        title: t.formItem.counseling.area.label,
-        name: "select1",
-        type: ParamType.SELECT,
-        options: t.formItem.counseling.area.options,
-      },
-      {
-        title: t.formItem.counseling.cnsltHow.label,
-        name: "select2",
-        type: ParamType.SELECT,
-        options: t.formItem.counseling.cnsltHow.options,
-      },
       {
         title: t.formItem.counseling.cnsltDt.label,
         name: "timeRange",

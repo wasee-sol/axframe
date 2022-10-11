@@ -1,8 +1,9 @@
-import { Form } from "antd";
+import { openExampleDrawer } from "@template/examples/ExampleDrawer";
+import { Form, message } from "antd";
 import { ParamObject, ParamType, ParamOption } from "components/search";
-import { usePageModel, useI18n, useLink, useDidMountEffect, useSpinning } from "hooks";
+import { usePageModel, useI18n, useDidMountEffect, useSpinning } from "hooks";
 import { omit } from "lodash";
-import moment, { Moment } from "moment";
+import { Moment } from "moment";
 import * as React from "react";
 import { RFDGColumn, RFDGSortParam, RFDGClickParams } from "react-frame-datagrid";
 import {
@@ -26,13 +27,12 @@ interface PageModalMetaData extends SearchFilterParams {
   colWidths: number[];
 }
 
-export function useExampleList() {
+export function useExampleListWithDrawer() {
   const [searchForm] = Form.useForm();
   const { pageModel, pageModelMetadata, setPageModelMetadata } = usePageModel<PageModalMetaData>(
     ROUTES.EXAMPLES.children.LIST_DETAIL.children.LIST.path
   );
   const { t, currentLanguage } = useI18n();
-  const { linkByPattern } = useLink();
   const { isBusy, spinning, setSpinning } = useSpinning<{ getApi: boolean }>();
   const defaultRequestParams = React.useRef<CounselingListRequest>({
     pageNumber: 1,
@@ -157,12 +157,14 @@ export function useExampleList() {
     []
   );
 
-  const onClickItem = React.useCallback(
-    (params: RFDGClickParams<CounselingItem>) => {
-      linkByPattern(ROUTES.EXAMPLES.children.LIST_DETAIL.children.DETAIL, { id: params.item.id });
-    },
-    [linkByPattern]
-  );
+  const onClickItem = React.useCallback(async (params: RFDGClickParams<CounselingItem>) => {
+    try {
+      const data = await openExampleDrawer({ query: params.item });
+      message.info(JSON.stringify(data ?? {}));
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
 
   React.useEffect(() => {
     setFilterTypeOptions([
@@ -183,11 +185,6 @@ export function useExampleList() {
         name: "select2",
         type: ParamType.SELECT,
         options: t.formItem.counseling.cnsltHow.options,
-      },
-      {
-        title: t.formItem.counseling.cnsltDt.label,
-        name: "timeRange",
-        type: ParamType.TIME_RANGE,
       },
     ]);
   }, [t]);
@@ -235,9 +232,7 @@ export function useExampleList() {
     } as CounselingListRequest;
 
     // adapter start
-    if (requestParams.sttDt && requestParams.endDt) {
-      requestParams["timeRange"] = [moment(requestParams.sttDt), moment(requestParams.endDt)];
-    }
+    //--
     // adapter end
 
     setParamValues(omit(requestParams, ["showSearchParamChildren", "colWidths"]));

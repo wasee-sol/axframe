@@ -1,7 +1,7 @@
 import { useState } from "react";
 import * as React from "react";
 import { SignInFormItem } from "@template/account/SignIn";
-import { useDialog } from "hooks/useDialog";
+import { useDialog } from "hooks";
 import { useUserStore } from "stores";
 import { UserService } from "services";
 

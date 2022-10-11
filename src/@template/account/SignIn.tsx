@@ -4,7 +4,7 @@ import { Button, Divider, Form, Input } from "antd";
 import * as React from "react";
 import { RFIArrowLogIn } from "react-frame-icon";
 import { SMixinFlexColumn, SMixinFlexRow } from "styles/emotion";
-import { useI18n } from "hooks/useI18n";
+import { useI18n } from "hooks";
 import { useSignIn } from "@hooks/pages/useSignIn";
 import { getTrimNonEmptyRegExp } from "utils/formPatterns/getTrimNonEmptyRegExp";
 import { mergeProps } from "utils/object";
