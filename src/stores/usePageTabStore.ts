@@ -58,15 +58,16 @@ export const usePageTabStore = buildStore<TabsStore>(
       set({ pages: new Map(pagesValues) });
     },
     addTab: (page) => {
-      const pagesEntries = [...get().pages];
+      const pages = get().pages;
+      const pagesEntries = [...pages];
       const existsPageEntry = pagesEntries.find(([, _page]) => _page.path === page.path);
       if (existsPageEntry) {
         return existsPageEntry[0];
       }
 
       const tabUuid = uuidv4();
-      get().pages.set(tabUuid, page);
-      set({ pages: new Map([...get().pages]) });
+      pages.set(tabUuid, page);
+      set({ pages: new Map([...pages]) });
       return tabUuid;
     },
     removeTab: (tabUuid) => {
@@ -85,8 +86,9 @@ export const usePageTabStore = buildStore<TabsStore>(
       return get().getActiveTabPage();
     },
     updateTab: (tabUuid, page) => {
-      get().pages.set(tabUuid, page);
-      set({ pages: new Map([...get().pages]) });
+      const pages = get().pages;
+      pages.set(tabUuid, page);
+      set({ pages: new Map([...pages]) });
     },
     setActiveTab: (activeTabUuid) => {
       set({ activeTabUuid });
