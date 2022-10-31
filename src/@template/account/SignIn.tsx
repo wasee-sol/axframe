@@ -20,18 +20,8 @@ export interface SignInFormItem {
 }
 
 function SignIn(props: Props) {
-  const { onSignIn, signing, setSigning } = mergeProps(props, useSignIn());
+  const { form, onSignIn, spinning } = mergeProps(props, useSignIn());
   const { t, currentLanguage, setLanguage } = useI18n();
-  const [form] = Form.useForm<SignInFormItem>();
-
-  const handleSubmit = React.useCallback(
-    async (values: SignInFormItem) => {
-      setSigning(true);
-      await onSignIn?.(values);
-      setSigning(false);
-    },
-    [onSignIn, setSigning]
-  );
 
   return (
     <SignInContainer>
@@ -41,7 +31,7 @@ function SignIn(props: Props) {
           <Logo>React Frame</Logo>
         </SignInBoxHeader>
         <SignInBoxBody>
-          <Form<SignInFormItem> form={form} onFinish={handleSubmit} layout={"vertical"}>
+          <Form<SignInFormItem> form={form} onFinish={onSignIn} layout={"vertical"}>
             <Form.Item
               label={t.formItem.user.userId.label}
               name='userId'
@@ -75,7 +65,7 @@ function SignIn(props: Props) {
               <Input.Password prefix={<LockOutlined />} placeholder={t.formItem.user.password.placeholder} allowClear />
             </Form.Item>
             <Form.Item>
-              <Button type='primary' htmlType='submit' role={"sign-in-btn"} block loading={signing}>
+              <Button type='primary' htmlType='submit' role={"sign-in-btn"} block loading={spinning}>
                 <RFIArrowLogIn fontSize={20} />
                 Sign In
               </Button>
