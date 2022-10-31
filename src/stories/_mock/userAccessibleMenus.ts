@@ -1,10 +1,10 @@
-import { MenuEnum } from "@types";
+import { MenuIdType } from "router/menus";
 
-export const mock_userAccessibleMenus: MenuEnum[] = [
-  MenuEnum.SAMPLE_REGISTRATION,
-  MenuEnum.SAMPLE_LIST,
-  MenuEnum.SAMPLE_LIST_WITH_MODAL,
-  MenuEnum.SAMPLE_LIST_WITH_DRAWER,
-  MenuEnum.DASHBOARD,
-  MenuEnum.SETTING,
+export const mock_userAccessibleMenus: MenuIdType[] = [
+  MenuIdType.SAMPLE_REGISTRATION,
+  MenuIdType.SAMPLE_LIST,
+  MenuIdType.SAMPLE_LIST_WITH_MODAL,
+  MenuIdType.SAMPLE_LIST_WITH_DRAWER,
+  MenuIdType.DASHBOARD,
+  MenuIdType.SETTING,
 ];

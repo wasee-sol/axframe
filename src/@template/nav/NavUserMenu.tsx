@@ -7,7 +7,7 @@ import { useLink } from "hooks/useLink";
 import * as React from "react";
 import { SMixinScrollerStyle } from "styles/emotion";
 import { mergeProps } from "utils/object";
-import { MenuItem } from "@types";
+import { MenuItem } from "router/menus";
 
 interface StyleProps {
   sideMenuOpened?: boolean;

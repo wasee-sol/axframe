@@ -2,8 +2,7 @@ import * as React from "react";
 import { useUserStore } from "stores";
 import { useDialog } from "hooks";
 import { useAppStore } from "stores";
-import { MENUS } from "router/menus";
-import { MenuItem } from "@types";
+import { MenuItem, MENUS } from "router/menus";
 
 export function useNavGroup() {
   const sideMenuOpened = useAppStore((s) => s.sideMenuOpened);

@@ -1,6 +1,6 @@
 import buildStore from "stores/buildStore";
 import { UserService } from "services";
-import { MenuEnum } from "../@types";
+import { MenuIdType } from "router/menus";
 import { usePageTabStore } from "./usePageTabStore";
 
 export interface User {
@@ -21,7 +21,7 @@ export interface UserMenuItem {
 export interface UserModel {
   loaded: boolean;
   me?: User;
-  accessibleMenus: MenuEnum[];
+  accessibleMenus: MenuIdType[];
   openedMenuUuids: string[];
   selectedMenuUuid: string;
 }
@@ -30,7 +30,7 @@ export interface UserActions {
   setLoaded: (loaded: boolean) => void;
   setMe: (me: User) => Promise<void>;
   signOut: () => Promise<void>;
-  setAccessibleMenus: (accessibleMenus: MenuEnum[]) => void;
+  setAccessibleMenus: (accessibleMenus: MenuIdType[]) => void;
   setOpenedMenuUuids: (uuids: string[]) => void;
   setSelectedMenuUuid: (uuid: string) => void;
 }

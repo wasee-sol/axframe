@@ -1,5 +1,5 @@
-import { MenuItem } from "@types";
 import { RawRoutes, RawRoute } from "router/Routes";
+import { MenuItem } from "router/menus";
 
 export const getFlattedRoutes = (routes) => {
   function getRouteList(routes: RawRoutes): MenuItem[] {

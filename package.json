@@ -40,6 +40,7 @@
     "@emotion/css": "^11.10.0",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
+    "@monaco-editor/react": "^4.4.6",
     "antd": "^4.23.3",
     "color": "^4.2.3",
     "emotion-normalize": "^11.0.1",

@@ -1,4 +1,4 @@
-import { MenuItem } from "@types";
+import { MenuItem } from "router/menus";
 
 export const getFlattedMenus = (menus: MenuItem[]) => {
   const useMenuFlatFn = ({ children = [], ...rest }: any) => {

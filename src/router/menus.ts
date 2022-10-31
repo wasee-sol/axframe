@@ -1,15 +1,31 @@
-import { MenuEnum, MenuItem } from "@types";
+import { LanguageType } from "../i18n";
 import { ROUTES, RawRoute } from "./Routes";
+import { MenuItemType } from "rc-menu/lib/interface";
 
+export enum MenuIdType {
+  SAMPLE_REGISTRATION = "SAMPLE_REGISTRATION",
+  SAMPLE_LIST = "SAMPLE_LIST",
+  SAMPLE_LIST_WITH_MODAL = "SAMPLE_LIST_WITH_MODAL",
+  SAMPLE_LIST_WITH_DRAWER = "SAMPLE_LIST_WITH_DRAWER",
+  DASHBOARD = "DASHBOARD",
+  SETTING = "SETTING",
+}
+
+export interface MenuItem extends MenuItemType {
+  children?: MenuItem[];
+  enum?: MenuIdType;
+  labels?: Record<LanguageType, string>;
+  route?: Record<string, any>;
+}
 interface RawMenu {
-  menuId?: MenuEnum;
+  menuId?: MenuIdType;
   route: RawRoute;
   children?: RawMenu[];
 }
 
 export const menus: RawMenu[] = [
   {
-    menuId: MenuEnum.DASHBOARD,
+    menuId: MenuIdType.DASHBOARD,
     route: ROUTES.DASHBOARD,
   },
   {
@@ -19,27 +35,27 @@ export const menus: RawMenu[] = [
         route: ROUTES.EXAMPLES.children.LIST_DETAIL,
         children: [
           {
-            menuId: MenuEnum.SAMPLE_REGISTRATION,
+            menuId: MenuIdType.SAMPLE_REGISTRATION,
             route: ROUTES.EXAMPLES.children.LIST_DETAIL.children.REGISTRATION,
           },
           {
-            menuId: MenuEnum.SAMPLE_LIST,
+            menuId: MenuIdType.SAMPLE_LIST,
             route: ROUTES.EXAMPLES.children.LIST_DETAIL.children.LIST,
           },
         ],
       },
       {
-        menuId: MenuEnum.SAMPLE_LIST_WITH_MODAL,
+        menuId: MenuIdType.SAMPLE_LIST_WITH_MODAL,
         route: ROUTES.EXAMPLES.children.LIST_WITH_MODAL,
       },
       {
-        menuId: MenuEnum.SAMPLE_LIST_WITH_DRAWER,
+        menuId: MenuIdType.SAMPLE_LIST_WITH_DRAWER,
         route: ROUTES.EXAMPLES.children.LIST_WITH_DRAWER,
       },
     ],
   },
   {
-    menuId: MenuEnum.SETTING,
+    menuId: MenuIdType.SETTING,
     route: ROUTES.SETTING,
   },
 ];

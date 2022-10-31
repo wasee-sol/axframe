@@ -8,7 +8,7 @@ import { User } from "stores/useUserStore";
 import { SMixinFlexColumn } from "styles/emotion";
 import { useNavGroup } from "@hooks/nav/useNavGroup";
 import { mergeProps } from "utils/object";
-import { MenuItem } from "@types";
+import { MenuItem } from "router/menus";
 import NavFooter from "./NavFooter";
 
 interface StyleProps {
