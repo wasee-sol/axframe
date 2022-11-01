@@ -50,7 +50,9 @@ const NavGroupContainer = styled.div<StyleProps>`
 
   ${({ sideMenuOpened, theme }) => {
     if (sideMenuOpened) {
-      return css``;
+      return css`
+        background: ${theme.header_background};
+      `;
     }
     return css`
       background: ${theme.header_background};

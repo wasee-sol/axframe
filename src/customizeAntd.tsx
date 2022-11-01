@@ -9,9 +9,11 @@ import {
   InputNumber,
   InputNumberProps,
   Modal,
+  ModalProps,
   Select,
   SelectProps,
   Tooltip,
+  TooltipProps,
 } from "antd";
 import { PasswordProps } from "antd/lib/input";
 import { BaseOptionType } from "rc-cascader";
@@ -20,24 +22,30 @@ import { RFIArrowLeft, RFIArrowDown, RFIClose, RFIArrowUp } from "react-frame-ic
 /*
  * Modal
  */
-if (Modal.defaultProps) {
-  Modal.defaultProps.transitionName = "slide-down";
-  Modal.defaultProps.maskClosable = false;
-  Modal.defaultProps.closeIcon = <RFIClose fontSize={16} />;
-  Modal.defaultProps.bodyStyle = { padding: 0 };
-  Modal.defaultProps.title = null;
-  Modal.defaultProps.footer = null;
-  Modal.defaultProps.closable = true;
-  Modal.defaultProps.destroyOnClose = true;
+const _Modal = Modal as React.FC<ModalProps>;
+_Modal.defaultProps ??= {};
+const modalDefaultProps = _Modal.defaultProps;
+if (modalDefaultProps) {
+  modalDefaultProps.transitionName = "slide-down";
+  modalDefaultProps.maskClosable = false;
+  modalDefaultProps.closeIcon = <RFIClose fontSize={16} />;
+  modalDefaultProps.bodyStyle = { padding: 0 };
+  modalDefaultProps.title = null;
+  modalDefaultProps.footer = null;
+  modalDefaultProps.closable = true;
+  modalDefaultProps.destroyOnClose = true;
 }
 
 /*
  * Tooltip
  */
-if (Tooltip.defaultProps) {
-  Tooltip.defaultProps.mouseEnterDelay = 0;
-  Tooltip.defaultProps.mouseLeaveDelay = 0;
-  Tooltip.defaultProps.destroyTooltipOnHide = true;
+const _Tooltip = Tooltip as React.FC<TooltipProps>;
+_Tooltip.defaultProps ??= {};
+const tooltipDefaultProps = _Tooltip.defaultProps;
+if (tooltipDefaultProps) {
+  tooltipDefaultProps.mouseEnterDelay = 0;
+  tooltipDefaultProps.mouseLeaveDelay = 0;
+  tooltipDefaultProps.destroyTooltipOnHide = true;
 }
 
 /*
