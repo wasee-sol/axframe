@@ -1,7 +1,7 @@
 import { RFDGSortParam } from "react-frame-datagrid";
-import { ApiListResponse, ApiPageResponse } from "../@types";
+import { ApiListResponse, ApiPageResponse } from "../../@types";
 
-export interface CounselingItem {
+export interface ExampleItem {
   id: number;
   cntrCd: string;
   cntrNm: string;
@@ -49,7 +49,7 @@ export interface CounselingItem {
   updatedByNm: string;
 }
 
-export interface CounselingListRequest {
+export interface ExampleListRequest {
   sttDt?: string;
   endDt?: string;
   filterType?: string;
@@ -59,11 +59,11 @@ export interface CounselingListRequest {
   pageNumber?: number;
 }
 
-export interface CounselingListResponse extends ApiListResponse {
-  ds: CounselingItem[];
+export interface ExampleListResponse extends ApiListResponse {
+  ds: ExampleItem[];
   rs: ApiPageResponse;
 }
 
-export interface CounselingRepositoryInterface {
-  list(params: CounselingListRequest): Promise<CounselingListResponse>;
+export interface ExampleRepositoryInterface {
+  list(params: ExampleListRequest): Promise<ExampleListResponse>;
 }

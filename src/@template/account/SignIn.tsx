@@ -28,7 +28,7 @@ function SignIn(props: Props) {
       <SignInBox>
         <SignInBoxHeader>
           <h1>Sign In</h1>
-          <Logo>React Frame</Logo>
+          <Logo>{t.appName}</Logo>
         </SignInBoxHeader>
         <SignInBoxBody>
           <Form<SignInFormItem> form={form} onFinish={onSignIn} layout={"vertical"}>

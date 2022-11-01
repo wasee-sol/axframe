@@ -5,15 +5,11 @@ import { omit } from "lodash";
 import moment, { Moment } from "moment";
 import * as React from "react";
 import { RFDGColumn, RFDGSortParam, RFDGClickParams } from "react-frame-datagrid";
-import {
-  CounselingListResponse,
-  CounselingListRequest,
-  CounselingItem,
-} from "repository/CounselingRepositoryInterface";
+import { ExampleListResponse, ExampleListRequest, ExampleItem } from "repository/example/ExampleRepositoryInterface";
 import { ROUTES } from "router/Routes";
 import { CounselingService } from "services";
 
-export interface SearchFilterParams extends CounselingListRequest {
+export interface SearchFilterParams extends ExampleListRequest {
   select1?: string;
   select2?: string;
   timeRange?: Moment[];
@@ -34,16 +30,16 @@ export function useExampleList() {
   const { t, currentLanguage } = useI18n();
   const { linkByPattern } = useLink();
   const { isBusy, spinning, setSpinning } = useSpinning<{ getApi: boolean }>();
-  const defaultRequestParams = React.useRef<CounselingListRequest>({
+  const defaultRequestParams = React.useRef<ExampleListRequest>({
     pageNumber: 1,
     pageSize: 100,
   }).current;
 
   const [filterTypeOptions, setFilterTypeOptions] = React.useState<ParamOption[]>([]);
   const [paramObjects, setParamObjects] = React.useState<ParamObject[]>([]);
-  const [columns, setColumns] = React.useState<RFDGColumn<CounselingItem>[]>([]);
-  const [paramValues, setParamValues] = React.useState<CounselingListRequest>(defaultRequestParams);
-  const [apiResponse, setApiResponse] = React.useState<CounselingListResponse>();
+  const [columns, setColumns] = React.useState<RFDGColumn<ExampleItem>[]>([]);
+  const [paramValues, setParamValues] = React.useState<ExampleListRequest>(defaultRequestParams);
+  const [apiResponse, setApiResponse] = React.useState<ExampleListResponse>();
   const [showSearchParamChildren, setShowSearchParamChildren] = React.useState(false);
   const [sortParams, setSortParams] = React.useState<RFDGSortParam[]>([]);
   const [colWidths, setColWidths] = React.useState<number[]>([]);
@@ -59,7 +55,7 @@ export function useExampleList() {
   const page = React.useMemo(() => apiResponse?.rs, [apiResponse]);
 
   const getList = React.useCallback(
-    async (params: CounselingListRequest) => {
+    async (params: ExampleListRequest) => {
       if (isBusy) return;
       setSpinning({ getApi: true });
 
@@ -87,7 +83,7 @@ export function useExampleList() {
   const handleReset = React.useCallback(async () => {
     const requestParams = {
       ...defaultRequestParams,
-    } as CounselingListRequest;
+    } as ExampleListRequest;
 
     setParamValues(requestParams);
     setSortParams([]);
@@ -99,7 +95,7 @@ export function useExampleList() {
   const handleChangeSearchValue = React.useCallback(
     (values: SearchFilterParams) => {
       // adapter start
-      const _values: CounselingListRequest = {};
+      const _values: ExampleListRequest = {};
       if (values.timeRange) {
         _values.sttDt = values.timeRange[0].format("YYYY-MM-DD");
         _values.endDt = values.timeRange[1].format("YYYY-MM-DD");
@@ -115,7 +111,7 @@ export function useExampleList() {
         ...values,
         sttDt: _values.sttDt,
         endDt: _values.endDt,
-      } as CounselingListRequest;
+      } as ExampleListRequest;
 
       setParamValues(requestParams);
     },
@@ -128,7 +124,7 @@ export function useExampleList() {
         ...paramValues,
         pageNumber: pageNo,
         pageSize: pageSize,
-      } as CounselingListRequest;
+      } as ExampleListRequest;
 
       await setParamValues(requestParams);
       await getList(requestParams);
@@ -141,7 +137,7 @@ export function useExampleList() {
       const requestParams = {
         ...paramValues,
         sorts: sortParams,
-      } as CounselingListRequest;
+      } as ExampleListRequest;
 
       setSortParams(sortParams);
       setParamValues(requestParams);
@@ -151,14 +147,14 @@ export function useExampleList() {
   );
 
   const handleColumnsChange = React.useCallback(
-    (columnIndex: number, width: number, columns: RFDGColumn<CounselingItem>[]) => {
+    (columnIndex: number, width: number, columns: RFDGColumn<ExampleItem>[]) => {
       setColWidths(columns.map((column) => column.width));
     },
     []
   );
 
   const onClickItem = React.useCallback(
-    (params: RFDGClickParams<CounselingItem>) => {
+    (params: RFDGClickParams<ExampleItem>) => {
       linkByPattern(ROUTES.EXAMPLES.children.LIST_DETAIL.children.DETAIL, { id: params.item.id });
     },
     [linkByPattern]
@@ -214,7 +210,7 @@ export function useExampleList() {
       }
 
       return column;
-    }) as RFDGColumn<CounselingItem>[];
+    }) as RFDGColumn<ExampleItem>[];
 
     setColumns(_columns);
   }, [t, colWidths]);
@@ -232,7 +228,7 @@ export function useExampleList() {
     const requestParams = {
       ...defaultRequestParams,
       ...pageModelMetadata,
-    } as CounselingListRequest;
+    } as ExampleListRequest;
 
     // adapter start
     if (requestParams.sttDt && requestParams.endDt) {

@@ -6,7 +6,7 @@ import { SearchParams } from "components/search";
 import { useContainerSize } from "hooks";
 import * as React from "react";
 import { RFIListSearch } from "react-frame-icon";
-import { CounselingItem } from "repository/CounselingRepositoryInterface";
+import { ExampleItem } from "repository/example/ExampleRepositoryInterface";
 import { PageLayout } from "styles/pageStyled";
 import { mergeProps } from "utils/object";
 import { useExampleListWithDrawer } from "@hooks/examples/useExampleListWithDrawer";
@@ -42,7 +42,7 @@ function ExampleListWidthDrawer(props: Props) {
   return (
     <Container stretch role={"page-container"}>
       <Header>
-        <IconText icon={<RFIListSearch />}>{t.pages.counseling.list.title}</IconText>
+        <IconText icon={<RFIListSearch />}>{t.examples.counseling.list.title}</IconText>
 
         <ButtonGroup compact>
           <Button size='small'>{t.button.excel}</Button>
@@ -64,7 +64,7 @@ function ExampleListWidthDrawer(props: Props) {
         spinning={listSpinning}
       />
       <Body ref={bodyContainer}>
-        <DataGrid<CounselingItem>
+        <DataGrid<ExampleItem>
           frozenColumnIndex={0}
           width={containerWidth}
           height={containerHeight}

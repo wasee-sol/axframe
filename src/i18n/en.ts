@@ -259,7 +259,7 @@ const EN = {
       closeTabsToRight: "Close Tabs to the right",
     },
   },
-  pages: {
+  examples: {
     counseling: {
       registration: {
         title: "Counseling Registration",

@@ -1,13 +1,9 @@
 import { delay } from "utils/thread/timing";
-import {
-  CounselingRepositoryInterface,
-  CounselingListRequest,
-  CounselingListResponse,
-} from "./CounselingRepositoryInterface";
+import { ExampleRepositoryInterface, ExampleListRequest, ExampleListResponse } from "./ExampleRepositoryInterface";
 
-export class MockCounselingRepository implements CounselingRepositoryInterface {
-  public async list(params: CounselingListRequest): Promise<CounselingListResponse> {
-    console.log("CounselingListRequest", params);
+export class MockExampleRepository implements ExampleRepositoryInterface {
+  public async list(params: ExampleListRequest): Promise<ExampleListResponse> {
+    console.log("ExampleListRequest", params);
     await delay(300);
     return {
       result: "00",

@@ -14,7 +14,7 @@ function ExampleDetail(props: Props) {
     <Container>
       <Header>
         <IconText icon={null}>
-          {t.pages.counseling.detail.title} ({urlParams.id})
+          {t.examples.counseling.detail.title} ({urlParams.id})
         </IconText>
 
         <ButtonGroup compact></ButtonGroup>

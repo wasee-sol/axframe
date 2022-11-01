@@ -5,13 +5,13 @@ import { IconText } from "components/common";
 import moment from "moment";
 import * as React from "react";
 import { RFIWriteForm } from "react-frame-icon";
-import { CounselingItem } from "repository/CounselingRepositoryInterface";
+import { ExampleItem } from "repository/example/ExampleRepositoryInterface";
 import { PageLayout } from "styles/pageStyled";
 import { mergeProps } from "utils/object";
 
 interface Props {}
 
-interface FormField extends CounselingItem {}
+interface FormField extends ExampleItem {}
 
 function ExampleRegistration(props: Props) {
   const { form, t, handleFormValuesChange, handleFormReset, handleFindZipCode } = mergeProps(
@@ -39,7 +39,7 @@ function ExampleRegistration(props: Props) {
   return (
     <Container>
       <Header>
-        <IconText icon={<RFIWriteForm />}>{t.pages.counseling.registration.title}</IconText>
+        <IconText icon={<RFIWriteForm />}>{t.examples.counseling.registration.title}</IconText>
 
         <ButtonGroup compact>
           <Button size='small'>{t.button.temporaryStorageList}</Button>
