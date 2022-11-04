@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import UserAvatar from "@template/user/UserAvatar";
 import { Dropdown, Popover } from "antd";
 import * as React from "react";
-import { RFIMoreVertical } from "react-frame-icon";
+import { AXFIMoreVertical } from "@axframe/icon";
 import { User } from "stores";
 import { SMixinFlexRow } from "styles/emotion";
 import { useNavGroup } from "@hooks/nav/useNavGroup";
@@ -38,7 +38,7 @@ function UserInfo(props: Props) {
               placement={"bottomRight"}
             >
               <DownDownHandle>
-                <RFIMoreVertical />
+                <AXFIMoreVertical />
               </DownDownHandle>
             </Dropdown>
           </>
@@ -84,7 +84,7 @@ const UserInfoBox = styled.div<StyleProps>`
     if (sideMenuOpened) {
       return css`
         ${SMixinFlexRow("stretch", "center")};
-        border-bottom: 1px solid ${theme.rf_border_color};
+        border-bottom: 1px solid ${theme.axf_border_color};
         padding-bottom: 32px;
       `;
     }

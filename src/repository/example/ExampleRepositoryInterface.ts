@@ -1,4 +1,4 @@
-import { RFDGSortParam } from "react-frame-datagrid";
+import { AXFDGSortParam } from "@axframe/datagrid";
 import { ApiListResponse, ApiPageResponse } from "../../@types";
 
 export interface ExampleItem {
@@ -54,7 +54,7 @@ export interface ExampleListRequest {
   endDt?: string;
   filterType?: string;
   filter?: string;
-  sorts?: RFDGSortParam[];
+  sorts?: AXFDGSortParam[];
   pageSize?: number;
   pageNumber?: number;
 }

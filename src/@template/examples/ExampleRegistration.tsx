@@ -4,7 +4,7 @@ import { Form, Select, DatePicker, Radio, Input, Row, Col, Button, Space, Checkb
 import { IconText } from "components/common";
 import moment from "moment";
 import * as React from "react";
-import { RFIWriteForm } from "react-frame-icon";
+import { AXFIWriteForm } from "@axframe/icon";
 import { ExampleItem } from "repository/example/ExampleRepositoryInterface";
 import { PageLayout } from "styles/pageStyled";
 import { mergeProps } from "utils/object";
@@ -39,7 +39,7 @@ function ExampleRegistration(props: Props) {
   return (
     <Container>
       <Header>
-        <IconText icon={<RFIWriteForm />}>{t.examples.counseling.registration.title}</IconText>
+        <IconText icon={<AXFIWriteForm />}>{t.examples.counseling.registration.title}</IconText>
 
         <ButtonGroup compact>
           <Button size='small'>{t.button.temporaryStorageList}</Button>

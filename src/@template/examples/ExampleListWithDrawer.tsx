@@ -5,7 +5,7 @@ import { DataGrid } from "components/DataGrid";
 import { SearchParams } from "components/search";
 import { useContainerSize } from "hooks";
 import * as React from "react";
-import { RFIListSearch } from "react-frame-icon";
+import { AXFIListSearch } from "@axframe/icon";
 import { ExampleItem } from "repository/example/ExampleRepositoryInterface";
 import { PageLayout } from "styles/pageStyled";
 import { mergeProps } from "utils/object";
@@ -42,7 +42,7 @@ function ExampleListWidthDrawer(props: Props) {
   return (
     <Container stretch role={"page-container"}>
       <Header>
-        <IconText icon={<RFIListSearch />}>{t.examples.counseling.list.title}</IconText>
+        <IconText icon={<AXFIListSearch />}>{t.examples.counseling.list.title}</IconText>
 
         <ButtonGroup compact>
           <Button size='small'>{t.button.excel}</Button>

@@ -71,7 +71,7 @@ const PageFormBox = styled.div<{ level?: 1 | 2 | 3 }>`
     if (level === 1) {
       return css`
         background: ${theme.form_box_bg};
-        border: 1px solid ${theme.rf_border_color};
+        border: 1px solid ${theme.axf_border_color};
         border-radius: 4px;
         padding: 20px;
 
@@ -83,7 +83,7 @@ const PageFormBox = styled.div<{ level?: 1 | 2 | 3 }>`
     if (level === 2) {
       return css`
         background: ${theme.component_sub_background};
-        border: 1px solid ${theme.rf_border_color};
+        border: 1px solid ${theme.axf_border_color};
         border-radius: 4px;
         padding: 10px 20px;
         margin: 0 0 15px;

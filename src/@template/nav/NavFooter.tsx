@@ -5,7 +5,7 @@ import { Dropdown, Menu } from "antd";
 import { MenuProps } from "antd/lib/menu";
 import { IconText } from "components/common";
 import * as React from "react";
-import { RFILanguage, RFISun, RFIMoon } from "react-frame-icon";
+import { AXFILanguage, AXFISun, AXFIMoon } from "@axframe/icon";
 import { SMixinFlexColumn, SMixinFlexRow } from "styles/emotion";
 import { mergeProps } from "utils/object";
 
@@ -35,7 +35,7 @@ function NavFooter(props: Props) {
   return (
     <Container sideMenuOpened={sideMenuOpened}>
       <IconText
-        icon={theme === "light" ? <RFIMoon /> : <RFISun />}
+        icon={theme === "light" ? <AXFIMoon /> : <AXFISun />}
         iconSize={20}
         onClick={handleChangeTheme}
         role={"theme-selector"}
@@ -53,7 +53,7 @@ function NavFooter(props: Props) {
         }
         trigger={["click"]}
       >
-        <IconText icon={<RFILanguage />} iconSize={20} role={"lang-selector"}>
+        <IconText icon={<AXFILanguage />} iconSize={20} role={"lang-selector"}>
           {sideMenuOpened && LanguageLabel[currentLanguage]}
         </IconText>
       </Dropdown>
@@ -85,7 +85,7 @@ const Container = styled.div<Props>`
         padding: 0 20px;
         font-size: 13px;
         gap: 10px;
-        border-top: 1px solid ${theme.rf_border_color};
+        border-top: 1px solid ${theme.axf_border_color};
       `;
     }
     return css`

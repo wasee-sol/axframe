@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { IconText } from "components/common";
-import { RFIAdd } from "react-frame-icon";
+import { AXFIAdd } from "@axframe/icon";
 
 export default {
   title: "template/common/IconText",
@@ -15,20 +15,20 @@ const Template: ComponentStory<typeof IconText> = (args) => <IconText {...args} 
 
 export const Default = Template.bind({});
 Default.args = {
-  icon: <RFIAdd />,
+  icon: <AXFIAdd />,
   children: "Add Item",
 };
 
 export const BlockAndNormal = () => {
   return (
     <div style={{ width: 200 }}>
-      <IconText icon={<RFIAdd />} block>
+      <IconText icon={<AXFIAdd />} block>
         Add Item
       </IconText>
-      <IconText icon={<RFIAdd />} iconSize={"2em"}>
+      <IconText icon={<AXFIAdd />} iconSize={"2em"}>
         Add Item
       </IconText>
-      <IconText icon={<RFIAdd />} disabled>
+      <IconText icon={<AXFIAdd />} disabled>
         Add Item
       </IconText>
     </div>

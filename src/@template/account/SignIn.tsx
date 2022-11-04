@@ -2,7 +2,7 @@ import { IdcardOutlined, LockOutlined } from "@ant-design/icons";
 import styled from "@emotion/styled";
 import { Button, Divider, Form, Input } from "antd";
 import * as React from "react";
-import { RFIArrowLogIn } from "react-frame-icon";
+import { AXFIArrowLogIn } from "@axframe/icon";
 import { SMixinFlexColumn, SMixinFlexRow } from "styles/emotion";
 import { useI18n } from "hooks";
 import { useSignIn } from "@hooks/pages/useSignIn";
@@ -66,7 +66,7 @@ function SignIn(props: Props) {
             </Form.Item>
             <Form.Item>
               <Button type='primary' htmlType='submit' role={"sign-in-btn"} block loading={spinning}>
-                <RFIArrowLogIn fontSize={20} />
+                <AXFIArrowLogIn fontSize={20} />
                 Sign In
               </Button>
             </Form.Item>
@@ -124,7 +124,7 @@ const SignInContainer = styled.div`
 const SignInBox = styled.div`
   width: 400px;
   background: ${(p) => p.theme.component_background};
-  border: 1px solid ${(p) => p.theme.rf_border_color};
+  border: 1px solid ${(p) => p.theme.axf_border_color};
   border-radius: 4px;
   box-shadow: ${(p) => p.theme.box_shadow_base};
   padding: 32px;
@@ -144,7 +144,7 @@ const SignInBoxHeader = styled.div`
   }
 
   padding-bottom: 16px;
-  border-bottom: 1px solid ${(p) => p.theme.rf_border_color};
+  border-bottom: 1px solid ${(p) => p.theme.axf_border_color};
 `;
 const SignInBoxBody = styled.div`
   padding: 20px 0;

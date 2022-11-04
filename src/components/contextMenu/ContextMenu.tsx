@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ContextMenu as ContextMenuClass, IRFCMenu } from "react-frame-contextmenu";
+import { ContextMenu as ContextMenuClass, AXFCMenu } from "@axframe/contextmenu";
 import { LanguageType } from "i18n";
 
 export interface IContextmenuItem {
@@ -8,8 +8,8 @@ export interface IContextmenuItem {
 }
 
 export abstract class ContextMenu<T = any> {
-  public menu: IRFCMenu.IContextMenu;
-  private _click: IRFCMenu.OnClickItem<T> | undefined;
+  public menu: AXFCMenu.IContextMenu;
+  private _click: AXFCMenu.OnClickItem<T> | undefined;
   private _lang: LanguageType;
 
   public constructor() {
@@ -18,7 +18,7 @@ export abstract class ContextMenu<T = any> {
     this.initMenu();
   }
 
-  public set onClick(_onClick: IRFCMenu.OnClickItem<T> | undefined) {
+  public set onClick(_onClick: AXFCMenu.OnClickItem<T> | undefined) {
     if (_onClick) {
       this._click = _onClick;
     }
@@ -34,7 +34,7 @@ export abstract class ContextMenu<T = any> {
   }
 
   public handleMenuClick = (
-    menuItem: IRFCMenu.IMenuItem,
+    menuItem: AXFCMenu.IMenuItem,
     browserWindow: Window,
     evt: React.MouseEvent<HTMLDivElement>
   ) => {
@@ -42,7 +42,7 @@ export abstract class ContextMenu<T = any> {
     this._click?.(menuItem, browserWindow, evt);
   };
 
-  public popup(e: React.MouseEvent, _options?: IRFCMenu.IPopupOption): void {
+  public popup(e: React.MouseEvent, _options?: AXFCMenu.IPopupOption): void {
     this.menu.popup({ x: e.pageX, y: e.pageY });
   }
 

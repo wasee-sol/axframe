@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { Tooltip } from "antd";
 import * as React from "react";
-import { ReactFrameLogo, RFIMenuFold, RFIMenuUnfold } from "react-frame-icon";
+import { AXFrameLogo, AXFIMenuFold, AXFIMenuUnfold } from "@axframe/icon";
 import { SMixinFlexColumn, SMixinFlexRow } from "styles/emotion";
 import { useNavGroup } from "@hooks/nav/useNavGroup";
 import { useI18n } from "hooks/useI18n";
@@ -21,10 +21,10 @@ function NavHeader(props: Props) {
     <NavHeaderContainer sideMenuOpened={sideMenuOpened}>
       <Logo sideMenuOpened={sideMenuOpened}>
         {sideMenuOpened ? (
-          <ReactFrameLogo fontSize={24} />
+          <AXFrameLogo fontSize={24} />
         ) : (
           <Tooltip title={t.appName} placement={"right"}>
-            <ReactFrameLogo fontSize={30} />
+            <AXFrameLogo fontSize={30} />
           </Tooltip>
         )}
         {sideMenuOpened ? t.appName : ""}
@@ -33,13 +33,13 @@ function NavHeader(props: Props) {
         {sideMenuOpened ? (
           <IconText
             role={"toggle-icon"}
-            icon={<RFIMenuFold fontSize={18} />}
+            icon={<AXFIMenuFold fontSize={18} />}
             onClick={() => handleSetSideMenuOpened?.(false)}
           />
         ) : (
           <IconText
             role={"toggle-icon"}
-            icon={<RFIMenuUnfold fontSize={18} />}
+            icon={<AXFIMenuUnfold fontSize={18} />}
             onClick={() => handleSetSideMenuOpened?.(true)}
             block
           />

@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "@emotion/styled";
-import { RFIHome, RFIClose } from "react-frame-icon";
+import { AXFIHome, AXFIClose } from "@axframe/icon";
 import { useTabGroup } from "@hooks/tabs/useTabGroup";
 import { PageModel } from "stores";
 import { SMixinFlexRow } from "styles/emotion";
@@ -32,7 +32,7 @@ function TabItem(props: Props) {
       onContextMenu={(evt) => props.onContextMenu(evt, tabUuid)}
     >
       {tabInfo.isHome ? (
-        <RFIHome fontSize={18} />
+        <AXFIHome fontSize={18} />
       ) : (
         <>
           {tabInfo.labels?.[currentLanguage] ?? ""}
@@ -43,7 +43,7 @@ function TabItem(props: Props) {
               evt.stopPropagation();
             }}
           >
-            <RFIClose />
+            <AXFIClose />
           </a>
         </>
       )}
@@ -92,37 +92,37 @@ const TabItemContainer = styled.div<StyleProps>`
     if (active) {
       return css`
         color: ${theme.white_color};
-        background: ${theme.rf_tabs_active_background};
+        background: ${theme.axf_tabs_active_background};
 
         [role="tab-close"] {
           color: ${theme.white_color};
 
           &:hover {
             background: ${theme.white_color};
-            color: ${theme.rf_tabs_active_background};
+            color: ${theme.axf_tabs_active_background};
           }
         }
       `;
     }
     return css`
-      background: ${theme.rf_tabs_background};
+      background: ${theme.axf_tabs_background};
       color: ${theme.text_display_color};
 
       &:hover {
-        background: ${theme.rf_tabs_hover_background};
+        background: ${theme.axf_tabs_hover_background};
       }
 
       [role="tab-close"] {
         &:hover {
           background: ${theme.white_color};
-          color: ${theme.rf_tabs_active_background};
+          color: ${theme.axf_tabs_active_background};
         }
       }
     `;
   }}
   &.sortable-ghost {
     color: ${(p) => p.theme.white_color};
-    background: ${(p) => darken(p.theme.rf_tabs_active_background, 0.6)};
+    background: ${(p) => darken(p.theme.axf_tabs_active_background, 0.6)};
   }
 `;
 

@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import * as React from "react";
-import { RFIArrowLogOut } from "react-frame-icon";
+import { AXFIArrowLogOut } from "@axframe/icon";
 import { useNavGroup } from "@hooks/nav/useNavGroup";
 import { SMixinFlexColumn } from "styles/emotion";
 import { mergeProps } from "utils/object";
@@ -37,7 +37,7 @@ function UserInfoDropdown(props: Props) {
       <CustomDivider />
       <CustomMenus>
         <IconText
-          icon={<RFIArrowLogOut />}
+          icon={<AXFIArrowLogOut />}
           iconSize={"15px"}
           onClick={handleClickSignOut}
           block
@@ -76,7 +76,7 @@ const CustomDivider = styled.div`
   height: 1px;
   width: 100%;
   clear: both;
-  background: ${(p) => p.theme.rf_border_color};
+  background: ${(p) => p.theme.axf_border_color};
 `;
 
 const CustomMenus = styled.div`

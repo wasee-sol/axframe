@@ -5,7 +5,7 @@ import { usePageModel, useI18n, useDidMountEffect, useSpinning } from "hooks";
 import { omit } from "lodash";
 import { Moment } from "moment";
 import * as React from "react";
-import { RFDGColumn, RFDGSortParam, RFDGClickParams } from "react-frame-datagrid";
+import { AXFDGColumn, AXFDGSortParam, AXFDGClickParams } from "@axframe/datagrid";
 import { ExampleListResponse, ExampleListRequest, ExampleItem } from "repository/example/ExampleRepositoryInterface";
 import { ROUTES } from "router/Routes";
 import { CounselingService } from "services";
@@ -37,11 +37,11 @@ export function useExampleListWithDrawer() {
 
   const [filterTypeOptions, setFilterTypeOptions] = React.useState<ParamOption[]>([]);
   const [paramObjects, setParamObjects] = React.useState<ParamObject[]>([]);
-  const [columns, setColumns] = React.useState<RFDGColumn<ExampleItem>[]>([]);
+  const [columns, setColumns] = React.useState<AXFDGColumn<ExampleItem>[]>([]);
   const [paramValues, setParamValues] = React.useState<ExampleListRequest>(defaultRequestParams);
   const [apiResponse, setApiResponse] = React.useState<ExampleListResponse>();
   const [showSearchParamChildren, setShowSearchParamChildren] = React.useState(false);
-  const [sortParams, setSortParams] = React.useState<RFDGSortParam[]>([]);
+  const [sortParams, setSortParams] = React.useState<AXFDGSortParam[]>([]);
   const [colWidths, setColWidths] = React.useState<number[]>([]);
 
   const counselingList = React.useMemo(
@@ -133,7 +133,7 @@ export function useExampleListWithDrawer() {
   );
 
   const handleSortChange = React.useCallback(
-    async (sortParams: RFDGSortParam[]) => {
+    async (sortParams: AXFDGSortParam[]) => {
       const requestParams = {
         ...paramValues,
         sorts: sortParams,
@@ -147,13 +147,13 @@ export function useExampleListWithDrawer() {
   );
 
   const handleColumnsChange = React.useCallback(
-    (columnIndex: number, width: number, columns: RFDGColumn<ExampleItem>[]) => {
+    (columnIndex: number, width: number, columns: AXFDGColumn<ExampleItem>[]) => {
       setColWidths(columns.map((column) => column.width));
     },
     []
   );
 
-  const onClickItem = React.useCallback(async (params: RFDGClickParams<ExampleItem>) => {
+  const onClickItem = React.useCallback(async (params: AXFDGClickParams<ExampleItem>) => {
     try {
       const data = await openExampleDrawer({ query: params.item });
       message.info(JSON.stringify(data ?? {}));
@@ -207,7 +207,7 @@ export function useExampleListWithDrawer() {
       }
 
       return column;
-    }) as RFDGColumn<ExampleItem>[];
+    }) as AXFDGColumn<ExampleItem>[];
 
     setColumns(_columns);
   }, [t, colWidths]);

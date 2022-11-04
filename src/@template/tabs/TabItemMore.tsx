@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 import { Dropdown, Menu } from "antd";
 import * as React from "react";
 import styled from "@emotion/styled";
-import { RFIArrowDown } from "react-frame-icon";
+import { AXFIArrowDown } from "@axframe/icon";
 import { SMixinFlexRow } from "styles/emotion";
 import { useTabGroup } from "@hooks/tabs/useTabGroup";
 import { mergeProps } from "utils/object";
@@ -43,7 +43,7 @@ function TabItemMore(props: Props) {
       onOpenChange={(visible) => setVisible(visible)}
     >
       <TabItemMoreContainer visible={visible}>
-        <RFIArrowDown fontSize={18} />
+        <AXFIArrowDown fontSize={18} />
       </TabItemMoreContainer>
     </Dropdown>
   );
@@ -59,7 +59,7 @@ const TabItemMoreContainer = styled.div<StyleProps>`
   position: relative;
   color: ${(p) => p.theme.primary_color};
 
-  [role="rfi-icon"] {
+  [role="AXFI-icon"] {
     transition: all 0.3s;
     ${({ visible }) => {
       if (visible) {

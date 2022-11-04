@@ -1,12 +1,12 @@
-# react-frame
+# axframe
 
 Solution for Real-world Software
 
 ## Install
 
 ```shell
-git clone git@github.com:thomasJang/react-frame.git
-cd react-frame
+git clone git@github.com:axisj/axframe.git myproject
+cd myproject
 npm i
 ```
 

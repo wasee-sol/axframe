@@ -1,25 +1,25 @@
 import * as React from "react";
 import {
-  RFIDefaultProgram,
-  RFIGraph,
-  RFIInbox,
-  RFIProject,
-  RFIReport,
-  RFISetting,
-  RFITemplate,
-  RFIWriteForm,
-  RFIListSearch,
-} from "react-frame-icon";
+  AXFIDefaultProgram,
+  AXFIGraph,
+  AXFIInbox,
+  AXFIProject,
+  AXFIReport,
+  AXFISetting,
+  AXFITemplate,
+  AXFIWriteForm,
+  AXFIListSearch,
+} from "@axframe/icon";
 
 export type ProgramType =
-  | "RFIGraph"
-  | "RFIInbox"
-  | "RFIProject"
-  | "RFIReport"
-  | "RFISetting"
-  | "RFITemplate"
-  | "RFIWriteForm"
-  | "RFIListSearch";
+  | "AXFIGraph"
+  | "AXFIInbox"
+  | "AXFIProject"
+  | "AXFIReport"
+  | "AXFISetting"
+  | "AXFITemplate"
+  | "AXFIWriteForm"
+  | "AXFIListSearch";
 
 interface Props {
   type: ProgramType;
@@ -27,24 +27,24 @@ interface Props {
 
 function ProgramIcon({ type }: Props) {
   switch (type) {
-    case "RFIGraph":
-      return <RFIGraph className={"ant-menu-item-icon"} />;
-    case "RFIInbox":
-      return <RFIInbox className={"ant-menu-item-icon"} />;
-    case "RFIProject":
-      return <RFIProject className={"ant-menu-item-icon"} />;
-    case "RFIReport":
-      return <RFIReport className={"ant-menu-item-icon"} />;
-    case "RFISetting":
-      return <RFISetting className={"ant-menu-item-icon"} />;
-    case "RFITemplate":
-      return <RFITemplate className={"ant-menu-item-icon"} />;
-    case "RFIWriteForm":
-      return <RFIWriteForm className={"ant-menu-item-icon"} />;
-    case "RFIListSearch":
-      return <RFIListSearch className={"ant-menu-item-icon"} />;
+    case "AXFIGraph":
+      return <AXFIGraph className={"ant-menu-item-icon"} />;
+    case "AXFIInbox":
+      return <AXFIInbox className={"ant-menu-item-icon"} />;
+    case "AXFIProject":
+      return <AXFIProject className={"ant-menu-item-icon"} />;
+    case "AXFIReport":
+      return <AXFIReport className={"ant-menu-item-icon"} />;
+    case "AXFISetting":
+      return <AXFISetting className={"ant-menu-item-icon"} />;
+    case "AXFITemplate":
+      return <AXFITemplate className={"ant-menu-item-icon"} />;
+    case "AXFIWriteForm":
+      return <AXFIWriteForm className={"ant-menu-item-icon"} />;
+    case "AXFIListSearch":
+      return <AXFIListSearch className={"ant-menu-item-icon"} />;
     default:
-      return <RFIDefaultProgram className={"ant-menu-item-icon"} />;
+      return <AXFIDefaultProgram className={"ant-menu-item-icon"} />;
   }
 }
 

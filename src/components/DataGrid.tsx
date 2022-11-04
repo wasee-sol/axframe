@@ -1,8 +1,8 @@
 import * as React from "react";
 import styled from "@emotion/styled";
-import { RFDGProps, RFDataGrid } from "react-frame-datagrid";
+import { AXFDGProps, AXFDataGrid } from "@axframe/datagrid";
 
-interface Props<T> extends RFDGProps<T> {}
+interface Props<T> extends AXFDGProps<T> {}
 
 export function DataGrid<T>({
   frozenColumnIndex,
@@ -18,7 +18,7 @@ export function DataGrid<T>({
 }: Props<T>) {
   return (
     <Container>
-      <RFDataGrid
+      <AXFDataGrid
         headerHeight={35}
         itemHeight={20}
         footerHeight={35}
@@ -32,7 +32,7 @@ const Container = styled.div`
   position: absolute;
   overflow: hidden;
 
-  [role="react-frame-datagrid"] {
+  [role="@axframe/datagrid"] {
     //transition: all 0.1s;
   }
 `;

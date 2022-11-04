@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "@emotion/styled";
 import { Input, Select, Form, FormInstance } from "antd";
-import { RFISearch, RFIArrowDown, RFIArrowUp } from "react-frame-icon";
+import { AXFISearch, AXFIArrowDown, AXFIArrowUp } from "@axframe/icon";
 import { IconText, Spinner } from "components/common";
 import { SMixinFlexRow } from "styles/emotion";
 import { useDidMountEffect } from "../../hooks/useDidMountEffect";
@@ -129,10 +129,10 @@ export function SearchParams({
           </SearchInput>
 
           <Buttons>
-            <IconText icon={spinning ? <Spinner /> : <RFISearch fontSize={18} />} onClick={handleSearch} />
+            <IconText icon={spinning ? <Spinner /> : <AXFISearch fontSize={18} />} onClick={handleSearch} />
             {children && (
               <IconText
-                icon={showChildren ? <RFIArrowUp fontSize={18} /> : <RFIArrowDown fontSize={18} />}
+                icon={showChildren ? <AXFIArrowUp fontSize={18} /> : <AXFIArrowDown fontSize={18} />}
                 onClick={toggleShowExtraParam}
               />
             )}

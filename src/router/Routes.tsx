@@ -1,5 +1,5 @@
 import * as React from "react";
-import { RFIWriteForm, RFIGraph, RFIHome, RFISetting, RFIListSearch, RFIDefaultProgram } from "react-frame-icon";
+import { AXFIWriteForm, AXFIGraph, AXFIHome, AXFISetting, AXFIListSearch, AXFIDefaultProgram } from "@axframe/icon";
 import { getFlattedRoutes } from "../utils/store/getFlattedRoutes";
 
 export interface RawRoute {
@@ -20,33 +20,33 @@ const routes = {
   DASHBOARD: {
     path: "dashboard",
     labels: { en: "Dashboard", ko: "대시보드" },
-    icon: <RFIGraph />,
+    icon: <AXFIGraph />,
   },
   DASHBOARD_VIEWER: {
     path: "dashboard/:id",
     labels: { en: "Dashboard {id}", ko: "대시보드 {id}" },
-    icon: <RFIGraph />,
+    icon: <AXFIGraph />,
   },
 
   EXAMPLES: {
     path: "examples",
     labels: { en: "Examples", ko: "예제화면들" },
-    icon: <RFIDefaultProgram />,
+    icon: <AXFIDefaultProgram />,
     children: {
       LIST_DETAIL: {
         path: "listAndDetail",
         labels: { en: "Example(List&Detail)", ko: "샘플(목록&상세)" },
-        icon: <RFIWriteForm />,
+        icon: <AXFIWriteForm />,
         children: {
           REGISTRATION: {
             path: "registration",
             labels: { en: "Example(Registration)", ko: "샘플(등록화면)" },
-            icon: <RFIWriteForm />,
+            icon: <AXFIWriteForm />,
           },
           LIST: {
             path: "list",
             labels: { en: "Example(List)", ko: "샘플(목록화면)" },
-            icon: <RFIListSearch />,
+            icon: <AXFIListSearch />,
           },
           DETAIL: {
             path: "detail/:id",
@@ -58,13 +58,13 @@ const routes = {
       LIST_WITH_MODAL: {
         path: "listWithModal",
         labels: { en: "Example(List&Modal)", ko: "샘플(목록&모달)" },
-        icon: <RFIListSearch />,
+        icon: <AXFIListSearch />,
       },
 
       LIST_WITH_DRAWER: {
         path: "listWithDrawer",
         labels: { en: "Example(List&Drawer)", ko: "샘플(목록&드로워)" },
-        icon: <RFIWriteForm />,
+        icon: <AXFIWriteForm />,
       },
     },
   },
@@ -72,13 +72,13 @@ const routes = {
   SETTING: {
     path: "setting",
     labels: { en: "Setting", ko: "환경설정" },
-    icon: <RFISetting />,
+    icon: <AXFISetting />,
   },
 
   HOME: {
     path: "",
     labels: { en: "HOME", ko: "홈" },
-    icon: <RFIHome />,
+    icon: <AXFIHome />,
     hideTab: true,
   },
   BLANK_PAGE: {
