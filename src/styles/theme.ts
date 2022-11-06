@@ -24,6 +24,7 @@ const lightAntdColors = {
   warning_color: LIGHT.YELLOW_50,
   white_color: LIGHT.INK_5,
   black_color: "#000",
+  heading_color: LIGHT.INK_90,
   label_color: LIGHT.INK_70,
   input_border_color: LIGHT.INK_40,
   select_border_color: LIGHT.INK_40,
@@ -45,6 +46,7 @@ const lightCustomColors = {
   component_sub_background: LIGHT.INK_10,
   popover_background: LIGHT.INK_5,
   box_shadow_base: LIGHT.ELEVATION_03,
+  box_shadow_layout: LIGHT.ELEVATION_01,
   form_box_bg: LIGHT.INK_5,
 };
 const lightColors = {
@@ -101,6 +103,7 @@ const darkAntdColors: typeof lightAntdColors = {
   warning_color: DARK.YELLOW_50,
   white_color: DARK.INK_5,
   black_color: "#000",
+  heading_color: DARK.INK_5,
   label_color: DARK.INK_5,
   input_border_color: DARK.INK_80,
   select_border_color: DARK.INK_80,
@@ -123,6 +126,7 @@ const darkCustomColors: typeof lightCustomColors = {
   popover_background: DARK.INK_5,
 
   box_shadow_base: DARK.ELEVATION_03,
+  box_shadow_layout: DARK.ELEVATION_01,
   form_box_bg: DARK.INK_90,
 };
 const darkColors: typeof lightColors = {

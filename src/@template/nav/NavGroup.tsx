@@ -45,7 +45,7 @@ function NavGroup(props: Props) {
 
 const NavGroupContainer = styled.div<StyleProps>`
   flex: 1;
-  border-right: 1px solid ${(p) => p.theme.axf_border_color};
+  box-shadow: ${(p) => p.theme.box_shadow_layout};
   ${SMixinFlexColumn("stretch", "stretch")};
 
   ${({ sideMenuOpened, theme }) => {
