@@ -1,11 +1,11 @@
 import { useExampleRegistration } from "@hooks/examples/useExampleRegistration";
 import styled from "@emotion/styled";
-import { Form, Select, DatePicker, Radio, Input, Row, Col, Button, Space, Checkbox } from "antd";
+import { Button, Checkbox, Col, DatePicker, Form, Input, Radio, Row, Select, Space } from "antd";
 import { IconText } from "components/common";
 import moment from "moment";
 import * as React from "react";
 import { AXFIWriteForm } from "@axframe/icon";
-import { ExampleItem } from "repository/example/ExampleRepositoryInterface";
+import { ExampleItem } from "services";
 import { PageLayout } from "styles/pageStyled";
 import { mergeProps } from "utils/object";
 

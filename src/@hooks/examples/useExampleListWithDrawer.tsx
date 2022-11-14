@@ -6,7 +6,7 @@ import { omit } from "lodash";
 import { Moment } from "moment";
 import * as React from "react";
 import { AXFDGColumn, AXFDGSortParam, AXFDGClickParams } from "@axframe/datagrid";
-import { ExampleListResponse, ExampleListRequest, ExampleItem } from "repository/example/ExampleRepositoryInterface";
+import { ExampleListResponse, ExampleListRequest, ExampleItem } from "services";
 import { ROUTES } from "router/Routes";
 import { CounselingService } from "services";
 

@@ -6,7 +6,7 @@ import { SearchParams } from "components/search";
 import { useContainerSize } from "hooks";
 import * as React from "react";
 import { AXFIListSearch } from "@axframe/icon";
-import { ExampleItem } from "repository/example/ExampleRepositoryInterface";
+import { ExampleItem } from "services";
 import { PageLayout } from "styles/pageStyled";
 import { mergeProps } from "utils/object";
 import { useExampleListWithDrawer } from "@hooks/examples/useExampleListWithDrawer";
