@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import React from "react";
 import styled from "@emotion/styled";
-import { SMixinFlexRow, SMixinFlexColumn } from "styles/emotion/mixins";
+import { SMixinFlexRow, SMixinFlexColumn } from "@core/styles/emotion/mixins";
 
 interface Props {
   id?: string;

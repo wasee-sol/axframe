@@ -1,7 +1,7 @@
 import { MockUserRepository } from "./user/MockUserRepository";
-import { MockExampleRepository } from "./example/MockExampleRepository";
+import { MockExampleRepository } from "@core/services/example/MockExampleRepository";
 
-export * from "./example/ExampleRepositoryInterface";
+export * from "@core/services/example/ExampleRepositoryInterface";
 export * from "./user/UserRepositoryInterface";
 
 export const UserService = new MockUserRepository();

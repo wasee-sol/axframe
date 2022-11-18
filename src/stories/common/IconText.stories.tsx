@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { IconText } from "components/common";
+import { IconText } from "@core/components/common";
 import { AXFIAdd } from "@axframe/icon";
 
 export default {

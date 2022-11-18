@@ -1,6 +1,6 @@
 import { MenuIdType } from "router/menus";
 import { User } from "stores";
-import { SignInFormItem } from "../../@template/account/SignIn";
+import { SignInFormItem } from "templates/pages/SignIn";
 
 export interface GetUserMenuResponse {
   accessibleMenus: MenuIdType[];

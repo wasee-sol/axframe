@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 import * as React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import NavGroup from "@template/nav/NavGroup";
-import { MENUS } from "../../router/menus";
+import NavGroup from "@core/templates/nav/NavGroup";
+import { MENUS } from "router/menus";
 
 export default {
   title: "template/nav/NavGroup",

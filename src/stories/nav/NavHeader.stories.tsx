@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import NavHeader from "@template/nav/NavHeader";
+import NavHeader from "@core/templates/nav/NavHeader";
 import * as React from "react";
 
 export default {

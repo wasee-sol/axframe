@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import ExampleRegistration from "@template/examples/ExampleRegistration";
+import ExampleRegistration from "@core/templates/examples/ExampleRegistration";
 
 export default {
   title: "template/pages/ExampleRegistration",

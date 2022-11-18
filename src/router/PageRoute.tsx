@@ -1,25 +1,25 @@
 import * as React from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { useAppStore, usePageTabStore, useUserStore } from "stores";
-import { getFlattedMenus } from "utils/store";
+import { getFlattedMenus } from "@core/utils/store";
 import { MENUS } from "./menus";
 import RequireAuth from "./RequireAuth";
 import RestrictAuth from "./RestrictAuth";
 import { ROUTES } from "./Routes";
 
-const FrameDefault = React.lazy(() => import("@template/pageFrame/FrameDefault"));
-const FrameProgram = React.lazy(() => import("@template/pageFrame/FrameProgram"));
+const FrameDefault = React.lazy(() => import("@core/templates/pageFrame/FrameDefault"));
+const FrameProgram = React.lazy(() => import("@core/templates/pageFrame/FrameProgram"));
 
-const ExampleRegistration = React.lazy(() => import("@template/examples/ExampleRegistration"));
-const ExampleList = React.lazy(() => import("@template/examples/ExampleList"));
-const ExampleDetail = React.lazy(() => import("@template/examples/ExampleDetail"));
-const ExampleListWithModal = React.lazy(() => import("@template/examples/ExampleListWithModal"));
-const ExampleListWithDrawer = React.lazy(() => import("@template/examples/ExampleListWithDrawer"));
-const Dashboard = React.lazy(() => import("@template/pages/PageDashboard"));
-const DashboardViewer = React.lazy(() => import("@template/pages/PageDashboardViewer"));
-const Home = React.lazy(() => import("@template/pages/PageHome"));
-const Setting = React.lazy(() => import("@template/pages/PageSetting"));
-const SignIn = React.lazy(() => import("@template/account/SignIn"));
+const ExampleRegistration = React.lazy(() => import("@core/templates/examples/ExampleRegistration"));
+const ExampleList = React.lazy(() => import("@core/templates/examples/ExampleList"));
+const ExampleDetail = React.lazy(() => import("@core/templates/examples/ExampleDetail"));
+const ExampleListWithModal = React.lazy(() => import("@core/templates/examples/ExampleListWithModal"));
+const ExampleListWithDrawer = React.lazy(() => import("@core/templates/examples/ExampleListWithDrawer"));
+const Dashboard = React.lazy(() => import("templates/pages/Dashboard"));
+const DashboardViewer = React.lazy(() => import("templates/pages/DashboardViewer"));
+const Home = React.lazy(() => import("templates/pages/Home"));
+const Setting = React.lazy(() => import("templates/pages/Setting"));
+const SignIn = React.lazy(() => import("templates/pages/SignIn"));
 
 function PageRoute() {
   const sideMenuOpened = useAppStore((s) => s.sideMenuOpened);

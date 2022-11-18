@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import NavUserMenu from "@template/nav/NavUserMenu";
+import NavUserMenu from "@core/templates/nav/NavUserMenu";
 import * as React from "react";
 import { MENUS } from "router/menus";
 

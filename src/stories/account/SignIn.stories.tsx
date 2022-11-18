@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import SignIn from "@template/account/SignIn";
-import { PageFrameContainer } from "@template/pageFrame/FrameDefault";
+import SignIn from "templates/pages/SignIn";
+import { PageFrameContainer } from "@core/templates/pageFrame/FrameDefault";
 
 export default {
   title: "template/account/SignIn",

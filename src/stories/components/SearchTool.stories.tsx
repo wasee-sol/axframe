@@ -1,8 +1,8 @@
 import { Form } from "antd";
 import * as React from "react";
 import { ComponentMeta } from "@storybook/react";
-import { SearchParams, ParamType } from "../../components/search";
-import { useI18n } from "../../hooks";
+import { SearchParams, SearchParamType } from "@core/components/search";
+import { useI18n } from "hooks";
 
 export default {
   title: "template/components/SearchParams",
@@ -47,19 +47,19 @@ export const ParamObjects = () => {
         {
           title: t.formItem.counseling.area.label,
           name: "select1",
-          type: ParamType.SELECT,
+          type: SearchParamType.SELECT,
           options: t.formItem.counseling.area.options,
         },
         {
           title: t.formItem.counseling.cnsltHow.label,
           name: "select2",
-          type: ParamType.SELECT,
+          type: SearchParamType.SELECT,
           options: t.formItem.counseling.cnsltHow.options,
         },
         {
           title: t.formItem.counseling.cnsltDt.label,
           name: "timeRange",
-          type: ParamType.TIME_RANGE,
+          type: SearchParamType.TIME_RANGE,
         },
       ]}
     />

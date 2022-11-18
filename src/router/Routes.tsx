@@ -1,6 +1,6 @@
 import * as React from "react";
 import { AXFIWriteForm, AXFIGraph, AXFIHome, AXFISetting, AXFIListSearch, AXFIDefaultProgram } from "@axframe/icon";
-import { getFlattedRoutes } from "../utils/store/getFlattedRoutes";
+import { getFlattedRoutes } from "@core/utils/store/getFlattedRoutes";
 
 export interface RawRoute {
   key?: string;
