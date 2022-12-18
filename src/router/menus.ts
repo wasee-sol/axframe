@@ -7,6 +7,7 @@ export enum MenuIdType {
   SAMPLE_LIST = "SAMPLE_LIST",
   SAMPLE_LIST_WITH_MODAL = "SAMPLE_LIST_WITH_MODAL",
   SAMPLE_LIST_WITH_DRAWER = "SAMPLE_LIST_WITH_DRAWER",
+  SAMPLE_LIST_NEW = "SAMPLE_LIST_NEW",
   DASHBOARD = "DASHBOARD",
   SETTING = "SETTING",
 }
@@ -51,6 +52,10 @@ export const menus: RawMenu[] = [
       {
         menuId: MenuIdType.SAMPLE_LIST_WITH_DRAWER,
         route: ROUTES.EXAMPLES.children.LIST_WITH_DRAWER,
+      },
+      {
+        menuId: MenuIdType.SAMPLE_LIST_NEW,
+        route: ROUTES.EXAMPLES.children.LIST_NEW,
       },
     ],
   },

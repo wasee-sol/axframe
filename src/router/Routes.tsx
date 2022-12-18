@@ -66,6 +66,12 @@ const routes = {
         labels: { en: "Example(List&Drawer)", ko: "샘플(목록&드로워)" },
         icon: <AXFIWriteForm />,
       },
+
+      LIST_NEW: {
+        path: "listNew",
+        labels: { en: "Example(List-new)", ko: "샘플(목록-뉴)" },
+        icon: <AXFIWriteForm />,
+      },
     },
   },
 

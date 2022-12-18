@@ -15,6 +15,8 @@ const ExampleList = React.lazy(() => import("@core/templates/examples/ExampleLis
 const ExampleDetail = React.lazy(() => import("@core/templates/examples/ExampleDetail"));
 const ExampleListWithModal = React.lazy(() => import("@core/templates/examples/ExampleListWithModal"));
 const ExampleListWithDrawer = React.lazy(() => import("@core/templates/examples/ExampleListWithDrawer"));
+const NewExampleList = React.lazy(() => import("@core/templates/examples/NewExampleList"));
+
 const Dashboard = React.lazy(() => import("templates/pages/Dashboard"));
 const DashboardViewer = React.lazy(() => import("templates/pages/DashboardViewer"));
 const Home = React.lazy(() => import("templates/pages/Home"));
@@ -61,6 +63,7 @@ function PageRoute() {
           </Route>
           <Route path={ROUTES.EXAMPLES.children.LIST_WITH_MODAL.path} element={<ExampleListWithModal />} />
           <Route path={ROUTES.EXAMPLES.children.LIST_WITH_DRAWER.path} element={<ExampleListWithDrawer />} />
+          <Route path={ROUTES.EXAMPLES.children.LIST_NEW.path} element={<NewExampleList />} />
         </Route>
         <Route path={ROUTES.SETTING.path} element={<Setting />} />
         <Route path={ROUTES.BLANK_PAGE.path} element={<></>} />
