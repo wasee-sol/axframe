@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { useExampleList } from "@core/templateStores/examples/useExampleList";
 import { Button, Col, Form, Input, Row } from "antd";
 import { IconText } from "@core/components/common";
-import { DataGrid } from "components/DataGrid";
+import { DataGrid } from "@core/components/DataGrid";
 import { SearchParams } from "@core/components/search";
 import { useContainerSize } from "@core/hooks/useContainerSize";
 import * as React from "react";
@@ -54,13 +54,12 @@ function ExampleList(props: Props) {
 
       <SearchParams
         form={searchForm}
-        filterTypeOptions={searchFilterTypeOptions}
-        paramObjects={searchParamObjects}
-        paramValues={searchParamValues}
-        onChangeParams={handleChangeSearchValue}
+        params={searchParamObjects}
+        paramsValue={searchParamValues}
+        onChangeParamsValue={handleChangeSearchValue}
         onSearch={handleSearch}
-        visibleChildren={showSearchParamChildren}
-        onChangeVisibleChildren={(visible) => setShowSearchParamChildren(visible)}
+        expand={showSearchParamChildren}
+        onChangeExpand={(visible) => setShowSearchParamChildren(visible)}
         spinning={listSpinning}
       >
         <>

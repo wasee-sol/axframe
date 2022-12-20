@@ -45,7 +45,7 @@ module.exports = {
     "react/jsx-no-target-blank": 0,
     "unused-imports/no-unused-imports-ts": 2,
     "unused-imports/no-unused-vars-ts": 0,
-    "react-hooks/exhaustive-deps": 2,
+    "react-hooks/exhaustive-deps": 1,
     "react/display-name": 0,
     "no-restricted-syntax": [
       2,

@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Button } from "antd";
 import { IconText } from "@core/components/common";
-import { DataGrid } from "components/DataGrid";
+import { DataGrid } from "@core/components/DataGrid";
 import { SearchParams } from "@core/components/search";
 import { useContainerSize } from "hooks";
 import * as React from "react";
@@ -54,13 +54,13 @@ function ExampleListWidthDrawer(props: Props) {
 
       <SearchParams
         form={searchForm}
-        filterTypeOptions={searchFilterTypeOptions}
-        paramObjects={searchParamObjects}
-        paramValues={searchParamValues}
-        onChangeParams={handleChangeSearchValue}
+        // paramOptions={searchFilterTypeOptions}
+        params={searchParamObjects}
+        paramsValue={searchParamValues}
+        onChangeParamsValue={handleChangeSearchValue}
         onSearch={handleSearch}
-        visibleChildren={showSearchParamChildren}
-        onChangeVisibleChildren={(visible) => setShowSearchParamChildren(visible)}
+        expand={showSearchParamChildren}
+        onChangeExpand={(visible) => setShowSearchParamChildren(visible)}
         spinning={listSpinning}
       />
       <Body ref={bodyContainer}>

@@ -23,11 +23,11 @@ export const Filtertype = () => {
   return (
     <SearchParams
       form={form}
-      filterTypeOptions={[
-        { value: "", label: t.filterType.전체 },
-        { value: "title", label: t.filterType.제목 },
-        { value: "writer", label: t.filterType.작성자 },
-      ]}
+      // paramOptions={[
+      //   { value: "", label: t.filterType.전체 },
+      //   { value: "title", label: t.filterType.제목 },
+      //   { value: "writer", label: t.filterType.작성자 },
+      // ]}
     />
   );
 };
@@ -38,12 +38,12 @@ export const ParamObjects = () => {
   return (
     <SearchParams
       form={form}
-      filterTypeOptions={[
-        { value: "", label: t.filterType.전체 },
-        { value: "title", label: t.filterType.제목 },
-        { value: "writer", label: t.filterType.작성자 },
-      ]}
-      paramObjects={[
+      // paramOptions={[
+      //   { value: "", label: t.filterType.전체 },
+      //   { value: "title", label: t.filterType.제목 },
+      //   { value: "writer", label: t.filterType.작성자 },
+      // ]}
+      params={[
         {
           title: t.formItem.counseling.area.label,
           name: "select1",

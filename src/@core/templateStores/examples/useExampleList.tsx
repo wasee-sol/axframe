@@ -26,7 +26,7 @@ export function useExampleList() {
     ROUTES.EXAMPLES.children.LIST_DETAIL.children.LIST.path
   );
   const { t, currentLanguage } = useI18n();
-  const { linkByPattern } = useLink();
+  const { linkByRoute } = useLink();
   const { isBusy, spinning, setSpinning } = useSpinning<{ getApi: boolean }>();
   const initialSearchParams = React.useRef<ExampleListRequest>({
     pageNumber: 1,
@@ -151,9 +151,9 @@ export function useExampleList() {
 
   const onClickItem = React.useCallback(
     (params: AXFDGClickParams<ExampleItem>) => {
-      linkByPattern(ROUTES.EXAMPLES.children.LIST_DETAIL.children.DETAIL, { id: params.item.id });
+      linkByRoute(ROUTES.EXAMPLES.children.LIST_DETAIL.children.DETAIL, { id: params.item.id });
     },
-    [linkByPattern]
+    [linkByRoute]
   );
 
   React.useEffect(() => {

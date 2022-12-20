@@ -1,5 +1,5 @@
 import * as React from "react";
-import { SearchParamObject, SearchParamOption } from "../components/search";
+import { IParam, SearchParamOption } from "../components/search";
 import { AXFDGColumn, AXFDGSortParam } from "@axframe/datagrid";
 
 export function useListPageData<P, R, T>(initialSearchParams: P, pageMetadata: P) {
@@ -12,7 +12,7 @@ export function useListPageData<P, R, T>(initialSearchParams: P, pageMetadata: P
     pageMetadata?.["showSearchParamChildren"] ?? false
   );
   const [searchFilterTypeOptions, setSearchFilterTypeOptions] = React.useState<SearchParamOption[]>([]);
-  const [searchParamObjects, setSearchParamObjects] = React.useState<SearchParamObject[]>([]);
+  const [searchParamObjects, setSearchParamObjects] = React.useState<IParam[]>([]);
   const [searchParamValues, setSearchParamValues] = React.useState<P>(data);
   const [columns, setColumns] = React.useState<AXFDGColumn<T>[]>([]);
   const [colWidths, setColWidths] = React.useState<number[]>(data["colWidths"] ?? []);

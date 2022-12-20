@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { Tooltip } from "antd";
 import * as React from "react";
-import { AppnoriLogo, AXFIMenuFold, AXFIMenuUnfold } from "@axframe/icon";
+import { AXFIMenuFold, AXFIMenuUnfold, AXFrameLogo } from "@axframe/icon";
 import { SMixinFlexColumn, SMixinFlexRow } from "@core/styles/emotion";
 import { useNavGroup } from "@core/templateStores/nav/useNavGroup";
 import { useI18n } from "@core/hooks/useI18n";
@@ -21,10 +21,10 @@ function NavHeader(props: Props) {
     <NavHeaderContainer sideMenuOpened={sideMenuOpened}>
       <Logo sideMenuOpened={sideMenuOpened}>
         {sideMenuOpened ? (
-          <AppnoriLogo fontSize={24} />
+          <AXFrameLogo fontSize={24} />
         ) : (
           <Tooltip title={t.appName} placement={"right"}>
-            <AppnoriLogo fontSize={30} />
+            <AXFrameLogo fontSize={30} />
           </Tooltip>
         )}
         {sideMenuOpened ? t.appName : ""}

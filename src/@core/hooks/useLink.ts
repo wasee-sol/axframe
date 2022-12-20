@@ -40,7 +40,7 @@ export function useLink() {
     [addTab, getActiveTabPage, navigate, setActiveTab, updateTab]
   );
 
-  const linkByPattern = React.useCallback(
+  const linkByRoute = React.useCallback(
     (route: RawRoute, params: Record<string, any>) => {
       const labels = { en: stringFormat(route.labels.en, params), ko: stringFormat(route.labels.ko, params) };
       const { tabUuid, page } = getActiveTabPage();
@@ -66,6 +66,6 @@ export function useLink() {
 
   return {
     linkByTo,
-    linkByPattern,
+    linkByRoute,
   };
 }
