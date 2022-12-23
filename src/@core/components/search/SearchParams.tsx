@@ -7,6 +7,7 @@ import { SMixinFlexRow } from "@core/styles/emotion";
 import { PageLayout } from "styles/pageStyled";
 import { SearchParam, SearchParamOption, SearchParamType } from "./SearchParam";
 import moment from "moment";
+import { getMomentRangeValue } from "../../utils/object";
 
 export interface IParam {
   title: React.ReactNode;
@@ -76,9 +77,7 @@ export function SearchParams({
 
     params?.forEach((filter) => {
       if (filter.type === SearchParamType.TIME_RANGE) {
-        formValues[filter.name] = paramsValue?.[filter.name]
-          ? [moment(paramsValue?.[filter.name]?.[0]), moment(paramsValue?.[filter.name]?.[1])]
-          : [];
+        formValues[filter.name] = getMomentRangeValue(paramsValue?.[filter.name]);
       } else {
         formValues[filter.name] = paramsValue?.[filter.name] ?? "";
       }
