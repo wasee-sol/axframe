@@ -37,7 +37,9 @@ const PageHeader = styled.div`
 `;
 
 const PageBody = styled.div`
+  position: relative;
   flex: 1;
+  ${SMixinFlexColumn("stretch", "stretch")};
 `;
 
 const PageFormBoxHeader = styled.div<{ size?: HeaderSize }>`
@@ -65,6 +67,7 @@ const PageFormBoxHeader = styled.div<{ size?: HeaderSize }>`
     return css``;
   }}
 `;
+
 
 const PageFormBox = styled.div<{ level?: 1 | 2 | 3 }>`
   ${({ level = 1, theme }) => {

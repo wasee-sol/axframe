@@ -15,7 +15,7 @@ const ExampleList = React.lazy(() => import("@core/templates/examples/ExampleLis
 const ExampleDetail = React.lazy(() => import("@core/templates/examples/ExampleDetail"));
 const ExampleListWithModal = React.lazy(() => import("@core/templates/examples/ExampleListWithModal"));
 const ExampleListWithDrawer = React.lazy(() => import("@core/templates/examples/ExampleListWithDrawer"));
-const NewExampleList = React.lazy(() => import("@core/templates/examples/NewExampleList"));
+const NewExampleList = React.lazy(() => import("@core/templates/example"));
 
 const Dashboard = React.lazy(() => import("templates/pages/Dashboard"));
 const DashboardViewer = React.lazy(() => import("templates/pages/DashboardViewer"));

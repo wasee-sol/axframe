@@ -30,4 +30,4 @@ function Modals() {
   );
 }
 
-export default Modals;
+export { Modals };

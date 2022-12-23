@@ -25,9 +25,6 @@ function Dashboard(props: Props) {
 const Container = styled(PageLayout)``;
 const Header = styled(PageLayout.Header)``;
 const Body = styled(PageLayout.Body)``;
-const FormBoxHeader = styled(PageLayout.FormBoxHeader)``;
-const FormBox = styled(PageLayout.FormBox)``;
-const FormGroupTitle = styled(PageLayout.FormGroupTitle)``;
 const ButtonGroup = styled(PageLayout.ButtonGroup)``;
 
 export default Dashboard;

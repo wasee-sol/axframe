@@ -5,7 +5,6 @@ import { usePageTabStore } from "stores";
 import { getFlattedMenus } from "@core/utils/store";
 import { RawRoute } from "router/Routes";
 import { stringFormat } from "../utils/string";
-import { useI18n } from "./useI18n";
 
 export function useLink() {
   const navigate = useNavigate();
@@ -13,7 +12,6 @@ export function useLink() {
   const updateTab = usePageTabStore((s) => s.updateTab);
   const setActiveTab = usePageTabStore((s) => s.setActiveTab);
   const getActiveTabPage = usePageTabStore((s) => s.getActiveTabPage);
-  const { t } = useI18n();
 
   const linkByTo = React.useCallback(
     (to: string) => {

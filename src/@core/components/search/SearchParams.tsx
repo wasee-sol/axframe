@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "@emotion/styled";
-import { Form, FormInstance, Input } from "antd";
+import { Button, Form, FormInstance, Input } from "antd";
 import { AXFIArrowDown, AXFIArrowUp, AXFISearch } from "@axframe/icon";
 import { IconText, Spinner } from "@core/components/common";
 import { SMixinFlexRow } from "@core/styles/emotion";
@@ -76,9 +76,9 @@ export function SearchParams({
 
     params?.forEach((filter) => {
       if (filter.type === SearchParamType.TIME_RANGE) {
-        if (paramsValue?.[filter.name]) {
-          formValues[filter.name] = [moment(paramsValue?.[filter.name]?.[0]), moment(paramsValue?.[filter.name]?.[1])];
-        }
+        formValues[filter.name] = paramsValue?.[filter.name]
+          ? [moment(paramsValue?.[filter.name]?.[0]), moment(paramsValue?.[filter.name]?.[1])]
+          : [];
       } else {
         formValues[filter.name] = paramsValue?.[filter.name] ?? "";
       }
@@ -92,7 +92,7 @@ export function SearchParams({
   }, [form, params, paramsValue, expand]);
 
   return (
-    <Form layout='vertical' form={form} onValuesChange={onValuesChange} scrollToFirstError>
+    <Form layout='vertical' form={form} onValuesChange={onValuesChange} onFinish={handleSearch} scrollToFirstError>
       <Container>
         <DefaultWrap>
           {params && params?.length > 0 && (
@@ -129,6 +129,7 @@ export function SearchParams({
         </DefaultWrap>
         {children && showChildren && <FormBox>{children}</FormBox>}
       </Container>
+      <Button htmlType={"submit"} hidden />
     </Form>
   );
 }

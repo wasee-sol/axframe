@@ -72,4 +72,4 @@ const Container = styled.div`
   }
 `;
 
-export default React.memo(StoreSpinner);
+export { StoreSpinner };

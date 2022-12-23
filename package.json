@@ -54,7 +54,7 @@
     "react-css-theme-switcher": "^0.3.0",
     "react-daum-postcode": "^3.1.1",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.3.0",
+    "react-router-dom": "^6.4.0",
     "react-sortablejs": "^6.1.4",
     "sortablejs": "^1.15.0",
     "uuid": "^8.3.2",

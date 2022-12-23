@@ -30,7 +30,7 @@ module.exports = {
     "@typescript-eslint/no-non-null-assertion": 2,
     "@typescript-eslint/no-unnecessary-type-constraint": 0,
     "@typescript-eslint/no-unused-vars": [
-      2,
+      1,
       {
         vars: "all",
         varsIgnorePattern: "^_",
@@ -44,7 +44,7 @@ module.exports = {
     "react/prop-types": 0,
     "react/jsx-no-target-blank": 0,
     "unused-imports/no-unused-imports-ts": 2,
-    "unused-imports/no-unused-vars-ts": 0,
+    "unused-imports/no-unused-vars-ts": 2,
     "react-hooks/exhaustive-deps": 1,
     "react/display-name": 0,
     "no-restricted-syntax": [
