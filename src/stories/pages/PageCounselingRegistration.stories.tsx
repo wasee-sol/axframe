@@ -1,17 +1,17 @@
 import * as React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import ExampleRegistration from "@core/templates/examples/ExampleRegistration";
+import { ExampleFormSet } from "@core/templates/exampleForm/ExampleFormSet";
 
 export default {
-  title: "template/pages/ExampleRegistration",
-  component: ExampleRegistration,
+  title: "template/pages/ExampleFormSet",
+  component: ExampleFormSet,
   argTypes: {
     backgroundColor: { control: "color" },
   },
-} as ComponentMeta<typeof ExampleRegistration>;
+} as ComponentMeta<typeof ExampleFormSet>;
 
-const Template: ComponentStory<typeof ExampleRegistration> = (args) => {
-  return <ExampleRegistration {...args} />;
+const Template: ComponentStory<typeof ExampleFormSet> = (args) => {
+  return <ExampleFormSet {...args} />;
 };
 
 export const Default = Template.bind({});

@@ -5,21 +5,21 @@ import { DataGrid } from "@core/components/DataGrid";
 import { useContainerSize } from "@core/hooks/useContainerSize";
 import { AXFDGColumn, AXFDGProps } from "@axframe/datagrid";
 import { useI18n } from "@core/hooks/useI18n";
-import { useExampleStore } from "./useExampleStore";
+import { useExampleListStore } from "./useExampleListStore";
 
 interface Props {
   onClick: AXFDGProps<ExampleItem>["onClick"];
 }
 
 function ExampleListDataGrid({ onClick }: Props) {
-  const exampleListColWidths = useExampleStore((s) => s.exampleListColWidths);
-  const exampleSortParams = useExampleStore((s) => s.exampleSortParams);
-  const exampleListData = useExampleStore((s) => s.exampleListData);
-  const exampleListPage = useExampleStore((s) => s.exampleListPage);
-  const exampleListSpinning = useExampleStore((s) => s.exampleListSpinning);
-  const setExampleListColWidths = useExampleStore((s) => s.setExampleListColWidths);
-  const setExampleSortParams = useExampleStore((s) => s.setExampleSortParams);
-  const changeExampleListPage = useExampleStore((s) => s.changeExampleListPage);
+  const exampleListColWidths = useExampleListStore((s) => s.exampleListColWidths);
+  const exampleListSortParams = useExampleListStore((s) => s.exampleListSortParams);
+  const exampleListData = useExampleListStore((s) => s.exampleListData);
+  const exampleListPage = useExampleListStore((s) => s.exampleListPage);
+  const exampleListSpinning = useExampleListStore((s) => s.exampleListSpinning);
+  const setExampleListColWidths = useExampleListStore((s) => s.setExampleListColWidths);
+  const setExampleListSortParams = useExampleListStore((s) => s.setExampleListSortParams);
+  const changeExampleListPage = useExampleListStore((s) => s.changeExampleListPage);
 
   const { t } = useI18n();
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -77,8 +77,8 @@ function ExampleListDataGrid({ onClick }: Props) {
           },
         }}
         sort={{
-          sortParams: exampleSortParams,
-          onChange: setExampleSortParams,
+          sortParams: exampleListSortParams,
+          onChange: setExampleListSortParams,
         }}
         onChangeColumns={handleColumnsChange}
       />

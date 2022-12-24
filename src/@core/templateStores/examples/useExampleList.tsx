@@ -4,7 +4,7 @@ import { useI18n, useLink, useListPageData, usePageMetaData, useSpinning } from 
 import { Moment } from "moment";
 import * as React from "react";
 import { AXFDGClickParams, AXFDGColumn, AXFDGSortParam } from "@axframe/datagrid";
-import { CounselingService, ExampleItem, ExampleListRequest, ExampleListResponse } from "services";
+import { ExampleService, ExampleItem, ExampleListRequest, ExampleListResponse } from "services";
 import { ROUTES } from "router/Routes";
 
 export interface SearchFilterParams extends ExampleListRequest {
@@ -70,7 +70,7 @@ export function useExampleList() {
       setSpinning({ getApi: true });
 
       try {
-        const res = await CounselingService.list(params ?? searchParamValues);
+        const res = await ExampleService.list(params ?? searchParamValues);
         setApiResponse(res);
 
         return res;

@@ -20,7 +20,7 @@ module.exports = {
     "@typescript-eslint/camelcase": 0,
     "@typescript-eslint/consistent-type-assertions": 2,
     "@typescript-eslint/explicit-function-return-type": 0,
-    "@typescript-eslint/explicit-member-accessibility": 2,
+    "@typescript-eslint/explicit-member-accessibility": 0,
     "@typescript-eslint/interface-name-prefix": 0,
     "@typescript-eslint/no-empty-function": 1,
     "@typescript-eslint/no-empty-interface": 0,

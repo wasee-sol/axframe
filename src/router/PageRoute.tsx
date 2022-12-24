@@ -10,12 +10,13 @@ import { ROUTES } from "./Routes";
 const FrameDefault = React.lazy(() => import("@core/templates/pageFrame/FrameDefault"));
 const FrameProgram = React.lazy(() => import("@core/templates/pageFrame/FrameProgram"));
 
-const ExampleRegistration = React.lazy(() => import("@core/templates/examples/ExampleRegistration"));
 const ExampleList = React.lazy(() => import("@core/templates/examples/ExampleList"));
 const ExampleDetail = React.lazy(() => import("@core/templates/examples/ExampleDetail"));
 const ExampleListWithModal = React.lazy(() => import("@core/templates/examples/ExampleListWithModal"));
 const ExampleListWithDrawer = React.lazy(() => import("@core/templates/examples/ExampleListWithDrawer"));
-const NewExampleList = React.lazy(() => import("@core/templates/example"));
+
+const NewExampleList = React.lazy(() => import("@core/templates/exampleList"));
+const ExampleForm = React.lazy(() => import("@core/templates/exampleForm"));
 
 const Dashboard = React.lazy(() => import("templates/pages/Dashboard"));
 const DashboardViewer = React.lazy(() => import("templates/pages/DashboardViewer"));
@@ -54,10 +55,7 @@ function PageRoute() {
         <Route path={ROUTES.DASHBOARD_VIEWER.path} element={<DashboardViewer />} />
         <Route path={ROUTES.EXAMPLES.path}>
           <Route path={ROUTES.EXAMPLES.children.LIST_DETAIL.path}>
-            <Route
-              path={ROUTES.EXAMPLES.children.LIST_DETAIL.children.REGISTRATION.path}
-              element={<ExampleRegistration />}
-            />
+            <Route path={ROUTES.EXAMPLES.children.LIST_DETAIL.children.REGISTRATION.path} element={<ExampleForm />} />
             <Route path={ROUTES.EXAMPLES.children.LIST_DETAIL.children.LIST.path} element={<ExampleList />} />
             <Route path={ROUTES.EXAMPLES.children.LIST_DETAIL.children.DETAIL.path} element={<ExampleDetail />} />
           </Route>

@@ -4,17 +4,17 @@ import { SearchParams, SearchParamType } from "@core/components/search";
 import { useI18n } from "@core/hooks/useI18n";
 import { Form } from "antd";
 import { ExampleListDataGrid } from "./ExampleListDataGrid";
-import { useExampleStore } from "./useExampleStore";
+import { useExampleListStore } from "./useExampleListStore";
 import { SMixinFlexColumn } from "@core/styles/emotion";
 
 interface Props {}
 
 function ExampleListDataSet(props: Props) {
   const { t } = useI18n();
-  const exampleListRequestValue = useExampleStore((s) => s.exampleListRequestValue);
-  const setExampleListRequestValues = useExampleStore((s) => s.setExampleListRequestValues);
-  const callApi = useExampleStore((s) => s.callExampleListApi);
-  const spinning = useExampleStore((s) => s.exampleListSpinning);
+  const exampleListRequestValue = useExampleListStore((s) => s.exampleListRequestValue);
+  const setExampleListRequestValue = useExampleListStore((s) => s.setExampleListRequestValue);
+  const callApi = useExampleListStore((s) => s.callExampleListApi);
+  const spinning = useExampleListStore((s) => s.exampleListSpinning);
 
   const [searchForm] = Form.useForm();
 
@@ -51,7 +51,7 @@ function ExampleListDataSet(props: Props) {
         form={searchForm}
         params={params}
         paramsValue={exampleListRequestValue}
-        onChangeParamsValue={(value) => setExampleListRequestValues(value)}
+        onChangeParamsValue={(value) => setExampleListRequestValue(value)}
         onSearch={handleSearch}
         spinning={spinning}
       />

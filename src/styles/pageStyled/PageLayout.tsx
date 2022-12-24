@@ -15,6 +15,7 @@ interface Props {
 type HeaderSize = "small" | "medium" | "large";
 
 const PageLayoutContainer = styled.div<Props>`
+  position: relative;
   ${({ stretch }) => {
     if (stretch) {
       return css`
@@ -67,7 +68,6 @@ const PageFormBoxHeader = styled.div<{ size?: HeaderSize }>`
     return css``;
   }}
 `;
-
 
 const PageFormBox = styled.div<{ level?: 1 | 2 | 3 }>`
   ${({ level = 1, theme }) => {

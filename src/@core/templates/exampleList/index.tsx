@@ -7,16 +7,17 @@ import { PageLayout } from "styles/pageStyled";
 import { useI18n } from "@core/hooks/useI18n";
 import { ROUTES } from "router/Routes";
 import { ExampleListDataSet } from "./ExampleListDataSet";
-import { useExampleStore } from "./useExampleStore";
+import { useExampleListStore } from "./useExampleListStore";
 import { useDidMountEffect } from "@core/hooks/useDidMountEffect";
 
 interface Props {}
 function ExampleIndex({}: Props) {
   const { t } = useI18n();
-  const reset = useExampleStore((s) => s.reset);
+  const init = useExampleListStore((s) => s.init);
+  const reset = useExampleListStore((s) => s.reset);
 
   useDidMountEffect(() => {
-    useExampleStore.getState().init(ROUTES.EXAMPLES.children.LIST_NEW.path);
+    init(ROUTES.EXAMPLES.children.LIST_NEW.path);
   });
 
   return (

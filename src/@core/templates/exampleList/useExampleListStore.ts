@@ -5,12 +5,12 @@ import {
   ExampleListResponse,
 } from "@core/services/example/ExampleRepositoryInterface";
 import { AXFDGDataItem, AXFDGPage, AXFDGSortParam } from "@axframe/datagrid";
-import { CounselingService } from "services";
+import { ExampleService } from "services";
 import { errorDialog } from "@core/components/dialogs/errorDialog";
 import { usePageTabStore } from "@core/stores/usePageTabStore";
 import { subscribeWithSelector } from "zustand/middleware";
 import shallow from "zustand/shallow";
-import { DefaultPageStoreActions } from "@core/stores/types";
+import { DefaultPageStoreActions, StoreActions } from "@core/stores/types";
 
 interface APIRequest extends ExampleListRequest {}
 interface APIResponse extends ExampleListResponse {}
@@ -18,7 +18,7 @@ interface APIResponse extends ExampleListResponse {}
 interface MetaData {
   exampleListRequestValue: APIRequest;
   exampleListColWidths: number[];
-  exampleSortParams: AXFDGSortParam[];
+  exampleListSortParams: AXFDGSortParam[];
 }
 
 interface States extends MetaData {
@@ -29,21 +29,20 @@ interface States extends MetaData {
 }
 
 interface Actions extends DefaultPageStoreActions {
-  setExampleListRequestValues: (exampleListRequestValues: APIRequest) => void;
+  setExampleListRequestValue: (exampleListRequestValue: APIRequest) => void;
   setExampleListColWidths: (exampleListColWidths: number[]) => void;
   setExampleListSpinning: (exampleListSpinning: boolean) => void;
-  setExampleSortParams: (sortParams: AXFDGSortParam[]) => void;
+  setExampleListSortParams: (sortParams: AXFDGSortParam[]) => void;
   callExampleListApi: (request?: APIRequest) => Promise<void>;
   changeExampleListPage: (currentPage: number, pageSize?: number) => Promise<void>;
 }
 
+// create states
 const _exampleListRequestValue = {
   pageNumber: 1,
   pageSize: 100,
 };
-
-// create states
-const createState = (): States => ({
+const createState: States = {
   exampleListRequestValue: { ..._exampleListRequestValue },
   exampleListColWidths: [],
   exampleListSpinning: false,
@@ -52,23 +51,23 @@ const createState = (): States => ({
     currentPage: 0,
     totalPages: 0,
   },
-  exampleSortParams: [],
-});
+  exampleListSortParams: [],
+};
 
 // create actions
-const createActions = (set, get): Actions => ({
-  setExampleListRequestValues: (exampleListRequestValues) => {
+const createActions: StoreActions<States & Actions, Actions> = (set, get) => ({
+  setExampleListRequestValue: (exampleListRequestValues) => {
     set({ exampleListRequestValue: exampleListRequestValues });
   },
   setExampleListColWidths: (exampleListColWidths) => set({ exampleListColWidths }),
   setExampleListSpinning: (exampleListSpinning) => set({ exampleListSpinning }),
-  setExampleSortParams: (sortParams) => set({ exampleSortParams: sortParams }),
+  setExampleListSortParams: (sortParams) => set({ exampleListSortParams: sortParams }),
   callExampleListApi: async (request) => {
     await set({ exampleListSpinning: true });
 
     try {
       const apiParam = request ?? get().exampleListRequestValue;
-      const response = await CounselingService.list(apiParam);
+      const response = await ExampleService.list(apiParam);
 
       set({
         exampleListData: response.ds.map((values) => ({
@@ -96,27 +95,25 @@ const createActions = (set, get): Actions => ({
     set({ exampleListRequestValue: exampleListRequestValues });
     await get().callExampleListApi();
   },
-  applyMetadata: (metaData) => {
-    set({
-      exampleSortParams: metaData.exampleSortParams,
-      exampleListRequestValue: metaData.exampleListRequestValue,
-      exampleListColWidths: metaData.exampleListColWidths,
-    });
+  syncMetadata: (metaData) => {
+    if (metaData) {
+      console.log(`apply metaData Store : useExampleListStore`);
+      set({
+        exampleListSortParams: metaData.exampleListSortParams,
+        exampleListRequestValue: metaData.exampleListRequestValue,
+        exampleListColWidths: metaData.exampleListColWidths,
+      });
+    } else {
+      console.log(`clear metaData Store : useExampleListStore`);
+      set({
+        exampleListRequestValue: _exampleListRequestValue,
+      });
+    }
   },
 
   init: async (routePath) => {
     const metaData = usePageTabStore.getState().getTabMetaDataByPath(routePath);
-
-    if (metaData) {
-      console.log(`apply metaData at '${routePath}', Store : useExampleStore`);
-      try {
-        get().applyMetadata(metaData);
-      } catch (e) {
-        console.error(
-          "페이지 스토어 에서 applyMetadata 메소드를 찾을 수 없습니다. applyMetadata 액션을 만들어 주세요."
-        );
-      }
-    }
+    if (metaData) get().syncMetadata(metaData);
 
     set({ routePath });
     await get().callExampleListApi();
@@ -126,35 +123,33 @@ const createActions = (set, get): Actions => ({
     if (!routePath) return;
 
     usePageTabStore.getState().setTabMetaDataByPath(routePath, {});
-    set({
-      exampleListRequestValue: _exampleListRequestValue,
-    });
+    get().syncMetadata();
     await get().callExampleListApi();
   },
   destroy: () => {
-    unSubscribeExampleStore();
+    unSubscribeExampleListStore();
   },
 });
 
 // ---------------- exports
-export interface ExampleStore extends States, Actions {}
-export const useExampleStore = create(
-  subscribeWithSelector<ExampleStore>((set, get) => ({
-    ...createState(),
+export interface ExampleListStore extends States, Actions {}
+export const useExampleListStore = create(
+  subscribeWithSelector<ExampleListStore>((set, get) => ({
+    ...createState,
     ...createActions(set, get),
   }))
 );
 
 // pageModel 에 저장할 대상 모델 셀렉터 정의
-export const unSubscribeExampleStore = useExampleStore.subscribe(
-  (s) => [s.exampleSortParams, s.exampleListRequestValue, s.exampleListColWidths],
-  ([exampleSortParams, exampleListRequestValue, exampleListColWidths]) => {
-    const routePath = useExampleStore.getState().routePath;
+export const unSubscribeExampleListStore = useExampleListStore.subscribe(
+  (s) => [s.exampleListSortParams, s.exampleListRequestValue, s.exampleListColWidths],
+  ([exampleListSortParams, exampleListRequestValue, exampleListColWidths]) => {
+    const routePath = useExampleListStore.getState().routePath;
     if (!routePath) return;
     console.log(`Save metaData '${routePath}', Store : useExampleStore`);
 
     usePageTabStore.getState().setTabMetaDataByPath<MetaData>(routePath, {
-      exampleSortParams,
+      exampleListSortParams,
       exampleListRequestValue,
       exampleListColWidths,
     });

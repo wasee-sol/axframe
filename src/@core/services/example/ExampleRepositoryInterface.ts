@@ -2,18 +2,18 @@ import { AXFDGSortParam } from "@axframe/datagrid";
 import { ApiPageResponse } from "../../../@types";
 
 export interface ExampleItem {
-  id: number;
-  cntrCd: string;
-  cntrNm: string;
-  cnsltUserCd: string;
-  area: string;
-  cnsltUserNm: string;
-  cnsltDt: string;
-  cnsltHow: string;
+  id?: number;
+  cntrCd?: string;
+  cntrNm?: string;
+  cnsltUserCd?: string;
+  area?: string;
+  cnsltUserNm?: string;
+  cnsltDt?: string;
+  cnsltHow?: string;
   cnsltPath?: string;
   cnsltPathDtl?: string;
-  name: string;
-  birthDt: string;
+  name?: string;
+  birthDt?: string;
   sex?: string;
   phone1?: string;
   phone2?: string;
@@ -43,10 +43,9 @@ export interface ExampleItem {
   hopePoint1?: string;
   hopePoint1Etc?: string;
   hopePoint3?: string;
-  new: boolean;
-  updatedAt: string;
-  updatedBy: string;
-  updatedByNm: string;
+  updatedAt?: string;
+  updatedBy?: string;
+  updatedByNm?: string;
 }
 
 export interface ExampleListRequest {
@@ -64,6 +63,19 @@ export interface ExampleListResponse {
   rs: ApiPageResponse;
 }
 
-export interface ExampleRepositoryInterface {
-  list(params: ExampleListRequest): Promise<ExampleListResponse>;
+export interface ExampleSaveRequest extends ExampleItem {}
+
+export interface ExampleSaveResponse {
+  ds?: any[];
+  rs: ExampleItem;
+}
+
+// export interface ExampleRepositoryInterface {
+//   list(params: ExampleListRequest): Promise<ExampleListResponse>;
+//   save(params: ExampleFormRequest): Promise<ExampleFormResponse>;
+// }
+
+export abstract class ExampleRepositoryInterface {
+  abstract list(params: ExampleListRequest): Promise<ExampleListResponse>;
+  abstract save(params: ExampleSaveRequest): Promise<ExampleSaveResponse>;
 }
