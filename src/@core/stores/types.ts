@@ -4,9 +4,9 @@ export type ZustandGetter<T> = () => T;
 
 export type StoreActions<T, R> = (set: ZustandSetter<T>, get: ZustandGetter<T>) => R;
 
-export interface DefaultPageStoreActions {
+export interface PageStoreActions {
+  syncMetadata: (metaData?: Record<string, any>) => void;
   init: (routePath: string) => void;
   reset: () => void;
   destroy: () => void;
-  syncMetadata: (metaData?: Record<string, any>) => void;
 }

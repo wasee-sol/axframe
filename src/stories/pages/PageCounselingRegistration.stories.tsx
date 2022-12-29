@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { ExampleFormSet } from "@core/templates/exampleForm/ExampleFormSet";
 
 export default {
-  title: "template/pages/ExampleFormSet",
+  title: "template/pages/ExampleDetailView",
   component: ExampleFormSet,
   argTypes: {
     backgroundColor: { control: "color" },

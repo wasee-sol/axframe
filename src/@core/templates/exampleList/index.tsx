@@ -15,9 +15,16 @@ function ExampleIndex({}: Props) {
   const { t } = useI18n();
   const init = useExampleListStore((s) => s.init);
   const reset = useExampleListStore((s) => s.reset);
+  const callExampleListApi = useExampleListStore((s) => s.callExampleListApi);
+
+  const handleReset = React.useCallback(async () => {
+    reset();
+    await callExampleListApi();
+  }, [callExampleListApi, reset]);
 
   useDidMountEffect(() => {
     init(ROUTES.EXAMPLES.children.LIST_NEW.path);
+    callExampleListApi();
   });
 
   return (
@@ -29,7 +36,7 @@ function ExampleIndex({}: Props) {
           <Button size='small' onClick={() => {}}>
             {t.button.excel}
           </Button>
-          <Button size='small' onClick={() => reset()}>
+          <Button size='small' onClick={handleReset}>
             {t.button.reset}
           </Button>
         </ButtonGroup>

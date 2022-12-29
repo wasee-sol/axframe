@@ -7,10 +7,11 @@ import {
 import { AXFDGDataItem, AXFDGPage, AXFDGSortParam } from "@axframe/datagrid";
 import { ExampleService } from "services";
 import { errorDialog } from "@core/components/dialogs/errorDialog";
-import { usePageTabStore } from "@core/stores/usePageTabStore";
+import { setMetaDataByPath } from "@core/stores/usePageTabStore";
 import { subscribeWithSelector } from "zustand/middleware";
 import shallow from "zustand/shallow";
-import { DefaultPageStoreActions, StoreActions } from "@core/stores/types";
+import { PageStoreActions, StoreActions } from "@core/stores/types";
+import { pageStoreActions } from "@core/stores/pageStoreActions";
 
 interface APIRequest extends ExampleListRequest {}
 interface APIResponse extends ExampleListResponse {}
@@ -28,13 +29,14 @@ interface States extends MetaData {
   exampleListPage: AXFDGPage;
 }
 
-interface Actions extends DefaultPageStoreActions {
+interface Actions extends PageStoreActions {
   setExampleListRequestValue: (exampleListRequestValue: APIRequest) => void;
   setExampleListColWidths: (exampleListColWidths: number[]) => void;
   setExampleListSpinning: (exampleListSpinning: boolean) => void;
   setExampleListSortParams: (sortParams: AXFDGSortParam[]) => void;
   callExampleListApi: (request?: APIRequest) => Promise<void>;
   changeExampleListPage: (currentPage: number, pageSize?: number) => Promise<void>;
+  syncMetadata: (metaData?: Record<string, any>) => void;
 }
 
 // create states
@@ -110,29 +112,11 @@ const createActions: StoreActions<States & Actions, Actions> = (set, get) => ({
       });
     }
   },
-
-  init: async (routePath) => {
-    const metaData = usePageTabStore.getState().getTabMetaDataByPath(routePath);
-    if (metaData) get().syncMetadata(metaData);
-
-    set({ routePath });
-    await get().callExampleListApi();
-  },
-  reset: async () => {
-    const routePath = get().routePath;
-    if (!routePath) return;
-
-    usePageTabStore.getState().setTabMetaDataByPath(routePath, {});
-    get().syncMetadata();
-    await get().callExampleListApi();
-  },
-  destroy: () => {
-    unSubscribeExampleListStore();
-  },
+  ...pageStoreActions(set, get, () => unSubscribeExampleListStore()),
 });
 
 // ---------------- exports
-export interface ExampleListStore extends States, Actions {}
+export interface ExampleListStore extends States, Actions, PageStoreActions {}
 export const useExampleListStore = create(
   subscribeWithSelector<ExampleListStore>((set, get) => ({
     ...createState,
@@ -148,7 +132,7 @@ export const unSubscribeExampleListStore = useExampleListStore.subscribe(
     if (!routePath) return;
     console.log(`Save metaData '${routePath}', Store : useExampleStore`);
 
-    usePageTabStore.getState().setTabMetaDataByPath<MetaData>(routePath, {
+    setMetaDataByPath<MetaData>(routePath, {
       exampleListSortParams,
       exampleListRequestValue,
       exampleListColWidths,

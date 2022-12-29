@@ -6,11 +6,16 @@ import { Form } from "antd";
 import { ExampleListDataGrid } from "./ExampleListDataGrid";
 import { useExampleListStore } from "./useExampleListStore";
 import { SMixinFlexColumn } from "@core/styles/emotion";
+import { AXFDGClickParams } from "@axframe/datagrid";
+import { ExampleItem } from "@core/services/example/ExampleRepositoryInterface";
+import { ROUTES } from "../../../router/Routes";
+import { useLink } from "@core/hooks/useLink";
 
 interface Props {}
 
 function ExampleListDataSet(props: Props) {
   const { t } = useI18n();
+  const { linkByRoute } = useLink();
   const exampleListRequestValue = useExampleListStore((s) => s.exampleListRequestValue);
   const setExampleListRequestValue = useExampleListStore((s) => s.setExampleListRequestValue);
   const callApi = useExampleListStore((s) => s.callExampleListApi);
@@ -21,6 +26,13 @@ function ExampleListDataSet(props: Props) {
   const handleSearch = React.useCallback(async () => {
     await callApi();
   }, [callApi]);
+
+  const onClickItem = React.useCallback(
+    (params: AXFDGClickParams<ExampleItem>) => {
+      linkByRoute(ROUTES.EXAMPLES.children.LIST_DETAIL.children.DETAIL, { id: params.item.id });
+    },
+    [linkByRoute]
+  );
 
   const params = React.useMemo(
     () => [
@@ -56,11 +68,7 @@ function ExampleListDataSet(props: Props) {
         spinning={spinning}
       />
 
-      <ExampleListDataGrid
-        onClick={(params) => {
-          console.log(params.item, params.itemIndex, params.columnIndex);
-        }}
-      />
+      <ExampleListDataGrid onClick={onClickItem} />
     </Container>
   );
 }

@@ -187,3 +187,11 @@ usePageTabStore.persist.onFinishHydration((state) => {
     state.setLoaded(true);
   }
 });
+
+export const setMetaDataByPath = <T extends Record<string, any>>(routePath: string, metaData: Record<keyof T, any>) => {
+  usePageTabStore.getState().setTabMetaDataByPath<T>(routePath, metaData);
+};
+
+export const getMetaDataByPath = <T extends Record<string, any>>(routePath: string) => {
+  return usePageTabStore.getState().getTabMetaDataByPath<T>(routePath);
+};

@@ -11,12 +11,12 @@ const FrameDefault = React.lazy(() => import("@core/templates/pageFrame/FrameDef
 const FrameProgram = React.lazy(() => import("@core/templates/pageFrame/FrameProgram"));
 
 const ExampleList = React.lazy(() => import("@core/templates/examples/ExampleList"));
-const ExampleDetail = React.lazy(() => import("@core/templates/examples/ExampleDetail"));
 const ExampleListWithModal = React.lazy(() => import("@core/templates/examples/ExampleListWithModal"));
 const ExampleListWithDrawer = React.lazy(() => import("@core/templates/examples/ExampleListWithDrawer"));
 
 const NewExampleList = React.lazy(() => import("@core/templates/exampleList"));
 const ExampleForm = React.lazy(() => import("@core/templates/exampleForm"));
+const ExampleDetail = React.lazy(() => import("@core/templates/exampleDetail"));
 
 const Dashboard = React.lazy(() => import("templates/pages/Dashboard"));
 const DashboardViewer = React.lazy(() => import("templates/pages/DashboardViewer"));

@@ -70,6 +70,15 @@ export interface ExampleSaveResponse {
   rs: ExampleItem;
 }
 
+export interface ExampleDetailRequest {
+  id: string;
+}
+
+export interface ExampleDetailResponse {
+  ds?: any[];
+  rs: ExampleItem;
+}
+
 // export interface ExampleRepositoryInterface {
 //   list(params: ExampleListRequest): Promise<ExampleListResponse>;
 //   save(params: ExampleFormRequest): Promise<ExampleFormResponse>;
@@ -78,4 +87,5 @@ export interface ExampleSaveResponse {
 export abstract class ExampleRepositoryInterface {
   abstract list(params: ExampleListRequest): Promise<ExampleListResponse>;
   abstract save(params: ExampleSaveRequest): Promise<ExampleSaveResponse>;
+  abstract detail(params: ExampleDetailRequest): Promise<ExampleDetailResponse>;
 }

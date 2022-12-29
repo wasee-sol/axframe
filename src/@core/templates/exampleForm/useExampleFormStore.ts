@@ -2,10 +2,11 @@ import create from "zustand";
 import { ExampleSaveRequest, ExampleSaveResponse } from "@core/services/example/ExampleRepositoryInterface";
 import { ExampleService } from "services";
 import { errorDialog } from "@core/components/dialogs/errorDialog";
-import { usePageTabStore } from "@core/stores/usePageTabStore";
+import { setMetaDataByPath } from "@core/stores/usePageTabStore";
 import { subscribeWithSelector } from "zustand/middleware";
 import shallow from "zustand/shallow";
-import { DefaultPageStoreActions, StoreActions } from "@core/stores/types";
+import { PageStoreActions, StoreActions } from "@core/stores/types";
+import { pageStoreActions } from "@core/stores/pageStoreActions";
 
 interface APIRequest extends ExampleSaveRequest {}
 interface APIResponse extends ExampleSaveResponse {}
@@ -19,10 +20,11 @@ interface States extends MetaData {
   exampleSaveSpinning: boolean;
 }
 
-interface Actions extends DefaultPageStoreActions {
+interface Actions extends PageStoreActions {
   setExampleSaveRequestValue: (exampleSaveRequestValue: APIRequest) => void;
   setExampleSaveSpinning: (exampleSaveSpinning: boolean) => void;
   callExampleSaveApi: (request?: APIRequest) => Promise<void>;
+  syncMetadata: (metaData?: Record<string, any>) => void;
 }
 
 // create states
@@ -46,9 +48,6 @@ const createActions: StoreActions<States & Actions, Actions> = (set, get) => ({
       const response = await ExampleService.save(apiParam);
 
       console.log(response);
-
-      // set({});
-      get().reset();
     } catch (e) {
       await errorDialog(e as any);
     } finally {
@@ -66,26 +65,11 @@ const createActions: StoreActions<States & Actions, Actions> = (set, get) => ({
       set({ exampleSaveRequestValue: undefined });
     }
   },
-  init: async (routePath) => {
-    const metaData = usePageTabStore.getState().getTabMetaDataByPath(routePath);
-    if (metaData) get().syncMetadata(metaData);
-
-    set({ routePath });
-  },
-  reset: async () => {
-    const routePath = get().routePath;
-    if (!routePath) return;
-
-    usePageTabStore.getState().setTabMetaDataByPath(routePath, {});
-    get().syncMetadata();
-  },
-  destroy: () => {
-    unSubscribeExampleFormStore();
-  },
+  ...pageStoreActions(set, get, () => unSubscribeExampleFormStore()),
 });
 
 // ---------------- exports
-export interface ExampleFormStore extends States, Actions {}
+export interface ExampleFormStore extends States, Actions, PageStoreActions {}
 export const useExampleFormStore = create(
   subscribeWithSelector<ExampleFormStore>((set, get) => ({
     ...createState,
@@ -101,7 +85,7 @@ export const unSubscribeExampleFormStore = useExampleFormStore.subscribe(
     if (!routePath) return;
     console.log(`Save metaData '${routePath}', Store : useExampleFormStore`);
 
-    usePageTabStore.getState().setTabMetaDataByPath<MetaData>(routePath, {
+    setMetaDataByPath<MetaData>(routePath, {
       exampleSaveRequestValue,
     });
   },

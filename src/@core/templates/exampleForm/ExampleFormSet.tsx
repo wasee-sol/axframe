@@ -79,7 +79,10 @@ function ExampleFormSet(props: Props) {
       scrollToFirstError
       initialValues={formInitialValues}
       onValuesChange={onValuesChange}
-      onFinish={() => callExampleSaveApi()}
+      onFinish={async () => {
+        await callExampleSaveApi();
+        await reset();
+      }}
     >
       <Body>
         <FormBox>
