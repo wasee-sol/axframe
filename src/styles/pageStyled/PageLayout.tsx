@@ -43,7 +43,7 @@ const PageBody = styled.div`
   ${SMixinFlexColumn("stretch", "stretch")};
 `;
 
-const PageFormBoxHeader = styled.div<{ size?: HeaderSize }>`
+const PageContentBoxHeader = styled.div<{ size?: HeaderSize }>`
   ${SMixinFlexRow("space-between", "center")};
   font-weight: 600;
   color: ${(p) => p.theme.text_heading_color};
@@ -69,7 +69,7 @@ const PageFormBoxHeader = styled.div<{ size?: HeaderSize }>`
   }}
 `;
 
-const PageFormBox = styled.div<{ level?: 1 | 2 | 3 }>`
+const PageContentBox = styled.div<{ level?: 1 | 2 | 3 }>`
   ${({ level = 1, theme }) => {
     if (level === 1) {
       return css`
@@ -77,10 +77,6 @@ const PageFormBox = styled.div<{ level?: 1 | 2 | 3 }>`
         box-shadow: ${theme.box_shadow_layout};
         border-radius: 4px;
         padding: 20px;
-
-        > * {
-          max-width: 960px;
-        }
       `;
     }
     if (level === 2) {
@@ -90,17 +86,13 @@ const PageFormBox = styled.div<{ level?: 1 | 2 | 3 }>`
         border-radius: 4px;
         padding: 10px 20px;
         margin: 0 0 15px;
-
-        > * {
-          max-width: 960px;
-        }
       `;
     }
     return css``;
   }}
 `;
 
-const PageFormGroupTitle = styled.div`
+const PageGroupTitle = styled.div`
   margin-bottom: 5px;
   color: ${(p) => p.theme.text_heading_color};
   font-weight: bold;
@@ -123,9 +115,9 @@ const ButtonGroup = styled.div<{ compact?: boolean }>`
 export class PageLayout extends React.Component<Props> {
   public static Header = PageHeader;
   public static Body = PageBody;
-  public static FormBoxHeader = PageFormBoxHeader;
-  public static FormBox = PageFormBox;
-  public static FormGroupTitle = PageFormGroupTitle;
+  public static ContentBoxHeader = PageContentBoxHeader;
+  public static ContentBox = PageContentBox;
+  public static GroupTitle = PageGroupTitle;
   public static ButtonGroup = ButtonGroup;
 
   public render(): React.ReactElement {

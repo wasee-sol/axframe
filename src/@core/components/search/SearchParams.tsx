@@ -156,7 +156,7 @@ const Buttons = styled.div`
   flex: none;
 `;
 
-const FormBox = styled(PageLayout.FormBox)`
+const FormBox = styled(PageLayout.ContentBox)`
   margin-top: 10px;
   margin-bottom: 15px;
 

@@ -10,13 +10,11 @@ import { ROUTES } from "./Routes";
 const FrameDefault = React.lazy(() => import("@core/templates/pageFrame/FrameDefault"));
 const FrameProgram = React.lazy(() => import("@core/templates/pageFrame/FrameProgram"));
 
-const ExampleList = React.lazy(() => import("@core/templates/examples/ExampleList"));
-const ExampleListWithModal = React.lazy(() => import("@core/templates/examples/ExampleListWithModal"));
-const ExampleListWithDrawer = React.lazy(() => import("@core/templates/examples/ExampleListWithDrawer"));
-
-const NewExampleList = React.lazy(() => import("@core/templates/exampleList"));
+const ExampleList = React.lazy(() => import("@core/templates/exampleList"));
 const ExampleForm = React.lazy(() => import("@core/templates/exampleForm"));
 const ExampleDetail = React.lazy(() => import("@core/templates/exampleDetail"));
+const ExampleListAndModal = React.lazy(() => import("@core/templates/exampleListAndModal"));
+const ExampleListAndDrawer = React.lazy(() => import("@core/templates/exampleListAndDrawer"));
 
 const Dashboard = React.lazy(() => import("templates/pages/Dashboard"));
 const DashboardViewer = React.lazy(() => import("templates/pages/DashboardViewer"));
@@ -59,9 +57,8 @@ function PageRoute() {
             <Route path={ROUTES.EXAMPLES.children.LIST_DETAIL.children.LIST.path} element={<ExampleList />} />
             <Route path={ROUTES.EXAMPLES.children.LIST_DETAIL.children.DETAIL.path} element={<ExampleDetail />} />
           </Route>
-          <Route path={ROUTES.EXAMPLES.children.LIST_WITH_MODAL.path} element={<ExampleListWithModal />} />
-          <Route path={ROUTES.EXAMPLES.children.LIST_WITH_DRAWER.path} element={<ExampleListWithDrawer />} />
-          <Route path={ROUTES.EXAMPLES.children.LIST_NEW.path} element={<NewExampleList />} />
+          <Route path={ROUTES.EXAMPLES.children.LIST_AND_MODAL.path} element={<ExampleListAndModal />} />
+          <Route path={ROUTES.EXAMPLES.children.LIST_AND_DRAWER.path} element={<ExampleListAndDrawer />} />
         </Route>
         <Route path={ROUTES.SETTING.path} element={<Setting />} />
         <Route path={ROUTES.BLANK_PAGE.path} element={<></>} />

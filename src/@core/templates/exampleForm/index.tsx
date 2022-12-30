@@ -11,7 +11,7 @@ import { ExampleFormSet } from "./ExampleFormSet";
 import { useExampleFormStore } from "./useExampleFormStore";
 
 interface Props {}
-function ExampleForm(props: Props) {
+function Index(props: Props) {
   const { t } = useI18n();
   const init = useExampleFormStore((s) => s.init);
   const reset = useExampleFormStore((s) => s.reset);
@@ -45,4 +45,4 @@ const Container = styled(PageLayout)``;
 const Header = styled(PageLayout.Header)``;
 const ButtonGroup = styled(PageLayout.ButtonGroup)``;
 
-export default ExampleForm;
+export default Index;

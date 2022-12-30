@@ -55,21 +55,15 @@ const routes = {
         },
       },
 
-      LIST_WITH_MODAL: {
+      LIST_AND_MODAL: {
         path: "listWithModal",
         labels: { en: "Example(List&Modal)", ko: "샘플(목록&모달)" },
         icon: <AXFIListSearch />,
       },
 
-      LIST_WITH_DRAWER: {
+      LIST_AND_DRAWER: {
         path: "listWithDrawer",
         labels: { en: "Example(List&Drawer)", ko: "샘플(목록&드로워)" },
-        icon: <AXFIWriteForm />,
-      },
-
-      LIST_NEW: {
-        path: "listNew",
-        labels: { en: "Example(List-new)", ko: "샘플(목록-뉴)" },
         icon: <AXFIWriteForm />,
       },
     },

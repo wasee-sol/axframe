@@ -399,9 +399,13 @@ function ExampleFormSet(props: Props) {
 }
 
 const Body = styled(PageLayout.Body)``;
-const FormBoxHeader = styled(PageLayout.FormBoxHeader)``;
-const FormBox = styled(PageLayout.FormBox)``;
-const FormGroupTitle = styled(PageLayout.FormGroupTitle)``;
+const FormBoxHeader = styled(PageLayout.ContentBoxHeader)``;
+const FormBox = styled(PageLayout.ContentBox)`
+  > * {
+    max-width: 960px;
+  }
+`;
+const FormGroupTitle = styled(PageLayout.GroupTitle)``;
 const ButtonGroup = styled(PageLayout.ButtonGroup)``;
 
 export { ExampleFormSet };

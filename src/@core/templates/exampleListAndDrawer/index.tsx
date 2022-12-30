@@ -6,16 +6,16 @@ import { AXFIListSearch } from "@axframe/icon";
 import { PageLayout } from "styles/pageStyled";
 import { useI18n } from "@core/hooks/useI18n";
 import { ROUTES } from "router/Routes";
-import { ExampleListDataSet } from "./ExampleListDataSet";
-import { useExampleListStore } from "./useExampleListStore";
+import { ExampleListAndDrawerDataSet } from "./ExampleListAndDrawerDataSet";
+import { useExampleListAndDrawerStore } from "./useExampleListAndDrawerStore";
 import { useDidMountEffect } from "@core/hooks/useDidMountEffect";
 
 interface Props {}
 function Index({}: Props) {
   const { t } = useI18n();
-  const init = useExampleListStore((s) => s.init);
-  const reset = useExampleListStore((s) => s.reset);
-  const callExampleListApi = useExampleListStore((s) => s.callExampleListApi);
+  const init = useExampleListAndDrawerStore((s) => s.init);
+  const reset = useExampleListAndDrawerStore((s) => s.reset);
+  const callExampleListApi = useExampleListAndDrawerStore((s) => s.callExampleListApi);
 
   const handleReset = React.useCallback(async () => {
     reset();
@@ -23,7 +23,7 @@ function Index({}: Props) {
   }, [callExampleListApi, reset]);
 
   useDidMountEffect(() => {
-    init(ROUTES.EXAMPLES.children.LIST_DETAIL.children.LIST.path);
+    init(ROUTES.EXAMPLES.children.LIST_AND_DRAWER.path);
     callExampleListApi();
   });
 
@@ -42,7 +42,7 @@ function Index({}: Props) {
         </ButtonGroup>
       </Header>
 
-      <ExampleListDataSet />
+      <ExampleListAndDrawerDataSet />
     </Container>
   );
 }
