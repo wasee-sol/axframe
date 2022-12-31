@@ -35,6 +35,9 @@ export interface TabsActions {
   getActiveTabPage: () => TabPage;
   setActiveTabByPath: (path: string, label?: React.ReactNode) => void;
   clearTab: () => void;
+  getPageByPath: (path: string) => TabPage | undefined;
+  getTabMetaDataByPath: <T extends Record<string, any>>(path: string) => T | undefined;
+  setTabMetaDataByPath: <T extends Record<string, any>>(path: string, metaData: Record<keyof T, any>) => void;
 }
 
 export interface TabsStore extends PagesGroup, TabsActions {}
@@ -148,6 +151,30 @@ export const usePageTabStore = buildStore<TabsStore>(
       });
       set({ pages: new Map([...get().pages]) });
     },
+    getPageByPath: (path) => {
+      const pages = get().pages;
+      const tabUuid = [...pages].find(([, v]) => v.path === path)?.[0] ?? "";
+      const page = pages.get(tabUuid);
+
+      if (!page) return;
+
+      return {
+        tabUuid,
+        page,
+      };
+    },
+    getTabMetaDataByPath: <T>(path) => {
+      const pages = get().pages;
+      const tabUuid = [...pages].find(([, v]) => v.path === path)?.[0] ?? "";
+      return pages.get(tabUuid)?.metaData as T;
+    },
+    setTabMetaDataByPath: (path, metaData) => {
+      const tabPage = get().getPageByPath(path);
+      if (tabPage) {
+        tabPage.page.metaData = metaData;
+        get().updateTab(tabPage.tabUuid, tabPage.page);
+      }
+    },
   }),
   (storageValue) => {
     storageValue.state.activeTabUuid = initialUuid;
@@ -160,3 +187,11 @@ usePageTabStore.persist.onFinishHydration((state) => {
     state.setLoaded(true);
   }
 });
+
+export const setMetaDataByPath = <T extends Record<string, any>>(routePath: string, metaData: Record<keyof T, any>) => {
+  usePageTabStore.getState().setTabMetaDataByPath<T>(routePath, metaData);
+};
+
+export const getMetaDataByPath = <T extends Record<string, any>>(routePath: string) => {
+  return usePageTabStore.getState().getTabMetaDataByPath<T>(routePath);
+};

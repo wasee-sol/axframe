@@ -80,9 +80,10 @@ export const useUserStore = buildStore<UserStore>(
 );
 
 useUserStore.persist.onFinishHydration((state) => {
-  if (!sessionStorage.getItem("token")) {
-    state.clearMe();
-  }
+  // token check
+  // if (!sessionStorage.getItem("token")) {
+  //   state.clearMe();
+  // }
   if (!state.loaded) {
     state.setLoaded(true);
   }

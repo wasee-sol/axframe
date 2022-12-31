@@ -1,48 +1,46 @@
 import * as React from "react";
 import styled from "@emotion/styled";
-import { Form, FormInstance, Input, Select } from "antd";
+import { Button, Form, FormInstance, Input } from "antd";
 import { AXFIArrowDown, AXFIArrowUp, AXFISearch } from "@axframe/icon";
 import { IconText, Spinner } from "@core/components/common";
 import { SMixinFlexRow } from "@core/styles/emotion";
 import { PageLayout } from "styles/pageStyled";
-import { SearchParamOption, SearchParamType, SearchParam } from "./SearchParam";
+import { SearchParam, SearchParamOption, SearchParamType } from "./SearchParam";
 import moment from "moment";
+import { getMomentRangeValue } from "../../utils/object";
 
-export interface SearchParamObject {
+export interface IParam {
   title: React.ReactNode;
   name: string;
   type: SearchParamType;
   options?: SearchParamOption[];
 }
 
-export interface SearchParamValues extends Record<string, any> {
+export interface ParamsValue extends Record<string, any> {
   filter?: string;
-  filterType?: string;
 }
 
 interface Props {
   form: FormInstance<any>;
-  filterTypeOptions?: SearchParamOption[];
-  paramObjects?: SearchParamObject[];
-  paramValues?: SearchParamValues;
-  onChangeParams?: (params: Record<string, any>) => void;
+  params?: IParam[];
+  paramsValue?: ParamsValue;
+  onChangeParamsValue?: (paramsValue: Record<string, any>) => void;
   onSearch?: () => void;
   children?: React.ReactNode;
-  visibleChildren?: boolean;
-  onChangeVisibleChildren?: (visible: boolean) => void;
+  expand?: boolean;
+  onChangeExpand?: (expand: boolean) => void;
   spinning?: boolean;
 }
 
 export function SearchParams({
   form,
-  filterTypeOptions,
-  paramObjects,
-  paramValues,
-  onChangeParams,
+  params,
+  paramsValue,
+  onChangeParamsValue,
   onSearch,
   children,
-  visibleChildren,
-  onChangeVisibleChildren,
+  expand,
+  onChangeExpand,
   spinning,
 }: Props) {
   const [showChildren, setShowChildren] = React.useState(false);
@@ -53,60 +51,58 @@ export function SearchParams({
 
   const onValuesChange = React.useCallback(
     (changedValues: any, values: Record<string, any>) => {
-      onChangeParams?.(values);
+      onChangeParamsValue?.(values);
     },
-    [onChangeParams]
+    [onChangeParamsValue]
   );
 
   const onClickExtraButton = React.useCallback(
     (params: Record<string, any>) => {
       form.setFieldsValue(params);
-      onChangeParams?.(form.getFieldsValue());
+      onChangeParamsValue?.(form.getFieldsValue());
     },
-    [form, onChangeParams]
+    [form, onChangeParamsValue]
   );
 
   const toggleShowExtraParam = React.useCallback(() => {
-    onChangeVisibleChildren?.(!showChildren);
+    onChangeExpand?.(!showChildren);
     setShowChildren(!showChildren);
-  }, [onChangeVisibleChildren, showChildren]);
+  }, [onChangeExpand, showChildren]);
 
   React.useEffect(() => {
     const formValues = {
-      filterType: paramValues?.filterType,
-      filter: paramValues?.filter,
+      filterType: paramsValue?.filterType,
+      filter: paramsValue?.filter,
     };
 
-    paramObjects?.forEach((filter) => {
+    params?.forEach((filter) => {
       if (filter.type === SearchParamType.TIME_RANGE) {
-        if (paramValues?.[filter.name]) {
-          formValues[filter.name] = [moment(paramValues?.[filter.name]?.[0]), moment(paramValues?.[filter.name]?.[1])];
-        }
+        formValues[filter.name] = getMomentRangeValue(paramsValue?.[filter.name]);
       } else {
-        formValues[filter.name] = paramValues?.[filter.name] ?? "";
+        formValues[filter.name] = paramsValue?.[filter.name] ?? "";
       }
     });
 
     form.setFieldsValue(formValues);
 
-    if (visibleChildren !== undefined) {
-      setShowChildren(visibleChildren);
+    if (expand !== undefined) {
+      setShowChildren(expand);
     }
-  }, [form, paramObjects, paramValues, visibleChildren]);
+  }, [form, params, paramsValue, expand]);
 
   return (
-    <Form layout='vertical' form={form} onValuesChange={onValuesChange} scrollToFirstError>
+    <Form layout='vertical' form={form} onValuesChange={onValuesChange} onFinish={handleSearch} scrollToFirstError>
       <Container>
         <DefaultWrap>
-          {paramObjects && paramObjects?.length > 0 && (
+          {params && params?.length > 0 && (
             <Input.Group compact style={{ width: "auto" }}>
-              {paramObjects.map((filter, idx) => (
+              {params.map((filter, idx) => (
                 <SearchParam
                   key={idx}
                   name={filter.name}
                   title={filter.title}
                   type={filter.type}
-                  value={paramValues?.[filter.name]}
+                  value={paramsValue?.[filter.name]}
                   options={filter.options}
                   onClickExtraButton={onClickExtraButton}
                 />
@@ -115,22 +111,9 @@ export function SearchParams({
           )}
 
           <SearchInput>
-            <Input.Group compact>
-              {filterTypeOptions && (
-                <Form.Item name={"filterType"} noStyle initialValue={filterTypeOptions?.[0]?.value}>
-                  <Select>
-                    {filterTypeOptions.map((option, idx) => (
-                      <Select.Option key={idx} value={option.value}>
-                        {option.label}
-                      </Select.Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-              )}
-              <Form.Item name={"filter"} noStyle>
-                <Input placeholder={"search"} allowClear />
-              </Form.Item>
-            </Input.Group>
+            <Form.Item name={"filter"} noStyle>
+              <Input placeholder={"search"} allowClear />
+            </Form.Item>
           </SearchInput>
 
           <Buttons>
@@ -145,6 +128,7 @@ export function SearchParams({
         </DefaultWrap>
         {children && showChildren && <FormBox>{children}</FormBox>}
       </Container>
+      <Button htmlType={"submit"} hidden />
     </Form>
   );
 }
@@ -172,7 +156,7 @@ const Buttons = styled.div`
   flex: none;
 `;
 
-const FormBox = styled(PageLayout.FormBox)`
+const FormBox = styled(PageLayout.ContentBox)`
   margin-top: 10px;
   margin-bottom: 15px;
 

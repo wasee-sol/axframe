@@ -4,12 +4,11 @@ import * as React from "react";
 import { useThemeSwitcher } from "react-css-theme-switcher";
 import { BrowserRouter } from "react-router-dom";
 import { useAppStore, usePageTabStore, useUserStore } from "stores";
-import "styles/index.less";
 import { themePalette } from "styles/theme";
 import PageRoute from "router/PageRoute";
-import Drawers from "@core/components/Drawers";
-import Modals from "@core/components/Modals";
-import StoreSpinner from "@core/components/StoreSpinner";
+import { Drawers, Modals, StoreSpinner } from "@core/components";
+import "styles/index.less";
+import "@core/utils/console";
 import "./customizeAntd";
 
 const App: React.FC = () => {

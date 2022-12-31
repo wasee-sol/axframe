@@ -22,12 +22,6 @@ const routes = {
     labels: { en: "Dashboard", ko: "대시보드" },
     icon: <AXFIGraph />,
   },
-  DASHBOARD_VIEWER: {
-    path: "dashboard/:id",
-    labels: { en: "Dashboard {id}", ko: "대시보드 {id}" },
-    icon: <AXFIGraph />,
-  },
-
   EXAMPLES: {
     path: "examples",
     labels: { en: "Examples", ko: "예제화면들" },
@@ -55,13 +49,13 @@ const routes = {
         },
       },
 
-      LIST_WITH_MODAL: {
+      LIST_AND_MODAL: {
         path: "listWithModal",
         labels: { en: "Example(List&Modal)", ko: "샘플(목록&모달)" },
         icon: <AXFIListSearch />,
       },
 
-      LIST_WITH_DRAWER: {
+      LIST_AND_DRAWER: {
         path: "listWithDrawer",
         labels: { en: "Example(List&Drawer)", ko: "샘플(목록&드로워)" },
         icon: <AXFIWriteForm />,

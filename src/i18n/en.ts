@@ -7,7 +7,7 @@ import { EN_filterType } from "./filterType";
 import { EN_pageTab } from "./pageTab";
 
 const EN = {
-  appName: "Appnori Admin",
+  appName: "AXFrame",
   formItem: EN_formItem,
   datagrid: EN_datagrid,
   filterType: EN_filterType,

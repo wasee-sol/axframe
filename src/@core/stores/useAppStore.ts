@@ -31,7 +31,7 @@ export const appInitialState: AppModel = {
   height: 0,
 };
 
-const getAppStoreActions: StoreActions = (set, get) => ({
+const getAppStoreActions: StoreActions<AppModel & AppActions, AppActions> = (set, get) => ({
   setLanguage: (language: LanguageType) => set({ currentLanguage: language }),
   setTheme: (theme: ThemeType) => set({ theme }),
   setLoaded: (loaded: boolean) => set({ loaded }),

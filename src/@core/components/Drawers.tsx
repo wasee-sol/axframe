@@ -32,4 +32,4 @@ function Drawers() {
   );
 }
 
-export default Drawers;
+export { Drawers };

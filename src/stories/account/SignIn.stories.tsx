@@ -1,19 +1,19 @@
 import * as React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import SignIn from "templates/pages/SignIn";
-import { PageFrameContainer } from "@core/templates/pageFrame/FrameDefault";
+import Index from "pages/signin";
+import { PageFrameContainer } from "@core/pageFrame/FrameDefault";
 
 export default {
-  title: "template/account/SignIn",
-  component: SignIn,
+  title: "template/account/Index",
+  component: Index,
   argTypes: {
     backgroundColor: { control: "color" },
   },
-} as ComponentMeta<typeof SignIn>;
+} as ComponentMeta<typeof Index>;
 
-const Template: ComponentStory<typeof SignIn> = (args) => (
+const Template: ComponentStory<typeof Index> = (args) => (
   <PageFrameContainer>
-    <SignIn {...args} />
+    <Index {...args} />
   </PageFrameContainer>
 );
 

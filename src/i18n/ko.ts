@@ -8,7 +8,7 @@ import { KO_filterType } from "./filterType";
 import { KO_pageTab } from "./pageTab";
 
 const KO: typeof EN = {
-  appName: "앱노리 관리자",
+  appName: "AXFrame",
   formItem: KO_formItem,
   datagrid: KO_datagrid,
   filterType: KO_filterType,
