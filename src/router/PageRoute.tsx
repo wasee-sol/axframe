@@ -7,20 +7,19 @@ import RequireAuth from "./RequireAuth";
 import RestrictAuth from "./RestrictAuth";
 import { ROUTES } from "./Routes";
 
-const FrameDefault = React.lazy(() => import("@core/templates/pageFrame/FrameDefault"));
-const FrameProgram = React.lazy(() => import("@core/templates/pageFrame/FrameProgram"));
+const FrameDefault = React.lazy(() => import("@core/pageFrame/FrameDefault"));
+const FrameProgram = React.lazy(() => import("@core/pageFrame/FrameProgram"));
 
-const ExampleList = React.lazy(() => import("@core/templates/exampleList"));
-const ExampleForm = React.lazy(() => import("@core/templates/exampleForm"));
-const ExampleDetail = React.lazy(() => import("@core/templates/exampleDetail"));
-const ExampleListAndModal = React.lazy(() => import("@core/templates/exampleListAndModal"));
-const ExampleListAndDrawer = React.lazy(() => import("@core/templates/exampleListAndDrawer"));
+const ExampleList = React.lazy(() => import("@core/pages/exampleList"));
+const ExampleForm = React.lazy(() => import("@core/pages/exampleForm"));
+const ExampleDetail = React.lazy(() => import("@core/pages/exampleDetail"));
+const ExampleListAndModal = React.lazy(() => import("@core/pages/exampleListAndModal"));
+const ExampleListAndDrawer = React.lazy(() => import("@core/pages/exampleListAndDrawer"));
 
-const Dashboard = React.lazy(() => import("templates/pages/Dashboard"));
-const DashboardViewer = React.lazy(() => import("templates/pages/DashboardViewer"));
-const Home = React.lazy(() => import("templates/pages/Home"));
-const Setting = React.lazy(() => import("templates/pages/Setting"));
-const SignIn = React.lazy(() => import("templates/pages/SignIn"));
+const Dashboard = React.lazy(() => import("pages/dashboard"));
+const Home = React.lazy(() => import("pages/home"));
+const Setting = React.lazy(() => import("pages/setting"));
+const SignIn = React.lazy(() => import("pages/signin"));
 
 function PageRoute() {
   const sideMenuOpened = useAppStore((s) => s.sideMenuOpened);
@@ -48,9 +47,7 @@ function PageRoute() {
           </RequireAuth>
         }
       >
-        <Route path={ROUTES.HOME.path} element={<Home />} />
         <Route path={ROUTES.DASHBOARD.path} element={<Dashboard />} />
-        <Route path={ROUTES.DASHBOARD_VIEWER.path} element={<DashboardViewer />} />
         <Route path={ROUTES.EXAMPLES.path}>
           <Route path={ROUTES.EXAMPLES.children.LIST_DETAIL.path}>
             <Route path={ROUTES.EXAMPLES.children.LIST_DETAIL.children.REGISTRATION.path} element={<ExampleForm />} />
@@ -61,6 +58,7 @@ function PageRoute() {
           <Route path={ROUTES.EXAMPLES.children.LIST_AND_DRAWER.path} element={<ExampleListAndDrawer />} />
         </Route>
         <Route path={ROUTES.SETTING.path} element={<Setting />} />
+        <Route path={ROUTES.HOME.path} element={<Home />} />
         <Route path={ROUTES.BLANK_PAGE.path} element={<></>} />
       </Route>
       <Route

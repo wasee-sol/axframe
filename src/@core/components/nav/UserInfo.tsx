@@ -4,11 +4,10 @@ import UserAvatar from "./UserAvatar";
 import { Dropdown, Popover } from "antd";
 import * as React from "react";
 import { AXFIMoreVertical } from "@axframe/icon";
-import { User } from "stores";
+import { useAppStore, User, useUserStore } from "stores";
 import { SMixinFlexRow } from "@core/styles/emotion";
-import { useNavGroup } from "@core/templateStores/nav/useNavGroup";
-import { mergeProps } from "@core/utils/object";
 import UserInfoDropdown from "./UserInfoDropdown";
+import { useDialog } from "../../hooks/useDialog";
 
 interface StyleProps {
   sideMenuOpened?: boolean;
@@ -18,9 +17,21 @@ interface Props extends StyleProps {
   onSignOut?: () => Promise<void>;
 }
 
-function UserInfo(props: Props) {
-  const { sideMenuOpened, me, handleSignOut } = mergeProps(props, useNavGroup());
+function UserInfo({}: Props) {
+  const sideMenuOpened = useAppStore((s) => s.sideMenuOpened);
+  const me = useUserStore((s) => s.me);
+  const signOut = useUserStore((s) => s.signOut);
+  const { errorDialog } = useDialog();
+
   const { name, jobTitle } = me ?? {};
+
+  const handleSignOut = React.useCallback(async () => {
+    try {
+      await signOut();
+    } catch (err) {
+      await errorDialog(err);
+    }
+  }, [errorDialog, signOut]);
 
   return (
     <UserInfoContainer sideMenuOpened={sideMenuOpened}>

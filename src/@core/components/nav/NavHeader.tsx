@@ -4,19 +4,30 @@ import { Tooltip } from "antd";
 import * as React from "react";
 import { AXFIMenuFold, AXFIMenuUnfold, AXFrameLogo } from "@axframe/icon";
 import { SMixinFlexColumn, SMixinFlexRow } from "@core/styles/emotion";
-import { useNavGroup } from "@core/templateStores/nav/useNavGroup";
 import { useI18n } from "@core/hooks/useI18n";
-import { mergeProps } from "@core/utils/object";
 import { IconText } from "@core/components/common";
+import { useAppStore } from "../../stores/useAppStore";
+import { useUserStore } from "../../stores/useUserStore";
 
 interface Props {
   sideMenuOpened?: boolean;
   onChangeSideMenuOpened?: (opened: boolean) => void;
 }
 
-function NavHeader(props: Props) {
-  const { sideMenuOpened, handleSetSideMenuOpened } = mergeProps(props, useNavGroup());
+function NavHeader({}: Props) {
   const { t } = useI18n();
+  const sideMenuOpened = useAppStore((s) => s.sideMenuOpened);
+  const setSideMenuOpened = useAppStore((s) => s.setSideMenuOpened);
+  const setOpenedMenuUuids = useUserStore((s) => s.setOpenedMenuUuids);
+
+  const handleSetSideMenuOpened = React.useCallback(
+    (opened: boolean) => {
+      setOpenedMenuUuids([]);
+      setSideMenuOpened(opened);
+    },
+    [setOpenedMenuUuids, setSideMenuOpened]
+  );
+
   return (
     <NavHeaderContainer sideMenuOpened={sideMenuOpened}>
       <Logo sideMenuOpened={sideMenuOpened}>

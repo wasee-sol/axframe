@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import UserAvatar from "@core/templates/nav/UserAvatar";
+import UserAvatar from "@core/components/nav/UserAvatar";
 
 export default {
   title: "template/nav/UserAvatar",

@@ -1,12 +1,11 @@
 import * as React from "react";
 import styled from "@emotion/styled";
-import { AXFIHome, AXFIClose } from "@axframe/icon";
-import { useTabGroup } from "@core/templateStores/tabs/useTabGroup";
-import { Page } from "stores";
+import { AXFIClose, AXFIHome } from "@axframe/icon";
+import { Page, usePageTabStore } from "stores";
 import { SMixinFlexRow } from "@core/styles/emotion";
 import { css } from "@emotion/react";
 import { darken } from "styles/palette/colorUtil";
-import { mergeProps } from "@core/utils/object";
+import { useI18n } from "@core/hooks/useI18n";
 
 interface StyleProps {
   isHome?: boolean;
@@ -17,19 +16,21 @@ interface Props extends StyleProps {
   tabUuid: string;
   tabInfo: Page;
   onContextMenu: (e: React.MouseEvent<HTMLDivElement>, tabUuid: string) => void;
+  onRemoveTab: (uuid: string) => void;
+  onClickTab: (tabUuid: string, path?: string) => void;
 }
 
-function TabItem(props: Props) {
-  const { activeTabUuid, handleClickTab, handleRemoveTab, currentLanguage } = mergeProps(props, useTabGroup());
-  const { tabUuid, tabInfo } = props;
+function TabItem({ tabUuid, tabInfo, onContextMenu, onRemoveTab, onClickTab }: Props) {
+  const activeTabUuid = usePageTabStore((s) => s.activeTabUuid);
+  const { currentLanguage } = useI18n();
 
   return (
     <TabItemContainer
       isHome={tabInfo.isHome}
       active={activeTabUuid === tabUuid}
-      onClick={() => handleClickTab(tabUuid, tabInfo.path)}
+      onClick={() => onClickTab(tabUuid, tabInfo.path)}
       role={activeTabUuid === tabUuid ? "active-tab-item" : "tab-item"}
-      onContextMenu={(evt) => props.onContextMenu(evt, tabUuid)}
+      onContextMenu={(evt) => onContextMenu(evt, tabUuid)}
     >
       {tabInfo.isHome ? (
         <AXFIHome fontSize={18} />
@@ -39,7 +40,7 @@ function TabItem(props: Props) {
           <a
             role='tab-close'
             onClick={(evt) => {
-              handleRemoveTab(tabUuid);
+              onRemoveTab(tabUuid);
               evt.stopPropagation();
             }}
           >

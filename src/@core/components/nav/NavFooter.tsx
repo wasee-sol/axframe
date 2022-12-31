@@ -1,4 +1,3 @@
-import { useNavGroup } from "@core/templateStores/nav/useNavGroup";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { Dropdown, Menu } from "antd";
@@ -7,7 +6,7 @@ import { IconText } from "@core/components/common";
 import * as React from "react";
 import { AXFILanguage, AXFIMoon, AXFISun } from "@axframe/icon";
 import { SMixinFlexColumn, SMixinFlexRow } from "@core/styles/emotion";
-import { mergeProps } from "@core/utils/object";
+import { useAppStore } from "@core/stores/useAppStore";
 
 interface Props {
   sideMenuOpened?: boolean;
@@ -18,8 +17,12 @@ const LanguageLabel = {
   ko: "한국어",
 };
 
-function NavFooter(props: Props) {
-  const { sideMenuOpened, currentLanguage, setLanguage, theme, setTheme } = mergeProps(props, useNavGroup());
+function NavFooter({}: Props) {
+  const sideMenuOpened = useAppStore((s) => s.sideMenuOpened);
+  const currentLanguage = useAppStore((s) => s.currentLanguage);
+  const setLanguage = useAppStore((s) => s.setLanguage);
+  const theme = useAppStore((s) => s.theme);
+  const setTheme = useAppStore((s) => s.setTheme);
 
   const handleChangeTheme = React.useCallback(() => {
     setTheme(theme === "light" ? "dark" : "light");

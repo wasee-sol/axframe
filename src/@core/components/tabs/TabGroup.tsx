@@ -1,4 +1,3 @@
-import { useTabGroup } from "@core/templateStores/tabs/useTabGroup";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { TabGroupMenu, TabGroupMenuAction } from "@core/components/contextMenu";
@@ -6,16 +5,65 @@ import * as React from "react";
 import { ReactSortable } from "react-sortablejs";
 import { SMixinFlexRow } from "@core/styles/emotion";
 import { darken } from "styles/palette/colorUtil";
-import { mergeProps } from "@core/utils/object";
 import TabItem from "./TabItem";
 import TabItemMore from "./TabItemMore";
+import { usePageTabStore } from "@core/stores/usePageTabStore";
+import { useI18n } from "@core/hooks/useI18n";
+import { useLink } from "@core/hooks/useLink";
+import { useLocation } from "react-router-dom";
 
 interface Props {}
 
 function TabGroup(props: Props) {
-  const { activeTabUuid, tabItemList, setPages, handleRemoveTab, handleRemoveOtherTabs, currentLanguage } = mergeProps(
-    props,
-    useTabGroup()
+  const activeTabUuid = usePageTabStore((s) => s.activeTabUuid);
+  const getActiveTabPage = usePageTabStore((s) => s.getActiveTabPage);
+  const pages = usePageTabStore((s) => s.pages);
+  const setPages = usePageTabStore((s) => s.setPages);
+  const removeTab = usePageTabStore((s) => s.removeTab);
+  const removeTabs = usePageTabStore((s) => s.removeTabs);
+
+  const location = useLocation();
+  const { currentLanguage } = useI18n();
+  const { linkByTo } = useLink();
+
+  const tabItemList = React.useMemo(() => {
+    return [...pages].map(([k, v]) => ({ id: k, page: v }));
+  }, [pages]);
+
+  const handleRemoveTab = React.useCallback(
+    (tabUuid: string) => {
+      removeTab(tabUuid);
+      const activePageInfo = getActiveTabPage();
+      if (activePageInfo.page.path && activePageInfo.page.path !== location.pathname) {
+        linkByTo(activePageInfo.page.path);
+      }
+    },
+    [getActiveTabPage, linkByTo, location.pathname, removeTab]
+  );
+
+  const handleRemoveOtherTabs = React.useCallback(
+    (tabUuid: string, removeType: "OTHERS" | "TO_RIGHT") => {
+      const pagesValues = [...pages];
+
+      if (removeType === "OTHERS") {
+        const removeTabUuids = pagesValues.filter(([k, v]) => !v.isHome && k !== tabUuid).map(([k]) => k);
+        removeTabs(removeTabUuids);
+      } else {
+        const tabIndex = pagesValues.findIndex(([k]) => k === tabUuid);
+        const removeTabUuids = pagesValues
+          .slice(tabIndex + 1)
+          .filter(([k, v]) => !v.isHome && k !== tabUuid)
+          .map(([k]) => k);
+
+        removeTabs(removeTabUuids);
+      }
+
+      const activePageInfo = getActiveTabPage();
+      if (activePageInfo.page.path && activePageInfo.page.path !== location.pathname) {
+        linkByTo(activePageInfo.page.path);
+      }
+    },
+    [getActiveTabPage, linkByTo, location.pathname, pages, removeTabs]
   );
 
   const scrollerRef = React.useRef<HTMLDivElement>(null);
@@ -55,6 +103,14 @@ function TabGroup(props: Props) {
       tabGroupMenu.current.popupByItem(evt);
     },
     [handleRemoveOtherTabs, handleRemoveTab]
+  );
+
+  const handleClickTab = React.useCallback(
+    (tabUuid: string, path?: string) => {
+      if (!path) return;
+      linkByTo(path);
+    },
+    [linkByTo]
   );
 
   // scroll to activeTab
@@ -99,11 +155,18 @@ function TabGroup(props: Props) {
             }}
           >
             {tabItemList.map((tabItem, index) => (
-              <TabItem key={index} tabUuid={tabItem.id} tabInfo={tabItem.page} onContextMenu={handleContextMenu} />
+              <TabItem
+                key={index}
+                tabUuid={tabItem.id}
+                tabInfo={tabItem.page}
+                onContextMenu={handleContextMenu}
+                onClickTab={handleClickTab}
+                onRemoveTab={handleRemoveTab}
+              />
             ))}
           </ReactSortable>
         </TabItemsScroller>
-        <TabItemMore />
+        <TabItemMore onClickTab={handleClickTab} />
       </TabItemsGroup>
     </TabGroupContainer>
   );

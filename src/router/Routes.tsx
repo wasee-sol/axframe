@@ -22,12 +22,6 @@ const routes = {
     labels: { en: "Dashboard", ko: "대시보드" },
     icon: <AXFIGraph />,
   },
-  DASHBOARD_VIEWER: {
-    path: "dashboard/:id",
-    labels: { en: "Dashboard {id}", ko: "대시보드 {id}" },
-    icon: <AXFIGraph />,
-  },
-
   EXAMPLES: {
     path: "examples",
     labels: { en: "Examples", ko: "예제화면들" },

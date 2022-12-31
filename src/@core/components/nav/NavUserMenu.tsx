@@ -1,4 +1,3 @@
-import { useNavGroup } from "@core/templateStores/nav/useNavGroup";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { Menu } from "antd";
@@ -6,8 +5,10 @@ import { MenuProps } from "antd/lib/menu";
 import { useLink } from "@core/hooks/useLink";
 import * as React from "react";
 import { SMixinScrollerStyle } from "@core/styles/emotion";
-import { mergeProps } from "@core/utils/object";
-import { MenuItem } from "router/menus";
+import { MenuItem, MENUS } from "router/menus";
+import { useAppStore } from "../../stores/useAppStore";
+import { useUserStore } from "../../stores/useUserStore";
+import { useI18n } from "../../hooks/useI18n";
 
 interface StyleProps {
   sideMenuOpened?: boolean;
@@ -19,12 +20,45 @@ interface Props extends StyleProps {
   selectedMenuUuid?: string;
 }
 
-function NavUserMenu(props: Props) {
-  const { sideMenuOpened, menus, openedMenuUuids, selectedMenuUuid, onSideMenuOpenChange } = mergeProps(
-    props,
-    useNavGroup()
-  );
+function NavUserMenu({}: Props) {
+  const sideMenuOpened = useAppStore((s) => s.sideMenuOpened);
+  const accessibleMenus = useUserStore((s) => s.accessibleMenus);
+  const openedMenuUuids = useUserStore((s) => s.openedMenuUuids);
+  const setOpenedMenuUuids = useUserStore((s) => s.setOpenedMenuUuids);
+  const selectedMenuUuid = useUserStore((s) => s.selectedMenuUuid);
+  const { currentLanguage } = useI18n();
   const { linkByTo } = useLink();
+
+  const menus = React.useMemo(() => {
+    const getAccessibleMenus = (menuItems: MenuItem[]) => {
+      return menuItems
+        .map((menuItem) => {
+          if (menuItem.enum === undefined || accessibleMenus.includes(menuItem.enum)) {
+            const children = menuItem.children ? getAccessibleMenus(menuItem.children) : undefined;
+            if (typeof children !== "undefined" && children.length === 0) return;
+
+            menuItem.label = menuItem.labels?.[currentLanguage];
+
+            return {
+              ...menuItem,
+              children,
+            };
+          }
+
+          return;
+        })
+        .filter(Boolean) as MenuItem[];
+    };
+
+    return getAccessibleMenus(MENUS);
+  }, [accessibleMenus, currentLanguage]);
+
+  const onSideMenuOpenChange = React.useCallback(
+    (openKeys: string[]) => {
+      setOpenedMenuUuids(openKeys);
+    },
+    [setOpenedMenuUuids]
+  );
 
   const onClick: MenuProps["onClick"] = React.useCallback(
     ({ key }) => {

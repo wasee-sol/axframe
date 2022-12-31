@@ -3,10 +3,10 @@ import styled from "@emotion/styled";
 
 interface Props {}
 
-function Setting(props: Props) {
+function Index({}: Props) {
   return <PageSettingContainer>PageSetting</PageSettingContainer>;
 }
 
 const PageSettingContainer = styled.div``;
 
-export default Setting;
+export default Index;

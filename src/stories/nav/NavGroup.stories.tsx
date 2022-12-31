@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import * as React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import NavGroup from "@core/templates/nav/NavGroup";
+import NavGroup from "@core/components/nav/NavGroup";
 import { MENUS } from "router/menus";
 
 export default {

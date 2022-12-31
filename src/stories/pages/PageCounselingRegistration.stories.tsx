@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { ExampleFormSet } from "@core/templates/exampleForm/ExampleFormSet";
+import { ExampleFormSet } from "@core/pages/exampleForm/ExampleFormSet";
 
 export default {
   title: "template/pages/ExampleDetailView",

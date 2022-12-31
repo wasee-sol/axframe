@@ -4,19 +4,26 @@ import * as React from "react";
 import styled from "@emotion/styled";
 import { AXFIArrowDown } from "@axframe/icon";
 import { SMixinFlexRow } from "@core/styles/emotion";
-import { useTabGroup } from "@core/templateStores/tabs/useTabGroup";
-import { mergeProps } from "@core/utils/object";
 import { alpha } from "styles/palette/colorUtil";
+import { useI18n } from "@core/hooks/useI18n";
+import { usePageTabStore } from "@core/stores/usePageTabStore";
 
 interface StyleProps {
   visible?: boolean;
 }
 
-interface Props extends StyleProps {}
+interface Props extends StyleProps {
+  onClickTab: (tabUuid: string, path?: string) => void;
+}
 
-function TabItemMore(props: Props) {
-  const { currentLanguage, tabItemList, handleClickTab } = mergeProps(props, useTabGroup());
+function TabItemMore({ onClickTab }: Props) {
+  const { currentLanguage } = useI18n();
+  const pages = usePageTabStore((s) => s.pages);
   const [visible, setVisible] = React.useState(false);
+
+  const tabItemList = React.useMemo(() => {
+    return [...pages].map(([k, v]) => ({ id: k, page: v }));
+  }, [pages]);
 
   return (
     <Dropdown
@@ -28,7 +35,7 @@ function TabItemMore(props: Props) {
             label: (
               <div
                 onClick={() => {
-                  handleClickTab(tabItem.id, tabItem.page.path);
+                  onClickTab(tabItem.id, tabItem.page.path);
                 }}
               >
                 {tabItem.page.labels?.[currentLanguage]}

@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import UserInfo from "@core/templates/nav/UserInfo";
+import UserInfo from "@core/components/nav/UserInfo";
 import * as React from "react";
 
 export default {

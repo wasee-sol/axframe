@@ -4,11 +4,11 @@ import { Button, Divider, Form, Input } from "antd";
 import * as React from "react";
 import { AXFIArrowLogIn } from "@axframe/icon";
 import { SMixinFlexColumn, SMixinFlexRow } from "@core/styles/emotion";
-import { useI18n } from "hooks";
-import { useSignIn } from "templateStores/pages/useSignIn";
+import { useDialog, useI18n, useSpinning } from "hooks";
 import { getTrimNonEmptyRegExp } from "@core/utils/formPatterns/getTrimNonEmptyRegExp";
-import { mergeProps } from "@core/utils/object";
 import { IconText } from "@core/components/common";
+import { UserService } from "../../services";
+import { useUserStore } from "../../@core/stores/useUserStore";
 
 interface Props {
   onSignIn?: (values: SignInFormItem) => Promise<void>;
@@ -19,9 +19,28 @@ export interface SignInFormItem {
   password?: string;
 }
 
-function SignIn(props: Props) {
-  const { form, onSignIn, spinning } = mergeProps(props, useSignIn());
+function Index({}: Props) {
+  const setMe = useUserStore((s) => s.setMe);
   const { t, currentLanguage, setLanguage } = useI18n();
+  const { spinning, setSpinning } = useSpinning<{ signIn: boolean }>();
+  const { errorDialog } = useDialog();
+
+  const [form] = Form.useForm<SignInFormItem>();
+
+  const onSignIn = React.useCallback(
+    async (values: SignInFormItem) => {
+      setSpinning({ signIn: true });
+      try {
+        const me = await UserService.signIn(values);
+        await setMe(me);
+      } catch (err) {
+        await errorDialog(err);
+      } finally {
+        setSpinning({ signIn: false });
+      }
+    },
+    [errorDialog, setMe, setSpinning]
+  );
 
   return (
     <SignInContainer>
@@ -65,7 +84,7 @@ function SignIn(props: Props) {
               <Input.Password prefix={<LockOutlined />} placeholder={t.formItem.user.password.placeholder} allowClear />
             </Form.Item>
             <Form.Item>
-              <Button type='primary' htmlType='submit' role={"sign-in-btn"} block loading={spinning}>
+              <Button type='primary' htmlType='submit' role={"sign-in-btn"} block loading={spinning?.signIn}>
                 <AXFIArrowLogIn fontSize={20} />
                 Sign In
               </Button>
@@ -160,4 +179,4 @@ const Logo = styled.div`
   color: ${(p) => p.theme.primary_color};
 `;
 
-export default SignIn;
+export default Index;

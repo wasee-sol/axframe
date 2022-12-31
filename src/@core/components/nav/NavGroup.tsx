@@ -4,12 +4,11 @@ import styled from "@emotion/styled";
 import NavHeader from "./NavHeader";
 import UserInfo from "./UserInfo";
 import NavUserMenu from "./NavUserMenu";
-import { User } from "@core/stores/useUserStore";
+import { User, useUserStore } from "@core/stores/useUserStore";
 import { SMixinFlexColumn } from "@core/styles/emotion";
-import { useNavGroup } from "@core/templateStores/nav/useNavGroup";
-import { mergeProps } from "@core/utils/object";
 import { MenuItem } from "router/menus";
 import NavFooter from "./NavFooter";
+import { useAppStore } from "@core/stores/useAppStore";
 
 interface StyleProps {
   sideMenuOpened?: boolean;
@@ -23,7 +22,8 @@ interface Props extends StyleProps {
 }
 
 function NavGroup(props: Props) {
-  const { sideMenuOpened, me } = mergeProps(props, useNavGroup());
+  const sideMenuOpened = useAppStore((s) => s.sideMenuOpened);
+  const me = useUserStore((s) => s.me);
 
   return (
     <NavGroupContainer sideMenuOpened={sideMenuOpened}>

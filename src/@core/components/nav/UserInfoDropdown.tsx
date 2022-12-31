@@ -2,10 +2,10 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import * as React from "react";
 import { AXFIArrowLogOut } from "@axframe/icon";
-import { useNavGroup } from "@core/templateStores/nav/useNavGroup";
 import { SMixinFlexColumn } from "@core/styles/emotion";
-import { mergeProps } from "@core/utils/object";
 import { IconText, LabelText } from "@core/components/common";
+import { useDialog } from "@core/hooks/useDialog";
+import { useUserStore } from "@core/stores/useUserStore";
 
 interface StyleProps {
   asPopover?: boolean;
@@ -15,24 +15,35 @@ interface Props extends StyleProps {
   onSignOut?: () => Promise<void>;
 }
 
-function UserInfoDropdown(props: Props) {
-  const { handleSignOut, asPopover, signOutSpinning, setSignOutSpinning } = mergeProps(props, useNavGroup());
+function UserInfoDropdown({ asPopover }: Props) {
+  const { errorDialog } = useDialog();
+  const signOut = useUserStore((s) => s.signOut);
+  const me = useUserStore((s) => s.me);
+  const [signOutSpinning, setSignOutSpinning] = React.useState(false);
+
+  const { name, jobTitle, email } = me ?? {};
+
   const handleClickSignOut = React.useCallback(async () => {
     setSignOutSpinning(true);
-    await handleSignOut?.();
-    setSignOutSpinning(false);
-  }, [handleSignOut, setSignOutSpinning]);
+    try {
+      await signOut();
+    } catch (err) {
+      await errorDialog(err);
+    } finally {
+      setSignOutSpinning(false);
+    }
+  }, [errorDialog, setSignOutSpinning, signOut]);
 
   return (
     <UserInfoDropdownContainer asPopover={asPopover}>
       <LabelText role={"info"} label='User Name'>
-        Thomas Jang
+        {name}
       </LabelText>
       <LabelText role={"info"} label='E-Mail'>
-        tom@axisj.com
+        {email}
       </LabelText>
       <LabelText role={"info"} label='Job Title'>
-        Software Engineer
+        {jobTitle}
       </LabelText>
       <CustomDivider />
       <CustomMenus>
