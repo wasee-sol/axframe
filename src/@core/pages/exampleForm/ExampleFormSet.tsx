@@ -13,11 +13,11 @@ import { useDaumPostcodePopup } from "react-daum-postcode";
 interface Props {}
 interface FormField extends ExampleItem {}
 
-function ExampleFormSet(props: Props) {
-  const exampleSaveRequestValue = useExampleFormStore((s) => s.exampleSaveRequestValue);
-  const setExampleSaveRequestValue = useExampleFormStore((s) => s.setExampleSaveRequestValue);
-  const callExampleSaveApi = useExampleFormStore((s) => s.callExampleSaveApi);
-  const exampleSaveSpinning = useExampleFormStore((s) => s.exampleSaveSpinning);
+function ExampleFormSet({}: Props) {
+  const saveRequestValue = useExampleFormStore((s) => s.saveRequestValue);
+  const setSaveRequestValue = useExampleFormStore((s) => s.setSaveRequestValue);
+  const callSaveApi = useExampleFormStore((s) => s.callSaveApi);
+  const saveSpinning = useExampleFormStore((s) => s.saveSpinning);
   const reset = useExampleFormStore((s) => s.reset);
 
   const { t } = useI18n();
@@ -48,9 +48,9 @@ function ExampleFormSet(props: Props) {
 
   const onValuesChange = React.useCallback(
     (changedValues: any, values: Record<string, any>) => {
-      setExampleSaveRequestValue(values);
+      setSaveRequestValue(values);
     },
-    [setExampleSaveRequestValue]
+    [setSaveRequestValue]
   );
 
   React.useEffect(() => {
@@ -61,14 +61,14 @@ function ExampleFormSet(props: Props) {
   }, [birthDt, form]);
 
   React.useEffect(() => {
-    if (!exampleSaveRequestValue || Object.keys(exampleSaveRequestValue).length < 1) {
+    if (!saveRequestValue || Object.keys(saveRequestValue).length < 1) {
       form.resetFields();
     }
-  }, [exampleSaveRequestValue, form]);
+  }, [saveRequestValue, form]);
 
   useDidMountEffect(() => {
     console.log("form.setFieldsValue by metaData");
-    form.setFieldsValue(convertToDate(exampleSaveRequestValue, ["cnsltDt", "birthDt"]));
+    form.setFieldsValue(convertToDate(saveRequestValue, ["cnsltDt", "birthDt"]));
   });
 
   return (
@@ -80,7 +80,7 @@ function ExampleFormSet(props: Props) {
       initialValues={formInitialValues}
       onValuesChange={onValuesChange}
       onFinish={async () => {
-        await callExampleSaveApi();
+        await callSaveApi();
         await reset();
       }}
     >
@@ -389,7 +389,7 @@ function ExampleFormSet(props: Props) {
         </FormBox>
       </Body>
       <ButtonGroup>
-        <Button type={"primary"} htmlType={"submit"} loading={exampleSaveSpinning}>
+        <Button type={"primary"} htmlType={"submit"} loading={saveSpinning}>
           저장히기
         </Button>
         <Button onClick={reset}>{t.button.reset}</Button>

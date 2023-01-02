@@ -111,25 +111,25 @@ const createActions: StoreActions<States & Actions, Actions> = (set, get) => ({
       });
     }
   },
-  ...pageStoreActions(set, get, () => unSubscribeExampleListStore()),
+  ...pageStoreActions(set, get, () => unSubscribeExampleListWithListStore()),
 });
 
 // ---------------- exports
-export interface ExampleListStore extends States, Actions, PageStoreActions<States> {}
-export const useExampleListStore = create(
-  subscribeWithSelector<ExampleListStore>((set, get) => ({
+export interface ExampleListWithListStore extends States, Actions, PageStoreActions<States> {}
+export const useExampleListWithListStore = create(
+  subscribeWithSelector<ExampleListWithListStore>((set, get) => ({
     ...createState,
     ...createActions(set, get),
   }))
 );
 
 // pageModel 에 저장할 대상 모델 셀렉터 정의
-export const unSubscribeExampleListStore = useExampleListStore.subscribe(
+export const unSubscribeExampleListWithListStore = useExampleListWithListStore.subscribe(
   (s) => [s.listSortParams, s.listRequestValue, s.listColWidths],
   ([listSortParams, listRequestValue, listColWidths]) => {
-    const routePath = useExampleListStore.getState().routePath;
+    const routePath = useExampleListWithListStore.getState().routePath;
     if (!routePath) return;
-    console.log(`Save metaData '${routePath}', Store : useExampleListStore`);
+    console.log(`Save metaData '${routePath}', Store : useExampleListWithListStore`);
 
     setMetaDataByPath<MetaData>(routePath, {
       listSortParams,

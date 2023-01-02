@@ -10,16 +10,18 @@ import { ROUTES } from "./Routes";
 const FrameDefault = React.lazy(() => import("@core/pageFrame/FrameDefault"));
 const FrameProgram = React.lazy(() => import("@core/pageFrame/FrameProgram"));
 
-const ExampleList = React.lazy(() => import("@core/pages/exampleList"));
-const ExampleForm = React.lazy(() => import("@core/pages/exampleForm"));
-const ExampleDetail = React.lazy(() => import("@core/pages/exampleDetail"));
-const ExampleListAndModal = React.lazy(() => import("@core/pages/exampleListAndModal"));
-const ExampleListAndDrawer = React.lazy(() => import("@core/pages/exampleListAndDrawer"));
+const ExampleList = React.lazy(() => import("@core/pages/exampleList/App"));
+const ExampleForm = React.lazy(() => import("@core/pages/exampleForm/App"));
+const ExampleDetail = React.lazy(() => import("@core/pages/exampleDetail/App"));
+const ExampleListAndModal = React.lazy(() => import("@core/pages/exampleListAndModal/App"));
+const ExampleListAndDrawer = React.lazy(() => import("@core/pages/exampleListAndDrawer/App"));
+const ExampleListWithList = React.lazy(() => import("@core/pages/exampleListWithList/App"));
 
-const Dashboard = React.lazy(() => import("pages/dashboard"));
-const Home = React.lazy(() => import("pages/home"));
-const Setting = React.lazy(() => import("pages/setting"));
-const SignIn = React.lazy(() => import("pages/signin"));
+const Dashboard = React.lazy(() => import("pages/dashboard/App"));
+const Home = React.lazy(() => import("pages/home/App"));
+const Setting = React.lazy(() => import("pages/setting/App"));
+const SignIn = React.lazy(() => import("pages/signIn/App"));
+const Error404 = React.lazy(() => import("pages/error/Error404"));
 
 function PageRoute() {
   const sideMenuOpened = useAppStore((s) => s.sideMenuOpened);
@@ -56,6 +58,7 @@ function PageRoute() {
           </Route>
           <Route path={ROUTES.EXAMPLES.children.LIST_AND_MODAL.path} element={<ExampleListAndModal />} />
           <Route path={ROUTES.EXAMPLES.children.LIST_AND_DRAWER.path} element={<ExampleListAndDrawer />} />
+          <Route path={ROUTES.EXAMPLES.children.LIST_WITH_LIST.path} element={<ExampleListWithList />} />
         </Route>
         <Route path={ROUTES.SETTING.path} element={<Setting />} />
         <Route path={ROUTES.HOME.path} element={<Home />} />
@@ -73,6 +76,7 @@ function PageRoute() {
       >
         <Route path={ROUTES.SIGN_IN.path} element={<SignIn />} />
       </Route>
+      <Route path={"*"} element={<Error404 />} />
     </Routes>
   );
 }

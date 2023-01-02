@@ -12,14 +12,14 @@ interface Props {
 }
 
 function ExampleListDataGrid({ onClick }: Props) {
-  const exampleListColWidths = useExampleListStore((s) => s.exampleListColWidths);
-  const exampleListSortParams = useExampleListStore((s) => s.exampleListSortParams);
-  const exampleListData = useExampleListStore((s) => s.exampleListData);
-  const exampleListPage = useExampleListStore((s) => s.exampleListPage);
-  const exampleListSpinning = useExampleListStore((s) => s.exampleListSpinning);
-  const setExampleListColWidths = useExampleListStore((s) => s.setExampleListColWidths);
-  const setExampleListSortParams = useExampleListStore((s) => s.setExampleListSortParams);
-  const changeExampleListPage = useExampleListStore((s) => s.changeExampleListPage);
+  const listColWidths = useExampleListStore((s) => s.listColWidths);
+  const listSortParams = useExampleListStore((s) => s.listSortParams);
+  const listData = useExampleListStore((s) => s.listData);
+  const listPage = useExampleListStore((s) => s.listPage);
+  const listSpinning = useExampleListStore((s) => s.listSpinning);
+  const setListColWidths = useExampleListStore((s) => s.setListColWidths);
+  const setListSortParams = useExampleListStore((s) => s.setListSortParams);
+  const changeListPage = useExampleListStore((s) => s.changeListPage);
 
   const { t } = useI18n();
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -27,9 +27,9 @@ function ExampleListDataGrid({ onClick }: Props) {
 
   const handleColumnsChange = React.useCallback(
     (columnIndex: number, width: number, columns: AXFDGColumn<ExampleItem>[]) => {
-      setExampleListColWidths(columns.map((column) => column.width));
+      setListColWidths(columns.map((column) => column.width));
     },
-    [setExampleListColWidths]
+    [setListColWidths]
   );
 
   const columns = React.useMemo(
@@ -49,14 +49,14 @@ function ExampleListDataGrid({ onClick }: Props) {
         { key: "hopePoint", label: t.datagrid.주요욕구, align: "left", width: 150 },
         { key: "updatedByNm", label: t.datagrid.상담원, align: "left", width: 120 },
       ].map((column, colIndex) => {
-        if (exampleListColWidths.length > 0) {
-          column.width = exampleListColWidths[colIndex];
+        if (listColWidths.length > 0) {
+          column.width = listColWidths[colIndex];
           return column;
         }
 
         return column;
       }) as AXFDGColumn<ExampleItem>[],
-    [t, exampleListColWidths]
+    [t, listColWidths]
   );
 
   return (
@@ -66,19 +66,19 @@ function ExampleListDataGrid({ onClick }: Props) {
         width={containerWidth}
         height={containerHeight}
         columns={columns}
-        data={exampleListData}
-        spinning={exampleListSpinning}
+        data={listData}
+        spinning={listSpinning}
         onClick={onClick}
         page={{
-          ...exampleListPage,
+          ...listPage,
           loading: false,
           onChange: async (currentPage, pageSize) => {
-            await changeExampleListPage(currentPage, pageSize);
+            await changeListPage(currentPage, pageSize);
           },
         }}
         sort={{
-          sortParams: exampleListSortParams,
-          onChange: setExampleListSortParams,
+          sortParams: listSortParams,
+          onChange: setListSortParams,
         }}
         onChangeColumns={handleColumnsChange}
       />

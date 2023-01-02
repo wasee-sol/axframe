@@ -2,23 +2,24 @@ import * as React from "react";
 import styled from "@emotion/styled";
 import { SearchParams, SearchParamType } from "@core/components/search";
 import { useI18n } from "@core/hooks/useI18n";
-import { Form, message } from "antd";
-import { ExampleListAndDrawerDataGrid } from "./ExampleListAndDrawerDataGrid";
-import { useExampleListAndDrawerStore } from "./useExampleListAndDrawerStore";
+import { Form } from "antd";
+import { ExampleListWithListDataGrid } from "./ExampleListWithListDataGrid";
+import { useExampleListWithListStore } from "./useExampleListWithListStore";
 import { SMixinFlexColumn } from "@core/styles/emotion";
 import { AXFDGClickParams } from "@axframe/datagrid";
 import { ExampleItem } from "@core/services/example/ExampleRepositoryInterface";
-import { openExampleDrawer } from "./ExampleDrawer";
+import { ROUTES } from "../../../router/Routes";
+import { useLink } from "@core/hooks/useLink";
 
 interface Props {}
 
-function ExampleListAndDrawerDataSet({}: Props) {
+function ExampleListWithListDataSet({}: Props) {
   const { t } = useI18n();
-  // const { linkByRoute } = useLink();
-  const listRequestValue = useExampleListAndDrawerStore((s) => s.listRequestValue);
-  const setListRequestValue = useExampleListAndDrawerStore((s) => s.setListRequestValue);
-  const callListApi = useExampleListAndDrawerStore((s) => s.callListApi);
-  const listSpinning = useExampleListAndDrawerStore((s) => s.listSpinning);
+  const { linkByRoute } = useLink();
+  const listRequestValue = useExampleListWithListStore((s) => s.listRequestValue);
+  const setListRequestValue = useExampleListWithListStore((s) => s.setListRequestValue);
+  const callListApi = useExampleListWithListStore((s) => s.callListApi);
+  const listSpinning = useExampleListWithListStore((s) => s.listSpinning);
 
   const [searchForm] = Form.useForm();
 
@@ -26,14 +27,12 @@ function ExampleListAndDrawerDataSet({}: Props) {
     await callListApi();
   }, [callListApi]);
 
-  const onClickItem = React.useCallback(async (params: AXFDGClickParams<ExampleItem>) => {
-    try {
-      const data = await openExampleDrawer({ query: params.item });
-      message.info(JSON.stringify(data ?? {}));
-    } catch (err) {
-      console.log(err);
-    }
-  }, []);
+  const onClickItem = React.useCallback(
+    (params: AXFDGClickParams<ExampleItem>) => {
+      linkByRoute(ROUTES.EXAMPLES.children.LIST_DETAIL.children.DETAIL, { id: params.item.id });
+    },
+    [linkByRoute]
+  );
 
   const params = React.useMemo(
     () => [
@@ -69,7 +68,7 @@ function ExampleListAndDrawerDataSet({}: Props) {
         spinning={listSpinning}
       />
 
-      <ExampleListAndDrawerDataGrid onClick={onClickItem} />
+      <ExampleListWithListDataGrid onClick={onClickItem} />
     </Container>
   );
 }
@@ -80,4 +79,4 @@ const Container = styled.div`
   ${SMixinFlexColumn("stretch", "stretch")};
 `;
 
-export { ExampleListAndDrawerDataSet };
+export { ExampleListWithListDataSet };

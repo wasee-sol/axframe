@@ -1,5 +1,6 @@
 import create from "zustand";
 import {
+  ExampleDetailRequest,
   ExampleItem,
   ExampleListRequest,
   ExampleListResponse,
@@ -15,73 +16,72 @@ import { pageStoreActions } from "@core/stores/pageStoreActions";
 
 interface APIRequest extends ExampleListRequest {}
 interface APIResponse extends ExampleListResponse {}
-interface APIDetailRequest extends ExampleListRequest {}
+interface APIDetailRequest extends ExampleDetailRequest {}
 
 interface MetaData {
-  exampleListRequestValue: APIRequest;
-  exampleListColWidths: number[];
-  exampleListSortParams: AXFDGSortParam[];
+  listRequestValue: APIRequest;
+  listColWidths: number[];
+  listSortParams: AXFDGSortParam[];
 }
 
 interface States extends MetaData {
   routePath?: string; // initialized Store;
-  exampleListSpinning: boolean;
-  exampleListData: AXFDGDataItem<ExampleItem>[];
-  exampleListPage: AXFDGPage;
-  exampleDetailSpinning: boolean;
-  exampleDetail?: ExampleItem;
+  listSpinning: boolean;
+  listData: AXFDGDataItem<ExampleItem>[];
+  listPage: AXFDGPage;
+  detailSpinning: boolean;
+  detail?: ExampleItem;
 }
 
-interface Actions extends PageStoreActions {
-  setExampleListRequestValue: (exampleListRequestValue: APIRequest) => void;
-  setExampleListColWidths: (exampleListColWidths: number[]) => void;
-  setExampleListSpinning: (exampleListSpinning: boolean) => void;
-  setExampleListSortParams: (sortParams: AXFDGSortParam[]) => void;
-  callExampleListApi: (request?: APIRequest) => Promise<void>;
-  changeExampleListPage: (currentPage: number, pageSize?: number) => Promise<void>;
-  setExampleDetailSpinning: (exampleSaveSpinning: boolean) => void;
-  callExampleDetailApi: (request?: APIDetailRequest) => Promise<void>;
-  syncMetadata: (metaData?: Record<string, any>) => void;
+interface Actions extends PageStoreActions<States> {
+  setListRequestValue: (requestValue: APIRequest) => void;
+  setListColWidths: (colWidths: number[]) => void;
+  setListSpinning: (spinning: boolean) => void;
+  setListSortParams: (sortParams: AXFDGSortParam[]) => void;
+  callListApi: (request?: APIRequest) => Promise<void>;
+  changeListPage: (currentPage: number, pageSize?: number) => Promise<void>;
+  setDetailSpinning: (spinning: boolean) => void;
+  callDetailApi: (request?: APIDetailRequest) => Promise<void>;
 }
 
 // create states
-const _exampleListRequestValue = {
+const _listRequestValue = {
   pageNumber: 1,
   pageSize: 100,
 };
 const createState: States = {
-  exampleListRequestValue: { ..._exampleListRequestValue },
-  exampleListColWidths: [],
-  exampleListSpinning: false,
-  exampleListData: [],
-  exampleListPage: {
+  listRequestValue: { ..._listRequestValue },
+  listColWidths: [],
+  listSpinning: false,
+  listData: [],
+  listPage: {
     currentPage: 0,
     totalPages: 0,
   },
-  exampleListSortParams: [],
-  exampleDetailSpinning: false,
+  listSortParams: [],
+  detailSpinning: false,
 };
 
 // create actions
 const createActions: StoreActions<States & Actions, Actions> = (set, get) => ({
-  setExampleListRequestValue: (exampleListRequestValues) => {
-    set({ exampleListRequestValue: exampleListRequestValues });
+  setListRequestValue: (requestValues) => {
+    set({ listRequestValue: requestValues });
   },
-  setExampleListColWidths: (exampleListColWidths) => set({ exampleListColWidths }),
-  setExampleListSpinning: (exampleListSpinning) => set({ exampleListSpinning }),
-  setExampleListSortParams: (sortParams) => set({ exampleListSortParams: sortParams }),
-  callExampleListApi: async (request) => {
-    await set({ exampleListSpinning: true });
+  setListColWidths: (colWidths) => set({ listColWidths: colWidths }),
+  setListSpinning: (spinning) => set({ listSpinning: spinning }),
+  setListSortParams: (sortParams) => set({ listSortParams: sortParams }),
+  callListApi: async (request) => {
+    await set({ listSpinning: true });
 
     try {
-      const apiParam = request ?? get().exampleListRequestValue;
+      const apiParam = request ?? get().listRequestValue;
       const response = await ExampleService.list(apiParam);
 
       set({
-        exampleListData: response.ds.map((values) => ({
+        listData: response.ds.map((values) => ({
           values,
         })),
-        exampleListPage: {
+        listPage: {
           currentPage: response.rs.pageNumber ?? 1,
           pageSize: response.rs.pageSize ?? 0,
           totalPages: response.rs.pgCount ?? 0,
@@ -91,45 +91,45 @@ const createActions: StoreActions<States & Actions, Actions> = (set, get) => ({
     } catch (e) {
       await errorDialog(e as any);
     } finally {
-      await set({ exampleListSpinning: false });
+      await set({ listSpinning: false });
     }
   },
-  changeExampleListPage: async (pageNumber, pageSize) => {
+  changeListPage: async (pageNumber, pageSize) => {
     const exampleListRequestValues = {
-      ...get().exampleListRequestValue,
+      ...get().listRequestValue,
       pageNumber,
       pageSize,
     };
-    set({ exampleListRequestValue: exampleListRequestValues });
-    await get().callExampleListApi();
+    set({ listRequestValue: exampleListRequestValues });
+    await get().callListApi();
   },
-  setExampleDetailSpinning: (exampleDetailSpinning) => set({ exampleDetailSpinning }),
-  callExampleDetailApi: async (request) => {
-    await set({ exampleDetailSpinning: true });
+  setDetailSpinning: (spinning) => set({ detailSpinning: spinning }),
+  callDetailApi: async (request) => {
+    await set({ detailSpinning: true });
 
     try {
       const response = await ExampleService.detail(request);
       console.log(response);
 
-      set({ exampleDetail: response.rs });
+      set({ detail: response.rs });
     } catch (e) {
       await errorDialog(e as any);
     } finally {
-      await set({ exampleDetailSpinning: false });
+      await set({ detailSpinning: false });
     }
   },
   syncMetadata: (metaData) => {
     if (metaData) {
       console.log(`apply metaData Store : useExampleListStore`);
       set({
-        exampleListSortParams: metaData.exampleListSortParams,
-        exampleListRequestValue: metaData.exampleListRequestValue,
-        exampleListColWidths: metaData.exampleListColWidths,
+        listSortParams: metaData.listSortParams,
+        listRequestValue: metaData.listRequestValue,
+        listColWidths: metaData.listColWidths,
       });
     } else {
       console.log(`clear metaData Store : useExampleListStore`);
       set({
-        exampleListRequestValue: _exampleListRequestValue,
+        listRequestValue: _listRequestValue,
       });
     }
   },
@@ -137,7 +137,7 @@ const createActions: StoreActions<States & Actions, Actions> = (set, get) => ({
 });
 
 // ---------------- exports
-export interface ExampleListStore extends States, Actions, PageStoreActions {}
+export interface ExampleListStore extends States, Actions, PageStoreActions<States> {}
 export const useExampleListAndModalStore = create(
   subscribeWithSelector<ExampleListStore>((set, get) => ({
     ...createState,
@@ -147,16 +147,16 @@ export const useExampleListAndModalStore = create(
 
 // pageModel 에 저장할 대상 모델 셀렉터 정의
 export const unSubscribeExampleListStore = useExampleListAndModalStore.subscribe(
-  (s) => [s.exampleListSortParams, s.exampleListRequestValue, s.exampleListColWidths],
-  ([exampleListSortParams, exampleListRequestValue, exampleListColWidths]) => {
+  (s) => [s.listSortParams, s.listRequestValue, s.listColWidths],
+  ([listSortParams, listRequestValue, listColWidths]) => {
     const routePath = useExampleListAndModalStore.getState().routePath;
     if (!routePath) return;
-    console.log(`Save metaData '${routePath}', Store : useExampleStore`);
+    console.log(`Save metaData '${routePath}', Store : useExampleListAndModalStore`);
 
     setMetaDataByPath<MetaData>(routePath, {
-      exampleListSortParams,
-      exampleListRequestValue,
-      exampleListColWidths,
+      listSortParams,
+      listRequestValue,
+      listColWidths,
     });
   },
   { equalityFn: shallow }

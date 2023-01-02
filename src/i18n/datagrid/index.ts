@@ -10,7 +10,7 @@ export const EN_datagrid = {
   가구유형: "HomeType",
   거주형태: "HomeST",
   수급: "ETC",
-  주요욕구: "Index Desire",
+  주요욕구: "App Desire",
   상담원: "Employee",
   번호: "No.",
   제목: "Title",

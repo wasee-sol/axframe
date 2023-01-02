@@ -5,21 +5,21 @@ import { DataGrid } from "@core/components/DataGrid";
 import { useContainerSize } from "@core/hooks/useContainerSize";
 import { AXFDGColumn, AXFDGProps } from "@axframe/datagrid";
 import { useI18n } from "@core/hooks/useI18n";
-import { useExampleListAndModalStore } from "./useExampleListAndModalStore";
+import { useExampleListWithListStore } from "./useExampleListWithListStore";
 
 interface Props {
   onClick: AXFDGProps<ExampleItem>["onClick"];
 }
 
-function ExampleListAndModalDataGrid({ onClick }: Props) {
-  const listColWidths = useExampleListAndModalStore((s) => s.listColWidths);
-  const listSortParams = useExampleListAndModalStore((s) => s.listSortParams);
-  const listData = useExampleListAndModalStore((s) => s.listData);
-  const listPage = useExampleListAndModalStore((s) => s.listPage);
-  const listSpinning = useExampleListAndModalStore((s) => s.listSpinning);
-  const setListColWidths = useExampleListAndModalStore((s) => s.setListColWidths);
-  const setListSortParams = useExampleListAndModalStore((s) => s.setListSortParams);
-  const changeListPage = useExampleListAndModalStore((s) => s.changeListPage);
+function ExampleListWithListDataGrid({ onClick }: Props) {
+  const listColWidths = useExampleListWithListStore((s) => s.listColWidths);
+  const listSortParams = useExampleListWithListStore((s) => s.listSortParams);
+  const listData = useExampleListWithListStore((s) => s.listData);
+  const listPage = useExampleListWithListStore((s) => s.listPage);
+  const listSpinning = useExampleListWithListStore((s) => s.listSpinning);
+  const setListColWidths = useExampleListWithListStore((s) => s.setListColWidths);
+  const setListSortParams = useExampleListWithListStore((s) => s.setListSortParams);
+  const changeListPage = useExampleListWithListStore((s) => s.changeListPage);
 
   const { t } = useI18n();
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -90,4 +90,4 @@ const Container = styled.div`
   flex: 1;
 `;
 
-export { ExampleListAndModalDataGrid };
+export { ExampleListWithListDataGrid };

@@ -29,9 +29,9 @@ function ExampleDrawer({ open, onOk, onCancel, params, afterOpenChange }: Props)
   const { t } = useI18n();
   const { spinning, setSpinning, isBusy } = useSpinning<{ test: boolean; save: boolean; delete: boolean }>();
 
-  const callExampleDetailApi = useExampleListAndDrawerStore((s) => s.callExampleDetailApi);
-  const exampleDetailSpinning = useExampleListAndDrawerStore((s) => s.exampleDetailSpinning);
-  const exampleDetail = useExampleListAndDrawerStore((s) => s.exampleDetail);
+  const callDetailApi = useExampleListAndDrawerStore((s) => s.callDetailApi);
+  const detailSpinning = useExampleListAndDrawerStore((s) => s.detailSpinning);
+  const detail = useExampleListAndDrawerStore((s) => s.detail);
 
   const handleTest = React.useCallback(async () => {
     if (isBusy) return;
@@ -62,7 +62,7 @@ function ExampleDrawer({ open, onOk, onCancel, params, afterOpenChange }: Props)
   }, [onOk, setSpinning, isBusy]);
 
   useDidMountEffect(() => {
-    callExampleDetailApi(params.query);
+    callDetailApi(params.query);
   });
 
   return (
@@ -90,23 +90,21 @@ function ExampleDrawer({ open, onOk, onCancel, params, afterOpenChange }: Props)
     >
       TEST {params.query?.id}
       <Descriptions bordered size={"small"}>
-        <Descriptions.Item label={t.formItem.counseling.name.label}>{exampleDetail?.name}</Descriptions.Item>
-        <Descriptions.Item label={t.formItem.counseling.birthDt.label}>{exampleDetail?.birthDt}</Descriptions.Item>
-        <Descriptions.Item label={t.formItem.counseling.sex.label}>{exampleDetail?.sex}</Descriptions.Item>
-        <Descriptions.Item label={t.formItem.counseling.phone1.label}>{exampleDetail?.phone1}</Descriptions.Item>
+        <Descriptions.Item label={t.formItem.counseling.name.label}>{detail?.name}</Descriptions.Item>
+        <Descriptions.Item label={t.formItem.counseling.birthDt.label}>{detail?.birthDt}</Descriptions.Item>
+        <Descriptions.Item label={t.formItem.counseling.sex.label}>{detail?.sex}</Descriptions.Item>
+        <Descriptions.Item label={t.formItem.counseling.phone1.label}>{detail?.phone1}</Descriptions.Item>
         <Descriptions.Item label={t.formItem.counseling.phone2.label} span={2}>
-          {exampleDetail?.phone2}
+          {detail?.phone2}
         </Descriptions.Item>
         <Descriptions.Item label='Status' span={3}>
           <Badge status='processing' text='Running' />
         </Descriptions.Item>
-        <Descriptions.Item label={t.formItem.counseling.hndcapYn.label}>{exampleDetail?.hndcapYn}</Descriptions.Item>
-        <Descriptions.Item label={t.formItem.counseling.hndcapGrade.label}>
-          {exampleDetail?.hndcapGrade}
-        </Descriptions.Item>
-        <Descriptions.Item label={t.formItem.counseling.hndcapTyp.label}>{exampleDetail?.hndcapTyp}</Descriptions.Item>
+        <Descriptions.Item label={t.formItem.counseling.hndcapYn.label}>{detail?.hndcapYn}</Descriptions.Item>
+        <Descriptions.Item label={t.formItem.counseling.hndcapGrade.label}>{detail?.hndcapGrade}</Descriptions.Item>
+        <Descriptions.Item label={t.formItem.counseling.hndcapTyp.label}>{detail?.hndcapTyp}</Descriptions.Item>
       </Descriptions>
-      <Loading active={exampleDetailSpinning} />
+      <Loading active={detailSpinning} />
     </Drawer>
   );
 }

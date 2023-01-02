@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { Button } from "antd";
 import { IconText, Loading } from "@core/components/common";
 import * as React from "react";
 import { AXFIWriteForm } from "@axframe/icon";
@@ -12,17 +11,16 @@ import { useExampleDetailStore } from "./useExampleDetailStore";
 import { useParams } from "react-router-dom";
 
 interface Props {}
-function Index(props: Props) {
+function App({}: Props) {
   const { t } = useI18n();
   const init = useExampleDetailStore((s) => s.init);
-  const reset = useExampleDetailStore((s) => s.reset);
-  const callExampleDetailApi = useExampleDetailStore((s) => s.callExampleDetailApi);
-  const exampleDetailSpinning = useExampleDetailStore((s) => s.exampleDetailSpinning);
+  const callDetailApi = useExampleDetailStore((s) => s.callDetailApi);
+  const detailSpinning = useExampleDetailStore((s) => s.detailSpinning);
   const urlParams = useParams<{ id: string }>();
 
   useDidMountEffect(() => {
     init(ROUTES.EXAMPLES.children.LIST_DETAIL.children.DETAIL.path);
-    callExampleDetailApi();
+    if (urlParams.id) callDetailApi({ id: urlParams.id });
   });
 
   return (
@@ -39,7 +37,7 @@ function Index(props: Props) {
 
       <ExampleDetailView />
 
-      <Loading active={exampleDetailSpinning} />
+      <Loading active={detailSpinning} />
     </Container>
   );
 }
@@ -48,4 +46,4 @@ const Container = styled(PageLayout)``;
 const Header = styled(PageLayout.Header)``;
 const ButtonGroup = styled(PageLayout.ButtonGroup)``;
 
-export default Index;
+export default App;

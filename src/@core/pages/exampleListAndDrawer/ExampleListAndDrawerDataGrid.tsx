@@ -12,14 +12,14 @@ interface Props {
 }
 
 function ExampleListAndDrawerDataGrid({ onClick }: Props) {
-  const exampleListColWidths = useExampleListAndDrawerStore((s) => s.exampleListColWidths);
-  const exampleListSortParams = useExampleListAndDrawerStore((s) => s.exampleListSortParams);
-  const exampleListData = useExampleListAndDrawerStore((s) => s.exampleListData);
-  const exampleListPage = useExampleListAndDrawerStore((s) => s.exampleListPage);
-  const exampleListSpinning = useExampleListAndDrawerStore((s) => s.exampleListSpinning);
-  const setExampleListColWidths = useExampleListAndDrawerStore((s) => s.setExampleListColWidths);
-  const setExampleListSortParams = useExampleListAndDrawerStore((s) => s.setExampleListSortParams);
-  const changeExampleListPage = useExampleListAndDrawerStore((s) => s.changeExampleListPage);
+  const listColWidths = useExampleListAndDrawerStore((s) => s.listColWidths);
+  const listSortParams = useExampleListAndDrawerStore((s) => s.listSortParams);
+  const listData = useExampleListAndDrawerStore((s) => s.listData);
+  const listPage = useExampleListAndDrawerStore((s) => s.listPage);
+  const listSpinning = useExampleListAndDrawerStore((s) => s.listSpinning);
+  const setListColWidths = useExampleListAndDrawerStore((s) => s.setListColWidths);
+  const setListSortParams = useExampleListAndDrawerStore((s) => s.setListSortParams);
+  const changeListPage = useExampleListAndDrawerStore((s) => s.changeListPage);
 
   const { t } = useI18n();
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -27,9 +27,9 @@ function ExampleListAndDrawerDataGrid({ onClick }: Props) {
 
   const handleColumnsChange = React.useCallback(
     (columnIndex: number, width: number, columns: AXFDGColumn<ExampleItem>[]) => {
-      setExampleListColWidths(columns.map((column) => column.width));
+      setListColWidths(columns.map((column) => column.width));
     },
-    [setExampleListColWidths]
+    [setListColWidths]
   );
 
   const columns = React.useMemo(
@@ -49,14 +49,14 @@ function ExampleListAndDrawerDataGrid({ onClick }: Props) {
         { key: "hopePoint", label: t.datagrid.주요욕구, align: "left", width: 150 },
         { key: "updatedByNm", label: t.datagrid.상담원, align: "left", width: 120 },
       ].map((column, colIndex) => {
-        if (exampleListColWidths.length > 0) {
-          column.width = exampleListColWidths[colIndex];
+        if (listColWidths.length > 0) {
+          column.width = listColWidths[colIndex];
           return column;
         }
 
         return column;
       }) as AXFDGColumn<ExampleItem>[],
-    [t, exampleListColWidths]
+    [t, listColWidths]
   );
 
   return (
@@ -66,19 +66,19 @@ function ExampleListAndDrawerDataGrid({ onClick }: Props) {
         width={containerWidth}
         height={containerHeight}
         columns={columns}
-        data={exampleListData}
-        spinning={exampleListSpinning}
+        data={listData}
+        spinning={listSpinning}
         onClick={onClick}
         page={{
-          ...exampleListPage,
+          ...listPage,
           loading: false,
           onChange: async (currentPage, pageSize) => {
-            await changeExampleListPage(currentPage, pageSize);
+            await changeListPage(currentPage, pageSize);
           },
         }}
         sort={{
-          sortParams: exampleListSortParams,
-          onChange: setExampleListSortParams,
+          sortParams: listSortParams,
+          onChange: setListSortParams,
         }}
         onChangeColumns={handleColumnsChange}
       />

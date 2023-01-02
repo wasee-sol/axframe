@@ -4,7 +4,7 @@ import { IconText } from "@core/components/common";
 import { PageLayout } from "styles/pageStyled";
 interface Props {}
 
-function Index({}: Props) {
+function App({}: Props) {
   return (
     <Container>
       <Header>
@@ -22,4 +22,4 @@ const Header = styled(PageLayout.Header)``;
 const Body = styled(PageLayout.Body)``;
 const ButtonGroup = styled(PageLayout.ButtonGroup)``;
 
-export default Index;
+export default App;

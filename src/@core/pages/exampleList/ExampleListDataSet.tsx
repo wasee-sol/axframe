@@ -13,13 +13,13 @@ import { useLink } from "@core/hooks/useLink";
 
 interface Props {}
 
-function ExampleListDataSet(props: Props) {
+function ExampleListDataSet({}: Props) {
   const { t } = useI18n();
   const { linkByRoute } = useLink();
-  const exampleListRequestValue = useExampleListStore((s) => s.exampleListRequestValue);
-  const setExampleListRequestValue = useExampleListStore((s) => s.setExampleListRequestValue);
-  const callApi = useExampleListStore((s) => s.callExampleListApi);
-  const spinning = useExampleListStore((s) => s.exampleListSpinning);
+  const listRequestValue = useExampleListStore((s) => s.listRequestValue);
+  const setListRequestValue = useExampleListStore((s) => s.setListRequestValue);
+  const callApi = useExampleListStore((s) => s.callListApi);
+  const spinning = useExampleListStore((s) => s.listSpinning);
 
   const [searchForm] = Form.useForm();
 
@@ -62,8 +62,8 @@ function ExampleListDataSet(props: Props) {
       <SearchParams
         form={searchForm}
         params={params}
-        paramsValue={exampleListRequestValue}
-        onChangeParamsValue={(value) => setExampleListRequestValue(value)}
+        paramsValue={listRequestValue}
+        onChangeParamsValue={(value) => setListRequestValue(value)}
         onSearch={handleSearch}
         spinning={spinning}
       />

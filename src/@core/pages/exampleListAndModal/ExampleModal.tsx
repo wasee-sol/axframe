@@ -1,14 +1,14 @@
 import styled from "@emotion/styled";
 import { Badge, Button, Descriptions, message, Modal } from "antd";
 import * as React from "react";
-import { ModalLayout, PageLayout } from "styles/pageStyled";
+import { ModalLayout } from "styles/pageStyled";
 import { useModalStore } from "@core/stores/useModalStore";
-import { delay } from "../../utils/thread/timing";
+import { delay } from "@core/utils/thread/timing";
 import { useExampleListAndModalStore } from "./useExampleListAndModalStore";
-import { useSpinning } from "../../hooks/useSpinning";
-import { useDidMountEffect } from "../../hooks/useDidMountEffect";
-import { Loading } from "../../components/common";
-import { useI18n } from "../../hooks/useI18n";
+import { useSpinning } from "@core/hooks/useSpinning";
+import { useDidMountEffect } from "@core/hooks/useDidMountEffect";
+import { Loading } from "@core/components/common";
+import { useI18n } from "@core/hooks/useI18n";
 
 export interface ExampleModalRequest {
   query?: Record<string, any>;
@@ -31,9 +31,9 @@ function ExampleModal({ open, onOk, onCancel, afterClose, params }: Props) {
   const { t } = useI18n();
   const { spinning, setSpinning, isBusy } = useSpinning<{ test: boolean; save: boolean; delete: boolean }>();
 
-  const callExampleDetailApi = useExampleListAndModalStore((s) => s.callExampleDetailApi);
-  const exampleDetailSpinning = useExampleListAndModalStore((s) => s.exampleDetailSpinning);
-  const exampleDetail = useExampleListAndModalStore((s) => s.exampleDetail);
+  const callDetailApi = useExampleListAndModalStore((s) => s.callDetailApi);
+  const detailSpinning = useExampleListAndModalStore((s) => s.detailSpinning);
+  const detail = useExampleListAndModalStore((s) => s.detail);
 
   const handleTest = React.useCallback(async () => {
     if (isBusy) return;
@@ -64,7 +64,7 @@ function ExampleModal({ open, onOk, onCancel, afterClose, params }: Props) {
   }, [onOk, setSpinning, isBusy]);
 
   useDidMountEffect(() => {
-    callExampleDetailApi(params.query);
+    callDetailApi({ id: params.query?.id });
   });
 
   return (
@@ -77,28 +77,22 @@ function ExampleModal({ open, onOk, onCancel, afterClose, params }: Props) {
         </ModalLayout.Header>
         <Body>
           <Descriptions bordered size={"small"}>
-            <Descriptions.Item label={t.formItem.counseling.name.label}>{exampleDetail?.name}</Descriptions.Item>
-            <Descriptions.Item label={t.formItem.counseling.birthDt.label}>{exampleDetail?.birthDt}</Descriptions.Item>
-            <Descriptions.Item label={t.formItem.counseling.sex.label}>{exampleDetail?.sex}</Descriptions.Item>
-            <Descriptions.Item label={t.formItem.counseling.phone1.label}>{exampleDetail?.phone1}</Descriptions.Item>
+            <Descriptions.Item label={t.formItem.counseling.name.label}>{detail?.name}</Descriptions.Item>
+            <Descriptions.Item label={t.formItem.counseling.birthDt.label}>{detail?.birthDt}</Descriptions.Item>
+            <Descriptions.Item label={t.formItem.counseling.sex.label}>{detail?.sex}</Descriptions.Item>
+            <Descriptions.Item label={t.formItem.counseling.phone1.label}>{detail?.phone1}</Descriptions.Item>
             <Descriptions.Item label={t.formItem.counseling.phone2.label} span={2}>
-              {exampleDetail?.phone2}
+              {detail?.phone2}
             </Descriptions.Item>
             <Descriptions.Item label='Status' span={3}>
               <Badge status='processing' text='Running' />
             </Descriptions.Item>
-            <Descriptions.Item label={t.formItem.counseling.hndcapYn.label}>
-              {exampleDetail?.hndcapYn}
-            </Descriptions.Item>
-            <Descriptions.Item label={t.formItem.counseling.hndcapGrade.label}>
-              {exampleDetail?.hndcapGrade}
-            </Descriptions.Item>
-            <Descriptions.Item label={t.formItem.counseling.hndcapTyp.label}>
-              {exampleDetail?.hndcapTyp}
-            </Descriptions.Item>
+            <Descriptions.Item label={t.formItem.counseling.hndcapYn.label}>{detail?.hndcapYn}</Descriptions.Item>
+            <Descriptions.Item label={t.formItem.counseling.hndcapGrade.label}>{detail?.hndcapGrade}</Descriptions.Item>
+            <Descriptions.Item label={t.formItem.counseling.hndcapTyp.label}>{detail?.hndcapTyp}</Descriptions.Item>
           </Descriptions>
 
-          <Loading active={exampleDetailSpinning} />
+          <Loading active={detailSpinning} />
         </Body>
         <Footer>
           <Button type='primary' onClick={handleSave} loading={spinning?.save}>
@@ -116,7 +110,6 @@ function ExampleModal({ open, onOk, onCancel, afterClose, params }: Props) {
 
 const Container = styled(ModalLayout)``;
 const Body = styled(ModalLayout.Body)``;
-const ContentBox = styled(PageLayout.ContentBox)``;
 const Footer = styled(ModalLayout.Footer)``;
 
 export async function openExampleModal(params: ExampleModalRequest = {}) {

@@ -12,7 +12,7 @@ const isDev: boolean = process.env.NODE_ENV === "development";
 
 const config: webpack.Configuration = {
   mode: process.env.NODE_ENV as "development" | "production",
-  entry: ["/src/Index.tsx"],
+  entry: ["/src/index.tsx"],
   output: {
     filename: "[name].bundle.js",
     path: path.join(__dirname, "dist"),

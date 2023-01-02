@@ -12,19 +12,19 @@ import { openExampleModal } from "./ExampleModal";
 
 interface Props {}
 
-function ExampleListAndModalDataSet(props: Props) {
+function ExampleListAndModalDataSet({}: Props) {
   const { t } = useI18n();
   // const { linkByRoute } = useLink();
-  const exampleListRequestValue = useExampleListAndModalStore((s) => s.exampleListRequestValue);
-  const setExampleListRequestValue = useExampleListAndModalStore((s) => s.setExampleListRequestValue);
-  const callApi = useExampleListAndModalStore((s) => s.callExampleListApi);
-  const spinning = useExampleListAndModalStore((s) => s.exampleListSpinning);
+  const listRequestValue = useExampleListAndModalStore((s) => s.listRequestValue);
+  const setListRequestValue = useExampleListAndModalStore((s) => s.setListRequestValue);
+  const callListApi = useExampleListAndModalStore((s) => s.callListApi);
+  const listSpinning = useExampleListAndModalStore((s) => s.listSpinning);
 
   const [searchForm] = Form.useForm();
 
   const handleSearch = React.useCallback(async () => {
-    await callApi();
-  }, [callApi]);
+    await callListApi();
+  }, [callListApi]);
 
   const onClickItem = React.useCallback(async (params: AXFDGClickParams<ExampleItem>) => {
     try {
@@ -66,10 +66,10 @@ function ExampleListAndModalDataSet(props: Props) {
       <SearchParams
         form={searchForm}
         params={params}
-        paramsValue={exampleListRequestValue}
-        onChangeParamsValue={(value) => setExampleListRequestValue(value)}
+        paramsValue={listRequestValue}
+        onChangeParamsValue={(value) => setListRequestValue(value)}
         onSearch={handleSearch}
-        spinning={spinning}
+        spinning={listSpinning}
       />
 
       <ExampleListAndModalDataGrid onClick={onClickItem} />

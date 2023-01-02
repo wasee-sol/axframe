@@ -50,15 +50,21 @@ const routes = {
       },
 
       LIST_AND_MODAL: {
-        path: "listWithModal",
+        path: "listAndModal",
         labels: { en: "Example(List&Modal)", ko: "샘플(목록&모달)" },
         icon: <AXFIListSearch />,
       },
 
       LIST_AND_DRAWER: {
-        path: "listWithDrawer",
+        path: "listAndDrawer",
         labels: { en: "Example(List&Drawer)", ko: "샘플(목록&드로워)" },
         icon: <AXFIWriteForm />,
+      },
+
+      LIST_WITH_LIST: {
+        path: "listWithList",
+        labels: { en: "Example(List&List)", ko: "샘플(목록&목록)" },
+        icon: <AXFIDefaultProgram />,
       },
     },
   },

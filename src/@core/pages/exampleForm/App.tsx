@@ -11,11 +11,11 @@ import { ExampleFormSet } from "./ExampleFormSet";
 import { useExampleFormStore } from "./useExampleFormStore";
 
 interface Props {}
-function Index(props: Props) {
+function App({}: Props) {
   const { t } = useI18n();
   const init = useExampleFormStore((s) => s.init);
   const reset = useExampleFormStore((s) => s.reset);
-  const exampleSaveSpinning = useExampleFormStore((s) => s.exampleSaveSpinning);
+  const saveSpinning = useExampleFormStore((s) => s.saveSpinning);
 
   useDidMountEffect(() => {
     init(ROUTES.EXAMPLES.children.LIST_DETAIL.children.REGISTRATION.path);
@@ -36,7 +36,7 @@ function Index(props: Props) {
 
       <ExampleFormSet />
 
-      <Loading active={exampleSaveSpinning} />
+      <Loading active={saveSpinning} />
     </Container>
   );
 }
@@ -45,4 +45,4 @@ const Container = styled(PageLayout)``;
 const Header = styled(PageLayout.Header)``;
 const ButtonGroup = styled(PageLayout.ButtonGroup)``;
 
-export default Index;
+export default App;

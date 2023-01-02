@@ -19,7 +19,7 @@ export interface SignInFormItem {
   password?: string;
 }
 
-function Index({}: Props) {
+function App({}: Props) {
   const setMe = useUserStore((s) => s.setMe);
   const { t, currentLanguage, setLanguage } = useI18n();
   const { spinning, setSpinning } = useSpinning<{ signIn: boolean }>();
@@ -179,4 +179,4 @@ const Logo = styled.div`
   color: ${(p) => p.theme.primary_color};
 `;
 
-export default Index;
+export default App;

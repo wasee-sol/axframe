@@ -1,5 +1,6 @@
 import create from "zustand";
 import {
+  ExampleDetailRequest,
   ExampleItem,
   ExampleSaveRequest,
   ExampleSaveResponse,
@@ -9,55 +10,56 @@ import { errorDialog } from "@core/components/dialogs/errorDialog";
 import { setMetaDataByPath } from "@core/stores/usePageTabStore";
 import { subscribeWithSelector } from "zustand/middleware";
 import shallow from "zustand/shallow";
-import { StoreActions, PageStoreActions } from "@core/stores/types";
+import { PageStoreActions, StoreActions } from "@core/stores/types";
 import { pageStoreActions } from "@core/stores/pageStoreActions";
 
 interface APIRequest extends ExampleSaveRequest {}
 interface APIResponse extends ExampleSaveResponse {}
+interface APIDetailRequest extends ExampleDetailRequest {}
 
 interface MetaData {
-  exampleDetailRequestValue: APIRequest;
+  detailRequestValue: APIRequest;
 }
 
 interface States extends MetaData {
   routePath?: string; // initialized Store;
-  exampleDetailSpinning: boolean;
-  exampleDetail?: ExampleItem;
+  detailSpinning: boolean;
+  detail?: ExampleItem;
 }
 
-interface Actions extends PageStoreActions {
-  setExampleDetailRequestValue: (exampleSaveRequestValue: APIRequest) => void;
-  setExampleDetailSpinning: (exampleSaveSpinning: boolean) => void;
-  callExampleDetailApi: (request?: APIRequest) => Promise<void>;
+interface Actions extends PageStoreActions<States> {
+  setDetailRequestValue: (exampleSaveRequestValue: APIRequest) => void;
+  setDetailSpinning: (exampleSaveSpinning: boolean) => void;
+  callDetailApi: (request?: APIDetailRequest) => Promise<void>;
 }
 
 // create states
-const _exampleDetailRequestValue = {};
+const _detailRequestValue = {};
 const state: States = {
-  exampleDetailRequestValue: { ..._exampleDetailRequestValue },
-  exampleDetailSpinning: false,
+  detailRequestValue: { ..._detailRequestValue },
+  detailSpinning: false,
 };
 
 // create actions
 const createActions: StoreActions<States & Actions, Actions> = (set, get) => ({
-  setExampleDetailRequestValue: (exampleDetailRequestValue) => {
-    set({ exampleDetailRequestValue });
+  setDetailRequestValue: (requestValue) => {
+    set({ detailRequestValue: requestValue });
   },
-  setExampleDetailSpinning: (exampleDetailSpinning) => set({ exampleDetailSpinning }),
-  callExampleDetailApi: async (request) => {
-    await set({ exampleDetailSpinning: true });
+  setDetailSpinning: (spinning) => set({ detailSpinning: spinning }),
+  callDetailApi: async (request) => {
+    await set({ detailSpinning: true });
 
     try {
-      const apiParam = request ?? get().exampleDetailRequestValue;
+      const apiParam = request ?? get().detailRequestValue;
       const response = await ExampleService.detail(apiParam);
 
       console.log(response);
 
-      set({ exampleDetail: response.rs });
+      set({ detail: response.rs });
     } catch (e) {
       await errorDialog(e as any);
     } finally {
-      await set({ exampleDetailSpinning: false });
+      await set({ detailSpinning: false });
     }
   },
   syncMetadata: (metaData) => {
@@ -65,18 +67,18 @@ const createActions: StoreActions<States & Actions, Actions> = (set, get) => ({
     if (metaData) {
       console.log(`apply metaData Store : useExampleFormStore`);
       set({
-        exampleDetailRequestValue: metaData.exampleSaveRequestValue,
+        detailRequestValue: metaData.detailRequestValue,
       });
     } else {
       console.log(`clear metaData Store : useExampleFormStore`);
-      set({ exampleDetailRequestValue: undefined });
+      set({ detailRequestValue: undefined });
     }
   },
   ...pageStoreActions(set, get, () => unSubscribeExampleDetailStore()),
 });
 
 // ---------------- exports
-export interface ExampleDetailStore extends States, Actions {}
+export interface ExampleDetailStore extends States, Actions, PageStoreActions<States> {}
 export const useExampleDetailStore = create(
   subscribeWithSelector<ExampleDetailStore>((set, get) => ({
     ...state,
@@ -84,16 +86,15 @@ export const useExampleDetailStore = create(
   }))
 );
 
-// pageModel 에 저장할 대상 모델 셀렉터 정의
 export const unSubscribeExampleDetailStore = useExampleDetailStore.subscribe(
-  (s) => [s.exampleDetailRequestValue],
-  ([exampleDetailRequestValue]) => {
+  (s) => [s.detailRequestValue],
+  ([detailRequestValue]) => {
     const routePath = useExampleDetailStore.getState().routePath;
     if (!routePath) return;
-    console.log(`Save metaData '${routePath}', Store : useExampleFormStore`);
+    console.log(`Save metaData '${routePath}', Store : useExampleDetailStore`);
 
     setMetaDataByPath<MetaData>(routePath, {
-      exampleDetailRequestValue,
+      detailRequestValue,
     });
   },
   { equalityFn: shallow }

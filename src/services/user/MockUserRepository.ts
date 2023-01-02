@@ -1,5 +1,5 @@
 import { delay } from "@core/utils/thread/timing";
-import { SignInFormItem } from "pages/signin";
+import { SignInFormItem } from "pages/signIn/App";
 import { mock_userAccessibleMenus } from "stories/_mock/userAccessibleMenus";
 import { UserRepositoryInterface } from "./UserRepositoryInterface";
 
