@@ -20,6 +20,7 @@ interface MetaData {
   listRequestValue: APIRequest;
   listColWidths: number[];
   listSortParams: AXFDGSortParam[];
+  flexGrow: number;
 }
 
 interface States extends MetaData {
@@ -36,6 +37,7 @@ interface Actions extends PageStoreActions<States> {
   setListSortParams: (sortParams: AXFDGSortParam[]) => void;
   callListApi: (request?: APIRequest) => Promise<void>;
   changeListPage: (currentPage: number, pageSize?: number) => Promise<void>;
+  setFlexGrow: (flexGlow: number) => void;
 }
 
 // create states
@@ -53,6 +55,7 @@ const createState: States = {
     totalPages: 0,
   },
   listSortParams: [],
+  flexGrow: 1,
 };
 
 // create actions
@@ -103,6 +106,7 @@ const createActions: StoreActions<States & Actions, Actions> = (set, get) => ({
         listSortParams: metaData.listSortParams,
         listRequestValue: metaData.listRequestValue,
         listColWidths: metaData.listColWidths,
+        flexGrow: metaData.flexGrow,
       });
     } else {
       console.log(`clear metaData Store : useExampleListStore`);
@@ -110,6 +114,9 @@ const createActions: StoreActions<States & Actions, Actions> = (set, get) => ({
         listRequestValue: _listRequestValue,
       });
     }
+  },
+  setFlexGrow: (flexGlow) => {
+    set({ flexGrow: flexGlow });
   },
   ...pageStoreActions(set, get, () => unSubscribeExampleListWithListStore()),
 });
@@ -125,8 +132,8 @@ export const useExampleListWithListStore = create(
 
 // pageModel 에 저장할 대상 모델 셀렉터 정의
 export const unSubscribeExampleListWithListStore = useExampleListWithListStore.subscribe(
-  (s) => [s.listSortParams, s.listRequestValue, s.listColWidths],
-  ([listSortParams, listRequestValue, listColWidths]) => {
+  (s) => [s.listSortParams, s.listRequestValue, s.listColWidths, s.flexGrow],
+  ([listSortParams, listRequestValue, listColWidths, flexGrow]) => {
     const routePath = useExampleListWithListStore.getState().routePath;
     if (!routePath) return;
     console.log(`Save metaData '${routePath}', Store : useExampleListWithListStore`);
@@ -135,6 +142,7 @@ export const unSubscribeExampleListWithListStore = useExampleListWithListStore.s
       listSortParams,
       listRequestValue,
       listColWidths,
+      flexGrow,
     });
   },
   { equalityFn: shallow }

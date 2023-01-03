@@ -43,6 +43,12 @@ const PageBody = styled.div`
   ${SMixinFlexColumn("stretch", "stretch")};
 `;
 
+const PageFrameBody = styled.div`
+  position: relative;
+  flex: 1;
+  ${SMixinFlexRow("stretch", "stretch")};
+`;
+
 const PageContentBoxHeader = styled.div<{ size?: HeaderSize }>`
   ${SMixinFlexRow("space-between", "center")};
   font-weight: 600;
@@ -112,6 +118,10 @@ const ButtonGroup = styled.div<{ compact?: boolean }>`
   }};
 `;
 
+const PageFrame = styled.div`
+  flex: 1;
+`;
+
 export class PageLayout extends React.Component<Props> {
   public static Header = PageHeader;
   public static Body = PageBody;
@@ -119,6 +129,9 @@ export class PageLayout extends React.Component<Props> {
   public static ContentBox = PageContentBox;
   public static GroupTitle = PageGroupTitle;
   public static ButtonGroup = ButtonGroup;
+
+  public static FrameBody = PageFrameBody;
+  public static Frame = PageFrame;
 
   public render(): React.ReactElement {
     const { children, ...restProps } = this.props;
