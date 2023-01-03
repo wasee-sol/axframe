@@ -118,8 +118,15 @@ const ButtonGroup = styled.div<{ compact?: boolean }>`
   }};
 `;
 
-const PageFrame = styled.div`
+const PageFrameRow = styled.div`
+  position: relative;
   flex: 1;
+  ${SMixinFlexRow("stretch", "stretch")};
+`;
+const PageFrameColumn = styled.div`
+  position: relative;
+  flex: 1;
+  ${SMixinFlexColumn("stretch", "stretch")};
 `;
 
 export class PageLayout extends React.Component<Props> {
@@ -130,8 +137,8 @@ export class PageLayout extends React.Component<Props> {
   public static GroupTitle = PageGroupTitle;
   public static ButtonGroup = ButtonGroup;
 
-  public static FrameBody = PageFrameBody;
-  public static Frame = PageFrame;
+  public static FrameRow = PageFrameRow;
+  public static FrameColumn = PageFrameColumn;
 
   public render(): React.ReactElement {
     const { children, ...restProps } = this.props;

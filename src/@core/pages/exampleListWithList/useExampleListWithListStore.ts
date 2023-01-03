@@ -1,9 +1,5 @@
 import create from "zustand";
-import {
-  ExampleItem,
-  ExampleListRequest,
-  ExampleListResponse,
-} from "@core/services/example/ExampleRepositoryInterface";
+import { ExampleItem, ExampleListRequest } from "@core/services/example/ExampleRepositoryInterface";
 import { AXFDGDataItem, AXFDGPage, AXFDGSortParam } from "@axframe/datagrid";
 import { ExampleService } from "services";
 import { errorDialog } from "@core/components/dialogs/errorDialog";
@@ -13,14 +9,17 @@ import shallow from "zustand/shallow";
 import { PageStoreActions, StoreActions } from "@core/stores/types";
 import { pageStoreActions } from "@core/stores/pageStoreActions";
 
-interface APIRequest extends ExampleListRequest {}
-interface APIResponse extends ExampleListResponse {}
+interface ListRequest extends ExampleListRequest {}
+interface SubListRequest {}
 
 interface MetaData {
-  listRequestValue: APIRequest;
+  listRequestValue: ListRequest;
   listColWidths: number[];
   listSortParams: AXFDGSortParam[];
   flexGrow: number;
+  subListRequestValue: SubListRequest;
+  subListColWidths: number[];
+  subListSortParams: AXFDGSortParam[];
 }
 
 interface States extends MetaData {
@@ -28,16 +27,26 @@ interface States extends MetaData {
   listSpinning: boolean;
   listData: AXFDGDataItem<ExampleItem>[];
   listPage: AXFDGPage;
+  subListSpinning: boolean;
+  subListData: AXFDGDataItem<ExampleItem>[];
+  subListPage: AXFDGPage;
 }
 
 interface Actions extends PageStoreActions<States> {
-  setListRequestValue: (requestValue: APIRequest) => void;
+  setListRequestValue: (requestValue: ListRequest) => void;
   setListColWidths: (colWidths: number[]) => void;
   setListSpinning: (spinning: boolean) => void;
   setListSortParams: (sortParams: AXFDGSortParam[]) => void;
-  callListApi: (request?: APIRequest) => Promise<void>;
+  callListApi: (request?: ListRequest) => Promise<void>;
   changeListPage: (currentPage: number, pageSize?: number) => Promise<void>;
   setFlexGrow: (flexGlow: number) => void;
+
+  setSubListRequestValue: (requestValue: ListRequest) => void;
+  setSubListColWidths: (colWidths: number[]) => void;
+  setSubListSpinning: (spinning: boolean) => void;
+  setSubListSortParams: (sortParams: AXFDGSortParam[]) => void;
+  callSubListApi: (request?: ListRequest) => Promise<void>;
+  changeSubListPage: (currentPage: number, pageSize?: number) => Promise<void>;
 }
 
 // create states
@@ -56,6 +65,15 @@ const createState: States = {
   },
   listSortParams: [],
   flexGrow: 1,
+  subListRequestValue: { ..._listRequestValue },
+  subListColWidths: [],
+  subListSpinning: false,
+  subListData: [],
+  subListPage: {
+    currentPage: 0,
+    totalPages: 0,
+  },
+  subListSortParams: [],
 };
 
 // create actions
@@ -99,6 +117,50 @@ const createActions: StoreActions<States & Actions, Actions> = (set, get) => ({
     set({ listRequestValue: requestValues });
     await get().callListApi();
   },
+  setFlexGrow: (flexGlow) => {
+    set({ flexGrow: flexGlow });
+  },
+
+  setSubListRequestValue: (requestValues) => {
+    set({ subListRequestValue: requestValues });
+  },
+  setSubListColWidths: (colWidths) => set({ subListColWidths: colWidths }),
+  setSubListSpinning: (spinning) => set({ subListSpinning: spinning }),
+  setSubListSortParams: (sortParams) => set({ subListSortParams: sortParams }),
+  callSubListApi: async (request) => {
+    await set({ subListSpinning: true });
+
+    try {
+      const apiParam = request ?? get().subListRequestValue;
+      const response = await ExampleService.list(apiParam);
+
+      set({
+        subListData: response.ds.map((values) => ({
+          values,
+        })),
+        subListPage: {
+          currentPage: response.rs.pageNumber ?? 1,
+          pageSize: response.rs.pageSize ?? 0,
+          totalPages: response.rs.pgCount ?? 0,
+          totalElements: response.ds.length,
+        },
+      });
+    } catch (e) {
+      await errorDialog(e as any);
+    } finally {
+      await set({ subListSpinning: false });
+    }
+  },
+  changeSubListPage: async (pageNumber, pageSize) => {
+    const requestValues = {
+      ...get().subListRequestValue,
+      pageNumber,
+      pageSize,
+    };
+    set({ subListRequestValue: requestValues });
+    await get().callSubListApi();
+  },
+
   syncMetadata: (metaData) => {
     if (metaData) {
       console.log(`apply metaData Store : useExampleListStore`);
@@ -115,9 +177,7 @@ const createActions: StoreActions<States & Actions, Actions> = (set, get) => ({
       });
     }
   },
-  setFlexGrow: (flexGlow) => {
-    set({ flexGrow: flexGlow });
-  },
+
   ...pageStoreActions(set, get, () => unSubscribeExampleListWithListStore()),
 });
 
@@ -132,8 +192,24 @@ export const useExampleListWithListStore = create(
 
 // pageModel 에 저장할 대상 모델 셀렉터 정의
 export const unSubscribeExampleListWithListStore = useExampleListWithListStore.subscribe(
-  (s) => [s.listSortParams, s.listRequestValue, s.listColWidths, s.flexGrow],
-  ([listSortParams, listRequestValue, listColWidths, flexGrow]) => {
+  (s) => [
+    s.listSortParams,
+    s.listRequestValue,
+    s.listColWidths,
+    s.flexGrow,
+    s.subListSortParams,
+    s.subListRequestValue,
+    s.subListColWidths,
+  ],
+  ([
+    listSortParams,
+    listRequestValue,
+    listColWidths,
+    flexGrow,
+    subListSortParams,
+    subListRequestValue,
+    subListColWidths,
+  ]) => {
     const routePath = useExampleListWithListStore.getState().routePath;
     if (!routePath) return;
     console.log(`Save metaData '${routePath}', Store : useExampleListWithListStore`);
@@ -143,6 +219,9 @@ export const unSubscribeExampleListWithListStore = useExampleListWithListStore.s
       listRequestValue,
       listColWidths,
       flexGrow,
+      subListSortParams,
+      subListRequestValue,
+      subListColWidths,
     });
   },
   { equalityFn: shallow }

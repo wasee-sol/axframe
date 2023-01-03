@@ -27,12 +27,9 @@ function ExampleListWithListDataSet({}: Props) {
     await callListApi();
   }, [callListApi]);
 
-  const onClickItem = React.useCallback(
-    (params: AXFDGClickParams<ExampleItem>) => {
-      linkByRoute(ROUTES.EXAMPLES.children.LIST_DETAIL.children.DETAIL, { id: params.item.id });
-    },
-    [linkByRoute]
-  );
+  const onClickItem = React.useCallback((params: AXFDGClickParams<ExampleItem>) => {
+    // linkByRoute(ROUTES.EXAMPLES.children.LIST_DETAIL.children.DETAIL, { id: params.item.id });
+  }, []);
 
   const params = React.useMemo(
     () => [

@@ -9,6 +9,8 @@ import { useDidMountEffect } from "../../hooks/useDidMountEffect";
 import { ROUTES } from "../../../router/Routes";
 import { useI18n } from "../../hooks/useI18n";
 import { useExampleListWithListStore } from "./useExampleListWithListStore";
+import { ExampleListWithListDataGrid } from "./ExampleListWithListDataGrid";
+import { ExampleListWithListDataSet } from "./ExampleListWithListDataSet";
 
 interface Props {}
 
@@ -48,8 +50,10 @@ function App({}: Props) {
       </Header>
 
       <Body ref={resizerContainerRef}>
-        <Frame style={{ flex: flexGrow }}>A Frame</Frame>
-        <ColResizer containerRef={resizerContainerRef} onResize={(flexGlow) => setFlexGrow(flexGlow)} />
+        <Frame style={{ flex: flexGrow }}>
+          <ExampleListWithListDataSet />
+        </Frame>
+        <ColResizer margin={15} containerRef={resizerContainerRef} onResize={(flexGlow) => setFlexGrow(flexGlow)} />
         <Frame style={{ flex: 2 - flexGrow }}>B Frame</Frame>
       </Body>
     </Container>
@@ -58,9 +62,8 @@ function App({}: Props) {
 
 const Container = styled(PageLayout)``;
 const Header = styled(PageLayout.Header)``;
-const Body = styled(PageLayout.FrameBody)``;
+const Body = styled(PageLayout.FrameRow)``;
 const ButtonGroup = styled(PageLayout.ButtonGroup)``;
-
-const Frame = styled(PageLayout.Frame)``;
+const Frame = styled(PageLayout.FrameColumn)``;
 
 export default App;
