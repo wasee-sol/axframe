@@ -8,7 +8,7 @@ import { useDialog, useI18n, useSpinning } from "hooks";
 import { getTrimNonEmptyRegExp } from "@core/utils/formPatterns/getTrimNonEmptyRegExp";
 import { IconText } from "@core/components/common";
 import { UserService } from "../../services";
-import { useUserStore } from "../../@core/stores/useUserStore";
+import { useUserStore } from "@core/stores/useUserStore";
 
 interface Props {
   onSignIn?: (values: SignInFormItem) => Promise<void>;
