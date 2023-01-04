@@ -43,12 +43,6 @@ const PageBody = styled.div`
   ${SMixinFlexColumn("stretch", "stretch")};
 `;
 
-const PageFrameBody = styled.div`
-  position: relative;
-  flex: 1;
-  ${SMixinFlexRow("stretch", "stretch")};
-`;
-
 const PageContentBoxHeader = styled.div<{ size?: HeaderSize }>`
   ${SMixinFlexRow("space-between", "center")};
   font-weight: 600;
