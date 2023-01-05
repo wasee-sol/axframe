@@ -20,6 +20,7 @@ const PageLayoutContainer = styled.div<Props>`
     if (stretch) {
       return css`
         flex: 1;
+        overflow: hidden;
         ${SMixinFlexColumn("stretch", "stretch")};
       `;
     }
@@ -33,7 +34,7 @@ const PageHeader = styled.div`
 
   font-weight: 600;
   color: ${(p) => p.theme.text_heading_color};
-  margin: 0 0 15px 0;
+  padding: 30px 30px 15px 30px;
   font-size: 1.6em;
 `;
 
@@ -41,6 +42,7 @@ const PageBody = styled.div`
   position: relative;
   flex: 1;
   ${SMixinFlexColumn("stretch", "stretch")};
+  padding: 0 30px 30px 30px;
 `;
 
 const PageContentBoxHeader = styled.div<{ size?: HeaderSize }>`
@@ -112,12 +114,30 @@ const ButtonGroup = styled.div<{ compact?: boolean }>`
   }};
 `;
 
+const PageFrameHeader = styled.div`
+  ${SMixinFlexRow("stretch", "stretch")};
+  line-height: 32px;
+  gap: 10px;
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  color: ${(p) => p.theme.text_heading_color};
+`;
 const PageFrameRow = styled.div`
   position: relative;
   flex: 1;
   ${SMixinFlexRow("stretch", "stretch")};
+  overflow: auto;
+  padding: 15px;
 `;
 const PageFrameColumn = styled.div`
+  position: relative;
+  flex: 1;
+  ${SMixinFlexColumn("stretch", "stretch")};
+  overflow: auto;
+  padding: 15px;
+`;
+const PageFrameBody = styled.div`
   position: relative;
   flex: 1;
   ${SMixinFlexColumn("stretch", "stretch")};
@@ -131,6 +151,8 @@ export class PageLayout extends React.Component<Props> {
   public static GroupTitle = PageGroupTitle;
   public static ButtonGroup = ButtonGroup;
 
+  public static FrameHeader = PageFrameHeader;
+  public static FrameBody = PageFrameBody;
   public static FrameRow = PageFrameRow;
   public static FrameColumn = PageFrameColumn;
 
