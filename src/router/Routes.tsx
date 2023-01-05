@@ -66,6 +66,12 @@ const routes = {
         labels: { en: "Example(List&List)", ko: "샘플(목록&목록)" },
         icon: <AXFIDefaultProgram />,
       },
+
+      LIST_WITH_FORM: {
+        path: "listWithForm",
+        labels: { en: "Example(List&Form)", ko: "샘플(목록&폼)" },
+        icon: <AXFIDefaultProgram />,
+      },
     },
   },
 
