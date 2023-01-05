@@ -51,17 +51,15 @@ function PageRoute() {
         }
       >
         <Route path={ROUTES.DASHBOARD.path} element={<Dashboard />} />
-        <Route path={ROUTES.EXAMPLES.path}>
-          <Route path={ROUTES.EXAMPLES.children.LIST_DETAIL.path}>
-            <Route path={ROUTES.EXAMPLES.children.LIST_DETAIL.children.REGISTRATION.path} element={<ExampleForm />} />
-            <Route path={ROUTES.EXAMPLES.children.LIST_DETAIL.children.LIST.path} element={<ExampleList />} />
-            <Route path={ROUTES.EXAMPLES.children.LIST_DETAIL.children.DETAIL.path} element={<ExampleDetail />} />
-          </Route>
-          <Route path={ROUTES.EXAMPLES.children.LIST_AND_MODAL.path} element={<ExampleListAndModal />} />
-          <Route path={ROUTES.EXAMPLES.children.LIST_AND_DRAWER.path} element={<ExampleListAndDrawer />} />
-          <Route path={ROUTES.EXAMPLES.children.LIST_WITH_LIST.path} element={<ExampleListWithList />} />
-          <Route path={ROUTES.EXAMPLES.children.LIST_WITH_FORM.path} element={<ExampleListWithForm />} />
-        </Route>
+
+        <Route path={ROUTES.EXAMPLES.children.LIST_DETAIL.children.REGISTRATION.path} element={<ExampleForm />} />
+        <Route path={ROUTES.EXAMPLES.children.LIST_DETAIL.children.LIST.path} element={<ExampleList />} />
+        <Route path={ROUTES.EXAMPLES.children.LIST_DETAIL.children.DETAIL.path} element={<ExampleDetail />} />
+        <Route path={ROUTES.EXAMPLES.children.LIST_AND_MODAL.path} element={<ExampleListAndModal />} />
+        <Route path={ROUTES.EXAMPLES.children.LIST_AND_DRAWER.path} element={<ExampleListAndDrawer />} />
+        <Route path={ROUTES.EXAMPLES.children.LIST_WITH_LIST.path} element={<ExampleListWithList />} />
+        <Route path={ROUTES.EXAMPLES.children.LIST_WITH_FORM.path} element={<ExampleListWithForm />} />
+
         <Route path={ROUTES.SETTING.path} element={<Setting />} />
         <Route path={ROUTES.HOME.path} element={<Home />} />
         <Route path={ROUTES.BLANK_PAGE.path} element={<></>} />
