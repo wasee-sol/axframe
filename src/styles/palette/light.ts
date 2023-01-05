@@ -1,5 +1,5 @@
 const LIGHT = {
-  BLUE_5: "#F0F6FA",
+  BLUE_5: "#ecf4fc",
   BLUE_10: "#C8DEED",
   BLUE_30: "#7DB2D5",
   BLUE_50: "#3B82F6",
