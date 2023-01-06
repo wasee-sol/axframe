@@ -44,7 +44,15 @@ module.exports = {
     "react/prop-types": 0,
     "react/jsx-no-target-blank": 0,
     "unused-imports/no-unused-imports-ts": 2,
-    "unused-imports/no-unused-vars-ts": 2,
+    "unused-imports/no-unused-vars-ts": [
+      2,
+      {
+        vars: "all",
+        varsIgnorePattern: "^_",
+        args: "after-used",
+        argsIgnorePattern: "^_",
+      },
+    ],
     "react-hooks/exhaustive-deps": 1,
     "react/display-name": 0,
     "no-restricted-syntax": [
