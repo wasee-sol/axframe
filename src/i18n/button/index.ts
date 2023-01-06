@@ -7,6 +7,7 @@ export const EN_button = {
   findAddr: "findAddr",
   excel: "Excel",
   registration: "Registration",
+  addNew: "Registration",
 };
 
 export const KO_button: typeof EN_button = {
@@ -18,4 +19,5 @@ export const KO_button: typeof EN_button = {
   findAddr: "주소찾기",
   excel: "엑셀변환하기",
   registration: "등록하기",
+  addNew: "등록하기",
 };
