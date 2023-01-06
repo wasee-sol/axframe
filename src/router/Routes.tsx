@@ -30,7 +30,7 @@ const routes = {
       LIST_DETAIL: {
         path: "listAndDetail",
         labels: { en: "Example(List&Detail)", ko: "샘플(목록&상세)" },
-        icon: <AXFIWriteForm />,
+        icon: <AXFIDefaultProgram />,
         children: {
           REGISTRATION: {
             path: "registration",
@@ -45,6 +45,7 @@ const routes = {
           DETAIL: {
             path: "detail/:id",
             labels: { en: `Example(detail#{id})`, ko: "샘플(상세#{id})" },
+            icon: <AXFIDefaultProgram />,
           },
         },
       },
@@ -58,7 +59,7 @@ const routes = {
       LIST_AND_DRAWER: {
         path: "listAndDrawer",
         labels: { en: "Example(List&Drawer)", ko: "샘플(목록&드로워)" },
-        icon: <AXFIWriteForm />,
+        icon: <AXFIListSearch />,
       },
 
       LIST_WITH_LIST: {
