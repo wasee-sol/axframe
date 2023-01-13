@@ -7,4 +7,3 @@ export * from "@core/hooks/useUnMountEffect";
 export * from "@core/hooks/useSpinning";
 export * from "@core/hooks/usePageMetaData";
 export * from "@core/hooks/useContainerSize";
-export * from "@core/hooks/useListPageData";

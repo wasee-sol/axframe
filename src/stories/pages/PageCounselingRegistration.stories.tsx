@@ -1,17 +1,17 @@
 import * as React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { ExampleFormSet } from "@core/pages/exampleForm/ExampleFormSet";
+import { FormSet } from "@core/pages/FORM/FormSet";
 
 export default {
-  title: "template/pages/ExampleDetailView",
-  component: ExampleFormSet,
+  title: "template/pages/DetailView",
+  component: FormSet,
   argTypes: {
     backgroundColor: { control: "color" },
   },
-} as ComponentMeta<typeof ExampleFormSet>;
+} as ComponentMeta<typeof FormSet>;
 
-const Template: ComponentStory<typeof ExampleFormSet> = (args) => {
-  return <ExampleFormSet {...args} />;
+const Template: ComponentStory<typeof FormSet> = (args) => {
+  return <FormSet {...args} />;
 };
 
 export const Default = Template.bind({});

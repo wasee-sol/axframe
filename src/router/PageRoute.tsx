@@ -10,13 +10,13 @@ import { ROUTES } from "./Routes";
 const FrameDefault = React.lazy(() => import("@core/pageFrame/FrameDefault"));
 const FrameProgram = React.lazy(() => import("@core/pageFrame/FrameProgram"));
 
-const ExampleList = React.lazy(() => import("@core/pages/exampleList/App"));
-const ExampleForm = React.lazy(() => import("@core/pages/exampleForm/App"));
-const ExampleDetail = React.lazy(() => import("@core/pages/exampleDetail/App"));
-const ExampleListAndModal = React.lazy(() => import("@core/pages/exampleListAndModal/App"));
-const ExampleListAndDrawer = React.lazy(() => import("@core/pages/exampleListAndDrawer/App"));
-const ExampleListWithList = React.lazy(() => import("@core/pages/exampleListWithList/App"));
-const ExampleListWithForm = React.lazy(() => import("@core/pages/exampleListWithForm/App"));
+const ExampleList = React.lazy(() => import("@core/pages/LIST/App"));
+const ExampleForm = React.lazy(() => import("@core/pages/FORM/App"));
+const ExampleDetail = React.lazy(() => import("@core/pages/DETAIL/App"));
+const ExampleListAndModal = React.lazy(() => import("@core/pages/LIST_AND_MODAL/App"));
+const ExampleListAndDrawer = React.lazy(() => import("@core/pages/LIST_AND_DRAWER/App"));
+const ExampleListWithList = React.lazy(() => import("@core/pages/LIST_WITH_LIST/App"));
+const ExampleListWithForm = React.lazy(() => import("@core/pages/LIST_WITH_FORM/App"));
 
 const Dashboard = React.lazy(() => import("pages/dashboard/App"));
 const Home = React.lazy(() => import("pages/home/App"));
