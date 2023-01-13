@@ -39,7 +39,7 @@
     "@ant-design/icons": "^4.7.0",
     "@axframe/contextmenu": "^0.3.4",
     "@axframe/datagrid": "^0.1.14",
-    "@axframe/icon": "^0.1.6",
+    "@axframe/icon": "^0.1.7",
     "@emotion/css": "^11.10.0",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
