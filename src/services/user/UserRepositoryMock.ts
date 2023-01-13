@@ -3,7 +3,7 @@ import { SignInFormItem } from "pages/signIn/App";
 import { mock_userAccessibleMenus } from "stories/_mock/userAccessibleMenus";
 import { UserRepositoryInterface } from "./UserRepositoryInterface";
 
-export class MockUserRepository implements UserRepositoryInterface {
+export class UserRepositoryMock implements UserRepositoryInterface {
   public async getUserAccessibleMenus(userUuid: string) {
     console.log("userUuid", userUuid);
     await delay(500);
