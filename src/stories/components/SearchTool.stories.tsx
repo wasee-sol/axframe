@@ -1,4 +1,4 @@
-import { Form } from "antd";
+import { Button, Form } from "antd";
 import * as React from "react";
 import { ComponentMeta } from "@storybook/react";
 import { SearchParams, SearchParamType } from "@core/components/search";
@@ -17,19 +17,9 @@ export const Default = () => {
   return <SearchParams form={form} />;
 };
 
-export const Filtertype = () => {
-  const { t } = useI18n();
+export const FilterNotStretch = () => {
   const [form] = Form.useForm();
-  return (
-    <SearchParams
-      form={form}
-      // paramOptions={[
-      //   { value: "", label: t.filterType.전체 },
-      //   { value: "title", label: t.filterType.제목 },
-      //   { value: "writer", label: t.filterType.작성자 },
-      // ]}
-    />
-  );
+  return <SearchParams form={form} filterWidth={200} />;
 };
 
 export const ParamObjects = () => {
@@ -38,11 +28,6 @@ export const ParamObjects = () => {
   return (
     <SearchParams
       form={form}
-      // paramOptions={[
-      //   { value: "", label: t.filterType.전체 },
-      //   { value: "title", label: t.filterType.제목 },
-      //   { value: "writer", label: t.filterType.작성자 },
-      // ]}
       params={[
         {
           title: t.formItem.counseling.area.label,
@@ -63,5 +48,38 @@ export const ParamObjects = () => {
         },
       ]}
     />
+  );
+};
+
+export const ExtraButtons = () => {
+  const { t } = useI18n();
+  const [form] = Form.useForm();
+  return (
+    <SearchParams
+      filterWidth={200}
+      form={form}
+      params={[
+        {
+          title: t.formItem.counseling.area.label,
+          name: "select1",
+          type: SearchParamType.SELECT,
+          options: t.formItem.counseling.area.options,
+        },
+        {
+          title: t.formItem.counseling.cnsltHow.label,
+          name: "select2",
+          type: SearchParamType.SELECT,
+          options: t.formItem.counseling.cnsltHow.options,
+        },
+      ]}
+      extraButtons={() => (
+        <>
+          <Button>BTN1</Button>
+          <Button>BTN2</Button>
+        </>
+      )}
+    >
+      Children
+    </SearchParams>
   );
 };

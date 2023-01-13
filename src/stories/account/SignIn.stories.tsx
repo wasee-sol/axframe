@@ -4,7 +4,7 @@ import App from "pages/signIn/App";
 import { PageFrameContainer } from "@core/pageFrame/FrameDefault";
 
 export default {
-  title: "template/account/App",
+  title: "pages/account/App",
   component: App,
   argTypes: {
     backgroundColor: { control: "color" },
