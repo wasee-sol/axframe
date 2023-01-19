@@ -45,6 +45,7 @@
     "@emotion/styled": "^11.10.0",
     "@monaco-editor/react": "^4.4.6",
     "antd": "^4.23.3",
+    "axios": "^1.2.2",
     "color": "^4.2.3",
     "emotion-normalize": "^11.0.1",
     "idb-keyval": "^6.2.0",

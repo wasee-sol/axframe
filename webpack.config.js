@@ -1,6 +1,8 @@
 "use strict";
 var _a;
+var _b;
 exports.__esModule = true;
+var webpack = require("webpack");
 var path = require("path");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
 var ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
@@ -65,6 +67,12 @@ var config = {
         fallback: { buffer: false }
     },
     plugins: [
+        new webpack.DefinePlugin(Object.assign({
+            "process.env": {
+                NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+                API_PHASE: JSON.stringify((_b = process.env.API_PHASE) !== null && _b !== void 0 ? _b : "local")
+            }
+        })),
         new CompressionPlugin({
             filename: "[path][base].br",
             algorithm: "brotliCompress",

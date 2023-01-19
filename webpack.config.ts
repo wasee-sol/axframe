@@ -66,6 +66,14 @@ const config: webpack.Configuration = {
     fallback: { buffer: false },
   },
   plugins: [
+    new webpack.DefinePlugin(
+      Object.assign({
+        "process.env": {
+          NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+          API_PHASE: JSON.stringify(process.env.API_PHASE ?? "local"),
+        },
+      })
+    ),
     new CompressionPlugin({
       filename: "[path][base].br",
       algorithm: "brotliCompress",

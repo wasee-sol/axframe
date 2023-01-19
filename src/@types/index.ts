@@ -18,3 +18,5 @@ export interface MousePosition {
   clientX: number;
   clientY: number;
 }
+
+export * from "./error";

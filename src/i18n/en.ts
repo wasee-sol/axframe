@@ -5,6 +5,7 @@ import { EN_button } from "./button";
 import { EN_msg } from "./msg";
 import { EN_filterType } from "./filterType";
 import { EN_pageTab } from "./pageTab";
+import { EN_apiErrMsg } from "./error";
 
 const EN = {
   appName: "AXFrame",
@@ -15,5 +16,6 @@ const EN = {
   pageTab: EN_pageTab,
   pages: EN_pages,
   msg: EN_msg,
+  apiErrMsg: EN_apiErrMsg,
 };
 export default EN;
