@@ -2,7 +2,7 @@ import { LanguageType } from "../i18n";
 import { ROUTES, RawRoute } from "./Routes";
 import { MenuItemType } from "rc-menu/lib/interface";
 
-export enum MenuIdType {
+export enum PROGRAM_TYPES {
   SAMPLE_REGISTRATION = "SAMPLE_REGISTRATION",
   SAMPLE_LIST = "SAMPLE_LIST",
   SAMPLE_LIST_AND_MODAL = "SAMPLE_LIST_AND_MODAL",
@@ -15,19 +15,19 @@ export enum MenuIdType {
 
 export interface MenuItem extends MenuItemType {
   children?: MenuItem[];
-  enum?: MenuIdType;
+  enum?: PROGRAM_TYPES;
   labels?: Record<LanguageType, string>;
   route?: Record<string, any>;
 }
 interface RawMenu {
-  menuId?: MenuIdType;
+  menuId?: PROGRAM_TYPES;
   route: RawRoute;
   children?: RawMenu[];
 }
 
 export const menus: RawMenu[] = [
   {
-    menuId: MenuIdType.DASHBOARD,
+    menuId: PROGRAM_TYPES.DASHBOARD,
     route: ROUTES.DASHBOARD,
   },
   {
@@ -37,35 +37,35 @@ export const menus: RawMenu[] = [
         route: ROUTES.EXAMPLES.children.LIST_DETAIL,
         children: [
           {
-            menuId: MenuIdType.SAMPLE_REGISTRATION,
+            menuId: PROGRAM_TYPES.SAMPLE_REGISTRATION,
             route: ROUTES.EXAMPLES.children.LIST_DETAIL.children.REGISTRATION,
           },
           {
-            menuId: MenuIdType.SAMPLE_LIST,
+            menuId: PROGRAM_TYPES.SAMPLE_LIST,
             route: ROUTES.EXAMPLES.children.LIST_DETAIL.children.LIST,
           },
         ],
       },
       {
-        menuId: MenuIdType.SAMPLE_LIST_AND_MODAL,
+        menuId: PROGRAM_TYPES.SAMPLE_LIST_AND_MODAL,
         route: ROUTES.EXAMPLES.children.LIST_AND_MODAL,
       },
       {
-        menuId: MenuIdType.SAMPLE_LIST_AND_DRAWER,
+        menuId: PROGRAM_TYPES.SAMPLE_LIST_AND_DRAWER,
         route: ROUTES.EXAMPLES.children.LIST_AND_DRAWER,
       },
       {
-        menuId: MenuIdType.SAMPLE_LIST_WITH_LIST,
+        menuId: PROGRAM_TYPES.SAMPLE_LIST_WITH_LIST,
         route: ROUTES.EXAMPLES.children.LIST_WITH_LIST,
       },
       {
-        menuId: MenuIdType.SAMPLE_LIST_WITH_FORM,
+        menuId: PROGRAM_TYPES.SAMPLE_LIST_WITH_FORM,
         route: ROUTES.EXAMPLES.children.LIST_WITH_FORM,
       },
     ],
   },
   {
-    menuId: MenuIdType.SETTING,
+    menuId: PROGRAM_TYPES.SETTING,
     route: ROUTES.SETTING,
   },
 ];

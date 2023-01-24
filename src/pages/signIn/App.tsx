@@ -31,8 +31,8 @@ function App({}: Props) {
     async (values: SignInFormItem) => {
       setSpinning({ signIn: true });
       try {
-        const me = await UserService.signIn(values);
-        await setMe(me);
+        const data = await UserService.signIn(values);
+        await setMe(data.rs);
       } catch (err) {
         await errorDialog(err);
       } finally {

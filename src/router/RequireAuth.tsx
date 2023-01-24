@@ -12,7 +12,7 @@ interface Props {
 function RequireAuth({ children }: Props) {
   const loaded = useUserStore((s) => s.loaded);
   const me = useUserStore((s) => s.me);
-  const accessibleMenus = useUserStore((s) => s.accessibleMenus);
+  const programList = useUserStore((s) => s.programList);
   const location = useLocation();
   const currentMenu = getFlattedMenus(MENUS).find((fMenu) => fMenu.key === location.pathname);
 
@@ -20,7 +20,7 @@ function RequireAuth({ children }: Props) {
     return null;
   }
 
-  if (currentMenu && currentMenu.enum && !accessibleMenus.includes(currentMenu.enum)) {
+  if (currentMenu && currentMenu.enum && !programList.includes(currentMenu.enum)) {
     return <Navigate to={ROUTES.HOME.path} state={{ from: location }} replace />;
   }
 

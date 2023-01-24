@@ -1,13 +1,24 @@
-import { MenuIdType } from "router/menus";
-import { User } from "stores";
-import { SignInFormItem } from "pages/signIn/App";
+export interface User {
+  userNm: string;
+  userCd: string;
+  timeZone: number;
+  programList: string[];
+  locale: string;
+  authorityList: string[];
+  email: string;
+  compCd: string;
+}
 
-export interface GetUserMenuResponse {
-  accessibleMenus: MenuIdType[];
+export interface SignInRequest {
+  userCd: string;
+  userPs: string;
+}
+
+export interface SignInResponse {
+  rs: User;
 }
 
 export interface UserRepositoryInterface {
-  signIn(values: SignInFormItem): Promise<User>;
+  signIn(values: SignInRequest): Promise<SignInResponse>;
   signOut(): Promise<void>;
-  getUserAccessibleMenus(userUuid: string): Promise<GetUserMenuResponse>;
 }

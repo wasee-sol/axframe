@@ -1,16 +1,9 @@
 import buildStore from "@core/stores/buildStore";
-import { UserService } from "services";
-import { MenuIdType } from "router/menus";
+import { User, UserService } from "services";
+import { PROGRAM_TYPES } from "router/menus";
 import { usePageTabStore } from "../@core/stores/usePageTabStore";
-// import { setApiHeader } from "../services/apiWrapper";
+import { setApiHeader } from "../services/apiWrapper";
 import { getAppData } from "../@core/utils/store";
-
-export interface User {
-  uuid: string;
-  name: string;
-  email: string;
-  jobTitle?: string;
-}
 
 export interface UserMenuItem {
   icon?: string;
@@ -23,7 +16,8 @@ export interface UserMenuItem {
 export interface UserModel {
   loaded: boolean;
   me?: User;
-  accessibleMenus: MenuIdType[];
+  authorityList: string[];
+  programList: PROGRAM_TYPES[];
   openedMenuUuids: string[];
   selectedMenuUuid: string;
 }
@@ -33,7 +27,8 @@ export interface UserActions {
   setMe: (me: User) => Promise<void>;
   clearMe: () => void;
   signOut: () => Promise<void>;
-  setAccessibleMenus: (accessibleMenus: MenuIdType[]) => void;
+  setAuthorityList: (accessibleMenus: string[]) => void;
+  setProgramList: (programList: PROGRAM_TYPES[]) => void;
   setOpenedMenuUuids: (uuids: string[]) => void;
   setSelectedMenuUuid: (uuid: string) => void;
 }
@@ -42,7 +37,8 @@ export interface UserStore extends UserModel, UserActions {}
 
 export const userInitialState: UserModel = {
   loaded: false,
-  accessibleMenus: [],
+  authorityList: [],
+  programList: [],
   openedMenuUuids: [],
   selectedMenuUuid: "",
 };
@@ -54,20 +50,21 @@ export const useUserStore = buildStore<UserStore>(
     ...userInitialState,
     setLoaded: (loaded: boolean) => set({ loaded }),
     setMe: async (me) => {
-      console.log(me);
-      const { accessibleMenus } = await UserService.getUserAccessibleMenus(me.uuid);
-      set({ me, accessibleMenus });
+      set({ me, authorityList: me.authorityList, programList: me.programList as PROGRAM_TYPES[] });
     },
     clearMe: () => {
-      set({ me: undefined });
+      set({ me: undefined, authorityList: [], programList: [] });
     },
     signOut: async () => {
       await UserService.signOut();
-      set({ me: undefined });
+      get().clearMe();
       usePageTabStore.getState().clearTab();
     },
-    setAccessibleMenus: (accessibleMenus) => {
-      set({ accessibleMenus });
+    setAuthorityList: (authorityList) => {
+      set({ authorityList });
+    },
+    setProgramList: (programList) => {
+      set({ programList });
     },
     setOpenedMenuUuids: (uuids) => {
       set({ openedMenuUuids: uuids });
@@ -85,7 +82,7 @@ export const useUserStore = buildStore<UserStore>(
 useUserStore.persist.onFinishHydration((state) => {
   const appData = getAppData();
   if (appData) {
-    // setApiHeader(appData.authorization);
+    setApiHeader(appData.authorization);
   } else {
     state.clearMe();
   }
