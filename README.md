@@ -1,12 +1,16 @@
-# axframe
+# axframe (The god of Front-end)
 
-Solution for Real-world Software
+React framework for professional developers
 
 ## Install
 
 ```shell
-git clone git@github.com:axisj/axframe.git myproject
+git clone [git repo address] myproject
 cd myproject
+
+git submodule init
+git submodule update
+
 npm i
 ```
 
@@ -19,30 +23,13 @@ npm run dev
 ## Build
 
 ```shell
+// for production build
 npm run build
+
+// for production alpha
+npm run build:alpha
 ```
+
+You can see output files in 'dist' folder
 
 - In the development mode, check the disable cache option on the network tab.
-
-## Submodule
-
-To use axframe, you must add an axframe-core submodule to your project.
-How to manage axframe-core submodules.
-
-### git submodule add
-
-> $ git submodule add <repository> [path]
-
-Manage by adding submodules to the src/@core folder.
-
-```shell
-git submodule add git@github.com:axisj/axframe-core.git src/@core
-```
-
-### git submodule remove
-
-```shell
-git submodule deinit -f src/@core
-rm -rf .git/modules/src/@core
-git rm -f src/@core
-```

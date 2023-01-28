@@ -7,7 +7,7 @@ import { SMixinFlexColumn, SMixinFlexRow } from "@core/styles/emotion";
 import { useDialog, useI18n, useSpinning } from "hooks";
 import { getTrimNonEmptyRegExp } from "@core/utils/formPatterns/getTrimNonEmptyRegExp";
 import { IconText } from "@core/components/common";
-import { UserService } from "services";
+import { SignInRequest, UserService } from "services";
 import { useUserStore } from "stores";
 
 interface Props {
@@ -31,8 +31,11 @@ function App({}: Props) {
     async (values: SignInFormItem) => {
       setSpinning({ signIn: true });
       try {
-        const me = await UserService.signIn(values);
-        await setMe(me);
+        const { rs } = await UserService.signIn({
+          userCd: values.userId,
+          userPs: values.password,
+        });
+        await setMe(rs);
       } catch (err) {
         await errorDialog(err);
       } finally {
