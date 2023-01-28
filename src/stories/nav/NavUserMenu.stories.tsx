@@ -1,8 +1,7 @@
 import styled from "@emotion/styled";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import NavUserMenu from "@core/components/nav/NavUserMenu";
+import NavUserMenu from "components/nav/NavUserMenu";
 import * as React from "react";
-import { MENUS } from "router/menus";
 
 export default {
   title: "template/nav/NavUserMenu",
@@ -11,7 +10,7 @@ export default {
     backgroundColor: { control: "color" },
   },
   args: {
-    menus: MENUS,
+    menus: [],
   },
 } as ComponentMeta<typeof NavUserMenu>;
 

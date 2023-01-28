@@ -1,9 +1,10 @@
 import buildStore from "@core/stores/buildStore";
 import { User, UserService } from "services";
-import { PROGRAM_TYPES } from "router/menus";
+import { PROGRAM_TYPES } from "router";
 import { usePageTabStore } from "../@core/stores/usePageTabStore";
 import { setApiHeader } from "../services/apiWrapper";
 import { getAppData } from "../@core/utils/store";
+import { useAppStore } from "stores";
 
 export interface UserMenuItem {
   icon?: string;
@@ -50,6 +51,7 @@ export const useUserStore = buildStore<UserStore>(
     ...userInitialState,
     setLoaded: (loaded: boolean) => set({ loaded }),
     setMe: async (me) => {
+      await useAppStore.getState().callAppMenu();
       set({ me, authorityList: me.authorityList, programList: me.programList as PROGRAM_TYPES[] });
     },
     clearMe: () => {

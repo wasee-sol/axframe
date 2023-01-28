@@ -10,15 +10,15 @@ export interface User {
 }
 
 export interface SignInRequest {
-  userCd: string;
-  userPs: string;
+  userCd?: string;
+  userPs?: string;
 }
 
 export interface SignInResponse {
   rs: User;
 }
 
-export interface UserRepositoryInterface {
-  signIn(values: SignInRequest): Promise<SignInResponse>;
-  signOut(): Promise<void>;
+export abstract class UserRepositoryInterface {
+  abstract signIn(params: SignInRequest): Promise<SignInResponse>;
+  abstract signOut(): Promise<void>;
 }

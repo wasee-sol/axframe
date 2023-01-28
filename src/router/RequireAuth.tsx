@@ -2,8 +2,8 @@ import * as React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useUserStore } from "stores";
 import { getFlattedMenus } from "@core/utils/store";
-import { MENUS } from "./menus";
 import { ROUTES } from "./Routes";
+import { useAppMenu } from "./useAppMenu";
 
 interface Props {
   children: JSX.Element;
@@ -12,15 +12,16 @@ interface Props {
 function RequireAuth({ children }: Props) {
   const loaded = useUserStore((s) => s.loaded);
   const me = useUserStore((s) => s.me);
-  const programList = useUserStore((s) => s.programList);
+  const accessibleMenus = useUserStore((s) => s.authorityList);
+  const { APP_MENUS } = useAppMenu();
   const location = useLocation();
-  const currentMenu = getFlattedMenus(MENUS).find((fMenu) => fMenu.key === location.pathname);
+  const currentMenu = getFlattedMenus(APP_MENUS as any).find((fMenu) => fMenu.key === location.pathname);
 
   if (!loaded) {
     return null;
   }
 
-  if (currentMenu && currentMenu.enum && !programList.includes(currentMenu.enum)) {
+  if (currentMenu && currentMenu.program_type && !accessibleMenus.includes(currentMenu.program_type)) {
     return <Navigate to={ROUTES.HOME.path} state={{ from: location }} replace />;
   }
 
