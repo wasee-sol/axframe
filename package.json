@@ -9,6 +9,7 @@
     "node": ">=18.0.0"
   },
   "scripts": {
+    "preinstall": "git submodule init && git submodule update",
     "build:webpack-config": "tsc webpack.config.ts",
     "dev": "npm run build:webpack-config && run-p start:dev-server watch",
     "start:dev-server": "webpack-dev-server --port 4000 --history-api-fallback --compress --node-env development",

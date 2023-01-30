@@ -8,9 +8,6 @@ React framework for professional developers
 git clone [git repo address] myproject
 cd myproject
 
-git submodule init
-git submodule update
-
 npm i
 ```
 
