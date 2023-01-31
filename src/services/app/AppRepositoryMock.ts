@@ -65,6 +65,28 @@ export class AppRepositoryMock extends AppRepositoryInterface {
               progCd: "EXAMPLE_LIST_AND_MODAL",
               children: [],
             },
+            {
+              multiLanguage: {
+                en: "LIST&FORM",
+                ko: "LIST&FORM",
+              },
+              iconTy: "Template",
+              level: 1,
+              sort: 4,
+              progCd: "EXAMPLE_LIST_WITH_FORM",
+              children: [],
+            },
+            {
+              multiLanguage: {
+                en: "LIST&LIST",
+                ko: "LIST&LIST",
+              },
+              iconTy: "Template",
+              level: 1,
+              sort: 5,
+              progCd: "EXAMPLE_LIST_WITH_LIST",
+              children: [],
+            },
           ],
           userGroup: ["ROLE_ADMIN"],
         },
