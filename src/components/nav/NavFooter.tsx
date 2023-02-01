@@ -44,16 +44,12 @@ function NavFooter({}: Props) {
         role={"theme-selector"}
       />
       <Dropdown
-        overlay={
-          <Menu
-            onClick={onClickMenu}
-            items={[
-              { key: "en", label: LanguageLabel.en },
-              { key: "ko", label: LanguageLabel.ko },
-            ]}
-            selectedKeys={[currentLanguage]}
-          />
-        }
+        menu={{
+          items: [
+            { key: "en", label: LanguageLabel.en },
+            { key: "ko", label: LanguageLabel.ko },
+          ],
+        }}
         trigger={["click"]}
       >
         <IconText icon={<AXFILanguage />} iconSize={20} role={"lang-selector"}>

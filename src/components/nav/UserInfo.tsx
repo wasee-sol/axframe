@@ -44,11 +44,7 @@ function UserInfo({}: Props) {
               <span role='name'>{userNm}</span>
               <span role='job-title'>{email}</span>
             </UserCard>
-            <Dropdown
-              overlay={<UserInfoDropdown onSignOut={handleSignOut} />}
-              trigger={["click"]}
-              placement={"bottomRight"}
-            >
+            <Dropdown dropdownRender={() => <UserInfoDropdown onSignOut={handleSignOut} />} trigger={["click"]}>
               <DownDownHandle>
                 <AXFIMoreVertical />
               </DownDownHandle>

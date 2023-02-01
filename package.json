@@ -14,8 +14,8 @@
     "dev": "npm run build:webpack-config && npm run build:less && run-p start:dev-server watch",
     "start:dev-server": "webpack-dev-server --port 4000 --history-api-fallback --compress --node-env development",
     "build:less": "ts-node -T scripts/compile-less.ts",
-    "watch:less": "onchange -f change -d 1000 'src/styles/less' 'src/styles/theme.ts' -- run-s build:less",
-    "watch": "run-p watch:*",
+    "--watch:less": "onchange -f change -d 1000 'src/styles/less' 'src/styles/theme.ts' -- run-s build:less",
+    "--watch": "run-p watch:*",
     "build": "npm run build:webpack-config && webpack build --node-env production",
     "start": "npm run build && http-server ./dist -b",
     "storybook": "start-storybook -p 6006",
@@ -37,7 +37,7 @@
     ]
   },
   "dependencies": {
-    "@ant-design/icons": "^4.7.0",
+    "@ant-design/icons": "^5.0.1",
     "@axframe/contextmenu": "^0.3.4",
     "@axframe/datagrid": "^0.1.14",
     "@axframe/icon": "^0.1.7",
@@ -45,7 +45,7 @@
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@monaco-editor/react": "^4.4.6",
-    "antd": "^4.23.3",
+    "antd": "^5.1.7",
     "axios": "^1.2.2",
     "color": "^4.2.3",
     "emotion-normalize": "^11.0.1",
