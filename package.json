@@ -11,7 +11,7 @@
   "scripts": {
     "preinstall": "git submodule init && git submodule update",
     "build:webpack-config": "tsc webpack.config.ts",
-    "dev": "npm run build:webpack-config && run-p start:dev-server watch",
+    "dev": "npm run build:webpack-config && npm run build:less && run-p start:dev-server watch",
     "start:dev-server": "webpack-dev-server --port 4000 --history-api-fallback --compress --node-env development",
     "build:less": "ts-node -T scripts/compile-less.ts",
     "watch:less": "onchange -f change -d 1000 'src/styles/less' 'src/styles/theme.ts' -- run-s build:less",
