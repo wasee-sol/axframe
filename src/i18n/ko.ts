@@ -7,6 +7,7 @@ import { KO_msg } from "./msg";
 import { KO_filterType } from "./filterType";
 import { KO_pageTab } from "./pageTab";
 import { EN_apiErrMsg } from "./error";
+import { KO_common } from "./common";
 
 const KO: typeof EN = {
   appName: "AXFrame",
@@ -18,5 +19,6 @@ const KO: typeof EN = {
   pages: KO_pages,
   msg: KO_msg,
   apiErrMsg: EN_apiErrMsg,
+  common: KO_common,
 };
 export default KO;

@@ -1,13 +1,14 @@
 import { IdcardOutlined, LockOutlined } from "@ant-design/icons";
 import styled from "@emotion/styled";
-import { Button, Divider, Form, Input } from "antd";
+import type { TourProps } from "antd";
+import { Button, Divider, Form, Input, Tour } from "antd";
 import * as React from "react";
 import { AXFIArrowLogIn } from "@axframe/icon";
 import { SMixinFlexColumn, SMixinFlexRow } from "@core/styles/emotion";
-import { useDialog, useI18n, useSpinning } from "hooks";
+import { useDialog, useDidMountEffect, useI18n, useSpinning } from "hooks";
 import { getTrimNonEmptyRegExp } from "@core/utils/formPatterns/getTrimNonEmptyRegExp";
 import { IconText } from "@core/components/common";
-import { SignInRequest, UserService } from "services";
+import { UserService } from "services";
 import { useUserStore } from "stores";
 
 interface Props {
@@ -24,6 +25,27 @@ function App({}: Props) {
   const { t, currentLanguage, setLanguage } = useI18n();
   const { spinning, setSpinning } = useSpinning<{ signIn: boolean }>();
   const { errorDialog } = useDialog();
+  const [open, setOpen] = React.useState(false);
+
+  const ref1 = React.useRef(null);
+  const ref2 = React.useRef(null);
+  const ref3 = React.useRef(null);
+  const steps: TourProps["steps"] = [
+    {
+      title: "Hello Stranger! This is a demo page.",
+      description: "Please enter any value for your ID and password.",
+      target: () => ref1.current,
+    },
+    {
+      title: "Sign In",
+      description: "Click Sign In Button",
+      target: () => ref2.current,
+      onFinish: () => {
+        localStorage.setItem("isRegularUser", "true");
+        setOpen(false);
+      },
+    },
+  ];
 
   const [form] = Form.useForm<SignInFormItem>();
 
@@ -45,66 +67,87 @@ function App({}: Props) {
     [errorDialog, setMe, setSpinning]
   );
 
-  return (
-    <SignInContainer>
-      <SignInBox>
-        <SignInBoxHeader>
-          <h1>Sign In</h1>
-          <Logo>{t.appName}</Logo>
-        </SignInBoxHeader>
-        <SignInBoxBody>
-          <Form<SignInFormItem> form={form} onFinish={onSignIn} layout={"vertical"}>
-            <Form.Item
-              label={t.formItem.user.userId.label}
-              name='userId'
-              rules={[
-                {
-                  required: true,
-                  pattern: getTrimNonEmptyRegExp(),
-                  message: t.formItem.user.userId.msg.empty,
-                },
-              ]}
-            >
-              <Input
-                prefix={<IdcardOutlined />}
-                autoFocus
-                placeholder={t.formItem.user.userId.placeholder}
-                allowClear
-              />
-            </Form.Item>
+  useDidMountEffect(() => {
+    form.setFieldsValue({ userId: "AXFrame", password: "1" });
+    if (!localStorage.getItem("isRegularUser")) {
+      setOpen(true);
+    }
+  });
 
-            <Form.Item
-              label={t.formItem.user.password.label}
-              name='password'
-              rules={[
-                {
-                  required: true,
-                  pattern: getTrimNonEmptyRegExp(),
-                  message: t.formItem.user.password.msg.empty,
-                },
-              ]}
-            >
-              <Input.Password prefix={<LockOutlined />} placeholder={t.formItem.user.password.placeholder} allowClear />
-            </Form.Item>
-            <Form.Item>
-              <Button type='primary' htmlType='submit' role={"sign-in-btn"} block loading={spinning?.signIn}>
-                <AXFIArrowLogIn fontSize={20} />
-                Sign In
-              </Button>
-            </Form.Item>
-          </Form>
-        </SignInBoxBody>
-        <SignInBoxFooter>
-          <IconText onClick={() => setLanguage("en")} active={currentLanguage === "en"}>
-            English
-          </IconText>
-          <Divider type='vertical' />
-          <IconText onClick={() => setLanguage("ko")} active={currentLanguage === "ko"}>
-            한국어
-          </IconText>
-        </SignInBoxFooter>
-      </SignInBox>
-    </SignInContainer>
+  return (
+    <>
+      <SignInContainer>
+        <SignInBox ref={ref1}>
+          <SignInBoxHeader>
+            <h1>Sign In</h1>
+            <Logo>{t.appName}</Logo>
+          </SignInBoxHeader>
+          <SignInBoxBody>
+            <Form<SignInFormItem> form={form} onFinish={onSignIn} layout={"vertical"}>
+              <Form.Item
+                label={t.formItem.user.userId.label}
+                name='userId'
+                rules={[
+                  {
+                    required: true,
+                    pattern: getTrimNonEmptyRegExp(),
+                    message: t.formItem.user.userId.msg.empty,
+                  },
+                ]}
+              >
+                <Input
+                  prefix={<IdcardOutlined />}
+                  autoFocus
+                  placeholder={t.formItem.user.userId.placeholder}
+                  allowClear
+                />
+              </Form.Item>
+
+              <Form.Item
+                label={t.formItem.user.password.label}
+                name='password'
+                rules={[
+                  {
+                    required: true,
+                    pattern: getTrimNonEmptyRegExp(),
+                    message: t.formItem.user.password.msg.empty,
+                  },
+                ]}
+              >
+                <Input.Password
+                  prefix={<LockOutlined />}
+                  placeholder={t.formItem.user.password.placeholder}
+                  allowClear
+                />
+              </Form.Item>
+              <Form.Item>
+                <Button
+                  ref={ref3}
+                  type='primary'
+                  htmlType='submit'
+                  role={"sign-in-btn"}
+                  block
+                  loading={spinning?.signIn}
+                >
+                  <AXFIArrowLogIn fontSize={20} />
+                  Sign In
+                </Button>
+              </Form.Item>
+            </Form>
+          </SignInBoxBody>
+          <SignInBoxFooter>
+            <IconText onClick={() => setLanguage("en")} active={currentLanguage === "en"}>
+              English
+            </IconText>
+            <Divider type='vertical' />
+            <IconText onClick={() => setLanguage("ko")} active={currentLanguage === "ko"}>
+              한국어
+            </IconText>
+          </SignInBoxFooter>
+        </SignInBox>
+      </SignInContainer>
+      <Tour open={open} onClose={() => setOpen(false)} steps={steps} />
+    </>
   );
 }
 
