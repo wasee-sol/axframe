@@ -37,7 +37,7 @@
     ]
   },
   "dependencies": {
-    "@ant-design/icons": "^4.7.0",
+    "@ant-design/icons": "^5.0.1",
     "@axframe/contextmenu": "^0.3.4",
     "@axframe/datagrid": "^0.1.14",
     "@axframe/icon": "^0.1.7",
@@ -45,7 +45,7 @@
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@monaco-editor/react": "^4.4.6",
-    "antd": "^4.23.3",
+    "antd": "^5.1.7",
     "axios": "^1.2.2",
     "color": "^4.2.3",
     "emotion-normalize": "^11.0.1",
