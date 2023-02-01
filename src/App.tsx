@@ -47,7 +47,7 @@ const App: React.FC = () => {
   return (
     <ThemeProvider theme={themePalette[theme]}>
       <StoreSpinner spinning={!storeLoaded} />
-      <ConfigProvider>
+      <ConfigProvider theme={themePalette[theme]}>
         {storeLoaded && (
           <BrowserRouter>
             <PageRoute />

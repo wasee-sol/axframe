@@ -25,13 +25,14 @@ const lightAntdColors = {
   white_color: LIGHT.INK_5,
   black_color: "#000",
   heading_color: LIGHT.INK_90,
-  label_color: LIGHT.INK_70,
+  label_color: LIGHT.INK_10,
   input_border_color: LIGHT.INK_40,
   select_border_color: LIGHT.INK_40,
   component_background: LIGHT.INK_5,
   item_active_bg: LIGHT.BLUE_5,
   item_hover_bg: LIGHT.INK_10,
   menu_item_active_bg: LIGHT.BLUE_5,
+  modal_mask_bg: LIGHT.INK_100,
 };
 const lightCustomColors = {
   text_display_color: LIGHT.INK_100,
@@ -50,7 +51,6 @@ const lightCustomColors = {
   form_box_bg: LIGHT.INK_5,
 };
 const lightColors = {
-  ...lightAntdColors,
   ...lightCustomColors,
 
   // TabGroup
@@ -112,6 +112,7 @@ const darkAntdColors: typeof lightAntdColors = {
   item_active_bg: DARK.INK_100,
   item_hover_bg: DARK.INK_70,
   menu_item_active_bg: DARK.INK_100,
+  modal_mask_bg: DARK.INK_10,
 };
 const darkCustomColors: typeof lightCustomColors = {
   text_display_color: DARK.INK_5,
@@ -131,7 +132,6 @@ const darkCustomColors: typeof lightCustomColors = {
   form_box_bg: DARK.INK_90,
 };
 const darkColors: typeof lightColors = {
-  ...darkAntdColors,
   ...darkCustomColors,
   // TabGroup
   axf_border_color: DARK.INK_70,
@@ -189,16 +189,36 @@ const commons = {
   ui_max_zindex: 9999,
 };
 
+const commonTokens = {
+  borderRadius: 5,
+};
+const lightTokens = {
+  colorBgBase: lightAntdColors.component_background,
+};
+const darkTokens = {
+  colorBgBase: darkAntdColors.component_background,
+};
+
 const light = {
   themeType: "LIGHT",
   ...lightColors,
+  ...lightAntdColors,
   ...commons,
+  token: {
+    ...lightTokens,
+    ...commonTokens,
+  },
 };
 
 const dark = {
   themeType: "DARK",
   ...darkColors,
+  ...darkAntdColors,
   ...commons,
+  token: {
+    ...darkTokens,
+    ...commonTokens,
+  },
 };
 
 export const themePalette = {
