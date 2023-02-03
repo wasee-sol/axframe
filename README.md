@@ -2,6 +2,10 @@
 
 React framework for professional developers
 
+## Requirement
+
+node v18
+
 ## Install
 
 ```shell
