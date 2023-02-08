@@ -45,6 +45,7 @@ function NavFooter({}: Props) {
       />
       <Dropdown
         menu={{
+          onClick: onClickMenu,
           items: [
             { key: "en", label: LanguageLabel.en },
             { key: "ko", label: LanguageLabel.ko },
