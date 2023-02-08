@@ -142,6 +142,10 @@ const PageFrameBody = styled.div`
   flex: 1;
   ${SMixinFlexColumn("stretch", "stretch")};
 `;
+const PageSearchBar = styled.div`
+  position: relative;
+  padding: 0 30px;
+`;
 
 export class PageLayout extends React.Component<Props> {
   public static Header = PageHeader;
@@ -155,6 +159,7 @@ export class PageLayout extends React.Component<Props> {
   public static FrameBody = PageFrameBody;
   public static FrameRow = PageFrameRow;
   public static FrameColumn = PageFrameColumn;
+  public static PageSearchBar = PageSearchBar;
 
   public render(): React.ReactElement {
     const { children, ...restProps } = this.props;

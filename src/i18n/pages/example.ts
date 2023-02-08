@@ -20,6 +20,9 @@ export const EN_example = {
   listWithForm: {
     title: "List & Form",
   },
+  listWithFormRow: {
+    title: "List & Form (Row)",
+  },
 };
 export const KO_example: typeof EN_example = {
   detail: {
@@ -42,5 +45,8 @@ export const KO_example: typeof EN_example = {
   },
   listWithForm: {
     title: "목록 & 폼",
+  },
+  listWithFormRow: {
+    title: "목록 & 폼 (상하)",
   },
 };

@@ -63,6 +63,16 @@ const routes = {
         program_type: PROGRAM_TYPES.EXAMPLE_LIST_WITH_FORM,
         path: "listWithForm",
       },
+
+      LIST_WITH_FORM2: {
+        program_type: PROGRAM_TYPES.EXAMPLE_LIST_WITH_FORM2,
+        path: "listWithForm2",
+      },
+
+      LIST_WITH_FORM_ROW: {
+        program_type: PROGRAM_TYPES.EXAMPLE_LIST_WITH_FORM_ROW,
+        path: "listWithFormRow",
+      },
     },
   },
 };
