@@ -20,7 +20,7 @@ export const EN_formItem = {
       },
     },
   },
-  counseling: {
+  example: {
     title1: "personal data",
     title2: "Details of consultation",
     area: {

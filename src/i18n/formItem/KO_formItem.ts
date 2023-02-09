@@ -22,7 +22,7 @@ export const KO_formItem: typeof EN_formItem = {
       },
     },
   },
-  counseling: {
+  example: {
     title1: "인적사항",
     title2: "상담내용",
     area: {
