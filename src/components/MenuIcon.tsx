@@ -27,6 +27,10 @@ interface Props {
   role?: string;
   typeName: keyof typeof MenuIconType;
   fontSize?: number;
+  color?: string;
+  secondColor?: string;
+  style?: React.CSSProperties;
+  className?: string;
 }
 
 export const menuIcons = Object.values(MenuIconType).filter((v) => isNaN(Number(v)));

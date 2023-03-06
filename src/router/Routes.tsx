@@ -64,14 +64,24 @@ const routes = {
         path: "listWithForm",
       },
 
-      LIST_WITH_FORM2: {
-        program_type: PROGRAM_TYPES.EXAMPLE_LIST_WITH_FORM2,
-        path: "listWithForm2",
+      LIST_WITH_FORM_LIST: {
+        program_type: PROGRAM_TYPES.EXAMPLE_LIST_WITH_FORM_LIST,
+        path: "listWithFormList",
       },
 
       LIST_WITH_FORM_ROW: {
         program_type: PROGRAM_TYPES.EXAMPLE_LIST_WITH_FORM_ROW,
         path: "listWithFormRow",
+      },
+
+      THREE_LIST: {
+        program_type: PROGRAM_TYPES.EXAMPLE_THREE_LIST,
+        path: "threeList",
+      },
+
+      STATS: {
+        program_type: PROGRAM_TYPES.EXAMPLE_STATS,
+        path: "stats",
       },
     },
   },

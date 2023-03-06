@@ -35,8 +35,8 @@ const LIGHT = {
   ORANGE_90: "#F63200",
 
   ELEVATION_01: `0px 1px 4px rgba(25, 62, 88, 0.2)`,
-  ELEVATION_02: `0px 4px 8px rgba(25, 62, 88, 0.2)`,
-  ELEVATION_03: `0px 4px 15px rgba(25, 62, 88, 0.15)`,
+  ELEVATION_02: `0 0 6px rgba(0, 0, 0, 0.1)`,
+  ELEVATION_03: `0 0 1px rgba(0, 0, 0, 0.16)`,
   ELEVATION_04: `0px 16px 24px rgba(25, 62, 88, 0.16)`,
   ELEVATION_05: `0px 24px 32px rgba(25, 62, 88, 0.12)`,
 };

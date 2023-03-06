@@ -16,6 +16,10 @@ const ExampleListAndModal = React.lazy(() => import("@core/pages/LIST_AND_MODAL/
 const ExampleListAndDrawer = React.lazy(() => import("@core/pages/LIST_AND_DRAWER/App"));
 const ExampleListWithList = React.lazy(() => import("@core/pages/LIST_WITH_LIST/App"));
 const ExampleListWithForm = React.lazy(() => import("@core/pages/LIST_WITH_FORM/App"));
+const ExampleListWithFormList = React.lazy(() => import("@core/pages/LIST_WITH_FORM_LIST/App"));
+const ExampleListWithFormRow = React.lazy(() => import("@core/pages/LIST_WITH_FORM_ROW/App"));
+const ExampleThreeList = React.lazy(() => import("@core/pages/THREE_LIST/App"));
+const ExampleStats = React.lazy(() => import("@core/pages/STATS/App"));
 
 const Home = React.lazy(() => import("pages/home/App"));
 const SignIn = React.lazy(() => import("pages/signIn/App"));
@@ -59,6 +63,10 @@ function PageRoute() {
         <Route path={ROUTES.EXAMPLES.children.LIST_AND_DRAWER.path} element={<ExampleListAndDrawer />} />
         <Route path={ROUTES.EXAMPLES.children.LIST_WITH_LIST.path} element={<ExampleListWithList />} />
         <Route path={ROUTES.EXAMPLES.children.LIST_WITH_FORM.path} element={<ExampleListWithForm />} />
+        <Route path={ROUTES.EXAMPLES.children.LIST_WITH_FORM_LIST.path} element={<ExampleListWithFormList />} />
+        <Route path={ROUTES.EXAMPLES.children.LIST_WITH_FORM_ROW.path} element={<ExampleListWithFormRow />} />
+        <Route path={ROUTES.EXAMPLES.children.THREE_LIST.path} element={<ExampleThreeList />} />
+        <Route path={ROUTES.EXAMPLES.children.STATS.path} element={<ExampleStats />} />
 
         <Route path={ROUTES.HOME.path} element={<Home />} />
       </Route>

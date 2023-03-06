@@ -1,0 +1,16 @@
+import * as React from "react";
+import { AXFIconComponent, AXFIconProps } from "./AXFIconComponent";
+function AXFIconDefaultDuo(props: AXFIconProps) {
+  return (
+    <AXFIconComponent {...props}>
+      <svg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
+        <path d='M8 1L2 5L8 9V15L14 11V5L8 1Z' fill='red' fillOpacity='0.3' />
+        <path
+          d='M14.5 4.99999C14.5 4.89999 14.5 4.89999 14.5 4.79999C14.5 4.79999 14.5 4.79999 14.5 4.69999C14.5 4.59999 14.4 4.59999 14.4 4.59999L8.40001 0.599994C8.20001 0.499994 8.00001 0.499994 7.80001 0.599994L1.80001 4.59999L1.70001 4.69999C1.70001 4.69999 1.70001 4.69999 1.70001 4.79999C1.70001 4.79999 1.70001 4.89999 1.70001 4.99999V11C1.70001 11.2 1.80001 11.3 1.90001 11.4L7.90001 15.4C8.00001 15.4 8.10001 15.5 8.10001 15.5C8.10001 15.5 8.30001 15.5 8.30001 15.4L14.3 11.4C14.4 11.3 14.5 11.2 14.5 11V4.99999ZM8.00001 1.59999L13.1 4.99999L8.00001 8.39999L2.90001 4.99999L8.00001 1.59999ZM2.50001 5.89999L7.50001 9.19999V14L2.50001 10.7V5.89999ZM8.50001 14.1V9.29999L13.5 5.99999V10.8L8.50001 14.1Z'
+          fill='black'
+        />
+      </svg>
+    </AXFIconComponent>
+  );
+}
+export { AXFIconDefaultDuo };

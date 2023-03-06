@@ -18,6 +18,7 @@ import {
 import { PasswordProps } from "antd/lib/input";
 import { BaseOptionType } from "rc-cascader";
 import { AXFIArrowLeft, AXFIArrowDown, AXFIClose, AXFIArrowUp } from "@axframe/icon";
+import { fnFilterLabel } from "@core/utils/antd";
 
 /*
  * Modal
@@ -26,10 +27,12 @@ const _Modal = Modal as React.FC<ModalProps>;
 _Modal.defaultProps ??= {};
 const modalDefaultProps = _Modal.defaultProps;
 if (modalDefaultProps) {
-  modalDefaultProps.transitionName = "slide-down";
+  modalDefaultProps.transitionName = "";
   modalDefaultProps.maskClosable = false;
+  modalDefaultProps.centered = true;
   modalDefaultProps.closeIcon = <AXFIClose fontSize={16} />;
   modalDefaultProps.bodyStyle = { padding: 0 };
+  modalDefaultProps.className = "axframe-modal";
   modalDefaultProps.title = null;
   modalDefaultProps.footer = null;
   modalDefaultProps.closable = true;
@@ -70,6 +73,7 @@ const selectDefaultProps = _Select.defaultProps;
 if (selectDefaultProps) {
   selectDefaultProps.suffixIcon = <AXFIArrowDown fontSize={14} />;
   // selectDefaultProps.menuItemSelectedIcon = <QICheck fontSize={16} />;
+  selectDefaultProps.filterOption = fnFilterLabel;
 }
 
 /*

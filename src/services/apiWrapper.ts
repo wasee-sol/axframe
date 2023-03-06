@@ -4,8 +4,8 @@ import { ApiErrorCode } from "../@types";
 import { getAppData, setAppData } from "../@core/utils/store";
 import { useUserStore } from "../stores";
 
-const API_PHASE = process.env.API_PHASE;
-const API_URL = (() => {
+export const API_PHASE = process.env.API_PHASE;
+export const API_URL = (() => {
   switch (API_PHASE) {
     case "alpha":
       return "http://localhost:8080";
