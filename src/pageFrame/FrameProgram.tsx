@@ -76,11 +76,11 @@ const PageFrameHeader = styled.div`
   overflow: hidden;
 `;
 const PageFrameFooter = styled.div`
-  height: 44px;
+  height: 40px;
   background: ${(p) => p.theme.footer_background};
   border-top: 1px solid ${(p) => p.theme.border_color_base};
-  padding: 16px;
-  ${SMixinFlexRow("space-between", "center")};
+  padding: 0;
+  ${SMixinFlexRow("space-between", "stretch")};
 `;
 
 const PageFrameNav = styled.div<StyleProps>`

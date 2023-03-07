@@ -34,7 +34,7 @@ const lightAntdColors = {
   item_hover_bg: LIGHT.INK_10,
   menu_item_active_bg: LIGHT.BLUE_5,
   modal_mask_bg: LIGHT.INK_100,
-};
+}; //
 const lightCustomColors = {
   text_display_color: LIGHT.INK_100,
   text_heading_color: LIGHT.INK_90,

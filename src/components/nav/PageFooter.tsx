@@ -31,13 +31,15 @@ function PageFooter({}: Props) {
   return (
     <Container>
       <Tools>
-        <IconText
-          iconSize={20}
-          icon={sideMenuOpened ? <IconSideBarClosed /> : <IconSideBarOpen />}
-          onClick={() => {
-            handleSetSideMenuOpened(!sideMenuOpened);
-          }}
-        />
+        <ToggleSideNavHandle>
+          <IconText
+            iconSize={20}
+            icon={sideMenuOpened ? <IconSideBarClosed /> : <IconSideBarOpen />}
+            onClick={() => {
+              handleSetSideMenuOpened(!sideMenuOpened);
+            }}
+          />
+        </ToggleSideNavHandle>
 
         <LangSelector />
 
@@ -49,7 +51,7 @@ function PageFooter({}: Props) {
         />
       </Tools>
       <FooterLinks>
-        <span role={"copyright"}>AXISJ.com Inc.</span>
+        <span role={"copyright"}>2023 AXISJ Inc.</span>
 
         {/*<Button size={"small"} type='link'>*/}
         {/*  개인정보처리방침*/}
@@ -65,20 +67,32 @@ function PageFooter({}: Props) {
 const Container = styled.div`
   ${SMixinFlexRow("space-between", "center")};
   flex: 1;
+  padding: 0 6px;
+  position: relative;
+  font-size: 12px;
 `;
 
 const Tools = styled.div`
   ${SMixinFlexRow("flex-start", "center")};
   flex: 1;
+  gap: 10px;
 `;
 
-const ToggleSideNavHandle = styled.div``;
+const ToggleSideNavHandle = styled.div`
+  height: 39px;
+  border-right: 1px solid ${(p) => p.theme.border_color_base};
+  ${SMixinFlexRow("center", "center")};
+  padding: 0 8px;
+  margin-right: 10px;
+`;
 
 const FooterLinks = styled.div`
   font-size: 12px;
 
   [role="copyright"] {
     //color: #000;
+    color: ${(p) => p.theme.text_body_color};
+    font-weight: bold;
     margin-right: 8px;
   }
 
