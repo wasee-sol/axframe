@@ -5,7 +5,7 @@ import { Dropdown, Popover } from "antd";
 import * as React from "react";
 import { AXFIMoreVertical } from "@axframe/icon";
 import { useAppStore, useUserStore } from "stores";
-import { SMixinFlexRow } from "@core/styles/emotion";
+import { SMixinEllipsis, SMixinFlexRow } from "@core/styles/emotion";
 import UserInfoDropdown from "./UserInfoDropdown";
 import { useDialog } from "@core/hooks";
 import { User } from "services";
@@ -42,7 +42,7 @@ function UserInfo({}: Props) {
             <UserAvatar size={"medium"} userName={userNm} role='avatar' />
             <UserCard>
               <span role='name'>{userNm}</span>
-              <span role='job-title'>{email}</span>
+              <span role='email'>{email}</span>
             </UserCard>
             <Dropdown dropdownRender={() => <UserInfoDropdown onSignOut={handleSignOut} />} trigger={["click"]}>
               <DownDownHandle>
@@ -87,6 +87,7 @@ const UserInfoContainer = styled.div<StyleProps>`
 `;
 const UserInfoBox = styled.div<StyleProps>`
   ${SMixinFlexRow("stretch", "center")};
+  overflow: hidden;
   column-gap: 15px;
   ${({ sideMenuOpened, theme }) => {
     if (sideMenuOpened) {
@@ -108,13 +109,15 @@ const UserCard = styled.div`
   flex: 1;
   font-weight: bold;
   line-height: 1.3;
+  overflow: hidden;
+  ${SMixinEllipsis()}
   [role="name"] {
     display: block;
     color: ${(p) => p.theme.text_heading_color};
     font-size: 13px;
     margin-bottom: 2px;
   }
-  [role="job-title"] {
+  [role="email"] {
     font-size: 11px;
     color: ${(p) => p.theme.text_sub_body_color};
   }

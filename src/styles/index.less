@@ -1,8 +1,9 @@
 body {
   padding: 0;
   margin: 0;
-  font-size: 14px;
-  font-family: system-ui;
+  font-size: 13px;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   @media all and (min-width: 768px) {
     overflow: hidden;
   }
@@ -17,4 +18,12 @@ svg[data-axf-i-color-controllable="true"] * {
 }
 
 svg[data-axf-i-color-controllable="false"] * {
+}
+
+[role="axf-icon"] {
+}
+
+input[readonly] {
+  background: #eee;
+  cursor: not-allowed;
 }

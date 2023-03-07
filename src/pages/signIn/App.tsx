@@ -1,15 +1,15 @@
 import { IdcardOutlined, LockOutlined } from "@ant-design/icons";
 import styled from "@emotion/styled";
 import type { TourProps } from "antd";
-import { Button, Divider, Form, Input, Tour } from "antd";
+import { Button, Divider, Form, Input, Tour, Switch, Checkbox } from "antd";
 import * as React from "react";
 import { AXFIArrowLogIn } from "@axframe/icon";
 import { SMixinFlexColumn, SMixinFlexRow } from "@core/styles/emotion";
 import { useDialog, useDidMountEffect, useI18n, useSpinning } from "hooks";
 import { getTrimNonEmptyRegExp } from "@core/utils/formPatterns/getTrimNonEmptyRegExp";
-import { IconText } from "@core/components/common";
 import { UserService } from "services";
 import { useUserStore } from "stores";
+import { LangSelector } from "components/LangSelector";
 
 interface Props {
   onSignIn?: (values: SignInFormItem) => Promise<void>;
@@ -18,6 +18,7 @@ interface Props {
 export interface SignInFormItem {
   userId?: string;
   password?: string;
+  remember?: boolean;
 }
 
 function App({}: Props) {
@@ -26,6 +27,7 @@ function App({}: Props) {
   const { spinning, setSpinning } = useSpinning<{ signIn: boolean }>();
   const { errorDialog } = useDialog();
   const [open, setOpen] = React.useState(false);
+  const [isApiTest, setIsApiTest] = React.useState(false);
 
   const ref1 = React.useRef(null);
   const ref2 = React.useRef(null);
@@ -53,6 +55,12 @@ function App({}: Props) {
     async (values: SignInFormItem) => {
       setSpinning({ signIn: true });
       try {
+        if (values.remember && values.userId) {
+          localStorage.setItem("remember", values.userId);
+        } else {
+          localStorage.removeItem("remember");
+        }
+
         const { rs } = await UserService.signIn({
           userCd: values.userId,
           userPs: values.password,
@@ -67,6 +75,23 @@ function App({}: Props) {
     [errorDialog, setMe, setSpinning]
   );
 
+  React.useEffect(() => {
+    const remember = localStorage.getItem("remember");
+
+    if (remember) {
+      form.setFieldsValue({
+        userId: remember,
+        remember: true,
+      });
+      form.getFieldInstance("password").focus();
+    } else {
+      form.getFieldInstance("userId").focus();
+    }
+
+    const isTest = sessionStorage.getItem("isApiTest");
+    setIsApiTest(isTest === "T");
+  }, [form]);
+
   useDidMountEffect(() => {
     form.setFieldsValue({ userId: "AXFrame", password: "1" });
     if (!localStorage.getItem("isRegularUser")) {
@@ -77,73 +102,92 @@ function App({}: Props) {
   return (
     <>
       <SignInContainer>
-        <SignInBox ref={ref1}>
-          <SignInBoxHeader>
-            <h1>Sign In</h1>
-            <Logo>{t.appName}</Logo>
-          </SignInBoxHeader>
-          <SignInBoxBody>
-            <Form<SignInFormItem> form={form} onFinish={onSignIn} layout={"vertical"}>
-              <Form.Item
-                label={t.formItem.user.userId.label}
-                name='userId'
-                rules={[
-                  {
-                    required: true,
-                    pattern: getTrimNonEmptyRegExp(),
-                    message: t.formItem.user.userId.msg.empty,
-                  },
-                ]}
-              >
-                <Input
-                  prefix={<IdcardOutlined />}
-                  autoFocus
-                  placeholder={t.formItem.user.userId.placeholder}
-                  allowClear
-                />
-              </Form.Item>
-
-              <Form.Item
-                label={t.formItem.user.password.label}
-                name='password'
-                rules={[
-                  {
-                    required: true,
-                    pattern: getTrimNonEmptyRegExp(),
-                    message: t.formItem.user.password.msg.empty,
-                  },
-                ]}
-              >
-                <Input.Password
-                  prefix={<LockOutlined />}
-                  placeholder={t.formItem.user.password.placeholder}
-                  allowClear
-                />
-              </Form.Item>
-              <Form.Item>
-                <Button
-                  ref={ref3}
-                  type='primary'
-                  htmlType='submit'
-                  role={"sign-in-btn"}
-                  block
-                  loading={spinning?.signIn}
+        <SignInBox>
+          <SignInVisual />
+          <SignInFormBox>
+            <SignInLogo />
+            <SignInBoxBody ref={ref1}>
+              <Form<SignInFormItem> form={form} onFinish={onSignIn} layout={"vertical"}>
+                <Form.Item
+                  label={t.formItem.user.userId.label}
+                  name='userId'
+                  rules={[
+                    {
+                      required: true,
+                      pattern: getTrimNonEmptyRegExp(),
+                      message: t.formItem.user.userId.msg.empty,
+                    },
+                  ]}
                 >
-                  <AXFIArrowLogIn fontSize={20} />
-                  Sign In
-                </Button>
-              </Form.Item>
-            </Form>
-          </SignInBoxBody>
-          <SignInBoxFooter>
-            <IconText onClick={() => setLanguage("en")} active={currentLanguage === "en"}>
-              English
-            </IconText>
-            <Divider type='vertical' />
-            <IconText onClick={() => setLanguage("ko")} active={currentLanguage === "ko"}>
-              한국어
-            </IconText>
-          </SignInBoxFooter>
+                  <Input prefix={<IdcardOutlined />} placeholder={t.formItem.user.userId.placeholder} allowClear />
+                </Form.Item>
+
+                <Form.Item
+                  label={t.formItem.user.password.label}
+                  name='password'
+                  rules={[
+                    {
+                      required: true,
+                      pattern: getTrimNonEmptyRegExp(),
+                      message: t.formItem.user.password.msg.empty,
+                    },
+                  ]}
+                >
+                  <Input.Password
+                    prefix={<LockOutlined />}
+                    placeholder={t.formItem.user.password.placeholder}
+                    allowClear
+                  />
+                </Form.Item>
+
+                <Form.Item>
+                  <Form.Item name='remember' valuePropName='checked' noStyle>
+                    <Checkbox>Remember ID</Checkbox>
+                  </Form.Item>
+
+                  <a className='reset-password' href=''>
+                    Reset password
+                  </a>
+                </Form.Item>
+                <Divider />
+
+                <Form.Item>
+                  <Button
+                    ref={ref2}
+                    type='primary'
+                    htmlType='submit'
+                    role={"sign-in-btn"}
+                    block
+                    loading={spinning?.signIn}
+                  >
+                    <AXFIArrowLogIn fontSize={20} />
+                    {t.button.signIn}
+                  </Button>
+                </Form.Item>
+
+                <div style={{ padding: "20px 5px", textAlign: "center" }}>
+                  Only authorized people can use it. Illegal use may result in legal sanctions.
+                </div>
+              </Form>
+            </SignInBoxBody>
+            <SignInBoxFooter>
+              <div>
+                <LangSelector />
+              </div>
+              {process.env.API_PHASE !== "production" && (
+                <div>
+                  API TEST &nbsp;
+                  <Switch
+                    checked={isApiTest}
+                    onChange={(checked) => {
+                      sessionStorage.setItem("isApiTest", checked ? "T" : "F");
+                      window.location.reload();
+                    }}
+                  />
+                </div>
+              )}
+            </SignInBoxFooter>
+          </SignInFormBox>
         </SignInBox>
       </SignInContainer>
       <Tour open={open} onClose={() => setOpen(false)} steps={steps} />
@@ -155,8 +199,11 @@ const SignInContainer = styled.div`
   ${SMixinFlexColumn("center", "center")};
   flex: 1;
   overflow: auto;
-  background: url("/signin-background.jpg") no-repeat center center #0060e6;
-
+  background: url("/signin-background.jpg") no-repeat center center;
+  background-size: cover;
+  .reset-password {
+    float: right;
+  }
   .ant-input-affix-wrapper {
     box-sizing: border-box;
     border-radius: 5px;
@@ -187,42 +234,55 @@ const SignInContainer = styled.div`
 `;
 
 const SignInBox = styled.div`
+  width: 800px;
+  height: 600px;
+  background: rgba(245, 245, 245, 1);
+  border-radius: 16px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(8px);
+  ${SMixinFlexRow("stretch", "stretch")};
+  overflow: hidden;
+`;
+
+const SignInVisual = styled.div`
   width: 400px;
-  background: ${(p) => p.theme.component_background};
-  border: 1px solid ${(p) => p.theme.axf_border_color};
-  border-radius: 4px;
-  box-shadow: ${(p) => p.theme.box_shadow_base};
-  padding: 32px;
-  ${SMixinFlexColumn("flex-start", "stretch")};
+  height: 600px;
+  background: url("/signin-visual.jpg") no-repeat center center;
+  background-size: cover;
 `;
 
-const SignInBoxHeader = styled.div`
+const SignInFormBox = styled.div`
   flex: 1;
-  ${SMixinFlexRow("space-between", "center")};
-  font-size: 16px;
-
-  h1 {
-    flex: 1;
-    font-size: 16px;
-    font-weight: bold;
-    margin: 0;
-  }
-
-  padding-bottom: 16px;
-  border-bottom: 1px solid ${(p) => p.theme.axf_border_color};
+  ${SMixinFlexColumn("stretch", "stretch")};
 `;
+
+const SignInLogo = styled.div`
+  width: 400px;
+  height: 96px;
+  background: url("/logo.png") no-repeat center center;
+  background-size: 50%;
+`;
+
 const SignInBoxBody = styled.div`
-  padding: 20px 0;
-`;
-const SignInBoxFooter = styled.div``;
+  padding: 20px 32px;
+  flex: 1;
 
-const Logo = styled.div`
-  ${SMixinFlexRow("stretch", "center")};
-  column-gap: 6px;
-  flex: none;
-  font-size: 16px;
-  font-weight: bold;
-  color: ${(p) => p.theme.primary_color};
+  .ant-form-vertical {
+    .ant-form-item-label {
+      padding-bottom: 5px;
+      > label {
+        font-weight: 700;
+      }
+    }
+  }
+  .ant-form-item {
+    margin-bottom: 18px;
+  }
+`;
+const SignInBoxFooter = styled.div`
+  ${SMixinFlexRow("space-between", "center")};
+  padding: 20px 32px;
+  color: #4c4c4c;
 `;
 
 export default App;

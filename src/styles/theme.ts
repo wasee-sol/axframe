@@ -4,6 +4,7 @@
 import { alpha, lighten } from "./palette/colorUtil"; // Using relative path because the tsconfig isn't set at building less file
 import DARK from "./palette/dark";
 import LIGHT from "./palette/light";
+import { AliasToken } from "antd/lib/theme/interface";
 
 const lightAntdColors = {
   body_background: LIGHT.INK_10,
@@ -165,14 +166,15 @@ const darkColors: typeof lightColors = {
 };
 
 const commons = {
-  heading_font_family: "system-ui",
+  heading_font_family:
+    "Inter,-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji'",
   border_radius_base: "4px",
   modal_header_height: "40px",
 
   active: LIGHT.BLUE_50,
   passed: LIGHT.BLUE_30,
 
-  btn_font_size_sm: "13px",
+  btn_font_size_sm: "12px",
   height_base: "32px",
   height_lg: "40px",
   height_sm: "28px",
@@ -189,14 +191,27 @@ const commons = {
   ui_max_zindex: 9999,
 };
 
-const commonTokens = {
+const commonTokens: Partial<AliasToken> = {
   borderRadius: 5,
+  fontSize: 13,
+  fontSizeSM: 12,
+  fontSizeLG: 14,
+  fontFamily:
+    "Inter,-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji'",
 };
-const lightTokens = {
+const lightTokens: Partial<AliasToken> = {
+  colorPrimary: lightAntdColors.primary_color,
   colorBgBase: lightAntdColors.component_background,
+  colorTextBase: lightAntdColors.text_color,
+  colorBorder: lightAntdColors.border_color_base,
+  colorBgContainerDisabled: lightAntdColors.disabled_bg,
 };
-const darkTokens = {
+const darkTokens: Partial<AliasToken> = {
+  colorPrimary: darkAntdColors.primary_color,
   colorBgBase: darkAntdColors.component_background,
+  colorTextBase: darkAntdColors.text_color,
+  colorBorder: lightAntdColors.border_color_base,
+  colorBgContainerDisabled: lightAntdColors.disabled_bg,
 };
 
 const light = {
@@ -208,7 +223,7 @@ const light = {
     ...lightTokens,
     ...commonTokens,
   },
-};
+}; //
 
 const dark = {
   themeType: "DARK",

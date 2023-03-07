@@ -6,8 +6,8 @@ import RestrictAuth from "./RestrictAuth";
 import { ROUTES, ROUTES_LIST } from "./Routes";
 import { useAppMenu } from "./useAppMenu";
 
-const FrameDefault = React.lazy(() => import("@core/pageFrame/FrameDefault"));
-const FrameProgram = React.lazy(() => import("@core/pageFrame/FrameProgram"));
+const FrameDefault = React.lazy(() => import("pageFrame/FrameDefault"));
+const FrameProgram = React.lazy(() => import("pageFrame/FrameProgram"));
 
 const ExampleList = React.lazy(() => import("@core/pages/LIST/App"));
 const ExampleForm = React.lazy(() => import("@core/pages/FORM/App"));

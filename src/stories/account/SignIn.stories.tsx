@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import App from "pages/signIn/App";
-import { PageFrameContainer } from "@core/pageFrame/FrameDefault";
+import { PageFrameContainer } from "pageFrame/FrameDefault";
 
 export default {
   title: "pages/account/App",

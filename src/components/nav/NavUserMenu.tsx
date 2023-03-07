@@ -22,9 +22,6 @@ interface Props extends StyleProps {
 
 function NavUserMenu({}: Props) {
   const sideMenuOpened = useAppStore((s) => s.sideMenuOpened);
-  const authorityList = useUserStore((s) => s.authorityList);
-  const programList = useUserStore((s) => s.programList);
-  // const programList = [PROGRAM_TYPES.BUSI, PROGRAM_TYPES.CODE];
   const openedMenuUuids = useUserStore((s) => s.openedMenuUuids);
   const setOpenedMenuUuids = useUserStore((s) => s.setOpenedMenuUuids);
   const selectedMenuUuid = useUserStore((s) => s.selectedMenuUuid);
@@ -46,6 +43,7 @@ function NavUserMenu({}: Props) {
             program_type: m.progCd,
             labels: m.multiLanguage,
             label: m.multiLanguage[currentLanguage],
+            title: m.multiLanguage[currentLanguage],
             children: children.length === 0 ? undefined : children,
           } as MenuItem;
         })
@@ -64,7 +62,7 @@ function NavUserMenu({}: Props) {
       });
     };
     return getAppMenuGroups(APP_MENUS);
-  }, [APP_MENUS, authorityList, currentLanguage, programList]);
+  }, [APP_MENUS, currentLanguage]);
 
   const onSideMenuOpenChange = React.useCallback(
     (openKeys: string[]) => {
@@ -97,9 +95,10 @@ function NavUserMenu({}: Props) {
         openKeys={openedMenuUuids}
         onOpenChange={onSideMenuOpenChange}
         selectedKeys={[selectedMenuUuid]}
-        inlineIndent={28}
+        inlineIndent={14}
         inlineCollapsed={!sideMenuOpened}
         onClick={onClick}
+        _internalDisableMenuItemTitleTooltip
       />
     </NavUserMenuContainer>
   );
@@ -114,7 +113,7 @@ const NavUserMenuContainer = styled.div<StyleProps>`
   ${({ sideMenuOpened, theme }) => {
     if (sideMenuOpened) {
       return css`
-        padding: 20px 0;
+        padding: 2px 0;
         ${SMixinScrollerStyle({
           track_color: theme.body_background,
           thumb_color: theme.scroll_thumb_color,
@@ -122,7 +121,7 @@ const NavUserMenuContainer = styled.div<StyleProps>`
       `;
     }
     return css`
-      padding: 10px 0;
+      padding: 0;
       ${SMixinScrollerStyle({
         track_color: theme.component_background,
         thumb_color: theme.scroll_thumb_color,
@@ -140,17 +139,7 @@ const NavUserMenuContainer = styled.div<StyleProps>`
   .ant-menu-vertical,
   .ant-menu-vertical-left {
     border-right: 0 none;
-  }
-
-  // 메뉴의 패딩값 조절
-  .ant-menu-inline .ant-menu-item {
-    padding: 0 28px;
-  }
-
-  // 메뉴 아이콘 크기와 색상 조정
-  .ant-menu-item .ant-menu-item-icon,
-  .ant-menu-submenu-title .ant-menu-item-icon {
-    font-size: 22px;
+    border-inline-end: 0 none !important;
   }
 
   // 그룹메뉴 색상 및 스타일 조정
@@ -173,15 +162,50 @@ const NavUserMenuContainer = styled.div<StyleProps>`
     }
   }
 
-  // 그룹메뉴 다운화살표 위치 조정
-  .ant-menu-submenu-expand-icon,
-  .ant-menu-submenu-arrow {
-    right: 30px;
-  }
+  // 0depth
+  .ant-menu-root > .ant-menu-submenu > .ant-menu-submenu-title {
+    //background: #000;
+    //margin-bottom: 1px !important;
+    //margin-top: 1px !important;
 
-  // 그룹메뉴 우측 패딩 값
-  .ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title {
-    padding-right: 38px;
+    height: 36px;
+    line-height: 36px;
+    font-size: 14px;
+    font-weight: 700;
+
+    .ant-menu-item-icon {
+      font-size: 22px;
+      color: ${(p) => p.theme.primary_color};
+    }
+  }
+  // 1depth
+  .ant-menu-inline .ant-menu-sub.ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title {
+    //background: red;
+    //margin-bottom: 1px !important;
+    //margin-top: 1px !important;
+
+    height: 34px;
+    line-height: 34px;
+    font-size: 12px;
+    .ant-menu-item-icon {
+      font-size: 20px;
+      color: ${(p) => p.theme.primary_color};
+    }
+  }
+  // 2depth
+  .ant-menu-inline .ant-menu-item {
+    //background: green;
+    //margin-bottom: 2px !important;
+    //margin-top: 2px !important;
+    margin-block: 1px;
+
+    height: 32px;
+    line-height: 32px;
+    font-size: 12px;
+    .ant-menu-item-icon {
+      font-size: 16px;
+      color: ${(p) => p.theme.primary_color};
+    }
   }
 
   // !opened menu
@@ -210,6 +234,14 @@ const NavUserMenuContainer = styled.div<StyleProps>`
     height: 35px;
     line-height: 35px;
     font-size: 12px;
+  }
+
+  .ant-menu-inline-collapsed > .ant-menu-submenu > .ant-menu-submenu-title {
+    padding-inline: 12px;
+    margin: 2px;
+  }
+  .ant-menu.ant-menu-inline-collapsed > .ant-menu-submenu > .ant-menu-submenu-title {
+    padding: 0 13px;
   }
 `;
 

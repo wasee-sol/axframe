@@ -1,26 +1,21 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
-import { Dropdown, Menu } from "antd";
-import { MenuProps } from "antd/lib/menu";
-import { IconText } from "@core/components/common";
 import * as React from "react";
-import { AXFILanguage, AXFIMoon, AXFISun } from "@axframe/icon";
 import { SMixinFlexColumn, SMixinFlexRow } from "@core/styles/emotion";
-import { useAppStore } from "stores";
+import { useAppStore, useUserStore } from "stores";
+import { LangSelector } from "../LangSelector";
+import { IconText } from "../../@core/components/common";
+import { IconSideBarClosed, IconSideBarOpen } from "../icons";
+import { AXFIMoon, AXFISun } from "@axframe/icon";
 
 interface Props {
   sideMenuOpened?: boolean;
 }
 
-const LanguageLabel = {
-  en: "English",
-  ko: "한국어",
-};
-
 function NavFooter({}: Props) {
   const sideMenuOpened = useAppStore((s) => s.sideMenuOpened);
-  const currentLanguage = useAppStore((s) => s.currentLanguage);
-  const setLanguage = useAppStore((s) => s.setLanguage);
+  const setSideMenuOpened = useAppStore((s) => s.setSideMenuOpened);
+  const setOpenedMenuUuids = useUserStore((s) => s.setOpenedMenuUuids);
   const theme = useAppStore((s) => s.theme);
   const setTheme = useAppStore((s) => s.setTheme);
 
@@ -28,42 +23,57 @@ function NavFooter({}: Props) {
     setTheme(theme === "light" ? "dark" : "light");
   }, [setTheme, theme]);
 
-  const onClickMenu: MenuProps["onClick"] = React.useCallback(
-    (info) => {
-      setLanguage(info.key);
+  const handleSetSideMenuOpened = React.useCallback(
+    (opened: boolean) => {
+      setOpenedMenuUuids([]);
+      setSideMenuOpened(opened);
     },
-    [setLanguage]
+    [setOpenedMenuUuids, setSideMenuOpened]
   );
 
   return (
     <Container sideMenuOpened={sideMenuOpened}>
-      <IconText
-        icon={theme === "light" ? <AXFIMoon /> : <AXFISun />}
-        iconSize={20}
-        onClick={handleChangeTheme}
-        role={"theme-selector"}
-      />
-      <Dropdown
-        menu={{
-          onClick: onClickMenu,
-          items: [
-            { key: "en", label: LanguageLabel.en },
-            { key: "ko", label: LanguageLabel.ko },
-          ],
-        }}
-        trigger={["click"]}
-      >
-        <IconText icon={<AXFILanguage />} iconSize={20} role={"lang-selector"}>
-          {sideMenuOpened && LanguageLabel[currentLanguage]}
-        </IconText>
-      </Dropdown>
+      <Content sideMenuOpened={sideMenuOpened}>
+        <LangSelector hideLabel={!sideMenuOpened} />
+
+        <IconText
+          icon={theme === "light" ? <AXFIMoon /> : <AXFISun />}
+          iconSize={20}
+          onClick={handleChangeTheme}
+          role={"theme-selector"}
+        />
+
+        <IconText
+          iconSize={20}
+          icon={sideMenuOpened ? <IconSideBarClosed /> : <IconSideBarOpen />}
+          onClick={() => {
+            handleSetSideMenuOpened(!sideMenuOpened);
+          }}
+        />
+      </Content>
     </Container>
   );
 }
 
 const Container = styled.div<Props>`
   position: relative;
-  height: 50px;
+  padding: 0 16px 10px 16px;
+
+  ${({ sideMenuOpened }) => {
+    if (sideMenuOpened) {
+      return css`
+        padding: 0 16px 10px 16px;
+      `;
+    }
+    return css`
+      padding: 0;
+    `;
+  }}
+`;
+
+const Content = styled.div<Props>`
+  height: 40px;
+  padding-top: 7px;
 
   [role="lang-selector"] {
     cursor: pointer;
@@ -82,17 +92,17 @@ const Container = styled.div<Props>`
     if (sideMenuOpened) {
       return css`
         ${SMixinFlexRow("space-between", "center")};
-        padding: 0 20px;
-        font-size: 13px;
+        font-size: 12px;
         gap: 10px;
         border-top: 1px solid ${theme.axf_border_color};
       `;
     }
     return css`
+      border-top: 1px solid ${theme.axf_border_color};
       ${SMixinFlexColumn("center", "center")};
-      height: 90px;
+      height: 80px;
       padding: 0;
-
+      font-size: 24px;
       gap: 10px;
 
       [role="theme-selector"],

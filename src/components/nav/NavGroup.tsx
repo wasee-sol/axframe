@@ -1,10 +1,7 @@
 import { css } from "@emotion/react";
 import * as React from "react";
 import styled from "@emotion/styled";
-import NavHeader from "./NavHeader";
-import UserInfo from "./UserInfo";
 import NavUserMenu from "./NavUserMenu";
-import { useUserStore } from "stores/useUserStore";
 import { SMixinFlexColumn } from "@core/styles/emotion";
 import { MenuItem } from "router";
 import NavFooter from "./NavFooter";
@@ -24,55 +21,52 @@ interface Props extends StyleProps {
 
 function NavGroup(props: Props) {
   const sideMenuOpened = useAppStore((s) => s.sideMenuOpened);
-  const me = useUserStore((s) => s.me);
 
   return (
-    <NavGroupContainer sideMenuOpened={sideMenuOpened}>
-      <NavHeader {...props} />
-
-      {me ? (
+    <Container sideMenuOpened={sideMenuOpened}>
+      <NavGroupContainer sideMenuOpened={sideMenuOpened}>
         <NavContent sideMenuOpened={sideMenuOpened}>
-          <UserInfo {...props} />
           <NavUserMenu {...props} />
         </NavContent>
-      ) : (
-        <div>User Not Found</div>
-      )}
-
-      <NavFooter />
-    </NavGroupContainer>
+        {/*<NavFooter />*/}
+      </NavGroupContainer>
+    </Container>
   );
 }
 
-const NavGroupContainer = styled.div<StyleProps>`
-  flex: 1;
-  box-shadow: ${(p) => p.theme.box_shadow_layout};
+const Container = styled.div<StyleProps>`
   ${SMixinFlexColumn("stretch", "stretch")};
-
-  ${({ sideMenuOpened, theme }) => {
-    if (sideMenuOpened) {
+  ${({ sideMenuOpened }) => {
+    if (!sideMenuOpened) {
       return css`
-        background: ${theme.header_background};
+        width: 64px;
       `;
     }
-    return css`
-      background: ${theme.header_background};
-    `;
   }}
+`;
+
+const NavGroupContainer = styled.div<StyleProps>`
+  flex: 1;
+  overflow: hidden;
+  ${SMixinFlexColumn("stretch", "stretch")};
+  background: ${(p) => p.theme.header_background};
+  border-radius: 8px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.16);
 `;
 const NavContent = styled.div<StyleProps>`
   flex: 1;
   overflow-x: hidden;
   ${SMixinFlexColumn("stretch", "stretch")};
+  padding: 4px;
 
   ${({ sideMenuOpened, theme }) => {
     if (sideMenuOpened) {
       return css`
-        width: ${theme.side_menu_open_width}px;
+        width: ${theme.side_menu_open_width - 32}px;
       `;
     }
     return css`
-      width: 60px;
+      width: 64px;
     `;
   }}
 `;

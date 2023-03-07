@@ -2,10 +2,10 @@ const LIGHT = {
   BLUE_5: "#ecf4fc",
   BLUE_10: "#C8DEED",
   BLUE_30: "#7DB2D5",
-  BLUE_50: "#3B82F6",
-  BLUE_60: "#3B82F6",
-  BLUE_70: "#2c77f8",
-  BLUE_90: "#193E58",
+  BLUE_50: "#4974ad",
+  BLUE_60: "#224b8f",
+  BLUE_70: "#163d80",
+  BLUE_90: "#0e3d5e",
   BLUE_100: "#0F2635",
 
   INK_5: "#FFFFFF", // component bg
