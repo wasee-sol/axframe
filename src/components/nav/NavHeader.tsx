@@ -56,7 +56,6 @@ function NavHeader({}: Props) {
           />
         )}
       </ToggleHandle>
-      {sideMenuOpened && <TabLine />}
     </NavHeaderContainer>
   );
 }
@@ -111,15 +110,6 @@ const ToggleHandle = styled.div`
   [role="toggle-icon"] {
     column-gap: 0;
   }
-`;
-
-const TabLine = styled.div`
-  position: absolute;
-  height: 3px;
-  width: calc(100% + 1px);
-  bottom: 0;
-  left: 0;
-  background: ${(p) => p.theme.primary_color};
 `;
 
 export default NavHeader;

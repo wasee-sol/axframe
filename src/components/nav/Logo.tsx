@@ -27,7 +27,7 @@ function Logo({}: Props) {
 
 const Container = styled.div<StyleProps>`
   flex: none;
-  width: 250px;
+  width: ${(p) => p.theme.side_menu_open_width}px;
   padding: 16px;
   overflow: hidden;
   position: relative;

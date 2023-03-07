@@ -2,6 +2,7 @@ import { css } from "@emotion/react";
 import React from "react";
 import styled from "@emotion/styled";
 import { SMixinFlexColumn, SMixinFlexRow, SMixinScrollerStyle } from "@core/styles/emotion/mixins";
+import { alpha } from "../palette/colorUtil";
 
 interface Props {
   id?: string;
@@ -224,10 +225,10 @@ const PageSearchBar = styled.div`
     //background: ${(p) => p.theme.border_color_base};
     background: linear-gradient(
       90deg,
-      rgba(213, 213, 213, 0) 0%,
-      rgba(213, 213, 213, 1) 32px,
-      rgba(213, 213, 213, 1) calc(100% - 32px),
-      rgba(213, 213, 213, 0) 100%
+      ${(p) => alpha(p.theme.border_color_base, 0)} 0%,
+      ${(p) => alpha(p.theme.border_color_base, 100)} 32px,
+      ${(p) => alpha(p.theme.border_color_base, 100)} calc(100% - 32px),
+      ${(p) => alpha(p.theme.border_color_base, 0)} 100%
     );
     box-shadow: ${(p) => p.theme.box_shadow_resizer};
   }

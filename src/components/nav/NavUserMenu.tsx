@@ -186,7 +186,7 @@ const NavUserMenuContainer = styled.div<StyleProps>`
 
     height: 34px;
     line-height: 34px;
-    font-size: 12px;
+    //font-size: 13px;
     .ant-menu-item-icon {
       font-size: 20px;
       color: ${(p) => p.theme.primary_color};
@@ -201,7 +201,7 @@ const NavUserMenuContainer = styled.div<StyleProps>`
 
     height: 32px;
     line-height: 32px;
-    font-size: 12px;
+    //font-size: 13px;
     .ant-menu-item-icon {
       font-size: 16px;
       color: ${(p) => p.theme.primary_color};

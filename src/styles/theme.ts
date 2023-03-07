@@ -56,9 +56,12 @@ const lightColors = {
 
   // TabGroup
   axf_border_color: LIGHT.INK_30,
-  axf_tabs_background: LIGHT.INK_20,
+  axf_tabs_background: LIGHT.INK_30,
   axf_tabs_active_background: lightAntdColors.primary_color,
   axf_tabs_hover_background: LIGHT.INK_30,
+  axf_tabs_scroll_track_color: LIGHT.INK_30,
+  axf_tabs_scroll_thumb_color: LIGHT.INK_40,
+  axf_tabs_scroll_thumb_hover_color: LIGHT.INK_50,
 
   // DataGrid
   axfdg_header_bg: LIGHT.INK_10,
@@ -87,9 +90,9 @@ const lightColors = {
 
 // dark component colors
 const darkAntdColors: typeof lightAntdColors = {
-  body_background: DARK.INK_90,
+  body_background: DARK.INK_70,
   scroll_thumb_color: DARK.INK_100,
-  border_color_base: DARK.INK_80,
+  border_color_base: DARK.INK_90,
   border_color_split: DARK.INK_80,
   primary_color: DARK.BLUE_50,
   primary_color_hover: DARK.BLUE_50,
@@ -139,6 +142,9 @@ const darkColors: typeof lightColors = {
   axf_tabs_background: DARK.BLUE_60,
   axf_tabs_active_background: DARK.BLUE_50,
   axf_tabs_hover_background: DARK.BLUE_70,
+  axf_tabs_scroll_track_color: DARK.INK_60,
+  axf_tabs_scroll_thumb_color: DARK.INK_80,
+  axf_tabs_scroll_thumb_hover_color: DARK.INK_100,
 
   // DataGrid
   axfdg_header_bg: DARK.INK_90,
@@ -182,7 +188,7 @@ const commons = {
   error_page_header_color: "#FF4040",
   error_page_color: LIGHT.BLUE_90,
   form_vertical_label_padding: "0 0 4px",
-  side_menu_open_width: 250,
+  side_menu_open_width: 280,
 
   // custom styles
   ui_helper_zindex: 100,
@@ -210,8 +216,8 @@ const darkTokens: Partial<AliasToken> = {
   colorPrimary: darkAntdColors.primary_color,
   colorBgBase: darkAntdColors.component_background,
   colorTextBase: darkAntdColors.text_color,
-  colorBorder: lightAntdColors.border_color_base,
-  colorBgContainerDisabled: lightAntdColors.disabled_bg,
+  colorBorder: darkAntdColors.border_color_base,
+  colorBgContainerDisabled: darkAntdColors.disabled_bg,
 };
 
 const light = {

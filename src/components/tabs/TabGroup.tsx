@@ -184,7 +184,7 @@ const TabLine = styled.div`
   width: 100%;
   bottom: 0;
   left: 0;
-  background: #e7e7e7;
+  background: ${(p) => p.theme.axf_tabs_scroll_track_color};
   border-radius: 4px 0 0 4px;
 `;
 
@@ -204,7 +204,7 @@ const TabItemsGroup = styled.div`
     position: absolute;
     left: 0;
     top: 0;
-    background: linear-gradient(90deg, rgba(245, 245, 245, 1) 0%, rgba(245, 245, 245, 0) 100%);
+    background: linear-gradient(90deg, ${(p) => p.theme.body_background} 0%, rgba(245, 245, 245, 0) 100%);
     z-index: 20;
   }
 `;
@@ -222,30 +222,30 @@ const TabItemsScroller = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: ${(p) => p.theme.scroll_thumb_color};
+    background-color: ${(p) => p.theme.axf_tabs_scroll_thumb_color};
     border: 0 none;
     border-radius: 4px;
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background-color: #d5d5d5;
+    background-color: ${(p) => p.theme.axf_tabs_scroll_thumb_hover_color};
   }
 
   &::-webkit-scrollbar-track {
     border-radius: 10px;
-    background-color: #e7e7e7;
+    background-color: ${(p) => p.theme.axf_tabs_scroll_track_color};
   }
 
   &::-webkit-scrollbar-track:vertical {
-    background-color: #e7e7e7;
+    background-color: ${(p) => p.theme.axf_tabs_scroll_track_color};
   }
 
   &::-webkit-scrollbar-track:horizontal {
-    background-color: #e7e7e7;
+    background-color: ${(p) => p.theme.axf_tabs_scroll_track_color};
   }
 
   &::-webkit-scrollbar-corner {
-    background-color: #e7e7e7;
+    background-color: ${(p) => p.theme.axf_tabs_scroll_track_color};
   }
 
   > div {
@@ -254,10 +254,8 @@ const TabItemsScroller = styled.div`
     flex: 1;
     column-gap: 0;
     position: relative;
-    border-radius: 4px;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    background: #e7e7e7;
+    border-radius: 4px 0 0 4px;
+    background: ${(p) => p.theme.axf_tabs_background};
   }
 `;
 
