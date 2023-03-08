@@ -1,7 +1,4 @@
-// ref
-// https://github.com/ant-design/ant-design/blob/master/components/style/themes/default.less
-
-import { alpha, lighten } from "./palette/colorUtil"; // Using relative path because the tsconfig isn't set at building less file
+import { alpha, darken } from "./palette/colorUtil"; // Using relative path because the tsconfig isn't set at building less file
 import DARK from "./palette/dark";
 import LIGHT from "./palette/light";
 import { AliasToken } from "antd/lib/theme/interface";
@@ -54,22 +51,25 @@ const lightCustomColors = {
 const lightColors = {
   ...lightCustomColors,
 
+  axf_page_frame_header_bg: LIGHT.INK_5,
+  axf_page_frame_footer_bg: LIGHT.INK_5,
+
   // TabGroup
   axf_border_color: LIGHT.INK_30,
   axf_tabs_background: LIGHT.INK_30,
   axf_tabs_active_background: lightAntdColors.primary_color,
-  axf_tabs_hover_background: LIGHT.INK_30,
+  axf_tabs_hover_background: LIGHT.INK_40,
   axf_tabs_scroll_track_color: LIGHT.INK_30,
   axf_tabs_scroll_thumb_color: LIGHT.INK_40,
   axf_tabs_scroll_thumb_hover_color: LIGHT.INK_50,
 
   // DataGrid
-  axfdg_header_bg: LIGHT.INK_10,
+  axfdg_header_bg: LIGHT.INK_5,
   axfdg_header_color: lightCustomColors.text_heading_color,
   axfdg_header_font_weight: 500,
   axfdg_header_hover_bg: LIGHT.INK_20,
   axfdg_header_group_bg: LIGHT.INK_20,
-  axfdg_footer_bg: LIGHT.INK_10,
+  axfdg_footer_bg: LIGHT.INK_5,
   axfdg_border_color_base: LIGHT.INK_40,
   axfdg_border_radius: "4px",
   axfdg_row_selector_color: lightAntdColors.component_background,
@@ -78,7 +78,7 @@ const lightColors = {
   axfdg_body_active_bg: lightAntdColors.item_active_bg,
   axfdg_body_color: lightCustomColors.text_body_color,
   axfdg_scroll_size: "11px",
-  axfdg_scroll_track_bg: lighten(LIGHT.INK_10, 0.01),
+  axfdg_scroll_track_bg: darken(LIGHT.INK_5, 0.01),
 
   axfdg_scroll_thumb_radius: "6px",
   axfdg_scroll_thumb_bg: lightAntdColors.scroll_thumb_color,
@@ -137,11 +137,15 @@ const darkCustomColors: typeof lightCustomColors = {
 };
 const darkColors: typeof lightColors = {
   ...darkCustomColors,
+
+  axf_page_frame_header_bg: DARK.INK_70,
+  axf_page_frame_footer_bg: DARK.INK_70,
+
   // TabGroup
   axf_border_color: DARK.INK_70,
-  axf_tabs_background: DARK.BLUE_60,
-  axf_tabs_active_background: DARK.BLUE_50,
-  axf_tabs_hover_background: DARK.BLUE_70,
+  axf_tabs_background: DARK.INK_50,
+  axf_tabs_active_background: darkAntdColors.primary_color,
+  axf_tabs_hover_background: DARK.INK_80,
   axf_tabs_scroll_track_color: DARK.INK_60,
   axf_tabs_scroll_thumb_color: DARK.INK_80,
   axf_tabs_scroll_thumb_hover_color: DARK.INK_100,

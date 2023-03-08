@@ -6,12 +6,12 @@ import { PROGRAM_TYPES, useAppMenu } from "router";
 import { MenuIcon } from "components/MenuIcon";
 import { AXFCMenu, MenuBar } from "@axframe/contextmenu";
 import { SMixinFlexRow } from "@core/styles/emotion";
-import { PeatLogoClosed } from "components/icons";
-import { AXFIconBrandAxisj, AXFIconBrandAxisjDuo } from "../AXFIcons";
+import { AXFIconBrandAxisj } from "../AXFIcons";
 
 interface StyleProps {
   sideMenuOpened?: boolean;
 }
+
 interface Props extends StyleProps {
   me?: User;
   onSignOut?: () => Promise<void>;
@@ -93,6 +93,13 @@ const Container = styled.div<StyleProps>`
   position: relative;
   line-height: 33px;
   font-size: 13px;
+  color: ${(p) => p.theme.text_color};
+
+  .rf-menubar {
+    [data-menubar-item] {
+      color: ${(p) => p.theme.text_color};
+    }
+  }
 `;
 
 export default AppMenuBar;

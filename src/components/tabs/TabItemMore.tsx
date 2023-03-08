@@ -7,6 +7,7 @@ import { SMixinFlexRow } from "@core/styles/emotion";
 import { useI18n } from "@core/hooks/useI18n";
 import { usePageTabStore } from "@core/stores/usePageTabStore";
 import { useLink } from "hooks";
+import { darken } from "../../styles/palette/colorUtil";
 
 interface StyleProps {
   visible?: boolean;
@@ -74,7 +75,7 @@ const TabItemMoreContainer = styled.div<StyleProps>`
   > div {
     width: 40px;
     height: 36px;
-    background: #d5d5d5;
+    background: ${(p) => darken(p.theme.axf_tabs_background, 0.1)};
     border-radius: 0 4px 4px 0;
     ${SMixinFlexRow("center", "center")};
   }

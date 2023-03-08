@@ -69,7 +69,7 @@ const Container = styled.div`
   flex: 1;
   padding: 0 6px;
   position: relative;
-  font-size: 12px;
+  font-size: 11px;
 `;
 
 const Tools = styled.div`
@@ -79,7 +79,7 @@ const Tools = styled.div`
 `;
 
 const ToggleSideNavHandle = styled.div`
-  height: 39px;
+  height: 33px;
   border-right: 1px solid ${(p) => p.theme.border_color_base};
   ${SMixinFlexRow("center", "center")};
   padding: 0 8px;
@@ -87,12 +87,11 @@ const ToggleSideNavHandle = styled.div`
 `;
 
 const FooterLinks = styled.div`
-  font-size: 12px;
+  font-size: 11px;
 
   [role="copyright"] {
     //color: #000;
     color: ${(p) => p.theme.text_body_color};
-    font-weight: bold;
     margin-right: 8px;
   }
 
@@ -100,6 +99,7 @@ const FooterLinks = styled.div`
     font-size: 12px;
     padding: 0 8px;
     color: ${(p) => p.theme.text_color};
+
     &:hover {
       color: ${(p) => p.theme.link_color};
     }
