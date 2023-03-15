@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { ApiError } from "../@core/utils/error";
+import { ApiError } from "./ApiError";
 import { ApiErrorCode } from "../@types";
 import { getAppData, setAppData } from "../@core/utils/store";
 import { useUserStore } from "../stores";

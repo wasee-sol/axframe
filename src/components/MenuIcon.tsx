@@ -35,7 +35,7 @@ interface Props {
 
 export const menuIcons = Object.values(MenuIconType).filter((v) => isNaN(Number(v)));
 
-export function MenuIcon({ typeName, ...rest }: Props) {
+export function MenuIcon({ typeName, secondColor, ...rest }: Props) {
   switch (typeName) {
     case "Graph":
       return <AXFIGraph className={"ant-menu-item-icon"} {...rest} />;

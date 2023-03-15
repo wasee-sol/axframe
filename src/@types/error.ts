@@ -1,4 +1,6 @@
 export enum ApiErrorCode {
+  Alert = "0",
+  UNKNOWN = "1",
   INVALID_CODE = "1110", //(400, "1110", "잘못된 코드 입니다.")
   INVALID_VALUE = "1120", //(400, "1120", "잘못된 필드값")
   INVALID_PATTERN = "1130", //(400, "1130", "잘못된 형식")
