@@ -102,11 +102,11 @@ function App({}: Props) {
   return (
     <>
       <SignInContainer>
-        <SignInBox>
+        <SignInBox ref={ref1}>
           <SignInVisual />
           <SignInFormBox>
             <SignInLogo />
-            <SignInBoxBody ref={ref1}>
+            <SignInBoxBody>
               <Form<SignInFormItem> form={form} onFinish={onSignIn} layout={"vertical"}>
                 <Form.Item
                   label={t.formItem.user.userId.label}
@@ -164,10 +164,6 @@ function App({}: Props) {
                     {t.button.signIn}
                   </Button>
                 </Form.Item>
-
-                <div style={{ padding: "20px 5px", textAlign: "center" }}>
-                  Only authorized people can use it. Illegal use may result in legal sanctions.
-                </div>
               </Form>
             </SignInBoxBody>
             <SignInBoxFooter>
@@ -235,7 +231,7 @@ const SignInContainer = styled.div`
 
 const SignInBox = styled.div`
   width: 800px;
-  height: 600px;
+  height: 500px;
   background: rgba(245, 245, 245, 1);
   border-radius: 16px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
@@ -246,7 +242,7 @@ const SignInBox = styled.div`
 
 const SignInVisual = styled.div`
   width: 400px;
-  height: 600px;
+  height: 500px;
   background: url("/signin-visual.jpg") no-repeat center center;
   background-size: cover;
 `;

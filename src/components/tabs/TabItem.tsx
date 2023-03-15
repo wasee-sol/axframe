@@ -65,6 +65,7 @@ const Box = styled.div<StyleProps>`
   position: relative;
   white-space: nowrap;
   transition: all 0.3s;
+
   [role="tab-close"] {
     position: absolute;
     display: block;
@@ -77,8 +78,10 @@ const Box = styled.div<StyleProps>`
       display: block;
     }
   }
+
   &:hover {
     border-radius: 5px;
+
     [role="tab-close"] {
       //display: block;
     }
@@ -121,11 +124,12 @@ const Box = styled.div<StyleProps>`
       color: ${theme.text_display_color};
 
       &:hover {
-        background: #d5d5d5;
+        background: ${theme.axf_tabs_hover_background};
       }
 
       [role="tab-close"] {
         transition: all 0.3s;
+
         &:hover {
           background: ${theme.white_color};
           color: ${theme.axf_tabs_active_background};
