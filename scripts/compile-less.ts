@@ -34,11 +34,13 @@ const buildLessVar = () => {
       path.resolve(__dirname, `../src/styles/palette/theme-${palette}.less`),
       Object.keys(themeValue)
         .map((k) => {
-          if (typeof themeValue[k] !== "string" || !themeValue[k].includes("#")) {
-            return `@${k.replace(/_/g, "-")}: ${themeValue[k]};`;
-          }
+          if (k !== "token") {
+            if (typeof themeValue[k] !== "string" || !themeValue[k].includes("#")) {
+              return `@${k.replace(/_/g, "-")}: ${themeValue[k]};`;
+            }
 
-          return `@${k.replace(/_/g, "-")}: ${themeValue[k].toLowerCase()};`;
+            return `@${k.replace(/_/g, "-")}: ${themeValue[k].toLowerCase()};`;
+          }
         })
         .join("\r\n") + "\r\n"
     );
