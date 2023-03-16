@@ -27,9 +27,9 @@ const lightAntdColors = {
   input_border_color: LIGHT.INK_40,
   select_border_color: LIGHT.INK_40,
   component_background: LIGHT.INK_5,
-  item_active_bg: LIGHT.BLUE_5,
-  item_hover_bg: LIGHT.INK_10,
-  menu_item_active_bg: LIGHT.BLUE_5,
+  item_active_bg: LIGHT.BLUE_50,
+  item_hover_bg: LIGHT.BLUE_100,
+  menu_item_active_bg: LIGHT.BLUE_50,
   modal_mask_bg: LIGHT.INK_100,
 }; //
 const lightCustomColors = {
