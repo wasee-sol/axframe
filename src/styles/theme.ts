@@ -113,7 +113,7 @@ const darkAntdColors: typeof lightAntdColors = {
   input_border_color: DARK.INK_80,
   select_border_color: DARK.INK_80,
   component_background: DARK.INK_100,
-  item_active_bg: DARK.INK_100,
+  item_active_bg: DARK.INK_80,
   item_hover_bg: DARK.INK_70,
   menu_item_active_bg: DARK.INK_100,
   modal_mask_bg: DARK.INK_10,
@@ -149,7 +149,6 @@ const darkColors: typeof lightColors = {
   axf_tabs_scroll_track_color: DARK.INK_60,
   axf_tabs_scroll_thumb_color: DARK.INK_80,
   axf_tabs_scroll_thumb_hover_color: DARK.INK_100,
-
   // DataGrid
   axfdg_header_bg: DARK.INK_90,
   axfdg_header_color: darkCustomColors.text_heading_color,

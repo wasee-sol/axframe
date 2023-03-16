@@ -17,11 +17,6 @@ export const Default = () => {
   return <SearchParams form={form} />;
 };
 
-export const FilterNotStretch = () => {
-  const [form] = Form.useForm();
-  return <SearchParams form={form} filterWidth={200} />;
-};
-
 export const ParamObjects = () => {
   const { t } = useI18n();
   const [form] = Form.useForm();
@@ -56,7 +51,6 @@ export const ExtraButtons = () => {
   const [form] = Form.useForm();
   return (
     <SearchParams
-      filterWidth={200}
       form={form}
       params={[
         {
